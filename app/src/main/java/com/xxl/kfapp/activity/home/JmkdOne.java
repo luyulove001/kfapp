@@ -27,7 +27,7 @@ import talex.zsw.baselibrary.widget.MutiProgress;
 /**
  * 作者：XNN
  * 日期：2017/6/7
- * 作用：加盟开店第一步
+ * 作用：加盟开店第一步..
  */
 
 public class JmkdOne extends BaseActivity implements View.OnClickListener {
