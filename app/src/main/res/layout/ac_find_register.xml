@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <com.xxl.kfapp.widget.TitleBar
+        android:id="@+id/mTitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x40">
+
+                <EditText
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/x30"
+                    android:drawableStart="@mipmap/login_account"
+                    android:hint="@string/prompt_phone"
+                    android:inputType="phone"/>
+
+                <Button
+                    android:id="@+id/send"
+                    android:layout_width="@dimen/x230"
+                    android:layout_height="@dimen/y65"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/x30"
+                    android:layout_marginTop="@dimen/x25"
+                    android:background="@drawable/bg_btn_corner_red"
+                    android:text="@string/send_code"
+                    android:textColor="@color/white"/>
+            </RelativeLayout>
+
+
+            <EditText
+                android:id="@+id/code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x10"
+                android:hint="@string/prompt_code"
+                android:inputType="number"
+                android:paddingEnd="@dimen/x10"
+                android:paddingStart="@dimen/x95"/>
+
+            <EditText
+                android:id="@+id/nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x10"
+                android:drawablePadding="@dimen/x30"
+                android:drawableStart="@mipmap/login_account"
+                android:hint="@string/prompt_nickname"/>
+
+            <EditText
+                android:id="@+id/new_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x10"
+                android:drawablePadding="@dimen/x30"
+                android:drawableStart="@mipmap/login_pwd"
+                android:hint="@string/prompt_new_password"
+                android:inputType="textPassword"/>
+
+            <EditText
+                android:id="@+id/confirm_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x10"
+                android:drawablePadding="@dimen/x30"
+                android:drawableStart="@mipmap/login_pwd"
+                android:hint="@string/prompt_confirm_new_pwd"
+                android:inputType="textPassword"/>
+
+            <Button
+                android:id="@+id/confirm_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x50"
+                android:background="@drawable/bg_btn_red"
+                android:text="@string/confirm"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x40"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

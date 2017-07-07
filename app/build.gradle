@@ -68,4 +68,5 @@ dependencies {
         exclude group: 'com.android.support'
     }
     compile 'com.alibaba:fastjson:1.1.55.android'
+    compile 'com.lzy.net:okgo:3.0.2'
 }

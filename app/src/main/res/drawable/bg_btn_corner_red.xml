@@ -12,6 +12,7 @@
     <item>
         <shape>
             <solid android:color="@color/main_red" />
+            <corners android:radius="@dimen/x20"/>
         </shape>
     </item>
 
