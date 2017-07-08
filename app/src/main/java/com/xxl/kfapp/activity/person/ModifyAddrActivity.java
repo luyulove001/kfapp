@@ -52,7 +52,7 @@ public class ModifyAddrActivity extends BaseActivity {
 
     private Activity mContext;
     private MenuAdapter mMenuAdapter;
-    private List<AddrVo>  vos;
+    private List<AddrVo> vos;
     private String addrId;
 
     @Override
@@ -78,12 +78,8 @@ public class ModifyAddrActivity extends BaseActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RadioButton r1 = new RadioButton(ModifyAddrActivity.this);
-                r1.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-                r1.setText("浙江省杭州市滨江区江南大道xxx号");
-                r1.setTextColor(getResources().getColor(R.color.gray));
-                r1.setTextSize(getResources().getDimension(R.dimen.x16));
+                Intent i = new Intent(mContext, AddAddrActivity.class);
+                startActivityForResult(i, 2);
             }
         });
 
@@ -143,38 +139,39 @@ public class ModifyAddrActivity extends BaseActivity {
         public void onItemClick(Closeable closeable, int adapterPosition, int menuPosition, int direction) {
             closeable.smoothCloseMenu();
             if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
-                Toast.makeText(mContext, "list第" + adapterPosition + "; 右侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "list第" + adapterPosition + "; 右侧菜单第" + menuPosition, Toast.LENGTH_SHORT)
+                        .show();
             } else if (direction == SwipeMenuRecyclerView.LEFT_DIRECTION) {
-                Toast.makeText(mContext, "list第" + adapterPosition + "; 左侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "list第" + adapterPosition + "; 左侧菜单第" + menuPosition, Toast.LENGTH_SHORT)
+                        .show();
             }
 
             if (menuPosition == 1) {// 删除按钮被点击。
                 vos.remove(adapterPosition);
                 mMenuAdapter.notifyItemRemoved(adapterPosition);
+            } else if (menuPosition == 0) {
+                Intent i = new Intent(mContext, AddAddrActivity.class);
+                AddrVo vo = vos.get(adapterPosition);
+                i.putExtra("addrVo", vo);
+                startActivityForResult(i, 1);
             }
         }
     };
 
-    public void onAddressPicker() {
-        AddressPickTask task = new AddressPickTask(this);
-        task.setHideProvince(false);
-        task.setHideCounty(false);
-        task.setCallback(new AddressPickTask.Callback() {
-            @Override
-            public void onAddressInitFailed() {
-                ToastShow("数据初始化失败");
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                //TODO update and request new data
+                case 1:
+                    break;
+                case 2:
+                    break;
+                default:
+                    break;
             }
-
-            @Override
-            public void onAddressPicked(Province province, City city, County county) {
-                if (county == null) {
-                    ToastShow(province.getAreaName() + city.getAreaName());
-                } else {
-                    ToastShow(province.getAreaName() + city.getAreaName() + county.getAreaName());
-                }
-            }
-        });
-        task.execute("浙江", "杭州", "滨江");
+        }
     }
 
     @Override

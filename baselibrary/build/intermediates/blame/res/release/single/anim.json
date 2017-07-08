@@ -548,12 +548,12 @@
         "source": "F:\\project\\KFApp\\baselibrary\\src\\main\\res\\anim\\flip_vertical_out.xml"
     },
     {
-        "merged": "F:\\project\\KFApp\\baselibrary\\build\\intermediates\\res\\merged\\release\\anim\\translate.xml",
-        "source": "F:\\project\\KFApp\\baselibrary\\src\\main\\res\\anim\\translate.xml"
-    },
-    {
         "merged": "F:\\project\\KFApp\\baselibrary\\build\\intermediates\\res\\merged\\release\\anim\\alpha_translate_rotate.xml",
         "source": "F:\\project\\KFApp\\baselibrary\\src\\main\\res\\anim\\alpha_translate_rotate.xml"
+    },
+    {
+        "merged": "F:\\project\\KFApp\\baselibrary\\build\\intermediates\\res\\merged\\release\\anim\\translate.xml",
+        "source": "F:\\project\\KFApp\\baselibrary\\src\\main\\res\\anim\\translate.xml"
     },
     {
         "merged": "F:\\project\\KFApp\\baselibrary\\build\\intermediates\\res\\merged\\release\\anim\\scale.xml",

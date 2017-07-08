@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"/>
 
     <RelativeLayout
+        android:id="@+id/lyt_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/x20"
@@ -32,9 +33,7 @@
             android:layout_alignParentTop="true"
             android:layout_toStartOf="@+id/mImageView"
             android:gravity="center"
-            android:paddingEnd="@dimen/x20"
-            android:paddingStart="@dimen/x20"
-            android:text="所在地区:"
+            android:text="请选择"
             android:textColor="@color/gray"/>
 
         <ImageView
