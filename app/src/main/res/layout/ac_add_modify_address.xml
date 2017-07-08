@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/gray_holo_light"
+              android:orientation="vertical">
+
+    <com.xxl.kfapp.widget.TitleBar
+        android:id="@+id/mTitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x20"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/x80"
+            android:gravity="center"
+            android:paddingEnd="@dimen/x20"
+            android:paddingStart="@dimen/x20"
+            android:text="所在地区:"
+            android:textColor="@color/gray"/>
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/x80"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/mImageView"
+            android:gravity="center"
+            android:paddingEnd="@dimen/x20"
+            android:paddingStart="@dimen/x20"
+            android:text="所在地区:"
+            android:textColor="@color/gray"/>
+
+        <ImageView
+            android:id="@+id/mImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/x20"
+            android:src="@mipmap/arrow_right_gray"/>
+    </RelativeLayout>
+
+    <include layout="@layout/include_line2"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/x80"
+            android:gravity="center"
+            android:paddingEnd="@dimen/x20"
+            android:paddingStart="@dimen/x20"
+            android:text="详细地址:"
+            android:textColor="@color/gray"/>
+
+        <EditText
+            android:id="@+id/et_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:padding="10dp"/>
+    </LinearLayout>
+</LinearLayout>

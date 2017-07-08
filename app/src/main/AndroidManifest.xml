@@ -50,10 +50,11 @@
         <activity
             android:name=".activity.common.MainActivity"
             android:screenOrientation="portrait">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN"/>-->
-            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN"/> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".zxing.CaptureActivity"
@@ -97,6 +98,12 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.common.FindOrRegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.person.NotificationActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.person.AddAddrActivity"
             android:screenOrientation="portrait"/>
     </application>
 

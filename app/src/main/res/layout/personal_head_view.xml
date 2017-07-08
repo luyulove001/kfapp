@@ -8,28 +8,53 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="30dp"
         android:orientation="vertical">
 
-        <talex.zsw.baselibrary.widget.CircleImageView
-            android:id="@+id/mHead"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@mipmap/ic_launcher"/>
+        <RelativeLayout
+            android:id="@+id/lyt_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <talex.zsw.baselibrary.widget.CircleImageView
+                android:id="@+id/mHead"
+                android:layout_width="@dimen/x160"
+                android:layout_height="@dimen/y160"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/head_bg"/>
+
+            <ImageView
+                android:id="@+id/camera"
+                android:layout_width="@dimen/x70"
+                android:layout_height="@dimen/y70"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/y25"
+                android:src="@mipmap/head_null"/>
+
+            <TextView
+                android:id="@+id/tv_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/camera"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/y10"
+                android:text="@string/upload_head"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x24"/>
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/mTvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
             android:layout_gravity="center"
-            android:drawablePadding="5dp"
+            android:layout_marginTop="10dp"
             android:drawableEnd="@mipmap/main_icon_boy"
+            android:drawablePadding="5dp"
+            android:gravity="center"
             android:text="小沙弥"
             android:textColor="@color/black2"
             android:textSize="@dimen/text_title"/>

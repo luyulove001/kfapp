@@ -136,6 +136,10 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
 
     @Override
     protected void initData() {
+        String account = PreferenceUtils.getPrefString(getApplicationContext(), "account", "");
+        if (!TextUtils.isEmpty(account)) {
+            mEmailView.setText(account);
+        }
         mid = getMyUUID();
         sign = System.currentTimeMillis() + "";
         signdata = Md5Algorithm.signMD5("mid=" + mid + "&sign=" + sign);
@@ -374,7 +378,10 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                             if (code.equals("100000")) {
                                 String token = json.getJSONObject("data").getString("token");
                                 PreferenceUtils.setPrefString(getApplicationContext(), "token", token);
+                                PreferenceUtils.setPrefString(getApplicationContext(), "account", mEmailView.getText
+                                        ().toString());
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
                             }

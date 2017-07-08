@@ -9,46 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <RadioGroup
-        android:id="@+id/RadioGroup"
+    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+        android:id="@+id/mRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
-        <RadioButton
-            android:id="@+id/RadioButton01"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableEnd="@mipmap/arrow_right_gray"
-            android:textColor="@color/gray"
-            android:text="浙江省杭州市滨江区江南大道xxx号"/>
-
-    </RadioGroup>
-
-    <LinearLayout
-        android:id="@+id/lyt_addAddr"
+    <Button
+        android:id="@+id/btn_add_addr"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="@dimen/x50"
-            android:layout_height="@dimen/y50"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/x10"
-            android:src="@mipmap/qq_red"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/x10"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="@string/new_address"
-            android:textColor="@color/black"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/arrow_right_gray"/>
-    </LinearLayout>
-
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_btn_red"
+        android:text="@string/add_address"
+        android:textColor="@color/white"/>
 </LinearLayout>

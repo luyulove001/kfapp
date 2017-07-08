@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import talex.zsw.baselibrary.util.ACache;
+import talex.zsw.baselibrary.util.StringUtils;
 import talex.zsw.baselibrary.view.SweetAlertDialog.SweetAlertDialog;
 
 
@@ -137,6 +138,38 @@ public abstract class BaseFragment extends Fragment {
         sweetAlertDialog.setConfirmText("确定");
         sweetAlertDialog.setCancelable(cancelable);//不让点击返回按钮取消对话框
         sweetAlertDialog.show();
+    }
+
+    public void sweetDialogCustom(int type, String title, String content, String confirmText,
+                                  String cancelText, SweetAlertDialog.OnSweetClickListener confirmListener,
+                                  SweetAlertDialog.OnSweetClickListener cancelListener) {
+        if (sweetAlertDialog != null && sweetAlertDialog.isShowing()) {
+            sweetAlertDialog.changeAlertType(type);
+        } else {
+            sweetAlertDialog = new SweetAlertDialog(getActivity(), type);
+            sweetAlertDialog.setCancelable(false);
+        }
+        if (!StringUtils.isBlank(title)) {
+            sweetAlertDialog.setTitleText(title);
+        }
+        if (!StringUtils.isBlank(content)) {
+            sweetAlertDialog.setContentText(content);
+        }
+        if (!StringUtils.isBlank(confirmText)) {
+            sweetAlertDialog.setConfirmText(confirmText);
+        }
+        if (!StringUtils.isBlank(cancelText)) {
+            sweetAlertDialog.setCancelText(cancelText);
+        }
+        if (confirmListener != null) {
+            sweetAlertDialog.setConfirmClickListener(confirmListener);
+        }
+        if (confirmListener != null) {
+            sweetAlertDialog.setCancelClickListener(cancelListener);
+        }
+        if (!sweetAlertDialog.isShowing()) {
+            sweetAlertDialog.show();
+        }
     }
 
     /**

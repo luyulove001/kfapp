@@ -31,7 +31,6 @@
             android:background="@drawable/btn_white"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="酒店订单"
             android:textColor="@color/black2"
             android:textSize="18sp"/>
 
@@ -72,7 +71,6 @@
             android:background="@drawable/btn_white"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="酒店订单"
             android:textColor="@color/black2"
             android:textSize="18sp"/>
 
@@ -111,7 +109,6 @@
             android:background="@drawable/btn_white"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="酒店订单"
             android:textColor="@color/black2"
             android:textSize="18sp"/>
 
@@ -151,7 +148,6 @@
             android:background="@drawable/btn_white"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="酒店订单"
             android:textColor="@color/black2"
             android:textSize="18sp"/>
 
@@ -191,7 +187,6 @@
             android:background="@drawable/btn_white"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="酒店订单"
             android:textColor="@color/black2"
             android:textSize="18sp"/>
 
@@ -205,13 +200,16 @@
             android:visibility="gone"/>
     </RelativeLayout>
 
-    <include layout="@layout/gray_line"/>
+    <include
+        layout="@layout/gray_line"
+        android:visibility="gone"/>
 
     <RelativeLayout
         android:id="@+id/lyt_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -272,7 +270,6 @@
             android:background="@drawable/btn_white"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="酒店订单"
             android:textColor="@color/black2"
             android:textSize="18sp"/>
 
@@ -312,7 +309,6 @@
             android:background="@drawable/btn_white"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="酒店订单"
             android:textColor="@color/black2"
             android:textSize="18sp"/>
 
@@ -324,4 +320,14 @@
             android:layout_marginEnd="@dimen/x30"
             android:src="@mipmap/arrow_right_gray"/>
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:layout_marginTop="@dimen/y50"
+        android:background="@drawable/bg_btn_red"
+        android:text="@string/action_logout"
+        android:textColor="@color/white"
+        android:textSize="@dimen/x40"/>
 </LinearLayout>

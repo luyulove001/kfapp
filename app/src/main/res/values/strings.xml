@@ -8,6 +8,12 @@
     <string name="confirm">确认</string>
     <string name="input_nickname">请输入昵称，最长30个字</string>
     <string name="new_address">新增收货人地址</string>
+    <string name="upload_head">上传头像</string>
+    <string name="notify_all">全部</string>
+    <string name="notify_sys">系统</string>
+    <string name="notify_con">聊天</string>
+    <string name="notify_comment">评论回复</string>
+    <string name="add_address">添加地址</string>
 
     <!-- Strings related to login -->
     <string name="prompt_account">请输入账号</string>
@@ -21,6 +27,7 @@
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_register">注册</string>
     <string name="action_sign_in_short">登录</string>
+    <string name="action_logout">退出</string>
     <string name="error_invalid_account">请输入正确手机号</string>
     <string name="error_invalid_password">密码太短</string>
     <string name="error_incorrect_password">请输入正确密码</string>

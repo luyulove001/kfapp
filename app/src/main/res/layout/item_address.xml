@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/x30"
+        android:layout_marginTop="@dimen/x40"
+        android:text="摇一摇"
+        android:textSize="@dimen/x40"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/x30"
+        android:layout_marginTop="@dimen/x40"
+        android:text="13838384438"
+        android:textSize="@dimen/x40"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/disp_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username"
+        android:padding="@dimen/x30"
+        android:text="浙江省杭州市滨江区江南大道垃圾电缆附件阿亮丁健身房垃圾圣诞福利课教案省廊坊"
+        android:textSize="@dimen/x35"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:layout_below="@+id/disp_address"
+        android:background="@color/gray"/>
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/disp_address"
+        android:text="设为默认"
+        android:textColor="@color/gray"/>
+
+    <TextView
+        android:id="@+id/tv_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tv_delete"
+        android:layout_alignBottom="@+id/tv_delete"
+        android:layout_marginEnd="14dp"
+        android:layout_toStartOf="@+id/tv_delete"
+        android:drawablePadding="@dimen/x10"
+        android:drawableStart="@mipmap/main_icon_boy"
+        android:text="编辑"
+        android:textSize="@dimen/x35"/>
+
+    <TextView
+        android:id="@+id/tv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/checkBox"
+        android:layout_alignBottom="@+id/checkBox"
+        android:layout_alignEnd="@+id/phone"
+        android:drawablePadding="@dimen/x10"
+        android:drawableStart="@mipmap/main_icon_girl"
+        android:text="删除"
+        android:textSize="@dimen/x35"/>
+
+</RelativeLayout>

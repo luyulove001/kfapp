@@ -8,13 +8,16 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xxl.kfapp.R;
+import com.xxl.kfapp.activity.common.LoginActivity;
 import com.xxl.kfapp.activity.person.ModifyAddrActivity;
 import com.xxl.kfapp.activity.person.RenameActivity;
 import com.xxl.kfapp.base.BaseFragment;
+import com.xxl.kfapp.model.response.AddrVo;
 import com.xxl.kfapp.widget.SlideFromBottomPopup;
 
 import java.io.File;
@@ -25,6 +28,7 @@ import java.io.IOException;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import talex.zsw.baselibrary.view.PullZoomView.PullToZoomScrollViewEx;
+import talex.zsw.baselibrary.view.SweetAlertDialog.SweetAlertDialog;
 import talex.zsw.baselibrary.widget.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
@@ -36,12 +40,14 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class PersonFragment extends BaseFragment implements View.OnClickListener {
-    TextView tvNickname, tvGender, tvJob, tvJobNum, tvPoints, tvOrder, tvAddress, tvNotify;
-    RelativeLayout lytNickname, lytGender, lytOrder, lytAddress, lytNotify;
-    CircleImageView ivHead;
+    private TextView tvNickname, tvGender, tvJob, tvJobNum, tvPoints, tvOrder, tvAddress, tvNotify;
+    private RelativeLayout lytNickname, lytGender, lytOrder, lytAddress, lytNotify, lytHead;
+    private CircleImageView ivHead;
+    private Button btnLogout;
     private SlideFromBottomPopup mSlidePopup;
     private Bitmap head;//头像Bitmap
     private static String path;//sd路径
+    private AddrVo address;
 
     @Bind(R.id.mScrollView)
     PullToZoomScrollViewEx mScrollView;
@@ -65,6 +71,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         mScrollView.setScrollContentView(contentView);
 
         ivHead = (CircleImageView) headView.findViewById(R.id.mHead);
+        lytHead = (RelativeLayout) headView.findViewById(R.id.lyt_head);
 
         tvNickname = (TextView) contentView.findViewById(R.id.nickname);
         tvGender = (TextView) contentView.findViewById(R.id.gender);
@@ -79,13 +86,17 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         lytOrder = (RelativeLayout) contentView.findViewById(R.id.lyt_order);
         lytAddress = (RelativeLayout) contentView.findViewById(R.id.lyt_address);
         lytNotify = (RelativeLayout) contentView.findViewById(R.id.lyt_notify);
+        btnLogout = (Button) contentView.findViewById(R.id.btn_logout);
 
-        ivHead.setOnClickListener(this);
         lytNickname.setOnClickListener(this);
         lytGender.setOnClickListener(this);
         lytOrder.setOnClickListener(this);
         lytAddress.setOnClickListener(this);
         lytNotify.setOnClickListener(this);
+        btnLogout.setOnClickListener(this);
+        lytHead.setOnClickListener(this);
+
+        lytOrder.setVisibility(View.GONE);
     }
 
     @Override
@@ -105,12 +116,30 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             case R.id.lyt_order:
                 break;
             case R.id.lyt_address:
-                startActivity(new Intent(getActivity(), ModifyAddrActivity.class));
+                Intent i = new Intent(getActivity(), ModifyAddrActivity.class);
+                if (address != null) {
+                    i.putExtra("addrid", address.getAddrid());
+                }
+                startActivityForResult(i, 5);
                 break;
             case R.id.lyt_notify:
                 break;
-            case R.id.mHead:
+            case R.id.lyt_head:
                 showHeadPopup();
+                break;
+            case R.id.btn_logout:
+                sweetDialogCustom(0, "是否确定退出登录", "", "确定退出", "取消", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                        getActivity().finish();
+                    }
+                }, new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        closeDialog();
+                    }
+                });
                 break;
         }
     }
@@ -119,8 +148,8 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
      * 设置头像弹出窗
      */
     private void showHeadPopup() {
-        mSlidePopup = new SlideFromBottomPopup(getActivity()    );
-        mSlidePopup.setTexts(new String[] {"拍照", "相册选择", "取消"});
+        mSlidePopup = new SlideFromBottomPopup(getActivity());
+        mSlidePopup.setTexts(new String[]{"拍照", "相册选择", "取消"});
         mSlidePopup.setOnItemClickListener(new SlideFromBottomPopup.OnItemClickListener() {
             @Override
             public void onItemClick(View v) {
@@ -152,7 +181,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
      */
     private void showGenderPopup() {
         mSlidePopup = new SlideFromBottomPopup(getActivity());
-        mSlidePopup.setTexts(new String[] {"男", "女", "取消"});
+        mSlidePopup.setTexts(new String[]{"男", "女", "取消"});
         mSlidePopup.setOnItemClickListener(new SlideFromBottomPopup.OnItemClickListener() {
             @Override
             public void onItemClick(View v) {
@@ -207,6 +236,12 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                     tvNickname.setText(data.getStringExtra("nickname"));
                 }
                 break;
+            case 5:
+                if (resultCode == RESULT_OK && data != null) {
+                    address = (AddrVo) data.getSerializableExtra("address");
+                    tvAddress.setText(address.getDispaddress());
+                }
+                break;
             default:
                 break;
         }
@@ -256,5 +291,11 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }
