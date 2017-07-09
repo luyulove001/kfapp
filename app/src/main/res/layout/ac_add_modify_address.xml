@@ -65,7 +65,7 @@
         <EditText
             android:id="@+id/et_detail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@null"
             android:padding="10dp"/>
     </LinearLayout>

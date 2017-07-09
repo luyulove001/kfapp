@@ -11,4 +11,5 @@ public class Urls {
     public static final String getCode = "/authapi/getIdentifyingCode";
     public static final String forgot = "/authapi/forgotpass";
     public static final String getAddress = "/personalapi/getMemberAddrList";
+    public static final String updateAddress = "/personalapi/updateMemberAddress";
 }

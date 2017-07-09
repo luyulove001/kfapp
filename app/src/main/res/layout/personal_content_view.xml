@@ -245,16 +245,17 @@
 
     <include layout="@layout/gray_line"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/lyt_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:layout_gravity="center_vertical"
+        android:background="@color/white"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:background="@drawable/btn_white"
             android:gravity="center_vertical"
             android:padding="10dp"
@@ -263,12 +264,12 @@
 
         <TextView
             android:id="@+id/address"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/x220"
+            android:layout_weight="1"
             android:background="@drawable/btn_white"
             android:gravity="center_vertical"
+            android:maxLines="1"
             android:padding="10dp"
             android:textColor="@color/black2"
             android:textSize="18sp"/>
@@ -276,11 +277,10 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/x30"
+            android:layout_gravity="center_vertical"
             android:src="@mipmap/arrow_right_gray"/>
-    </RelativeLayout>
+    </LinearLayout>
 
     <include layout="@layout/gray_line"/>
 

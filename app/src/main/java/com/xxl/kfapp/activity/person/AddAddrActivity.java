@@ -3,6 +3,7 @@ package com.xxl.kfapp.activity.person;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,14 +26,13 @@ public class AddAddrActivity extends BaseActivity {
     RelativeLayout lytAddress;
     @Bind(R.id.location)
     TextView tvLocation;
+    @Bind(R.id.et_detail)
+    EditText etDetail;
     private AddrVo vo;
 
     @Override
     protected void initArgs(Intent intent) {
         vo = (AddrVo) intent.getSerializableExtra("addrVo");
-        if (vo == null) {
-            vo = new AddrVo();
-        }
     }
 
     @Override
@@ -44,11 +44,14 @@ public class AddAddrActivity extends BaseActivity {
         mTitleBar.setRightTV("保存", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                vo.setAddress(etDetail.getText().toString());
                 Intent i = new Intent();
                 i.putExtra("addrVo", vo);
                 setResult(RESULT_OK, i);
+                finish();
             }
         });
+        mTitleBar.getvTvRight().setTextColor(getResources().getColor(R.color.white));
         lytAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +62,12 @@ public class AddAddrActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        if (vo == null) {
+            vo = new AddrVo();
+        } else {
+            etDetail.setText(vo.getAddress());
+            tvLocation.setText(vo.getAddprovincename() + vo.getAddcityname() + vo.getAddareaname());
+        }
     }
 
     public void onAddressPicker() {

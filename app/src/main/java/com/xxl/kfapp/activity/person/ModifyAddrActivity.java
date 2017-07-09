@@ -55,6 +55,9 @@ public class ModifyAddrActivity extends BaseActivity {
     private List<AddrVo> vos;
     private String addrId;
 
+    public static final int AddAddress = 2;
+    public static final int UpdateAddress = 1;
+
     @Override
     protected void initArgs(Intent intent) {
         addrId = getIntent().getStringExtra("addrid");
@@ -79,7 +82,7 @@ public class ModifyAddrActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(mContext, AddAddrActivity.class);
-                startActivityForResult(i, 2);
+                startActivityForResult(i, AddAddress);
             }
         });
 
@@ -98,20 +101,12 @@ public class ModifyAddrActivity extends BaseActivity {
 
             // 添加右侧的，如果不添加，则右侧不会出现菜单。
             {
-                SwipeMenuItem addItem = new SwipeMenuItem(mContext)
-                        .setBackgroundDrawable(R.drawable.select_orange)// 点击的背景。
-                        .setText("编辑")
-                        .setTextColor(getResources().getColor(R.color.white))
-                        .setWidth(width) // 宽度。
+                SwipeMenuItem addItem = new SwipeMenuItem(mContext).setBackgroundDrawable(R.drawable.select_orange)// 点击的背景。
+                        .setText("编辑").setTextColor(getResources().getColor(R.color.white)).setWidth(width) // 宽度。
                         .setHeight(height); // 高度。
                 swipeRightMenu.addMenuItem(addItem); // 添加一个按钮到右侧菜单。
 
-                SwipeMenuItem closeItem = new SwipeMenuItem(mContext)
-                        .setBackgroundDrawable(R.drawable.bg_btn_red)
-                        .setText("删除")
-                        .setTextColor(getResources().getColor(R.color.white))
-                        .setWidth(width)
-                        .setHeight(height);
+                SwipeMenuItem closeItem = new SwipeMenuItem(mContext).setBackgroundDrawable(R.drawable.bg_btn_red).setText("删除").setTextColor(getResources().getColor(R.color.white)).setWidth(width).setHeight(height);
 
                 swipeRightMenu.addMenuItem(closeItem);
             }
@@ -139,11 +134,9 @@ public class ModifyAddrActivity extends BaseActivity {
         public void onItemClick(Closeable closeable, int adapterPosition, int menuPosition, int direction) {
             closeable.smoothCloseMenu();
             if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
-                Toast.makeText(mContext, "list第" + adapterPosition + "; 右侧菜单第" + menuPosition, Toast.LENGTH_SHORT)
-                        .show();
+                Toast.makeText(mContext, "list第" + adapterPosition + "; 右侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
             } else if (direction == SwipeMenuRecyclerView.LEFT_DIRECTION) {
-                Toast.makeText(mContext, "list第" + adapterPosition + "; 左侧菜单第" + menuPosition, Toast.LENGTH_SHORT)
-                        .show();
+                Toast.makeText(mContext, "list第" + adapterPosition + "; 左侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
             }
 
             if (menuPosition == 1) {// 删除按钮被点击。
@@ -153,7 +146,7 @@ public class ModifyAddrActivity extends BaseActivity {
                 Intent i = new Intent(mContext, AddAddrActivity.class);
                 AddrVo vo = vos.get(adapterPosition);
                 i.putExtra("addrVo", vo);
-                startActivityForResult(i, 1);
+                startActivityForResult(i, UpdateAddress);
             }
         }
     };
@@ -161,12 +154,15 @@ public class ModifyAddrActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        AddrVo vo = (AddrVo) data.getSerializableExtra("addrVo");
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 //TODO update and request new data
-                case 1:
+                case UpdateAddress:
+                    doUpdateAddr(vo);
                     break;
-                case 2:
+                case AddAddress:
+                    doUpdateAddr(vo);
                     break;
                 default:
                     break;
@@ -186,31 +182,48 @@ public class ModifyAddrActivity extends BaseActivity {
 
     private void doGetAddressList() {
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
-        OkGo.<String>get(Urls.baseUrl + Urls.getAddress)
-                .tag(this)
-                .params("token", token)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        try {
-                            JSONObject json = JSON.parseObject(response.body());
-                            String code = json.getString("code");
-                            if (code.equals("100000")) {
-                                JSONArray array = json.getJSONArray("data");
-                                vos = new ArrayList<>();
-                                for (int i = 0; i < array.size(); i++) {
-                                    vos.add(array.getObject(i, AddrVo.class));
-                                }
-                                mMenuAdapter = new MenuAdapter(vos, addrId);
-                                mMenuAdapter.setOnItemClickListener(onItemClickListener);
-                                mMenuRecyclerView.setAdapter(mMenuAdapter);
-                            } else {
-                                sweetDialog(json.getString("msg"), 1, false);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+        OkGo.<String>get(Urls.baseUrl + Urls.getAddress).tag(this).params("token", token).execute(new StringCallback() {
+            @Override
+            public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                try {
+                    JSONObject json = JSON.parseObject(response.body());
+                    String code = json.getString("code");
+                    if (code.equals("100000")) {
+                        JSONArray array = json.getJSONArray("data");
+                        vos = new ArrayList<>();
+                        for (int i = 0; i < array.size(); i++) {
+                            vos.add(array.getObject(i, AddrVo.class));
                         }
+                        mMenuAdapter = new MenuAdapter(vos, addrId);
+                        mMenuAdapter.setOnItemClickListener(onItemClickListener);
+                        mMenuRecyclerView.setAdapter(mMenuAdapter);
+                    } else {
+                        sweetDialog(json.getString("msg"), 1, false);
                     }
-                });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void doUpdateAddr(AddrVo vo) {
+        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.updateAddress).tag(this).params("token", token).params("addrid", vo.getAddrid()).params("addprovincecode", vo.getAddprovincecode()).params("addprovincename", vo.getAddprovincename()).params("addcitycode", vo.getAddcitycode()).params("addcityname", vo.getAddcityname()).params("addareacode", vo.getAddareacode()).params("addareaname", vo.getAddareaname()).params("address", vo.getAddress()).execute(new StringCallback() {
+            @Override
+            public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                try {
+                    JSONObject json = JSON.parseObject(response.body());
+                    String code = json.getString("code");
+                    if (code.equals("100000")) {
+                        doGetAddressList();
+                    } else {
+                        sweetDialog(json.getString("msg"), 1, false);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -41,7 +42,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class PersonFragment extends BaseFragment implements View.OnClickListener {
     private TextView tvNickname, tvGender, tvJob, tvJobNum, tvPoints, tvOrder, tvAddress, tvNotify;
-    private RelativeLayout lytNickname, lytGender, lytOrder, lytAddress, lytNotify, lytHead;
+    private RelativeLayout lytNickname, lytGender, lytOrder, lytNotify, lytHead;
+    private LinearLayout lytAddress;
     private CircleImageView ivHead;
     private Button btnLogout;
     private SlideFromBottomPopup mSlidePopup;
@@ -64,8 +66,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
 
         View headView = LayoutInflater.from(getActivity()).inflate(R.layout.personal_head_view, null, false);
         View zoomView = LayoutInflater.from(getActivity()).inflate(R.layout.personal_zoom_view, null, false);
-        View contentView =
-                LayoutInflater.from(getActivity()).inflate(R.layout.personal_content_view, null, false);
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.personal_content_view, null, false);
         mScrollView.setHeaderView(headView);
         mScrollView.setZoomView(zoomView);
         mScrollView.setScrollContentView(contentView);
@@ -84,7 +85,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         lytNickname = (RelativeLayout) contentView.findViewById(R.id.lyt_nickname);
         lytGender = (RelativeLayout) contentView.findViewById(R.id.lyt_gender);
         lytOrder = (RelativeLayout) contentView.findViewById(R.id.lyt_order);
-        lytAddress = (RelativeLayout) contentView.findViewById(R.id.lyt_address);
+        lytAddress = (LinearLayout) contentView.findViewById(R.id.lyt_address);
         lytNotify = (RelativeLayout) contentView.findViewById(R.id.lyt_notify);
         btnLogout = (Button) contentView.findViewById(R.id.btn_logout);
 
@@ -156,8 +157,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 switch (v.getId()) {
                     case R.id.tx_1:
                         Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        intent2.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment
-                                .getExternalStorageDirectory(), "head.jpg")));
+                        intent2.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "head.jpg")));
                         mSlidePopup.dismiss();
                         startActivityForResult(intent2, 2);//采用ForResult打开
                         break;
@@ -213,8 +213,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 break;
             case 2:
                 if (resultCode == RESULT_OK) {
-                    File temp = new File(Environment.getExternalStorageDirectory()
-                            + "/head.jpg");
+                    File temp = new File(Environment.getExternalStorageDirectory() + "/head.jpg");
                     cropPhoto(Uri.fromFile(temp));//裁剪图片
                 }
                 break;

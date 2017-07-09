@@ -110,9 +110,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/bg_corner_red"
+                    android:background="@drawable/bg_stroke_red"
                     android:text="@string/action_register"
-                    android:textColor="@color/main_red"
+                    android:textColor="@drawable/text_white_red"
                     android:textSize="@dimen/x40"/>
 
             </LinearLayout>
