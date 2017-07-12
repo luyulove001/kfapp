@@ -51,10 +51,10 @@
             android:name=".activity.common.MainActivity"
             android:screenOrientation="portrait">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN"/> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".zxing.CaptureActivity"
@@ -81,23 +81,14 @@
             android:name=".activity.home.JmkdTwoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.JmkdThreeActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.home.JmkdFourActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.home.JmkdFiveActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.common.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN"/>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
-            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.person.RenameActivity"
@@ -113,7 +104,25 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.person.AddAddrActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.home.ShopDetailActivity"
+                  android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.home.ShopSettingActivity"
+                  android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.home.ShopRenameActivity"
+                  android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.home.ShopUnbindActivity"
+                  android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.home.ShopPriceActivity"
+                  android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.home.WithdrawActivity"
+                  android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

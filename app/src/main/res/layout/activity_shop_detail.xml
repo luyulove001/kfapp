@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.xxl.kfapp.activity.home.ShopDetailActivity">
+
+    <com.xxl.kfapp.widget.TitleBar
+        android:id="@+id/mTitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y60">
+
+        <ImageView
+            android:id="@+id/iv_shop"
+            android:layout_width="@dimen/x200"
+            android:layout_height="@dimen/y200"
+            android:layout_marginEnd="@dimen/x20"
+            android:layout_marginStart="@dimen/x20"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/x20"
+            android:layout_toEndOf="@+id/iv_shop"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_shopname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/x20"
+                android:paddingStart="@dimen/x20"
+                android:text="下沙物美店 NO.996"
+                android:textSize="@dimen/x40"/>
+
+            <TextView
+                android:id="@+id/tv_shopkeeper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x10"
+                android:paddingEnd="@dimen/x20"
+                android:paddingStart="@dimen/x20"
+                android:text="下沙物美店 NO.996"/>
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x10"
+                android:paddingEnd="@dimen/x20"
+                android:paddingStart="@dimen/x20"
+                android:text="下沙物美店 NO.996"/>
+
+            <TextView
+                android:id="@+id/tv_start_business"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x10"
+                android:paddingEnd="@dimen/x20"
+                android:paddingStart="@dimen/x20"
+                android:text="下沙物美店 NO.996"/>
+
+            <LinearLayout
+                android:layout_width="@dimen/x430"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y40"
+                android:background="@drawable/bg_stroke_red"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_open_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x40"
+                    android:paddingEnd="@dimen/x20"
+                    android:paddingStart="@dimen/x20"
+                    android:text="下沙物美店 NO.996"/>
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/x20"
+                    android:layout_marginTop="@dimen/x20"
+                    android:paddingEnd="@dimen/x20"
+                    android:paddingStart="@dimen/x20"
+                    android:text="下沙物美店 NO.996"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x60"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/x1"
+            android:layout_weight="1"
+            android:background="@color/gray_holo_dark"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/x30"
+            android:paddingStart="@dimen/x30"
+            android:text="售票机 1 台"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/x1"
+            android:layout_weight="1"
+            android:background="@color/gray_holo_dark"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/x360"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/x20"
+            android:paddingEnd="@dimen/x20"
+            android:paddingStart="@dimen/x20"
+            android:text="设备号"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/x20"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingEnd="@dimen/x20"
+            android:paddingStart="@dimen/x20"
+            android:text="密钥"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/x20"
+            android:paddingEnd="@dimen/x20"
+            android:paddingStart="@dimen/x20"
+            android:text="状态"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/x360"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/x20"
+            android:paddingEnd="@dimen/x20"
+            android:paddingStart="@dimen/x20"
+            android:text="设备号"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/x20"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingEnd="@dimen/x20"
+            android:paddingStart="@dimen/x20"
+            android:text="asd1321"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/x20"
+            android:paddingEnd="@dimen/x20"
+            android:paddingStart="@dimen/x20"
+            android:text="状态"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x40"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/x1"
+            android:layout_weight="1"
+            android:background="@color/gray_holo_dark"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/x30"
+            android:paddingStart="@dimen/x30"
+            android:text="理发师 2 人"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/x1"
+            android:layout_weight="1"
+            android:background="@color/gray_holo_dark"/>
+    </LinearLayout>
+
+    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+        android:id="@+id/ls_haircut"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

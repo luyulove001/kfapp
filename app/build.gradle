@@ -68,6 +68,5 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.alibaba:fastjson:1.1.55.android'
     compile 'com.lzy.net:okgo:3.0.2'
-    testCompile 'junit:junit:4.12'
     compile 'com.yanzhenjie:recyclerview-swipe:1.0.4'
 }

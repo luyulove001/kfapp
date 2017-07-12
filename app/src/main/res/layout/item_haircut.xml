@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/y250"
+              android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="@dimen/x215"
+        android:layout_height="match_parent">
+
+        <talex.zsw.baselibrary.widget.CircleImageView
+            android:id="@+id/iv_haircut"
+            android:layout_width="@dimen/x100"
+            android:layout_height="@dimen/y100"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/y20"
+            android:src="@color/red_btn_bg_color"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_haircut"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/y10"
+            android:drawableStart="@mipmap/icon_kfs"
+            android:drawablePadding="@dimen/x10"
+            android:text="孔子"
+            android:textColor="@color/black2"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/y10"
+            android:text="工号-001"
+            android:textColor="@color/black2"/>
+
+        <View
+            android:layout_width="@dimen/x1"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:background="@color/gray_holo_dark"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/x320"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/y40"
+            android:drawableStart="@mipmap/icon_kfs"
+            android:drawablePadding="@dimen/x10"
+            android:text="孔子"
+            android:textColor="@color/black2"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y1"
+            android:layout_centerInParent="true"
+            android:background="@color/gray_holo_dark"/>
+
+        <TextView
+            android:id="@+id/tv_checking_in"
+            android:layout_width="@dimen/x160"
+            android:layout_height="@dimen/y125"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/y10"
+            android:gravity="center"
+            android:text="考勤情況"
+            android:textColor="@color/black2"/>
+
+        <TextView
+            android:id="@+id/tv_performance"
+            android:layout_width="@dimen/x160"
+            android:layout_height="@dimen/y125"
+            android:layout_marginTop="@dimen/y10"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:text="上班业绩"
+            android:textColor="@color/black2"/>
+
+        <View
+            android:layout_width="@dimen/x1"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:background="@color/gray_holo_dark"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/x215"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/tab_home_p"
+            android:layout_marginTop="@dimen/y40"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/tv_shopname"
+            android:layout_above="@+id/shop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/y10"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="下沙物美店 NO.901"
+            android:textColor="@color/black2"/>
+
+        <TextView
+            android:id="@+id/shop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/y25"
+            android:gravity="center"
+            android:text="所属店铺"
+            android:textColor="@color/black2"/>
+    </RelativeLayout>
+</LinearLayout>

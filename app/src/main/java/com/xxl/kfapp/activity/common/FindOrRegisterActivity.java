@@ -3,6 +3,7 @@ package com.xxl.kfapp.activity.common;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,6 +54,7 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
     private boolean prompt = true, checkUpResult = true;
     private KeyboardWatcher keyboardWatcher;
     private boolean isForgot = false;
+    private CountDownTimer timer;
 
     @Override
     protected void initArgs(Intent intent) {
@@ -83,6 +85,17 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
 
     @Override
     public void initData() {
+        timer = new CountDownTimer(60 * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                btnSend.setText("重新获取（" + millisUntilFinished / 1000 + "）");
+            }
+
+            @Override
+            public void onFinish() {
+                btnSend.setText("重新获取");
+            }
+        };
         mid = "1";
         sign = System.currentTimeMillis() + "";
         signdata = Md5Algorithm.signMD5("mid=" + mid + "&sign=" + sign);
@@ -279,6 +292,7 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
                                     sweetDialog(json.getString("msg"), 1, false);
                                 } else {
                                     sweetDialog(json.getString("msg"), 0, false);
+                                    timer.start();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

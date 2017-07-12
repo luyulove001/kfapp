@@ -42,8 +42,8 @@
                     android:layout_width="@dimen/x230"
                     android:layout_height="@dimen/y65"
                     android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/x30"
-                    android:layout_marginTop="@dimen/x25"
                     android:background="@drawable/bg_btn_corner_red"
                     android:text="@string/send_code"
                     android:textColor="@color/white"/>

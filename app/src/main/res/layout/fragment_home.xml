@@ -57,14 +57,57 @@
             android:lineSpacingExtra="15dp"
             android:textSize="@dimen/middle" />
 
+        <ImageView
+            android:id="@+id/btn_begin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:src="@mipmap/img_button_home" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/btn_begin"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:src="@mipmap/img_button_home" />
+        android:layout_margin="10dp"
+        android:padding="@dimen/x20"
+        android:gravity="center"
+        android:orientation="vertical">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/x40"
+            android:text="恭喜你！已成为快发师"/>
+
+        <Button
+            android:id="@+id/btn_create_shop"
+            android:layout_width="@dimen/x450"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/x20"
+            android:layout_marginStart="@dimen/x20"
+            android:layout_marginTop="@dimen/x40"
+            android:background="@drawable/bg_corner_red"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="我要开店"
+            android:textColor="@drawable/text_white_red"
+            android:textSize="@dimen/middle"/>
+
+        <Button
+            android:id="@+id/btn_get_job"
+            android:layout_width="@dimen/x450"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x40"
+            android:layout_marginEnd="@dimen/x20"
+            android:layout_marginStart="@dimen/x20"
+            android:layout_marginTop="@dimen/x40"
+            android:background="@drawable/bg_corner_red"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="我要求职"
+            android:textColor="@drawable/text_white_red"
+            android:textSize="@dimen/middle"/>
+    </LinearLayout>
 
 </LinearLayout>

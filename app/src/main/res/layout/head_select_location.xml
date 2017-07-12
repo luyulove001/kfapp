@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/btn_location"
+        android:layout_width="@dimen/x420"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/x40"
+        android:layout_marginEnd="@dimen/x20"
+        android:layout_marginStart="@dimen/x20"
+        android:layout_marginTop="@dimen/x40"
+        android:background="@drawable/bg_corner_red"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:text="地址筛选"
+        android:textColor="@drawable/text_white_red"
+        android:textSize="@dimen/middle"/>
+
+    <Button
+        android:id="@+id/btn_all"
+        android:layout_width="@dimen/x120"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/x20"
+        android:layout_marginTop="@dimen/x40"
+        android:background="@drawable/bg_btn_red"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:text="全部"
+        android:textColor="@color/white"
+        android:textSize="@dimen/middle"/>
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="@dimen/x120"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/x20"
+        android:layout_marginTop="@dimen/x40"
+        android:background="@drawable/bg_btn_red"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:text="全部"
+        android:textColor="@color/white"
+        android:textSize="@dimen/middle"/>
+</LinearLayout>
