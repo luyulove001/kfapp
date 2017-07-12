@@ -23,10 +23,10 @@ import butterknife.ButterKnife;
 /**
  * 作者：XNN
  * 日期：2017/6/7
- * 作用：加盟开店第三步 阅读协议
+ * 作用：注册快发师第三步 阅读协议
  */
 
-public class JmkdThree extends BaseActivity implements View.OnClickListener {
+public class RegisterKfsThreeActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.mTitleBar)
     TitleBar mTitleBar;
     @Bind(R.id.checkPW)
@@ -48,7 +48,7 @@ public class JmkdThree extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_registerkfs_three);
         ButterKnife.bind(this);
         next.setOnClickListener(this);
-        mTitleBar.setTitle("开店申请");
+        mTitleBar.setTitle("注册快发师申请");
         mTitleBar.setBackOnclickListener(this);
     }
 
@@ -63,7 +63,7 @@ public class JmkdThree extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                startActivity(new Intent(this, RegisterKfsFour.class));
+                startActivity(new Intent(this, RegisterKfsFourActivity.class));
                 finish();
                 break;
         }
@@ -90,7 +90,7 @@ public class JmkdThree extends BaseActivity implements View.OnClickListener {
 
     private void setData() {
         progressVos = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 5; i++) {
             ProgressVo vo = new ProgressVo();
             if (i == 0) {
                 vo.setName("申请加盟");
@@ -102,13 +102,9 @@ public class JmkdThree extends BaseActivity implements View.OnClickListener {
                 vo.setName("阅读协议");
                 vo.setTag(1);
             } else if (i == 3) {
-                vo.setName("品牌保证金");
+                vo.setName("考试");
             } else if (i == 4) {
-                vo.setName("选址");
-            } else if (i == 5) {
-                vo.setName("装修设备");
-            } else if (i == 6) {
-                vo.setName("加盟成功");
+                vo.setName("申请成功");
             }
 
             progressVos.add(vo);

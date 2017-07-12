@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/white"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,18 +16,18 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:paddingLeft="10dp"
-            android:text="请选择获取头像方式"
+            android:text="请选择获取身份证方式"
             android:textColor="@color/gray"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/dIvClose"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@mipmap/icon_capacity_close"/>
+            android:src="@mipmap/icon_capacity_close" />
     </LinearLayout>
 
-    <include layout="@layout/include_line"/>
+    <include layout="@layout/include_line" />
 
     <ListView
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
 
     </ListView>
 
-    <include layout="@layout/include_line"/>
+    <include layout="@layout/include_line" />
 
     <TextView
         android:id="@+id/dTvPhoto"
@@ -47,9 +47,9 @@
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:text="拍照"
-        android:textSize="19sp"/>
+        android:textSize="19sp" />
 
-    <include layout="@layout/include_line"/>
+    <include layout="@layout/include_line" />
 
     <TextView
         android:id="@+id/dTvPicture"
@@ -59,8 +59,8 @@
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:text="图片"
-        android:textSize="19sp"/>
+        android:textSize="19sp" />
 
-    <include layout="@layout/include_line"/>
+    <include layout="@layout/include_line" />
 
 </LinearLayout>

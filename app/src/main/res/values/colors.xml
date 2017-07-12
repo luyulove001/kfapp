@@ -34,6 +34,7 @@
     <color name="progress_red">#EA923A</color>
     <color name="progress_green">#54A530</color>
     <color name="bg_sh">#FDF6F4</color>
+    <color name="bg_text">#454545</color>
     <!--<color name="bg_gray">#F8F8F8</color>-->
 
     <!-- 图表 -->

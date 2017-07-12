@@ -15,15 +15,12 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
@@ -39,11 +36,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import talex.zsw.baselibrary.util.BitmapUtil;
 import talex.zsw.baselibrary.util.DimenUtils;
-import talex.zsw.baselibrary.util.XmlUtil;
-import talex.zsw.baselibrary.util.klog.KLog;
-import talex.zsw.baselibrary.view.SweetAlertDialog.SweetAlertDialog;
 import talex.zsw.baselibrary.view.SweetSheet.sweetpick.BlurEffect;
 import talex.zsw.baselibrary.view.SweetSheet.sweetpick.CustomDelegate;
 import talex.zsw.baselibrary.view.SweetSheet.sweetpick.SweetSheet;
@@ -55,7 +48,7 @@ import talex.zsw.baselibrary.view.SweetSheet.sweetpick.SweetSheet;
  * 作用：注册快发师第一步 资料申请
  */
 
-public class RegisterKfsOne extends BaseActivity implements View.OnClickListener {
+public class RegisterKfsOneActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.mTitleBar)
     TitleBar mTitleBar;
     @Bind(R.id.next)
@@ -66,10 +59,13 @@ public class RegisterKfsOne extends BaseActivity implements View.OnClickListener
     ImageView idPhoto1;
     @Bind(R.id.rLayout)
     RelativeLayout rLayout;
+    @Bind(R.id.idPhoto2)
+    ImageView idPhoto2;
 
     private ProgressAdapter progressAdapter;
     private List<ProgressVo> progressVos;
     private SweetSheet mSweetSheet;
+    private int idPhoto;//判断是正面还是反面，正面1，反面2.
 
     //=======================图片=====================
     public File tempFile =
@@ -90,6 +86,7 @@ public class RegisterKfsOne extends BaseActivity implements View.OnClickListener
         ButterKnife.bind(this);
         next.setOnClickListener(this);
         idPhoto1.setOnClickListener(this);
+        idPhoto2.setOnClickListener(this);
         mTitleBar.setTitle("注册快发师申请");
         mTitleBar.setBackOnclickListener(this);
     }
@@ -106,10 +103,19 @@ public class RegisterKfsOne extends BaseActivity implements View.OnClickListener
         switch (v.getId()) {
 
             case R.id.next:
-                startActivity(new Intent(this, RegisterKfsTwo.class));
+                startActivity(new Intent(this, RegisterKfsTwoActivity.class));
                 finish();
                 break;
             case R.id.idPhoto1:
+                idPhoto = 1;
+                if (mSweetSheet != null) {
+                    mSweetSheet.toggle();
+                } else {
+                    setupCustomView();
+                }
+                break;
+            case R.id.idPhoto2:
+                idPhoto = 2;
                 if (mSweetSheet != null) {
                     mSweetSheet.toggle();
                 } else {
@@ -169,7 +175,7 @@ public class RegisterKfsOne extends BaseActivity implements View.OnClickListener
     }
 
 
-    //=================================头像=============================================
+    //=================================身份证照片选择=============================================
     private void setupCustomView() {
         mSweetSheet = new SweetSheet(rLayout);
         int x = DimenUtils.dpToPx(getResources(), 190);
@@ -267,7 +273,11 @@ public class RegisterKfsOne extends BaseActivity implements View.OnClickListener
         Bundle bundle = picdata.getExtras();
         if (bundle != null) {
             photo = bundle.getParcelable("data");
-            idPhoto1.setImageBitmap(photo);
+            if (idPhoto == 1) {
+                idPhoto1.setImageBitmap(photo);
+            } else if (idPhoto == 2) {
+                idPhoto2.setImageBitmap(photo);
+            }
             photo = getRoundedCornerBitmap(photo);
             //			photo = getRoundedCornerBitmap(photo);
             //			Drawable drawable = new BitmapDrawable(photo);

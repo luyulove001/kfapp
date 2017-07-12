@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ScrollView;
 
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.adapter.ProgressAdapter;
@@ -24,17 +23,20 @@ import butterknife.ButterKnife;
 /**
  * 作者：XNN
  * 日期：2017/6/7
- * 作用：注册快发师第二步 审核
+ * 作用：加盟开店第二步 审核
  */
 
-public class RegisterKfsTwo extends BaseActivity implements View.OnClickListener {
+public class JmkdTwoActivity extends BaseActivity implements View.OnClickListener {
+
+
     @Bind(R.id.mTitleBar)
     TitleBar mTitleBar;
-    @Bind(R.id.next)
-    Button next;
     @Bind(R.id.pRecyclerView)
     RecyclerView pRecyclerView;
-
+    @Bind(R.id.mScrollView)
+    ScrollView mScrollView;
+    @Bind(R.id.next)
+    Button next;
     private ProgressAdapter progressAdapter;
     private List<ProgressVo> progressVos;
 
@@ -45,10 +47,10 @@ public class RegisterKfsTwo extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void initView(Bundle bundle) {
-        setContentView(R.layout.activity_registerkfs_two);
+        setContentView(R.layout.activity_jmkd_two);
         ButterKnife.bind(this);
         next.setOnClickListener(this);
-        mTitleBar.setTitle("注册快发师申请");
+        mTitleBar.setTitle("开店申请");
         mTitleBar.setBackOnclickListener(this);
     }
 
@@ -63,7 +65,7 @@ public class RegisterKfsTwo extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                startActivity(new Intent(this, RegisterKfsThree.class));
+                startActivity(new Intent(this, JmkdThreeActivity.class));
                 finish();
                 break;
         }
@@ -89,7 +91,7 @@ public class RegisterKfsTwo extends BaseActivity implements View.OnClickListener
 
     private void setData() {
         progressVos = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 7; i++) {
             ProgressVo vo = new ProgressVo();
             if (i == 0) {
                 vo.setName("申请加盟");
@@ -100,13 +102,24 @@ public class RegisterKfsTwo extends BaseActivity implements View.OnClickListener
             } else if (i == 2) {
                 vo.setName("阅读协议");
             } else if (i == 3) {
-                vo.setName("考试");
+                vo.setName("品牌保证金");
             } else if (i == 4) {
-                vo.setName("申请成功");
+                vo.setName("选址");
+            } else if (i == 5) {
+                vo.setName("装修设备");
+            } else if (i == 6) {
+                vo.setName("加盟成功");
             }
 
             progressVos.add(vo);
         }
         progressAdapter.setNewData(progressVos);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

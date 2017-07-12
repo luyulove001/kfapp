@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.xxl.kfapp">
+    package="com.xxl.kfapp">
 
     <!-- 打电话 -->
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <!-- 地理位置相关 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- 定位包、导航包需要的额外权限（注：基础权限也需要） -->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 
     <!-- 网络相关 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <!-- 读写手机状态和身份 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 读写手机状态和身份 -->
-    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <!-- 读写存储卡 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 修改全局系统设置 -->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!-- 显示系统窗口 -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- 唤醒 -->
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
 
     <!-- 检查更新 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.READ_PROFILE"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".base.BaseApplication"
@@ -51,60 +51,69 @@
             android:name=".activity.common.MainActivity"
             android:screenOrientation="portrait">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN"/> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
-            <!-- </intent-filter> -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".zxing.CaptureActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.RegisterKfsOne"
-            android:screenOrientation="portrait"/>
+            android:name=".activity.home.RegisterKfsOneActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.RegisterKfsTwo"
-            android:screenOrientation="portrait"/>
+            android:name=".activity.home.RegisterKfsTwoActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.RegisterKfsThree"
-            android:screenOrientation="portrait"/>
+            android:name=".activity.home.RegisterKfsThreeActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.RegisterKfsFour"
-            android:screenOrientation="portrait"/>
+            android:name=".activity.home.RegisterKfsFourActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.RegisterKfsFive"
-            android:screenOrientation="portrait"/>
+            android:name=".activity.home.RegisterKfsFiveActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.JmkdOne"
-            android:screenOrientation="portrait"/>
+            android:name=".activity.home.JmkdOneActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.JmkdTwo"
-            android:screenOrientation="portrait"/>
+            android:name=".activity.home.JmkdTwoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.JmkdThreeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.JmkdFourActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.JmkdFiveActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.common.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN"/>-->
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".activity.person.RenameActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.person.ModifyAddrActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.common.FindOrRegisterActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.person.NotificationActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.person.AddAddrActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

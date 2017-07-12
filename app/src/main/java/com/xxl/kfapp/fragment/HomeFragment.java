@@ -2,15 +2,12 @@ package com.xxl.kfapp.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xxl.kfapp.R;
-import com.xxl.kfapp.activity.home.JmkdOne;
-import com.xxl.kfapp.activity.home.RegisterKfsOne;
+import com.xxl.kfapp.activity.home.RegisterKfsOneActivity;
 import com.xxl.kfapp.base.BaseFragment;
 import com.xxl.kfapp.widget.LinedEditText;
 
@@ -64,7 +61,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_begin:
-                startActivity(new Intent(getActivity(), RegisterKfsOne.class));
+                startActivity(new Intent(getActivity(), RegisterKfsOneActivity.class));
                 break;
         }
     }

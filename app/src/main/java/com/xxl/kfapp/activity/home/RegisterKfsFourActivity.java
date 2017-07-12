@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -26,7 +24,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import talex.zsw.baselibrary.view.RecyleView.DividerItemDecoration;
 import talex.zsw.baselibrary.view.RecyleView.FullyLinearLayoutManager;
 
 /**
@@ -35,7 +32,7 @@ import talex.zsw.baselibrary.view.RecyleView.FullyLinearLayoutManager;
  * 作用：注册快发师第四步 考试
  */
 
-public class RegisterKfsFour extends BaseActivity implements View.OnClickListener {
+public class RegisterKfsFourActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.mTitleBar)
     TitleBar mTitleBar;
@@ -92,7 +89,7 @@ public class RegisterKfsFour extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                startActivity(new Intent(this, RegisterKfsFive.class));
+                startActivity(new Intent(this, RegisterKfsFiveActivity.class));
                 finish();
                 break;
         }

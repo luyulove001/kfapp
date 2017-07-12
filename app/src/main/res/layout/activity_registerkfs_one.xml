@@ -171,14 +171,11 @@
 
                     </LinearLayout>
 
-                    <TextView
-                        android:layout_width="0dp"
+                    <ImageView
+                        android:id="@+id/idPhoto2"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawablePadding="5dp"
-                        android:drawableRight="@mipmap/allow_right"
-                        android:text="孟子"
-                        android:textColor="@color/black2" />
+                        android:src="@mipmap/img_add" />
                 </LinearLayout>
 
                 <include layout="@layout/include_line2" />

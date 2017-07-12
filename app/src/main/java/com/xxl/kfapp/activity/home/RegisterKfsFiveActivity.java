@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
  * 作用：注册快发师第五步  注册成功
  */
 
-public class RegisterKfsFive extends BaseActivity implements View.OnClickListener {
+public class RegisterKfsFiveActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.mTitleBar)
     TitleBar mTitleBar;
@@ -67,11 +67,11 @@ public class RegisterKfsFive extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_kd:
-//                startActivity(new Intent(this, RegisterKfsFour.class));
+                startActivity(new Intent(this, JmkdOneActivity.class));
                 finish();
                 break;
             case R.id.btn_qz:
-//                startActivity(new Intent(this, RegisterKfsFour.class));
+//                startActivity(new Intent(this, RegisterKfsFourActivity.class));
                 finish();
                 break;
         }
@@ -92,7 +92,7 @@ public class RegisterKfsFive extends BaseActivity implements View.OnClickListene
         layoutManager.setAutoMeasureEnabled(true);
         pRecyclerView.setLayoutManager(layoutManager);
         setData();
-//        pRecyclerView.smoothScrollToPosition();
+        pRecyclerView.smoothScrollToPosition(4);
 
     }
 
