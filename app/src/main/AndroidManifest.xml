@@ -81,6 +81,15 @@
             android:name=".activity.home.JmkdTwoActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.home.JmkdThreeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.JmkdFourActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.JmkdFiveActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.common.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait">

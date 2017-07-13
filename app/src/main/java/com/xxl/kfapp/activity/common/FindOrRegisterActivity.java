@@ -178,7 +178,7 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
         if (checkUpResult) {
             mDialog.show();
             btnConfirm.setEnabled(false);
-            OkGo.<String>get(Urls.baseUrl + Urls.forgot)
+            OkGo.<String>get(Urls.baseUrl + Urls.forgotpass)
                     .tag(this)
                     .params("use", "2")
                     .params("phone", phone)
@@ -221,7 +221,7 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
         if (checkUpResult) {
             mDialog.show();
             btnConfirm.setEnabled(false);
-            OkGo.<String>get(Urls.baseUrl + Urls.register)
+            OkGo.<String>get(Urls.baseUrl + Urls.reg)
                     .tag(this)
                     .params("regfrom", "1")
                     .params("account", phone)
@@ -273,7 +273,7 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
             } else {
                 use = "1";
             }
-            OkGo.<String>get(Urls.baseUrl + Urls.getCode)
+            OkGo.<String>get(Urls.baseUrl + Urls.getIdentifyingCode)
                     .tag(this)
                     .params("phone", phone)
                     .params("use", use)

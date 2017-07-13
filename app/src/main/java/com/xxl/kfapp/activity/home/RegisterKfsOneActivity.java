@@ -1,6 +1,9 @@
 package com.xxl.kfapp.activity.home;
 
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,17 +18,32 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
+import com.xxl.kfapp.activity.common.FindOrRegisterActivity;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.model.response.BarberInfoVo;
+import com.xxl.kfapp.model.response.DictVo;
 import com.xxl.kfapp.model.response.ProgressVo;
+import com.xxl.kfapp.utils.AddressPickTask;
+import com.xxl.kfapp.utils.PreferenceUtils;
+import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.TitleBar;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -33,10 +51,17 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.entity.City;
+import cn.qqtheme.framework.entity.County;
+import cn.qqtheme.framework.entity.Province;
+import cn.qqtheme.framework.picker.OptionPicker;
+import cn.qqtheme.framework.widget.WheelView;
 import talex.zsw.baselibrary.util.DimenUtils;
+import talex.zsw.baselibrary.util.klog.KLog;
 import talex.zsw.baselibrary.view.SweetSheet.sweetpick.BlurEffect;
 import talex.zsw.baselibrary.view.SweetSheet.sweetpick.CustomDelegate;
 import talex.zsw.baselibrary.view.SweetSheet.sweetpick.SweetSheet;
@@ -61,11 +86,32 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
     RelativeLayout rLayout;
     @Bind(R.id.idPhoto2)
     ImageView idPhoto2;
+    @Bind(R.id.et_realname)
+    EditText etRealname;
+    @Bind(R.id.et_idcard)
+    EditText etIdcard;
+    @Bind(R.id.tv_address)
+    TextView tvAddress;
+    @Bind(R.id.et_adress)
+    EditText etAddress;
+    @Bind(R.id.tv_education)
+    TextView tvEducation;
+    @Bind(R.id.et_linkman)
+    EditText etLinkman;
+    @Bind(R.id.et_linktel)
+    EditText etLinktel;
+    @Bind(R.id.tv_worklife)
+    TextView tvWorklife;
+    @Bind(R.id.et_certdisc)
+    EditText etCertdisc;
 
     private ProgressAdapter progressAdapter;
     private List<ProgressVo> progressVos;
     private SweetSheet mSweetSheet;
     private int idPhoto;//判断是正面还是反面，正面1，反面2.
+
+    private BarberInfoVo barberInfoVo;
+    private List<DictVo> eduVos, workVos;
 
     //=======================图片=====================
     public File tempFile =
@@ -74,6 +120,8 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
     public static final int PHOTO_REQUEST_GALLERY = 5002;// 从相册中选择
     public static final int PHOTO_REQUEST_CUT = 5003;// 结果
     private Bitmap photo = null;
+    private Uri imageUri;//照片uri
+    private String cardpos, cardneg;
 
     @Override
     protected void initArgs(Intent intent) {
@@ -87,6 +135,9 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
         next.setOnClickListener(this);
         idPhoto1.setOnClickListener(this);
         idPhoto2.setOnClickListener(this);
+        tvAddress.setOnClickListener(this);
+        tvEducation.setOnClickListener(this);
+        tvWorklife.setOnClickListener(this);
         mTitleBar.setTitle("注册快发师申请");
         mTitleBar.setBackOnclickListener(this);
     }
@@ -94,7 +145,10 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
     @Override
     protected void initData() {
         initInfoRecycleView();
-
+        barberInfoVo = new BarberInfoVo();
+        eduVos = new ArrayList<>();
+        workVos = new ArrayList<>();
+        doGetDictList("edu_type");
     }
 
 
@@ -103,8 +157,7 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
         switch (v.getId()) {
 
             case R.id.next:
-                startActivity(new Intent(this, RegisterKfsTwoActivity.class));
-                finish();
+                getData();
                 break;
             case R.id.idPhoto1:
                 idPhoto = 1;
@@ -122,7 +175,108 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
                     setupCustomView();
                 }
                 break;
+            case R.id.tv_address:
+                onAddressPicker();
+                break;
+            case R.id.tv_worklife:
+                onOptionPicker(getStrings(workVos), false);
+                break;
+            case R.id.tv_education:
+                onOptionPicker(getStrings(eduVos), true);
+                break;
         }
+    }
+
+    private void getData() {
+        String idcard = etIdcard.getText().toString();
+        String address = etAddress.getText().toString();
+        String linkman = etLinkman.getText().toString();
+        String linktel = etLinktel.getText().toString();
+        String realname = etRealname.getText().toString();
+        boolean prompt = true, checkUpResult = true;
+        if (TextUtils.isEmpty(realname) && prompt) {
+            ToastShow("真实姓名不能为空");
+            prompt = false;
+            checkUpResult = false;
+        }
+        if (TextUtils.isEmpty(idcard) && prompt) {
+            ToastShow("身份证号不能为空");
+            prompt = false;
+            checkUpResult = false;
+        }
+        if (TextUtils.isEmpty(cardpos) && prompt) {
+            ToastShow("身份证照片不能为空");
+            prompt = false;
+            checkUpResult = false;
+        }
+        if (TextUtils.isEmpty(cardneg) && prompt) {
+            ToastShow("身份证照片不能为空");
+            prompt = false;
+            checkUpResult = false;
+        }
+        if (TextUtils.isEmpty(address) && prompt) {
+            ToastShow("详细地址不能为空");
+            prompt = false;
+            checkUpResult = false;
+        }
+        if (TextUtils.isEmpty(linkman) && prompt) {
+            ToastShow("紧急联系人不能为空");
+            prompt = false;
+            checkUpResult = false;
+        }
+        if (TextUtils.isEmpty(linktel) && prompt) {
+            ToastShow("紧急联系人手机号不能为空");
+            prompt = false;
+            checkUpResult = false;
+        }
+        if (!FindOrRegisterActivity.checkPhoneNumber(linktel) && prompt) {
+            ToastShow("紧急联系人号码格式错误");
+            prompt = false;
+            checkUpResult = false;
+        }
+        if (checkUpResult) {
+            barberInfoVo.setCardid(etIdcard.getText().toString());
+            barberInfoVo.setCertdisc(etCertdisc.getText().toString());
+            barberInfoVo.setAddress(tvAddress.getText().toString());
+            barberInfoVo.setLinkman(etLinkman.getText().toString());
+            barberInfoVo.setLinktel(etLinktel.getText().toString());
+            barberInfoVo.setRealname(etRealname.getText().toString());
+            barberInfoVo.setCardpos(cardpos);
+            barberInfoVo.setCardneg(cardneg);
+            doInsertBarber(barberInfoVo);
+        }
+    }
+
+    private String[] getStrings(List<DictVo> vos) {
+        String[] strs = new String[vos.size()];
+        for (int i = 0; i < vos.size(); i++) {
+            strs[i] = vos.get(i).getContent();
+        }
+        return strs;
+    }
+
+    public void onOptionPicker(String[] strs, final boolean isEdu) {
+        OptionPicker picker = new OptionPicker(this, strs);
+        picker.setCanceledOnTouchOutside(false);
+        picker.setDividerRatio(WheelView.DividerConfig.FILL);
+        picker.setShadowColor(Color.RED, 40);
+        picker.setSelectedIndex(1);
+        picker.setCycleDisable(true);
+        picker.setTextSize(14);
+        picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+            @Override
+            public void onOptionPicked(int index, String item) {
+                ToastShow("index=" + index + ", item=" + item);
+                if (isEdu) {
+                    tvEducation.setText(item);
+                    barberInfoVo.setEducation(index + 1 + "");
+                } else {
+                    tvWorklife.setText(item);
+                    barberInfoVo.setWorklife(index + 1 + "");
+                }
+            }
+        });
+        picker.show();
     }
 
     @Override
@@ -148,7 +302,7 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
         layoutManager.setAutoMeasureEnabled(true);
         pRecyclerView.setLayoutManager(layoutManager);
         setData();
-//        pRecyclerView.smoothScrollToPosition();
+        //        pRecyclerView.smoothScrollToPosition();
 
     }
 
@@ -245,12 +399,13 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
     // 使用系统当前日期加以调整作为照片的名称
     public String getPhotoFileName() {
         Date date = new Date(System.currentTimeMillis());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("'IMG'_yyyyMMdd_HHmmss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("'IMG'_yyyyMMdd_HHmmss", Locale.CHINA);
         return dateFormat.format(date) + ".jpg";
     }
 
     // 调用系统方法裁剪图片
     public void startPhotoZoom(Uri uri, int size) {
+        imageUri = uri;
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         // crop为true是设置在开启的intent中设置显示的view可以剪裁
@@ -279,11 +434,12 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
                 idPhoto2.setImageBitmap(photo);
             }
             photo = getRoundedCornerBitmap(photo);
-            //			photo = getRoundedCornerBitmap(photo);
-            //			Drawable drawable = new BitmapDrawable(photo);
-            //			bytes = Bitmap2Bytes(photo);
+//            			photo = getRoundedCornerBitmap(photo);
+//            			Drawable drawable = new BitmapDrawable(photo);
+//            			bytes = Bitmap2Bytes(photo);
             if (photo != null) {
-//                uploadPhoto();
+                //                uploadPhoto();
+                doUploadImage(getRealFilePath(this, imageUri), idPhoto);
             }
         }
     }
@@ -319,4 +475,169 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
     }
 
 
+    private void doInsertBarber(BarberInfoVo vo) {
+        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.insertBarberApply)
+                .tag(this)
+                .params("token", token)
+                .params("realname", vo.getRealname())
+                .params("cardid", vo.getCardid())
+                .params("cardpos", vo.getCardpos())
+                .params("cardneg", vo.getCardneg())
+                .params("addprovincecode", vo.getAddprovincecode())
+                .params("addcitycode", vo.getAddcitycode())
+                .params("addareacode", vo.getAddareacode())
+                .params("address", vo.getAddress())
+                .params("education", vo.getEducation())
+                .params("linkman", vo.getLinkman())
+                .params("linktel", vo.getLinktel())
+                .params("worklife", vo.getWorklife())
+                .params("certdisc", vo.getCertdisc())
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                startActivity(new Intent(RegisterKfsOneActivity.this, RegisterKfsTwoActivity.class));
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    public void onAddressPicker() {
+        AddressPickTask task = new AddressPickTask(this);
+        task.setHideProvince(false);
+        task.setHideCounty(false);
+        task.setCallback(new AddressPickTask.Callback() {
+            @Override
+            public void onAddressInitFailed() {
+                ToastShow("数据初始化失败");
+            }
+
+            @Override
+            public void onAddressPicked(Province province, City city, County county) {
+                if (county == null) {
+                    ToastShow(province.getAreaName() + city.getAreaName());
+                    tvAddress.setText(province.getAreaName() + city.getAreaName());
+                    barberInfoVo.setAddprovincecode(province.getAreaId());
+                    barberInfoVo.setAddprovincename(province.getAreaName());
+                    barberInfoVo.setAddcitycode(province.getAreaId());
+                    barberInfoVo.setAddcityname(province.getAreaName());
+                    barberInfoVo.setAddareacode(city.getAreaId());
+                    barberInfoVo.setAddareaname(city.getAreaName());
+                } else {
+                    ToastShow(province.getAreaName() + city.getAreaName() + county.getAreaName());
+                    tvAddress.setText(province.getAreaName() + city.getAreaName() + county.getAreaName());
+                    barberInfoVo.setAddprovincecode(province.getAreaId());
+                    barberInfoVo.setAddprovincename(province.getAreaName());
+                    barberInfoVo.setAddcitycode(city.getAreaId());
+                    barberInfoVo.setAddcityname(city.getAreaName());
+                    barberInfoVo.setAddareacode(county.getAreaId());
+                    barberInfoVo.setAddareaname(county.getAreaName());
+                }
+            }
+        });
+        task.execute("浙江", "杭州", "滨江");
+    }
+
+    private void doGetDictList(final String keyname) {
+        OkGo.<String>get(Urls.baseUrl + Urls.getDictList)
+                .tag(this)
+                .params("keyname", keyname)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        DictVo vo;
+                        if ("edu_type".equals(keyname)) {
+                            eduVos.clear();
+                            doGetDictList("work_life");
+                        } else if ("work_life".equals(keyname)) {
+                            workVos.clear();
+                        }
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                JSONArray array = json.getJSONObject("data").getJSONArray("dicts");
+                                for (int i = 0; i < array.length(); i++) {
+                                    vo = new DictVo();
+                                    vo.setContent(array.getJSONObject(i).getString("content"));
+                                    vo.setValue(array.getJSONObject(i).getString("value"));
+                                    if ("edu_type".equals(keyname)) {
+                                        eduVos.add(vo);
+                                    } else if ("work_life".equals(keyname)) {
+                                        workVos.add(vo);
+                                    }
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void doUploadImage(String path, final int idPhoto) {
+        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        OkGo.<String>post(Urls.baseUrl + Urls.uploadForApp)
+                .tag(this)
+                .params("token", token)
+                .params("file", new File(path))
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                ToastShow(response.body());
+                                KLog.e(response.body());
+                                if (idPhoto == 1) {
+                                    cardpos = json.getJSONObject("data").getString("path");
+                                } else if (idPhoto == 2){
+                                    cardneg = json.getJSONObject("data").getString("path");
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    public static String getRealFilePath( final Context context, final Uri uri ) {
+        if ( null == uri ) return null;
+        final String scheme = uri.getScheme();
+        String data = null;
+        if ( scheme == null )
+            data = uri.getPath();
+        else if ( ContentResolver.SCHEME_FILE.equals( scheme ) ) {
+            data = uri.getPath();
+        } else if ( ContentResolver.SCHEME_CONTENT.equals( scheme ) ) {
+            Cursor cursor = context.getContentResolver().query( uri, new String[] { MediaStore.Images.ImageColumns.DATA }, null, null, null );
+            if ( null != cursor ) {
+                if ( cursor.moveToFirst() ) {
+                    int index = cursor.getColumnIndex( MediaStore.Images.ImageColumns.DATA );
+                    if ( index > -1 ) {
+                        data = cursor.getString( index );
+                    }
+                }
+                cursor.close();
+            }
+        }
+        return data;
+    }
 }

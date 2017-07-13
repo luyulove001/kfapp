@@ -7,8 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -21,7 +19,6 @@ import com.xxl.kfapp.R;
 import com.xxl.kfapp.adapter.MenuAdapter;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.response.AddrVo;
-import com.xxl.kfapp.utils.AddressPickTask;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.ListViewDecoration;
@@ -38,9 +35,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.qqtheme.framework.entity.City;
-import cn.qqtheme.framework.entity.County;
-import cn.qqtheme.framework.entity.Province;
 
 public class ModifyAddrActivity extends BaseActivity {
     @Bind(R.id.mTitleBar)
@@ -106,7 +100,9 @@ public class ModifyAddrActivity extends BaseActivity {
                         .setHeight(height); // 高度。
                 swipeRightMenu.addMenuItem(addItem); // 添加一个按钮到右侧菜单。
 
-                SwipeMenuItem closeItem = new SwipeMenuItem(mContext).setBackgroundDrawable(R.drawable.bg_btn_red).setText("删除").setTextColor(getResources().getColor(R.color.white)).setWidth(width).setHeight(height);
+                SwipeMenuItem closeItem = new SwipeMenuItem(mContext).setBackgroundDrawable(R.drawable.bg_btn_red)
+                        .setText("删除").setTextColor(getResources().getColor(R.color.white)).setWidth(width).setHeight
+                                (height);
 
                 swipeRightMenu.addMenuItem(closeItem);
             }
@@ -140,8 +136,7 @@ public class ModifyAddrActivity extends BaseActivity {
             }
 
             if (menuPosition == 1) {// 删除按钮被点击。
-                vos.remove(adapterPosition);
-                mMenuAdapter.notifyItemRemoved(adapterPosition);
+                doDeleteUserAddr(adapterPosition);
             } else if (menuPosition == 0) {
                 Intent i = new Intent(mContext, AddAddrActivity.class);
                 AddrVo vo = vos.get(adapterPosition);
@@ -151,11 +146,33 @@ public class ModifyAddrActivity extends BaseActivity {
         }
     };
 
+    private void doDeleteUserAddr(final int position) {
+        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.deleteUserAddr).tag(this).params("token", token)
+                .params("addrid", vos.get(position).getAddrid()).execute(new StringCallback() {
+            @Override
+            public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                try {
+                    JSONObject json = JSON.parseObject(response.body());
+                    String code = json.getString("code");
+                    if (code.equals("100000")) {
+                        vos.remove(position);
+                        mMenuAdapter.notifyItemRemoved(position);
+                    } else {
+                        sweetDialog(json.getString("msg"), 1, false);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        AddrVo vo = (AddrVo) data.getSerializableExtra("addrVo");
         if (resultCode == RESULT_OK) {
+            AddrVo vo = (AddrVo) data.getSerializableExtra("addrVo");
             switch (requestCode) {
                 //TODO update and request new data
                 case UpdateAddress:
@@ -182,7 +199,7 @@ public class ModifyAddrActivity extends BaseActivity {
 
     private void doGetAddressList() {
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
-        OkGo.<String>get(Urls.baseUrl + Urls.getAddress).tag(this).params("token", token).execute(new StringCallback() {
+        OkGo.<String>get(Urls.baseUrl + Urls.getMemberAddrList).tag(this).params("token", token).execute(new StringCallback() {
             @Override
             public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                 try {
@@ -209,7 +226,11 @@ public class ModifyAddrActivity extends BaseActivity {
 
     private void doUpdateAddr(AddrVo vo) {
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
-        OkGo.<String>get(Urls.baseUrl + Urls.updateAddress).tag(this).params("token", token).params("addrid", vo.getAddrid()).params("addprovincecode", vo.getAddprovincecode()).params("addprovincename", vo.getAddprovincename()).params("addcitycode", vo.getAddcitycode()).params("addcityname", vo.getAddcityname()).params("addareacode", vo.getAddareacode()).params("addareaname", vo.getAddareaname()).params("address", vo.getAddress()).execute(new StringCallback() {
+        OkGo.<String>get(Urls.baseUrl + Urls.updateMemberAddress).tag(this).params("token", token).params("addrid", vo
+                .getAddrid()).params("addprovincecode", vo.getAddprovincecode()).params("addprovincename", vo
+                .getAddprovincename()).params("addcitycode", vo.getAddcitycode()).params("addcityname", vo
+                .getAddcityname()).params("addareacode", vo.getAddareacode()).params("addareaname", vo.getAddareaname
+                ()).params("address", vo.getAddress()).execute(new StringCallback() {
             @Override
             public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                 try {
