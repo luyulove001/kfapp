@@ -1,16 +1,10 @@
 package com.xxl.kfapp.adapter;
 
 
-import android.graphics.Color;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.model.response.KSTMVo;
-import com.xxl.kfapp.model.response.ProgressVo;
 
 import java.util.List;
 

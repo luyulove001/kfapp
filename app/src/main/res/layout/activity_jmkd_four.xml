@@ -27,10 +27,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/lyt_deposit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="优势A"
-                    android:textSize="@dimen/text_title" />
+                    android:textSize="@dimen/text_title"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -59,7 +60,7 @@
                     android:layout_marginLeft="20dp"
                     android:text="快发品牌使用权"
                     android:textColor="@color/black2"
-                    android:textSize="@dimen/text_title" />
+                    android:textSize="@dimen/text_title"/>
             </LinearLayout>
 
 
@@ -75,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="优势B"
-                    android:textSize="@dimen/text_title" />
+                    android:textSize="@dimen/text_title"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -83,10 +84,11 @@
                     android:layout_marginLeft="20dp"
                     android:text="方便快捷的快发管理"
                     android:textColor="@color/black2"
-                    android:textSize="@dimen/text_title" />
+                    android:textSize="@dimen/text_title"/>
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@+id/lyt_wxpay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -96,23 +98,25 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@mipmap/icon_wx"
                     android:drawablePadding="20dp"
+                    android:drawableStart="@mipmap/icon_wx"
                     android:gravity="center"
                     android:text="微信"
-                    android:textSize="@dimen/text_title" />
+                    android:textSize="@dimen/text_title"/>
 
                 <ImageView
+                    android:id="@+id/iv_wx_selected"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
                     android:src="@mipmap/qq_grey"
                     android:textColor="@color/black2"
-                    android:textSize="@dimen/text_title" />
+                    android:textSize="@dimen/text_title"/>
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/lyt_alipay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
@@ -122,20 +126,21 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@mipmap/icon_zfb"
                     android:drawablePadding="20dp"
+                    android:drawableStart="@mipmap/icon_zfb"
                     android:gravity="center"
                     android:text="支付宝"
-                    android:textSize="@dimen/text_title" />
+                    android:textSize="@dimen/text_title"/>
 
                 <ImageView
+                    android:id="@+id/iv_ali_selected"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
                     android:src="@mipmap/qq_grey"
                     android:textColor="@color/black2"
-                    android:textSize="@dimen/text_title" />
+                    android:textSize="@dimen/text_title"/>
             </RelativeLayout>
         </LinearLayout>
 
@@ -154,7 +159,7 @@
                 android:paddingLeft="20dp"
                 android:text="保证金5000"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_title" />
+                android:textSize="@dimen/text_title"/>
 
             <TextView
                 android:id="@+id/next"
@@ -165,16 +170,17 @@
                 android:gravity="center"
                 android:text="付款"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_title" />
+                android:textSize="@dimen/text_title"/>
         </LinearLayout>
 
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/lyt_pay_success"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"

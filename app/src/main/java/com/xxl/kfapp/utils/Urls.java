@@ -6,9 +6,12 @@ public class Urls {
     public static final String reg = "/authapi/reg";
     public static final String getIdentifyingCode = "/authapi/getIdentifyingCode";
     public static final String forgotpass = "/authapi/forgotpass";
+
     public static final String getMemberAddrList = "/personalapi/getMemberAddrList";
     public static final String updateMemberAddress = "/personalapi/updateMemberAddress";
     public static final String deleteUserAddr = "/personalapi/deleteUserAddr";
+    public static final String getMemberInfo = "/personalapi/getMemberInfo";
+
     public static final String insertBarberApply = "/barberapi/insertBarberApply";
     public static final String getBarberApplyStatus = "/barberapi/getBarberApplyStatus";
     public static final String getBarberApplyInfo = "/barberapi/getBarberApplyInfo";

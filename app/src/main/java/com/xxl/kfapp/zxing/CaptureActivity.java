@@ -203,7 +203,7 @@ public class CaptureActivity extends Activity implements Callback {
                                 Toast.makeText(getApplicationContext(), "图片格式有误", Toast.LENGTH_LONG)
                                         .show();
                                 Looper.loop();
-                            } else {// TODO: 2016-09-13
+                            } else {
                                 Log.i("123result", result.toString());
                                 // Log.i("123result", result.getText());
                                 // 数据返回

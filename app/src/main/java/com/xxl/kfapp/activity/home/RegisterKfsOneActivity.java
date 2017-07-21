@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
@@ -112,6 +113,7 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
 
     private BarberInfoVo barberInfoVo;
     private List<DictVo> eduVos, workVos;
+    private boolean isRepeat;
 
     //=======================图片=====================
     public File tempFile =
@@ -125,7 +127,7 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void initArgs(Intent intent) {
-
+        isRepeat = intent.getBooleanExtra("isRepeat", false);
     }
 
     @Override
@@ -149,6 +151,7 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
         eduVos = new ArrayList<>();
         workVos = new ArrayList<>();
         doGetDictList("edu_type");
+        if (isRepeat) doGetBarberApplyInfo();
     }
 
 
@@ -502,8 +505,69 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
                             if (!code.equals("100000")) {
                                 sweetDialog(json.getString("msg"), 1, false);
                             } else {
+                                doUpdateApplyStatus();
                                 startActivity(new Intent(RegisterKfsOneActivity.this, RegisterKfsTwoActivity.class));
                                 finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void doUpdateApplyStatus() {
+        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.updateApplyStatus)
+                .tag(this)
+                .params("token", token)
+                .params("applysts", "11")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                KLog.i(response.body());
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void doGetBarberApplyInfo() {
+        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.getBarberApplyInfo)
+                .tag(this)
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                KLog.i(response.body());
+                                BarberInfoVo vo = mGson.fromJson(json.getString("data"), BarberInfoVo.class);
+                                etRealname.setText(vo.getRealname());
+                                etAddress.setText(vo.getAddress());
+                                etIdcard.setText(vo.getCardid());
+                                etLinkman.setText(vo.getLinkman());
+                                etLinktel.setText(vo.getLinktel());
+                                etCertdisc.setText(vo.getCertdisc());
+                                etAddress.setText(vo.getAddress());
+                                Glide.with(getApplicationContext()).load(vo.getCardpos()).into(idPhoto1);
+                                Glide.with(getApplicationContext()).load(vo.getCardneg()).into(idPhoto2);
+                                tvWorklife.setText(mACache.getAsJSONArray("worklife").getInt(Integer.valueOf(vo.getWorklife()) - 1));
+                                tvWorklife.setText(mACache.getAsJSONArray("education").getInt(Integer.valueOf(vo.getEducation()) - 1));
+                                tvAddress.setText(vo.getAddprovincename() + vo.getAddcityname() + vo.getAddareaname());
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -575,8 +639,10 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
                                     vo.setValue(array.getJSONObject(i).getString("value"));
                                     if ("edu_type".equals(keyname)) {
                                         eduVos.add(vo);
+                                        mACache.put("education", array, (int) System.currentTimeMillis()/1000);
                                     } else if ("work_life".equals(keyname)) {
                                         workVos.add(vo);
+                                        mACache.put("worklife", array, (int) System.currentTimeMillis()/1000);
                                     }
                                 }
                             }

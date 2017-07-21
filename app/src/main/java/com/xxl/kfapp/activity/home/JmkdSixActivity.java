@@ -1,19 +1,22 @@
 package com.xxl.kfapp.activity.home;
 
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.View;
-import android.webkit.WebView;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.ScrollView;
 
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.response.ProgressVo;
+import com.xxl.kfapp.model.response.ShopApplyInfoVo;
+import com.xxl.kfapp.model.response.ShopApplyStatusVo;
 import com.xxl.kfapp.widget.TitleBar;
 
 import java.util.ArrayList;
@@ -23,22 +26,19 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * 作者：XNN
- * 日期：2017/6/7
- * 作用：注册快发师第三步 阅读协议
+ * 作用：加盟开店第六步 购买设备
  */
+public class JmkdSixActivity extends BaseActivity implements View.OnClickListener {
 
-public class RegisterKfsThreeActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.mTitleBar)
     TitleBar mTitleBar;
-    @Bind(R.id.checkPW)
-    CheckBox checkPW;
-    @Bind(R.id.next)
-    Button next;
     @Bind(R.id.pRecyclerView)
     RecyclerView pRecyclerView;
-    @Bind(R.id.wv_protocol)
-    WebView webView;
+    @Bind(R.id.mScrollView)
+    ScrollView mScrollView;
+    @Bind(R.id.next)
+    Button next;
+
     private ProgressAdapter progressAdapter;
     private List<ProgressVo> progressVos;
 
@@ -49,31 +49,16 @@ public class RegisterKfsThreeActivity extends BaseActivity implements View.OnCli
 
     @Override
     protected void initView(Bundle bundle) {
-        setContentView(R.layout.activity_registerkfs_three);
+        setContentView(R.layout.activity_jmkd_six);
         ButterKnife.bind(this);
         next.setOnClickListener(this);
-        mTitleBar.setTitle("注册快发师申请");
+        mTitleBar.setTitle("装修设备");
         mTitleBar.setBackOnclickListener(this);
-        checkPW.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    next.setEnabled(true);
-                    next.setBackgroundResource(R.drawable.bg_corner_red);
-                    next.setTextColor(getResources().getColor(R.color.main_red));
-                } else {
-                    next.setEnabled(false);
-                    next.setBackgroundResource(R.drawable.bg_corner_gray);
-                    next.setTextColor(getResources().getColor(R.color.gray));
-                }
-            }
-        });
     }
 
     @Override
     protected void initData() {
         initInfoRecycleView();
-        webView.loadUrl("km.qchouses.com/kftest/html/article.php?artid=2");
     }
 
 
@@ -81,19 +66,23 @@ public class RegisterKfsThreeActivity extends BaseActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                startActivity(new Intent(this, RegisterKfsFourActivity.class));
+                startActivity(new Intent(this, JmkdTwoActivity.class));
                 finish();
                 break;
         }
-
     }
 
     /**
      * 初始化progress列表
      */
     private void initInfoRecycleView() {
+        WindowManager manager = this.getWindowManager();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(outMetrics);
+        int width = outMetrics.widthPixels;
 
-        progressAdapter = new ProgressAdapter(new ArrayList<ProgressVo>(), getScrnWeight() / 4);
+        progressAdapter = new ProgressAdapter(new ArrayList<ProgressVo>(), width / 4);
+        progressAdapter.openLoadAnimation();
         pRecyclerView.setAdapter(progressAdapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -102,13 +91,13 @@ public class RegisterKfsThreeActivity extends BaseActivity implements View.OnCli
         layoutManager.setAutoMeasureEnabled(true);
         pRecyclerView.setLayoutManager(layoutManager);
         setData();
-//        pRecyclerView.smoothScrollToPosition();
+        pRecyclerView.smoothScrollToPosition(5);
 
     }
 
     private void setData() {
         progressVos = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 7; i++) {
             ProgressVo vo = new ProgressVo();
             if (i == 0) {
                 vo.setName("申请加盟");
@@ -118,11 +107,18 @@ public class RegisterKfsThreeActivity extends BaseActivity implements View.OnCli
                 vo.setTag(2);
             } else if (i == 2) {
                 vo.setName("阅读协议");
-                vo.setTag(1);
+                vo.setTag(2);
             } else if (i == 3) {
-                vo.setName("考试");
+                vo.setName("品牌保证金");
+                vo.setTag(2);
             } else if (i == 4) {
-                vo.setName("申请成功");
+                vo.setName("选址");
+                vo.setTag(2);
+            } else if (i == 5) {
+                vo.setName("装修设备");
+                vo.setTag(1);
+            } else if (i == 6) {
+                vo.setName("加盟成功");
             }
 
             progressVos.add(vo);

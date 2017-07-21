@@ -1,24 +1,41 @@
 package com.xxl.kfapp.activity.home;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
+import com.xxl.kfapp.activity.person.AddAddrActivity;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.model.response.AddrVo;
 import com.xxl.kfapp.model.response.ProgressVo;
+import com.xxl.kfapp.utils.PreferenceUtils;
+import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.TitleBar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import talex.zsw.baselibrary.util.klog.KLog;
 
 /**
  * 作者：XNN
@@ -37,12 +54,23 @@ public class JmkdFiveActivity extends BaseActivity implements View.OnClickListen
     ScrollView mScrollView;
     @Bind(R.id.next)
     Button next;
+    @Bind(R.id.iv_select_addr)
+    ImageView ivSelectAddr;
+    @Bind(R.id.tv_no_address)
+    TextView tvNoAddress;
+    @Bind(R.id.tv_have_address)
+    TextView tvHaveAddress;
+    @Bind(R.id.tv_address)
+    TextView tvAddress;
+
     private ProgressAdapter progressAdapter;
     private List<ProgressVo> progressVos;
+    private Drawable selected, unselected;
+    private String applyid;
 
     @Override
     protected void initArgs(Intent intent) {
-
+        applyid = intent.getStringExtra("applyid");
     }
 
     @Override
@@ -52,24 +80,71 @@ public class JmkdFiveActivity extends BaseActivity implements View.OnClickListen
         next.setOnClickListener(this);
         mTitleBar.setTitle("开店申请");
         mTitleBar.setBackOnclickListener(this);
+        tvNoAddress.setOnClickListener(this);
+        tvHaveAddress.setOnClickListener(this);
+        tvAddress.setOnClickListener(this);
+        initDrawables();
+    }
+
+    private void initDrawables() {
+        selected = getDrawable(R.mipmap.qq_red);
+        unselected = getDrawable(R.mipmap.qq_grey);
+        selected.setBounds(0, 0, selected.getMinimumWidth(), selected.getMinimumHeight());
+        unselected.setBounds(0, 0, unselected.getMinimumWidth(), unselected.getMinimumHeight());
     }
 
     @Override
     protected void initData() {
         initInfoRecycleView();
-
+        if (TextUtils.isEmpty(applyid)) {
+            applyid = PreferenceUtils.getPrefString(getApplication(), "applyid", "");
+        }
+        doGetSelectAddrGoodPic();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-//                startActivity(new Intent(this, RegisterKfsFourActivity.class));
+                startActivity(getIntent().setClass(this, JmkdFive2Activity.class));
                 finish();
+                break;
+            case R.id.tv_no_address:
+                tvAddress.setVisibility(View.GONE);
+                tvNoAddress.setCompoundDrawables(null, null, selected, null);
+                tvHaveAddress.setCompoundDrawables(null, null, unselected, null);
+                break;
+            case R.id.tv_have_address:
+                tvAddress.setVisibility(View.VISIBLE);
+                tvHaveAddress.setCompoundDrawables(null, null, selected, null);
+                tvNoAddress.setCompoundDrawables(null, null, unselected, null);
+                break;
+            case R.id.tv_address:
+                startActivityForResult(new Intent(this, AddAddrActivity.class), 1);
                 break;
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 1:
+                    AddrVo vo = (AddrVo) data.getSerializableExtra("addrVo");
+                    tvAddress.setText(vo.getAddprovincename() + vo.getAddcityname()
+                            + vo.getAddareaname() + vo.getAddress());
+                    doUpdateApplyStatus();
+                    break;
+            }
+        }
     }
 
     /**
@@ -120,5 +195,53 @@ public class JmkdFiveActivity extends BaseActivity implements View.OnClickListen
         progressAdapter.setNewData(progressVos);
     }
 
+    private void doGetSelectAddrGoodPic() {
+        String token = PreferenceUtils.getPrefString(getApplicationContext(), "token", "1234567890");
+        OkGo.<String>post(Urls.baseUrl + Urls.getSelectAddrGoodPic)
+                .tag(this)
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                Glide.with(getApplicationContext()).load(json.getJSONObject("data").getString("yspic"))
+                                        .into(ivSelectAddr);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void doUpdateApplyStatus() {
+        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.updateShopApplyStatus)
+                .tag(this)
+                .params("token", token)
+                .params("applysts", "25")
+                .params("applyid", applyid)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            com.alibaba.fastjson.JSONObject json = JSON.parseObject(response.body());
+                            String code = json.getString("code");
+                            if (code.equals("100000")) {
+                                KLog.i(response.body());
+                            } else {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            }
+                        } catch (com.alibaba.fastjson.JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
 
 }

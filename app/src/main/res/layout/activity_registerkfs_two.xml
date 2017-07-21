@@ -43,6 +43,7 @@
             android:paddingTop="20dp">
 
             <TextView
+                android:id="@+id/tv_checking"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -52,18 +53,37 @@
                 android:textSize="@dimen/big" />
 
             <LinearLayout
+                android:id="@+id/lyt_reason_shsb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:background="@drawable/bg_sh_reasion"
+                android:background="@drawable/bg_sh_reason"
                 android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
+                <TextView
+                    android:id="@+id/tv_fixedreason"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_forgot_pwd"
+                    android:drawableStart="@mipmap/sh_dian"
+                    android:drawablePadding="@dimen/x15"
+                    android:padding="@dimen/x10"/>
 
+                <TextView
+                    android:id="@+id/tv_customreason"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_forgot_pwd"
+                    android:drawableStart="@mipmap/sh_dian"
+                    android:drawablePadding="@dimen/x15"
+                    android:padding="@dimen/x10"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -81,6 +101,7 @@
         android:paddingTop="10dp">
 
         <TextView
+            android:id="@+id/tv_tips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

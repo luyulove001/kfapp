@@ -4,16 +4,30 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.request.GetRequest;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.response.ProgressVo;
+import com.xxl.kfapp.model.response.ShopApplyInfoVo;
+import com.xxl.kfapp.model.response.ShopApplyStatusVo;
+import com.xxl.kfapp.utils.AddressPickTask;
+import com.xxl.kfapp.utils.PreferenceUtils;
+import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.TitleBar;
 
 import java.util.ArrayList;
@@ -21,6 +35,11 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.entity.City;
+import cn.qqtheme.framework.entity.County;
+import cn.qqtheme.framework.entity.Province;
+import okhttp3.Request;
+import talex.zsw.baselibrary.util.klog.KLog;
 
 /**
  * 作者：XNN
@@ -39,13 +58,20 @@ public class JmkdOneActivity extends BaseActivity implements View.OnClickListene
     ScrollView mScrollView;
     @Bind(R.id.next)
     Button next;
+    @Bind(R.id.lyt_want_address)
+    LinearLayout lytWantAddress;
+    @Bind(R.id.tv_want_address)
+    TextView tvWantAddress;
 
     private ProgressAdapter progressAdapter;
     private List<ProgressVo> progressVos;
+    private ShopApplyInfoVo shopInfoVo;
+    private ShopApplyStatusVo shopApplyStatusVo;
 
     @Override
     protected void initArgs(Intent intent) {
-
+        if (intent.getSerializableExtra("shopStatusVo") != null)
+            shopApplyStatusVo = (ShopApplyStatusVo) intent.getSerializableExtra("shopStatusVo");
     }
 
     @Override
@@ -55,10 +81,12 @@ public class JmkdOneActivity extends BaseActivity implements View.OnClickListene
         next.setOnClickListener(this);
         mTitleBar.setTitle("开店申请");
         mTitleBar.setBackOnclickListener(this);
+        lytWantAddress.setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
+        shopInfoVo = new ShopApplyInfoVo();
         initInfoRecycleView();
 
     }
@@ -72,7 +100,47 @@ public class JmkdOneActivity extends BaseActivity implements View.OnClickListene
                 startActivity(new Intent(this, JmkdTwoActivity.class));
                 finish();
                 break;
+            case R.id.lyt_want_address:
+                onAddressPicker();
+                break;
         }
+    }
+
+    public void onAddressPicker() {
+        AddressPickTask task = new AddressPickTask(this);
+        task.setHideProvince(false);
+        task.setHideCounty(false);
+        task.setCallback(new AddressPickTask.Callback() {
+            @Override
+            public void onAddressInitFailed() {
+                ToastShow("数据初始化失败");
+            }
+
+            @Override
+            public void onAddressPicked(Province province, City city, County county) {
+                if (county == null) {
+                    ToastShow(province.getAreaName() + city.getAreaName());
+                    tvWantAddress.setText(province.getAreaName() + city.getAreaName());
+                    shopInfoVo.setAddprovincecode(province.getAreaId());
+                    shopInfoVo.setAddprovincename(province.getAreaName());
+                    shopInfoVo.setAddcitycode(province.getAreaId());
+                    shopInfoVo.setAddcityname(province.getAreaName());
+                    shopInfoVo.setAddareacode(city.getAreaId());
+                    shopInfoVo.setAddareaname(city.getAreaName());
+                } else {
+                    ToastShow(province.getAreaName() + city.getAreaName() + county.getAreaName());
+                    tvWantAddress.setText(province.getAreaName() + city.getAreaName() + county.getAreaName());
+                    shopInfoVo.setAddprovincecode(province.getAreaId());
+                    shopInfoVo.setAddprovincename(province.getAreaName());
+                    shopInfoVo.setAddcitycode(city.getAreaId());
+                    shopInfoVo.setAddcityname(city.getAreaName());
+                    shopInfoVo.setAddareacode(county.getAreaId());
+                    shopInfoVo.setAddareaname(county.getAreaName());
+                }
+                doUpdateShopApply();
+            }
+        });
+        task.execute("浙江", "杭州", "滨江");
     }
 
     /**
@@ -94,7 +162,7 @@ public class JmkdOneActivity extends BaseActivity implements View.OnClickListene
         layoutManager.setAutoMeasureEnabled(true);
         pRecyclerView.setLayoutManager(layoutManager);
         setData();
-//        pRecyclerView.smoothScrollToPosition();
+        //        pRecyclerView.smoothScrollToPosition();
 
     }
 
@@ -124,5 +192,33 @@ public class JmkdOneActivity extends BaseActivity implements View.OnClickListene
         progressAdapter.setNewData(progressVos);
     }
 
-
+    private void doUpdateShopApply() {
+        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        GetRequest<String> request = OkGo.<String>get(Urls.baseUrl + Urls.updateMemberAddress)
+                .tag(this)
+                .params("token", token)
+                .params("addprovincecode", shopInfoVo.getAddprovincecode())
+                .params("addcitycode", shopInfoVo.getAddcitycode())
+                .params("addareacode", shopInfoVo.getAddareacode())
+                .params("applysts", "21");
+        if (!TextUtils.isEmpty(shopApplyStatusVo.getApplyid())) {
+            request.params("applyid", shopApplyStatusVo.getApplyid());
+        }
+        request.execute(new StringCallback() {
+            @Override
+            public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                try {
+                    JSONObject json = JSON.parseObject(response.body());
+                    String code = json.getString("code");
+                    if (code.equals("100000")) {
+                        KLog.i(response.body());
+                    } else {
+                        sweetDialog(json.getString("msg"), 1, false);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 }

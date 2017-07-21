@@ -67,7 +67,7 @@ public class ModifyAddrActivity extends BaseActivity {
         mTitleBar.getvTvRight().setTextColor(getResources().getColor(R.color.white));
         //侧滑菜单列表
         mMenuRecyclerView.setLayoutManager(new LinearLayoutManager(this));// 布局管理器。
-        mMenuRecyclerView.addItemDecoration(new ListViewDecoration());// 添加分割线。
+        mMenuRecyclerView.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler));// 添加分割线。
         mMenuRecyclerView.setSwipeMenuCreator(swipeMenuCreator);
         mMenuRecyclerView.setSwipeMenuItemClickListener(menuItemClickListener);
 
@@ -130,9 +130,9 @@ public class ModifyAddrActivity extends BaseActivity {
         public void onItemClick(Closeable closeable, int adapterPosition, int menuPosition, int direction) {
             closeable.smoothCloseMenu();
             if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
-                Toast.makeText(mContext, "list第" + adapterPosition + "; 右侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
+                ToastShow("list第" + adapterPosition + "; 右侧菜单第" + menuPosition);
             } else if (direction == SwipeMenuRecyclerView.LEFT_DIRECTION) {
-                Toast.makeText(mContext, "list第" + adapterPosition + "; 左侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
+                ToastShow("list第" + adapterPosition + "; 左侧菜单第" + menuPosition);
             }
 
             if (menuPosition == 1) {// 删除按钮被点击。
@@ -174,12 +174,11 @@ public class ModifyAddrActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             AddrVo vo = (AddrVo) data.getSerializableExtra("addrVo");
             switch (requestCode) {
-                //TODO update and request new data
                 case UpdateAddress:
-                    doUpdateAddr(vo);
+                    doGetAddressList();
                     break;
                 case AddAddress:
-                    doUpdateAddr(vo);
+                    doGetAddressList();
                     break;
                 default:
                     break;
@@ -224,27 +223,4 @@ public class ModifyAddrActivity extends BaseActivity {
         });
     }
 
-    private void doUpdateAddr(AddrVo vo) {
-        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
-        OkGo.<String>get(Urls.baseUrl + Urls.updateMemberAddress).tag(this).params("token", token).params("addrid", vo
-                .getAddrid()).params("addprovincecode", vo.getAddprovincecode()).params("addprovincename", vo
-                .getAddprovincename()).params("addcitycode", vo.getAddcitycode()).params("addcityname", vo
-                .getAddcityname()).params("addareacode", vo.getAddareacode()).params("addareaname", vo.getAddareaname
-                ()).params("address", vo.getAddress()).execute(new StringCallback() {
-            @Override
-            public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                try {
-                    JSONObject json = JSON.parseObject(response.body());
-                    String code = json.getString("code");
-                    if (code.equals("100000")) {
-                        doGetAddressList();
-                    } else {
-                        sweetDialog(json.getString("msg"), 1, false);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 }

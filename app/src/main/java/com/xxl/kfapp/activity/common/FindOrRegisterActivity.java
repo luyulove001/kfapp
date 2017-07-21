@@ -110,8 +110,8 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
 
     @Override
     public void onKeyboardShown(int keyboardSize) {
-        mScrollView.smoothScrollTo(getWindowManager().getDefaultDisplay().getWidth(), getWindowManager()
-                .getDefaultDisplay().getHeight());
+//        mScrollView.smoothScrollTo(getWindowManager().getDefaultDisplay().getWidth(), getWindowManager()
+//                .getDefaultDisplay().getHeight());
     }
 
     @Override

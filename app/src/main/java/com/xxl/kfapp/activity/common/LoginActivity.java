@@ -326,8 +326,8 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
 
     @Override
     public void onKeyboardShown(int keyboardSize) {
-        mScrollView.smoothScrollTo(getWindowManager().getDefaultDisplay().getWidth(), getWindowManager()
-                .getDefaultDisplay().getHeight());
+//        mScrollView.smoothScrollTo(getWindowManager().getDefaultDisplay().getWidth(), getWindowManager()
+//                .getDefaultDisplay().getHeight());
     }
 
     @Override

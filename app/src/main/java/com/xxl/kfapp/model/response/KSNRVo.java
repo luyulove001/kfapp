@@ -9,7 +9,17 @@ import java.io.Serializable;
  */
 
 public class KSNRVo implements Serializable {
-    private String info;
+    private String info;//content
+    private String id;//answer
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     private boolean xz = false;
 
     public boolean isXz() {

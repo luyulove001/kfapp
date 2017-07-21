@@ -29,8 +29,8 @@ public class ListViewDecoration extends RecyclerView.ItemDecoration {
 
     private Drawable mDrawable;
 
-    public ListViewDecoration() {
-        mDrawable = ResCompat.getDrawable(BaseApplication.getContext(), R.drawable.divider_recycler);
+    public ListViewDecoration(int drawableId) {
+        mDrawable = ResCompat.getDrawable(BaseApplication.getContext(), drawableId);
     }
 
     @Override

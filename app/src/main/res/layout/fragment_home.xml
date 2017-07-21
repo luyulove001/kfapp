@@ -35,7 +35,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/textTitle"
@@ -57,14 +58,22 @@
             android:lineSpacingExtra="15dp"
             android:textSize="@dimen/middle" />
 
-        <ImageView
-            android:id="@+id/btn_begin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:src="@mipmap/img_button_home" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_kfsgood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"/>
+
+    <ImageView
+        android:id="@+id/btn_begin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:src="@mipmap/img_button_home" />
 
     <LinearLayout
         android:layout_width="match_parent"

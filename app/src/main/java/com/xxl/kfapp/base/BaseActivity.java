@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
@@ -19,6 +18,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,7 +34,7 @@ import talex.zsw.baselibrary.widget.RichText;
  * 描述:
  */
 public abstract class BaseActivity extends AppCompatActivity {
-
+    // TODO: 2017/7/21  loading view show in http get/post
     private boolean is = false;
 
     protected abstract void initArgs(Intent intent);
@@ -46,6 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private InputMethodManager mInputMethodManager;
 
     public ACache mACache;
+    public Gson mGson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         mApplication.addActivity(this);
         if (mACache == null) {
             mACache = ACache.get(this);
+        }
+        if (mGson == null) {
+            mGson = new Gson();
         }
         mInputMethodManager = (InputMethodManager) this
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -93,6 +98,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         mApplication.removeActivity(this);
         mACache = null;
+        mGson = null;
         super.onDestroy();
         System.runFinalization();
         Runtime.getRuntime().gc();

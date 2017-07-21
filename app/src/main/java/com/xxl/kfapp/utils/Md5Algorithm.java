@@ -90,7 +90,6 @@ public class Md5Algorithm {
 		try {
 			System.out.println(Md5Algorithm.getInstance().md5Digest("111111".getBytes("iso8859-1")));
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

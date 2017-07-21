@@ -2,15 +2,23 @@ package com.xxl.kfapp.activity.person;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.response.AddrVo;
 import com.xxl.kfapp.utils.AddressPickTask;
+import com.xxl.kfapp.utils.PreferenceUtils;
+import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.TitleBar;
 
 import butterknife.Bind;
@@ -18,6 +26,7 @@ import butterknife.ButterKnife;
 import cn.qqtheme.framework.entity.City;
 import cn.qqtheme.framework.entity.County;
 import cn.qqtheme.framework.entity.Province;
+import talex.zsw.baselibrary.util.klog.KLog;
 
 public class AddAddrActivity extends BaseActivity {
     @Bind(R.id.mTitleBar)
@@ -48,7 +57,13 @@ public class AddAddrActivity extends BaseActivity {
                 Intent i = new Intent();
                 i.putExtra("addrVo", vo);
                 setResult(RESULT_OK, i);
-                finish();
+                if (TextUtils.isEmpty(vo.getAddress())) {
+                    ToastShow("请填写详细地址");
+                } else if(TextUtils.isEmpty(vo.getAddareacode())) {
+                    ToastShow("请先选择地区");
+                } else {
+                    doUpdateAddr(vo);
+                }
             }
         });
         mTitleBar.getvTvRight().setTextColor(getResources().getColor(R.color.white));
@@ -104,5 +119,37 @@ public class AddAddrActivity extends BaseActivity {
             }
         });
         task.execute("浙江", "杭州", "滨江");
+    }
+
+    private void doUpdateAddr(AddrVo vo) {
+        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.updateMemberAddress)
+                .tag(this)
+                .params("token", token).params("addrid", vo.getAddrid())
+                .params("addprovincecode", vo.getAddprovincecode())
+                .params("addprovincename", vo.getAddprovincename())
+                .params("addcitycode", vo.getAddcitycode())
+                .params("addcityname", vo.getAddcityname())
+                .params("addareacode", vo.getAddareacode())
+                .params("addareaname", vo.getAddareaname())
+                .params("address", vo.getAddress())
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = JSON.parseObject(response.body());
+                            String code = json.getString("code");
+                            if (code.equals("100000")) {
+                                KLog.i(response.body());
+                                ToastShow("地址保存成功");
+                                finish();
+                            } else {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 }

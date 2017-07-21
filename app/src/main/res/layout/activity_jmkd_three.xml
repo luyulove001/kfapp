@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_gray"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bg_gray"
+              android:orientation="vertical">
 
     <com.xxl.kfapp.widget.TitleBar
         android:id="@+id/mTitleBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,35 +23,32 @@
             android:id="@+id/pRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white" />
+            android:background="@color/white"/>
 
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/mScrollView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:text="请仔细阅读本协议，快发平台将根据以下条件和条款为您提供服务。"
+            android:textSize="@dimen/text_title"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="请仔细阅读本协议，快发平台将根据以下条件和条款为您提供服务。"
-                android:textSize="@dimen/text_title" />
+        <WebView
+            android:id="@+id/wv_deposit_protocol"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"/>
 
+    </LinearLayout>
 
-        </LinearLayout>
-
-    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -69,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="我以阅读协议内容"
-            android:textSize="@dimen/small" />
+            android:textSize="@dimen/small"/>
 
         <Button
             android:id="@+id/next"
@@ -81,6 +78,6 @@
             android:paddingTop="15dp"
             android:text="我同意"
             android:textColor="@drawable/text_white_red"
-            android:textSize="@dimen/middle" />
+            android:textSize="@dimen/middle"/>
     </LinearLayout>
 </LinearLayout>
