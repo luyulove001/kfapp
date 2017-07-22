@@ -9,8 +9,11 @@ import com.xxl.kfapp.base.BaseActivity;
 
 public class ShopPriceActivity extends BaseActivity {
 
+    String price;
     @Override
     protected void initArgs(Intent intent) {
+        intent = getIntent();
+        price = intent.getStringExtra("price");
 
     }
 

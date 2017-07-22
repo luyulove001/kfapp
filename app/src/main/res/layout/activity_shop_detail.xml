@@ -124,12 +124,14 @@
             android:background="@color/gray_holo_dark"/>
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tv_sn"
             android:layout_width="@dimen/x360"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/x20"
@@ -138,39 +140,7 @@
             android:text="设备号"/>
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingEnd="@dimen/x20"
-            android:paddingStart="@dimen/x20"
-            android:text="密钥"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
-            android:paddingEnd="@dimen/x20"
-            android:paddingStart="@dimen/x20"
-            android:text="状态"/>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="@dimen/x360"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
-            android:paddingEnd="@dimen/x20"
-            android:paddingStart="@dimen/x20"
-            android:text="设备号"/>
-
-        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/x20"
@@ -181,6 +151,7 @@
             android:text="asd1321"/>
 
         <TextView
+            android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/x20"
@@ -203,6 +174,7 @@
             android:background="@color/gray_holo_dark"/>
 
         <TextView
+            android:id="@+id/tv_staffcnt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingEnd="@dimen/x30"
@@ -220,4 +192,36 @@
         android:id="@+id/ls_haircut"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/x360"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/x20"
+            android:paddingEnd="@dimen/x20"
+            android:paddingStart="@dimen/x20"
+            android:text="设备号" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/x20"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingEnd="@dimen/x20"
+            android:paddingStart="@dimen/x20"
+            android:text="密钥" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/x20"
+            android:paddingEnd="@dimen/x20"
+            android:paddingStart="@dimen/x20"
+            android:text="状态" />
+    </LinearLayout>
 </LinearLayout>
