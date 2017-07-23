@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.xxl.kfapp.activity.home.ShopRenameActivity">
+
+    <com.xxl.kfapp.widget.TitleBar
+        android:id="@+id/mTitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -124,6 +130,7 @@
         android:background="@color/white">
 
         <TextView
+            android:id="@+id/tv_begintime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/x20"
@@ -132,6 +139,7 @@
             android:text="开始时间"/>
 
         <TextView
+            android:id="@+id/tv_endtime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/x20"
@@ -142,6 +150,7 @@
             android:text="结束时间"/>
 
         <TextView
+            android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/x20"

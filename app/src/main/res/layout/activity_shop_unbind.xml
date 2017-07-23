@@ -20,26 +20,43 @@
         android:orientation="horizontal"
         android:padding="@dimen/x20">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:drawablePadding="5dp"
-            android:drawableStart="@mipmap/qq_grey"
-            android:padding="@dimen/x25"
-            android:text="关店"
-            android:textSize="@dimen/big"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+
+        <RadioGroup
+            android:layout_marginTop="10dp"
+            android:id="@+id/rg_way"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="@dimen/x180"
-            android:drawablePadding="5dp"
-            android:drawableStart="@mipmap/qq_grey"
-            android:padding="@dimen/x25"
-            android:text="转让"
-            android:textSize="@dimen/big"/>
+            android:layout_width="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_marginRight="30dp"
+                android:id="@+id/rb_close_shop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:drawablePadding="5dp"
+                android:padding="@dimen/x25"
+                android:text="关店"
+                android:tag="gd"
+                android:textSize="@dimen/big"
+                 />
+
+            <RadioButton
+                android:layout_marginLeft="30dp"
+                android:id="@+id/rb_transfer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="@dimen/x180"
+                android:drawablePadding="5dp"
+                android:padding="@dimen/x25"
+                android:text="转让"
+                android:textSize="@dimen/big"
+                android:tag="zr"
+                />
+        </RadioGroup>
+
     </LinearLayout>
 
     <Button
