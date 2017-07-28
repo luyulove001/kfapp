@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.request.GetRequest;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.response.AddrVo;
@@ -26,6 +27,8 @@ import butterknife.ButterKnife;
 import cn.qqtheme.framework.entity.City;
 import cn.qqtheme.framework.entity.County;
 import cn.qqtheme.framework.entity.Province;
+import okhttp3.Request;
+import okhttp3.ResponseBody;
 import talex.zsw.baselibrary.util.klog.KLog;
 
 public class AddAddrActivity extends BaseActivity {
@@ -37,6 +40,10 @@ public class AddAddrActivity extends BaseActivity {
     TextView tvLocation;
     @Bind(R.id.et_detail)
     EditText etDetail;
+    @Bind(R.id.et_name)
+    EditText etName;
+    @Bind(R.id.et_phone)
+    EditText etPhone;
     private AddrVo vo;
 
     @Override
@@ -54,6 +61,8 @@ public class AddAddrActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 vo.setAddress(etDetail.getText().toString());
+                vo.setUsername(etName.getText().toString());
+                vo.setPhone(etPhone.getText().toString());
                 Intent i = new Intent();
                 i.putExtra("addrVo", vo);
                 setResult(RESULT_OK, i);
@@ -61,6 +70,10 @@ public class AddAddrActivity extends BaseActivity {
                     ToastShow("请填写详细地址");
                 } else if(TextUtils.isEmpty(vo.getAddareacode())) {
                     ToastShow("请先选择地区");
+                } else if (TextUtils.isEmpty(vo.getUsername())) {
+                    ToastShow("请先填写联系人姓名");
+                }else if (TextUtils.isEmpty(vo.getPhone())) {
+                    ToastShow("请先填写联系人手机号");
                 } else {
                     doUpdateAddr(vo);
                 }
@@ -82,6 +95,8 @@ public class AddAddrActivity extends BaseActivity {
         } else {
             etDetail.setText(vo.getAddress());
             tvLocation.setText(vo.getAddprovincename() + vo.getAddcityname() + vo.getAddareaname());
+            etName.setText(vo.getUsername());
+            etPhone.setText(vo.getPhone());
         }
     }
 
@@ -123,7 +138,7 @@ public class AddAddrActivity extends BaseActivity {
 
     private void doUpdateAddr(AddrVo vo) {
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
-        OkGo.<String>get(Urls.baseUrl + Urls.updateMemberAddress)
+        GetRequest<String> request = OkGo.<String>get(Urls.baseUrl + Urls.updateMemberAddress)
                 .tag(this)
                 .params("token", token).params("addrid", vo.getAddrid())
                 .params("addprovincecode", vo.getAddprovincecode())
@@ -133,23 +148,28 @@ public class AddAddrActivity extends BaseActivity {
                 .params("addareacode", vo.getAddareacode())
                 .params("addareaname", vo.getAddareaname())
                 .params("address", vo.getAddress())
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        try {
-                            JSONObject json = JSON.parseObject(response.body());
-                            String code = json.getString("code");
-                            if (code.equals("100000")) {
-                                KLog.i(response.body());
-                                ToastShow("地址保存成功");
-                                finish();
-                            } else {
-                                sweetDialog(json.getString("msg"), 1, false);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                .params("username", vo.getUsername())
+                .params("phone", vo.getPhone());
+        if (!TextUtils.isEmpty(vo.getAddrid())) {
+            request.params("addrid", vo.getAddrid());
+        }
+        request.execute(new StringCallback() {
+            @Override
+            public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                try {
+                    JSONObject json = JSON.parseObject(response.body());
+                    String code = json.getString("code");
+                    if (code.equals("100000")) {
+                        KLog.i(response.body());
+                        ToastShow("地址保存成功");
+                        finish();
+                    } else {
+                        sweetDialog(json.getString("msg"), 1, false);
                     }
-                });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

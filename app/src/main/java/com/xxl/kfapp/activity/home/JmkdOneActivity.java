@@ -194,7 +194,7 @@ public class JmkdOneActivity extends BaseActivity implements View.OnClickListene
 
     private void doUpdateShopApply() {
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
-        GetRequest<String> request = OkGo.<String>get(Urls.baseUrl + Urls.updateMemberAddress)
+        GetRequest<String> request = OkGo.<String>get(Urls.baseUrl + Urls.updateShopApply)
                 .tag(this)
                 .params("token", token)
                 .params("addprovincecode", shopInfoVo.getAddprovincecode())

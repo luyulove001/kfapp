@@ -26,6 +26,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tv_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/x10"
@@ -37,8 +38,9 @@
 
             <ImageView
                 android:id="@+id/iv_kfs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/x30"
+                android:layout_height="@dimen/y30"
+                android:layout_marginStart="2dp"
                 android:src="@mipmap/icon_kfs"/>
         </LinearLayout>
 
@@ -54,6 +56,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/lyt_totaldayamount"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -61,6 +64,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_totaldayamount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/x10"
@@ -82,6 +86,7 @@
                     android:background="@color/white"/>
 
                 <LinearLayout
+                    android:id="@+id/lyt_totalamount"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -89,6 +94,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_totalamount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/x10"
@@ -110,6 +116,7 @@
                     android:background="@color/white"/>
 
                 <LinearLayout
+                    android:id="@+id/lyt_totalbalance"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -117,6 +124,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_totalbalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/x10"
@@ -145,6 +153,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tv_shopcnt"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/x20"
@@ -161,12 +170,13 @@
             android:background="@color/line2"/>
 
         <TextView
+            android:id="@+id/tv_online"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="@dimen/x10"
-            android:text="今日签到：5"/>
+            android:text="今日正常：5"/>
 
         <View
             android:layout_width="@dimen/x1"
@@ -174,6 +184,7 @@
             android:background="@color/line2"/>
 
         <TextView
+            android:id="@+id/tv_offline"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -193,8 +204,9 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/lyt_totalbbcnt"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/x20"
             android:layout_marginTop="@dimen/x20"
             android:layout_weight="1"
@@ -204,9 +216,10 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/icon_kfs"/>
+                android:src="@mipmap/icon_kfs_main"/>
 
             <TextView
+                android:id="@+id/tv_totalbbcnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x10"
@@ -220,8 +233,9 @@
             android:background="@color/line2"/>
 
         <LinearLayout
+            android:id="@+id/lyt_totalworkcnt"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/x20"
             android:layout_marginTop="@dimen/x20"
             android:layout_weight="1"
@@ -234,6 +248,7 @@
                 android:src="@mipmap/ic_sign_num"/>
 
             <TextView
+                android:id="@+id/tv_totalworkcnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x10"
@@ -241,7 +256,13 @@
                 android:text="今日上班：2"/>
         </LinearLayout>
 
+        <View
+            android:layout_width="@dimen/x1"
+            android:layout_height="match_parent"
+            android:background="@color/line2"/>
+
         <LinearLayout
+            android:id="@+id/lyt_unnormal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x20"
@@ -251,16 +272,20 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/tv_totalworkcdcnt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/x10"
+                android:gravity="center"
                 android:padding="@dimen/x10"
                 android:text="迟到：2"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/tv_totalworkztcnt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/x10"
+                android:gravity="center"
                 android:padding="@dimen/x10"
                 android:text="早退：2"/>
         </LinearLayout>
@@ -277,6 +302,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/lyt_totalcnt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x20"
@@ -291,6 +317,7 @@
                 android:src="@mipmap/ic_cut_num"/>
 
             <TextView
+                android:id="@+id/tv_totalcnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x20"
@@ -304,6 +331,7 @@
             android:background="@color/line2"/>
 
         <LinearLayout
+            android:id="@+id/lyt_totaldaycnt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x20"
@@ -318,6 +346,7 @@
                 android:src="@mipmap/ic_cut_num"/>
 
             <TextView
+                android:id="@+id/tv_totaldaycnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x20"

@@ -10,15 +10,70 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/x170"
+            android:layout_height="@dimen/x80"
+            android:gravity="center"
+            android:paddingEnd="@dimen/x20"
+            android:paddingStart="@dimen/x20"
+            android:text="姓名:"
+            android:textColor="@color/gray"/>
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请填写姓名"
+            android:padding="10dp"
+            android:textColorHint="@color/gray_holo_light"
+            android:textSize="@dimen/x30"/>
+    </LinearLayout>
+
+    <include layout="@layout/include_line2"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/x170"
+            android:layout_height="@dimen/x80"
+            android:gravity="center"
+            android:paddingEnd="@dimen/x20"
+            android:paddingStart="@dimen/x20"
+            android:text="电话:"
+            android:textColor="@color/gray"/>
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请填写手机号"
+            android:padding="10dp"
+            android:textColorHint="@color/gray_holo_light"
+            android:textSize="@dimen/x30"/>
+    </LinearLayout>
+
+    <include layout="@layout/include_line2"/>
+
     <RelativeLayout
         android:id="@+id/lyt_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/x20"
         android:background="@color/white">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/x170"
             android:layout_height="@dimen/x80"
             android:gravity="center"
             android:paddingEnd="@dimen/x20"
@@ -51,11 +106,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/x170"
             android:layout_height="@dimen/x80"
             android:gravity="center"
             android:paddingEnd="@dimen/x20"
@@ -68,6 +123,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:padding="10dp"/>
+            android:hint="请填写详细地址"
+            android:padding="10dp"
+            android:textColorHint="@color/gray_holo_light"
+            android:textSize="@dimen/x30"/>
     </LinearLayout>
 </LinearLayout>

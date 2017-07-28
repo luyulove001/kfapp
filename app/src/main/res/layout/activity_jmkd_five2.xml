@@ -32,10 +32,10 @@
         android:id="@+id/mScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/bg_gray"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/bg_gray">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,22 +48,24 @@
                 android:layout_height="@dimen/y200"
                 android:background="@color/white"
                 android:padding="10dp">
+
                 <Button
                     android:id="@+id/btn_addr_select"
                     android:layout_width="@dimen/x550"
                     android:layout_height="@dimen/y100"
+                    android:layout_marginStart="@dimen/x20"
                     android:background="@drawable/bg_corner_red"
                     android:text="地址筛选"
-                    android:textColor="@drawable/text_white_red"
-                    android:layout_marginStart="@dimen/x20"/>
+                    android:textColor="@drawable/text_white_red"/>
+
                 <Button
                     android:id="@+id/btn_all"
                     android:layout_width="@dimen/x100"
                     android:layout_height="@dimen/y100"
-                    android:layout_toEndOf="@+id/btn_addr_select"
-                    android:layout_marginStart="@dimen/x20"
-                    android:background="@drawable/bg_btn_corner_red"
                     android:layout_marginEnd="@dimen/x20"
+                    android:layout_marginStart="@dimen/x20"
+                    android:layout_toEndOf="@+id/btn_addr_select"
+                    android:background="@drawable/bg_btn_corner_red"
                     android:text="全部"
                     android:textColor="@color/white"/>
 
@@ -71,11 +73,11 @@
                     android:id="@+id/tv_shop_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="共有2家店铺供您竞拍"
-                    android:textColor="@color/text_black2"
                     android:layout_below="@+id/btn_addr_select"
                     android:layout_marginStart="@dimen/x30"
-                    android:layout_marginTop="@dimen/x20"/>
+                    android:layout_marginTop="@dimen/x20"
+                    android:text="共有2家店铺供您竞拍"
+                    android:textColor="@color/text_black2"/>
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -99,7 +101,8 @@
         android:paddingBottom="10dp"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"

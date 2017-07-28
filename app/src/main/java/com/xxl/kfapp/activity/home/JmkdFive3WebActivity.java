@@ -148,7 +148,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setDefaultTextEncodingName("UTF-8");//设置默认为utf-8
-        webView.loadUrl("http://km.qchouses.com/kftest/html/auction/auction.php?shopid=" + shopid);
+        webView.loadUrl(Urls.baseH5Url + Urls.bidH5 + shopid);
     }
 
 
@@ -368,6 +368,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                 });
     }
 
+    //竞拍保证金
     private void doCreateUserOrder(final String paytype) {
         String token = PreferenceUtils.getPrefString(getApplication(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.createUserOrder)

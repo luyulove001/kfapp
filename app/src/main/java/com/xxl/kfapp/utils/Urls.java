@@ -47,4 +47,9 @@ public class Urls {
 
     public static final String getDictList = "/commapi/getDictList";
     public static final String uploadForApp = "/file/uploadForApp";
+
+    public static final String baseH5Url = "http://qchtest.qchouses.com/h5/article.php";
+    public static final String bidDepodit = "?artid=3";
+    public static final String kfPromise = "?artid=2";
+    public static final String bidH5 = "?shopid=";
 }

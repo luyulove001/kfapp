@@ -33,7 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/x30"
-                    android:drawableStart="@mipmap/login_account"
+                    android:drawableStart="@mipmap/qc_login_phone"
                     android:hint="@string/prompt_phone"
                     android:inputType="phone"/>
 
@@ -42,7 +42,7 @@
                     android:layout_width="@dimen/x230"
                     android:layout_height="@dimen/y65"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/x15"
                     android:layout_marginEnd="@dimen/x30"
                     android:background="@drawable/bg_btn_corner_red"
                     android:text="@string/send_code"

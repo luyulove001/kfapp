@@ -2,6 +2,7 @@ package com.xxl.kfapp.fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,12 +14,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.activity.common.LoginActivity;
 import com.xxl.kfapp.activity.person.ModifyAddrActivity;
 import com.xxl.kfapp.activity.person.RenameActivity;
+import com.xxl.kfapp.base.BaseApplication;
 import com.xxl.kfapp.base.BaseFragment;
 import com.xxl.kfapp.model.response.AddrVo;
+import com.xxl.kfapp.model.response.MemberInfoVo;
 import com.xxl.kfapp.widget.SlideFromBottomPopup;
 
 import java.io.File;
@@ -50,9 +54,12 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     private Bitmap head;//头像Bitmap
     private static String path;//sd路径
     private AddrVo address;
+    private Drawable male, female;
 
     @Bind(R.id.mScrollView)
     PullToZoomScrollViewEx mScrollView;
+
+    private MemberInfoVo memberInfoVo;
 
     @Override
     protected void initArgs(Bundle bundle) {
@@ -103,6 +110,25 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     @Override
     protected void initData() {
         path = Environment.getExternalStorageDirectory().getPath() + "/myHead/";
+        setMemberInfo();
+    }
+
+    private void initDrawables() {
+        male = getActivity().getDrawable(R.mipmap.main_icon_boy);
+        female = getActivity().getDrawable(R.mipmap.main_icon_girl);
+        male.setBounds(0, 0, male.getMinimumWidth(), male.getMinimumHeight());
+        female.setBounds(0, 0, female.getMinimumWidth(), female.getMinimumHeight());
+    }
+
+    private void setMemberInfo() {
+        memberInfoVo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
+        Glide.with(BaseApplication.getContext()).load(memberInfoVo.getHeadpic()).into(ivHead);
+        tvNickname.setText(memberInfoVo.getNickname());
+        if ("0".equals(memberInfoVo.getSex())) {
+            tvNickname.setCompoundDrawables(null, null, male, null);
+        } else if ("1".equals(memberInfoVo.getSex())) {
+            tvNickname.setCompoundDrawables(null, null, female, null);
+        }
     }
 
     @Override
@@ -222,9 +248,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                     Bundle extras = data.getExtras();
                     head = extras.getParcelable("data");
                     if (head != null) {
-                        /**
-                         * 上传服务器代码
-                         */
+                        //上传服务器代码
                         setPicToView(head);//保存在SD卡中
                         ivHead.setImageBitmap(head);//用ImageView显示出来
                     }

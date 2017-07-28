@@ -10,17 +10,25 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.response.ProgressVo;
+import com.xxl.kfapp.utils.PreferenceUtils;
+import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.TitleBar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import talex.zsw.baselibrary.util.klog.KLog;
 
 /**
  * 作者：XNN
@@ -54,6 +62,9 @@ public class RegisterKfsThreeActivity extends BaseActivity implements View.OnCli
         next.setOnClickListener(this);
         mTitleBar.setTitle("注册快发师申请");
         mTitleBar.setBackOnclickListener(this);
+        next.setEnabled(false);
+        next.setBackgroundResource(R.drawable.bg_corner_gray);
+        next.setTextColor(getResources().getColor(R.color.gray));
         checkPW.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -73,7 +84,7 @@ public class RegisterKfsThreeActivity extends BaseActivity implements View.OnCli
     @Override
     protected void initData() {
         initInfoRecycleView();
-        webView.loadUrl("km.qchouses.com/kftest/html/article.php?artid=2");
+        webView.loadUrl(Urls.baseH5Url + Urls.kfPromise);
     }
 
 
@@ -81,8 +92,7 @@ public class RegisterKfsThreeActivity extends BaseActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                startActivity(new Intent(this, RegisterKfsFourActivity.class));
-                finish();
+                doUpdateApplyStatus();
                 break;
         }
 
@@ -128,5 +138,31 @@ public class RegisterKfsThreeActivity extends BaseActivity implements View.OnCli
             progressVos.add(vo);
         }
         progressAdapter.setNewData(progressVos);
+    }
+
+    private void doUpdateApplyStatus() {
+        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.updateApplyStatus)
+                .tag(this)
+                .params("token", token)
+                .params("applysts", "13")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                KLog.i(response.body());
+                                startActivity(new Intent(RegisterKfsThreeActivity.this, RegisterKfsFourActivity.class));
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 }

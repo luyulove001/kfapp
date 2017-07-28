@@ -67,6 +67,7 @@ public class JmkdFiveActivity extends BaseActivity implements View.OnClickListen
     private List<ProgressVo> progressVos;
     private Drawable selected, unselected;
     private String applyid;
+    private boolean hasAddress;
 
     @Override
     protected void initArgs(Intent intent) {
@@ -83,6 +84,7 @@ public class JmkdFiveActivity extends BaseActivity implements View.OnClickListen
         tvNoAddress.setOnClickListener(this);
         tvHaveAddress.setOnClickListener(this);
         tvAddress.setOnClickListener(this);
+        setBtnNext(false, R.drawable.bg_corner_gray, getResources().getColor(R.color.gray));
         initDrawables();
     }
 
@@ -112,24 +114,38 @@ public class JmkdFiveActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                startActivity(getIntent().setClass(this, JmkdFive2Activity.class));
+                if (hasAddress) {
+                    startActivity(getIntent().setClass(this, JmkdSixActivity.class));
+                } else {
+                    startActivity(getIntent().setClass(this, JmkdFive2Activity.class));
+                }
                 finish();
                 break;
             case R.id.tv_no_address:
                 tvAddress.setVisibility(View.GONE);
                 tvNoAddress.setCompoundDrawables(null, null, selected, null);
                 tvHaveAddress.setCompoundDrawables(null, null, unselected, null);
+                setBtnNext(true, R.drawable.bg_corner_red, getResources().getColor(R.color.main_red));
+                hasAddress = false;
                 break;
             case R.id.tv_have_address:
                 tvAddress.setVisibility(View.VISIBLE);
                 tvHaveAddress.setCompoundDrawables(null, null, selected, null);
                 tvNoAddress.setCompoundDrawables(null, null, unselected, null);
+                hasAddress = true;
+                setBtnNext(false, R.drawable.bg_corner_gray, getResources().getColor(R.color.gray));
                 break;
             case R.id.tv_address:
                 startActivityForResult(new Intent(this, AddAddrActivity.class), 1);
                 break;
         }
 
+    }
+
+    private void setBtnNext(boolean clickable, int bg_corner, int color) {
+        next.setClickable(clickable);
+        next.setBackgroundResource(bg_corner);
+        next.setTextColor(color);
     }
 
     @Override
@@ -141,6 +157,7 @@ public class JmkdFiveActivity extends BaseActivity implements View.OnClickListen
                     AddrVo vo = (AddrVo) data.getSerializableExtra("addrVo");
                     tvAddress.setText(vo.getAddprovincename() + vo.getAddcityname()
                             + vo.getAddareaname() + vo.getAddress());
+                    setBtnNext(true, R.drawable.bg_corner_red, getResources().getColor(R.color.main_red));
                     doUpdateApplyStatus();
                     break;
             }

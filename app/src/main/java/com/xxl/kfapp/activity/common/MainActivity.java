@@ -10,19 +10,30 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.fragment.ForumFragment;
 import com.xxl.kfapp.fragment.HomeFragment;
+import com.xxl.kfapp.fragment.HomeFragmentKfs;
+import com.xxl.kfapp.fragment.HomeFragmentShopkeeper;
 import com.xxl.kfapp.fragment.PersonFragment;
 import com.xxl.kfapp.fragment.SPcartFragment;
 import com.xxl.kfapp.fragment.StoreFragment;
+import com.xxl.kfapp.model.response.MemberInfoVo;
+import com.xxl.kfapp.utils.PreferenceUtils;
+import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.IconText;
 import com.xxl.kfapp.widget.TitleBar;
 import com.xxl.kfapp.zxing.CaptureActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import talex.zsw.baselibrary.util.klog.KLog;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -51,6 +62,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private SPcartFragment sPcartFragment;
     private ForumFragment forumFragment;
     private PersonFragment personFragment;
+    private HomeFragmentShopkeeper shopkeeperFragment;
+    private HomeFragmentKfs kfsFragment;
+
+    private String role, jobsts;
 
 
     @Override
@@ -88,7 +103,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void initData() {
         setIndexFragment(1);//设置首页
-
+        doGetMemberInfo();
     }
 
     @Override
@@ -100,15 +115,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (selectId == v.getId()) {
             return;
         }
-//        if (v.getId() == R.id.mIconText4 && StringUtils.isBlank(SpUtil.getUserId()))
-//        {
-//            showToast("请先登录");
-//            start(LoginActivity.class);
-//            return;
-//        }
+        //        if (v.getId() == R.id.mIconText4 && StringUtils.isBlank(SpUtil.getUserId()))
+        //        {
+        //            showToast("请先登录");
+        //            start(LoginActivity.class);
+        //            return;
+        //        }
         selectId = v.getId();
         cleanSelect();
-        ((IconText) v).setSelected(true);
+        v.setSelected(true);
 
         switch (v.getId()) {
             case R.id.mIconText1:
@@ -143,11 +158,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         hideFragments(transaction);
         switch (position) {
             case 1:
-                if (homeFragment == null) {
-                    homeFragment = new HomeFragment();
-                    transaction.add(R.id.mContent, homeFragment);
-                } else {
-                    transaction.show(homeFragment);
+                if ("0".equals(role) || "1".equals(role)) {
+                    if ("0".equals(jobsts) || "2".equals(jobsts)) {
+                        homeFragment = new HomeFragment();
+                        transaction.add(R.id.mContent, homeFragment);
+                    } else if ("1".equals(jobsts)) {
+                        kfsFragment = new HomeFragmentKfs();
+                        transaction.add(R.id.mContent, kfsFragment);
+                    }
+                } else if ("2".equals(role)) {
+                    shopkeeperFragment = new HomeFragmentShopkeeper();
+                    transaction.add(R.id.mContent, shopkeeperFragment);
                 }
                 break;
             case 2:
@@ -201,6 +222,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (homeFragment != null) {
             transaction.hide(homeFragment);
         }
+        if (shopkeeperFragment != null) {
+            transaction.hide(shopkeeperFragment);
+        }
+        if (kfsFragment != null) {
+            transaction.hide(kfsFragment);
+        }
         if (storeFragment != null) {
             transaction.hide(storeFragment);
         }
@@ -233,6 +260,33 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private void doGetMemberInfo() {
+        String token = PreferenceUtils.getPrefString(getApplicationContext(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.getMemberInfo)
+                .tag(this)
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                KLog.i(response.body());
+                                MemberInfoVo vo = mGson.fromJson(json.getString("data"), MemberInfoVo.class);
+                                mACache.put("memberInfoVo", vo);//保存个人信息
+                                role = vo.getRole();
+                                jobsts = vo.getJobsts();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
 }

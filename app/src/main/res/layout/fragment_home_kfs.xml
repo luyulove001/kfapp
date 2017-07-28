@@ -26,6 +26,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tv_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/x10"
@@ -37,8 +38,9 @@
 
             <ImageView
                 android:id="@+id/iv_kfs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/x30"
+                android:layout_height="@dimen/y30"
+                android:layout_marginStart="2dp"
                 android:src="@mipmap/icon_kfs"/>
         </LinearLayout>
 
@@ -130,6 +132,7 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/x10"
                 android:drawableStart="@mipmap/ic_kfs_gray"
+                android:gravity="center"
                 android:padding="@dimen/x10"
                 android:text="今日理发(次)"/>
         </LinearLayout>
@@ -161,6 +164,7 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/x10"
                 android:drawableStart="@mipmap/ic_kfs_gray"
+                android:gravity="center"
                 android:padding="@dimen/x10"
                 android:text="累计理发(次)"/>
         </LinearLayout>
@@ -192,6 +196,7 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/x10"
                 android:drawableStart="@mipmap/ic_subsidy"
+                android:gravity="center"
                 android:padding="@dimen/x10"
                 android:text="津贴"/>
         </LinearLayout>
@@ -227,11 +232,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/x10"
-                    android:drawableEnd="@mipmap/ic_sign"
-                    android:drawablePadding="5dp"
                     android:text="10:30"
                     android:textColor="@color/black2"
                     android:textSize="@dimen/text_title"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/x10"
+                    android:src="@mipmap/ic_sign"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -271,8 +280,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/x10"
-                    android:drawableEnd="@mipmap/ic_sign"
-                    android:drawablePadding="5dp"
                     android:text="22:30"
                     android:textColor="@color/black2"
                     android:textSize="@dimen/text_title"/>
@@ -280,7 +287,13 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_tui"/>
+                    android:layout_marginEnd="@dimen/x10"
+                    android:src="@mipmap/ic_sign"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_late"/>
             </LinearLayout>
 
             <TextView
@@ -290,6 +303,7 @@
                 android:text="今日下班签退"/>
         </LinearLayout>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/x1"
@@ -299,11 +313,11 @@
         android:id="@+id/btn_order_received"
         android:layout_width="@dimen/x450"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginEnd="@dimen/x20"
         android:layout_marginStart="@dimen/x20"
         android:layout_marginTop="@dimen/x80"
         android:background="@drawable/bg_corner_red"
-        android:layout_gravity="center"
         android:paddingBottom="15dp"
         android:paddingTop="15dp"
         android:text="接单"

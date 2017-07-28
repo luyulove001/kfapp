@@ -38,9 +38,9 @@ public class ShopUnbindActivity extends BaseActivity {
     @Override
     protected void initView(Bundle bundle) {
         setContentView(R.layout.activity_shop_unbind);
+        ButterKnife.bind(this);
         mTitleBar.setTitle("解绑店铺");
         mTitleBar.setBackOnclickListener(this);
-        ButterKnife.bind(this);
     }
 
     @Override

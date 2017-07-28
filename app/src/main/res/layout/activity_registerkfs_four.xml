@@ -47,10 +47,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dp"
-                android:drawableRight="@mipmap/sh_ing"
+                android:drawableEnd="@mipmap/sh_ing"
                 android:gravity="center"
                 android:paddingBottom="10dp"
-                android:paddingLeft="20dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="20dp"
                 android:paddingTop="10dp"
                 android:text="共10题，您有3次考试机会"
                 android:textSize="@dimen/small" />
@@ -127,6 +128,7 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/lyt_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -144,17 +146,21 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/lyt_test_count"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:padding="10dp"
+        android:background="@color/white"
         android:orientation="vertical"
         android:visibility="gone">
 
         <TextView
+            android:id="@+id/tv_test_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:drawableLeft="@mipmap/sh_ing"
+            android:drawableStart="@mipmap/sh_ing"
             android:drawablePadding="5dp"
             android:text="您还有2次考试机会"
             android:textSize="@dimen/big" />
@@ -162,6 +168,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/lyt_test_again"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -173,7 +180,7 @@
         android:visibility="gone">
 
         <Button
-            android:id="@+id/reTyy"
+            android:id="@+id/reTry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"

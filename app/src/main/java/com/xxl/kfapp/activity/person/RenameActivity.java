@@ -61,7 +61,7 @@ public class RenameActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void initArgs(Intent intent) {
         intent = getIntent();
-        shopName = intent.getStringExtra("shopname");
+        shopName = intent.getStringExtra("shopName");
     }
 
     @Override
@@ -107,7 +107,7 @@ public class RenameActivity extends BaseActivity implements View.OnClickListener
         OkGo.<String>get(Urls.baseUrl + Urls.updateShopInfo)
                 .tag(this)
                 .params("token", token)
-                .params("shopid", "6")
+                .params("shopid", "1")
                 .params("oidname",shopName)
                 .params("newname",etNickname.getText().toString())
                 .execute(new StringCallback() {

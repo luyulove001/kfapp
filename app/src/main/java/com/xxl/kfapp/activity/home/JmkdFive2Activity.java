@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -22,6 +23,7 @@ import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.response.BidShopListVo;
 import com.xxl.kfapp.model.response.ProgressVo;
+import com.xxl.kfapp.utils.AddressPickTask;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.ListViewDecoration;
@@ -33,6 +35,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.entity.City;
+import cn.qqtheme.framework.entity.County;
+import cn.qqtheme.framework.entity.Province;
 import talex.zsw.baselibrary.util.klog.KLog;
 
 /**
@@ -49,6 +54,12 @@ public class JmkdFive2Activity extends BaseActivity implements View.OnClickListe
     ScrollView mScrollView;
     @Bind(R.id.next)
     Button next;
+    @Bind(R.id.btn_addr_select)
+    Button btnSelectAddr;
+    @Bind(R.id.btn_all)
+    Button btnAll;
+    @Bind(R.id.tv_shop_num)
+    TextView tvShopNum;
 
     private ProgressAdapter progressAdapter;
     private BidShopAdapter bidShopAdapter;
@@ -65,12 +76,14 @@ public class JmkdFive2Activity extends BaseActivity implements View.OnClickListe
         next.setOnClickListener(this);
         mTitleBar.setTitle("选址");
         mTitleBar.setBackOnclickListener(this);
+        btnSelectAddr.setOnClickListener(this);
+        btnAll.setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
         initInfoRecycleView();
-        doGetAucteShopList("", "", "");// TODO: 2017/7/21 此处显示选择的意向地址处
+        doGetShopApplyInfo(PreferenceUtils.getPrefString(getApplication(), "applyid", ""));
     }
 
 
@@ -78,11 +91,38 @@ public class JmkdFive2Activity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-//                startActivity(new Intent(this, JmkdTwoActivity.class));
-//                finish();
-
+                break;
+            case R.id.btn_addr_select:
+                onAddressPicker();
+                break;
+            case R.id.btn_all:
+                doGetAucteShopList("", "", "");
                 break;
         }
+    }
+
+    public void onAddressPicker() {
+        AddressPickTask task = new AddressPickTask(this);
+        task.setHideProvince(false);
+        task.setHideCounty(false);
+        task.setCallback(new AddressPickTask.Callback() {
+            @Override
+            public void onAddressInitFailed() {
+                ToastShow("数据初始化失败");
+            }
+
+            @Override
+            public void onAddressPicked(Province province, City city, County county) {
+                if (county == null) {
+                    ToastShow(province.getAreaName() + city.getAreaName());
+                    doGetAucteShopList(province.getAreaId(), city.getAreaId(), "");
+                } else {
+                    ToastShow(province.getAreaName() + city.getAreaName() + county.getAreaName());
+                    doGetAucteShopList(province.getAreaId(), city.getAreaId(), county.getAreaId());
+                }
+            }
+        });
+        task.execute("浙江", "杭州", "滨江");
     }
 
     /**
@@ -111,7 +151,8 @@ public class JmkdFive2Activity extends BaseActivity implements View.OnClickListe
     private void initShopList(final BidShopListVo vo) {
         bidShopAdapter = new BidShopAdapter(vo.getShoplst());
         bidShopAdapter.openLoadAnimation();
-        bidShopAdapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter.OnRecyclerViewItemChildClickListener() {
+        bidShopAdapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter
+                .OnRecyclerViewItemChildClickListener() {
 
             @Override
             public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
@@ -160,6 +201,33 @@ public class JmkdFive2Activity extends BaseActivity implements View.OnClickListe
         progressAdapter.setNewData(progressVos);
     }
 
+    private void doGetShopApplyInfo(String applyid) {
+        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.getShopApplyInfo)
+                .tag(this)
+                .params("token", token)
+                .params("applyid", applyid)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            com.alibaba.fastjson.JSONObject json = JSON.parseObject(response.body());
+                            String code = json.getString("code");
+                            if (code.equals("100000")) {
+                                KLog.i(response.body());
+                                json = json.getJSONObject("data");
+                                doGetAucteShopList(json.getString("addprovincecode"),
+                                        json.getString("addcitycode"), json.getString("addareacode"));
+                            } else {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            }
+                        } catch (com.alibaba.fastjson.JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
     private void doGetAucteShopList(String province, String city, String area) {
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.getAucteShopList)
@@ -179,6 +247,8 @@ public class JmkdFive2Activity extends BaseActivity implements View.OnClickListe
                                 BidShopListVo bidShopListVo = mGson.fromJson(json.getString("data"), BidShopListVo
                                         .class);
                                 KLog.i(bidShopListVo.getShoplst().size());
+                                tvShopNum.setText("共有" +
+                                        bidShopListVo.getShoplst().size() + "家店铺供您竞拍");
                                 initShopList(bidShopListVo);
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,17 +15,33 @@
         <talex.zsw.baselibrary.widget.CircleImageView
             android:id="@+id/mImage"
             android:layout_width="80dp"
-            android:layout_height="80dp" />
+            android:layout_height="80dp"/>
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:drawablePadding="5dp"
-            android:drawableEnd="@mipmap/main_icon_boy"
-            android:text="用户名"
-            android:textColor="@color/black2"
-            android:textSize="@dimen/text_title" />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@mipmap/main_icon_boy"
+                android:drawablePadding="5dp"
+                android:text="用户名"
+                android:textColor="@color/black2"
+                android:textSize="@dimen/text_title"/>
+
+            <ImageView
+                android:id="@+id/iv_kfs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x20"
+                android:visibility="gone"
+                android:src="@mipmap/icon_kfs"/>
+        </LinearLayout>
     </LinearLayout>
 
 
@@ -48,7 +64,7 @@
             android:gravity="bottom"
             android:text="成为快发师优势"
             android:textColor="@color/black2"
-            android:textSize="@dimen/text_title" />
+            android:textSize="@dimen/text_title"/>
 
         <com.xxl.kfapp.widget.LinedEditText
             android:id="@+id/lineText"
@@ -56,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:lineSpacingExtra="15dp"
-            android:textSize="@dimen/middle" />
+            android:textSize="@dimen/middle"/>
 
     </LinearLayout>
 
@@ -73,22 +89,25 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:src="@mipmap/img_button_home" />
+        android:src="@mipmap/img_button_home"/>
 
     <LinearLayout
+        android:id="@+id/lyt_kfs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:padding="@dimen/x20"
         android:gravity="center"
         android:orientation="vertical"
+        android:padding="@dimen/x20"
         android:visibility="gone">
-        
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/x40"
-            android:text="恭喜你！已成为快发师"/>
+            android:text="恭喜你！已成为快发师"
+            android:drawableStart="@mipmap/sh_cg"
+            android:drawablePadding="5dp"
+            android:textSize="@dimen/x40"/>
 
         <Button
             android:id="@+id/btn_create_shop"
@@ -117,7 +136,8 @@
             android:paddingTop="15dp"
             android:text="我要求职"
             android:textColor="@drawable/text_white_red"
-            android:textSize="@dimen/middle"/>
+            android:textSize="@dimen/middle"
+            android:visibility="gone"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -150,14 +150,13 @@
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind">
-        </activity>
-        <activity android:name=".activity.home.JmkdSixActivity">
-        </activity>
-        <activity android:name=".activity.home.JmkdFive2Activity">
-        </activity>
-        <activity android:name=".activity.home.JmkdFive3WebActivity">
-        </activity>
+            android:screenOrientation="behind"/>
+        <activity android:name=".activity.home.JmkdSixActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.home.JmkdFive2Activity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.home.JmkdFive3WebActivity"
+                  android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

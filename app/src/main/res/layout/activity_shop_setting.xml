@@ -128,6 +128,8 @@
             android:src="@mipmap/arrow_right_gray"/>
     </LinearLayout>
 
+    <include layout="@layout/gray_line"/>
+
     <LinearLayout
         android:id="@+id/lyt_unbind_shop"
         android:layout_width="match_parent"

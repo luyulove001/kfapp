@@ -22,6 +22,7 @@ import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.TitleBar;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -70,6 +71,7 @@ public class ShopDetailActivity extends BaseActivity {
     @Override
     protected void initView(Bundle bundle) {
         setContentView(R.layout.activity_shop_detail);
+        ButterKnife.bind(this);
         mTitleBar.setTitle("店铺详情");
         mTitleBar.setBackOnclickListener(this);
         mTitleBar.setRightIV2(R.mipmap.qc_fast_set_write, new View.OnClickListener() {
@@ -78,12 +80,11 @@ public class ShopDetailActivity extends BaseActivity {
                 setIntent();
             }
         });
-        ButterKnife.bind(this);
     }
 
     private void setIntent(){
         Intent intent = new Intent(this,ShopSettingActivity.class);
-        intent.putExtra("shopname",shopName);
+        intent.putExtra("shopName",shopName);
         intent.putExtra("startTime",startTime);
         intent.putExtra("endTime",endTime);
         intent.putExtra("price",price);
@@ -93,6 +94,7 @@ public class ShopDetailActivity extends BaseActivity {
     @Override
     protected void initData() {
         token = PreferenceUtils.getPrefString(this.getApplicationContext(), "token", "1234567890");
+        getDetail();
     }
 
     /**
@@ -102,7 +104,7 @@ public class ShopDetailActivity extends BaseActivity {
         OkGo.<String>get(Urls.baseUrl + Urls.getBossShopDetailInfo)
                 .tag(this)
                 .params("token", token)
-                .params("shopid", "6")
+                .params("shopid", "1")
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -134,9 +136,8 @@ public class ShopDetailActivity extends BaseActivity {
                                 String staffcnt = json.getJSONObject("data").getString("staffcnt");
                                 tvStaffcnt.setText("理发师"+ staffcnt + "人");
 
-                                JSONObject stafflst = json.getJSONObject("data").getJSONObject("stafflst");//TODO 列表的json
+                                JSONArray stafflst = json.getJSONObject("data").getJSONArray("stafflst");//TODO 列表的json
 
-                                finish();
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
                             }

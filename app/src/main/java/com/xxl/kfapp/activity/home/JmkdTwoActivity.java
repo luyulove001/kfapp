@@ -225,6 +225,7 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
                                 intent.putExtra("applyid", statusVo.getApplyid());
                                 intent.putExtra("brandmoney", statusVo.getBrandmoney());
                                 startActivity(intent);
+                                finish();
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
                             }

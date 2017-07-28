@@ -1,10 +1,13 @@
 package com.xxl.kfapp.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -15,6 +18,7 @@ import com.xxl.kfapp.R;
 import com.xxl.kfapp.activity.home.JmkdFiveActivity;
 import com.xxl.kfapp.activity.home.JmkdFourActivity;
 import com.xxl.kfapp.activity.home.JmkdOneActivity;
+import com.xxl.kfapp.activity.home.JmkdSixActivity;
 import com.xxl.kfapp.activity.home.JmkdThreeActivity;
 import com.xxl.kfapp.activity.home.JmkdTwoActivity;
 import com.xxl.kfapp.activity.home.RegisterKfsFiveActivity;
@@ -22,6 +26,8 @@ import com.xxl.kfapp.activity.home.RegisterKfsFourActivity;
 import com.xxl.kfapp.activity.home.RegisterKfsOneActivity;
 import com.xxl.kfapp.activity.home.RegisterKfsThreeActivity;
 import com.xxl.kfapp.activity.home.RegisterKfsTwoActivity;
+import com.xxl.kfapp.activity.home.ShopDetailActivity;
+import com.xxl.kfapp.base.BaseApplication;
 import com.xxl.kfapp.base.BaseFragment;
 import com.xxl.kfapp.model.response.ApplyStatusVo;
 import com.xxl.kfapp.model.response.MemberInfoVo;
@@ -53,13 +59,25 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     TextView textTitle;
     @Bind(R.id.iv_kfsgood)
     ImageView ivKfsGood;
+    @Bind(R.id.iv_kfs)
+    ImageView ivKfs;
     @Bind(R.id.lineText)
     LinedEditText lineText;
+    @Bind(R.id.lyt_kfs)
+    LinearLayout lytKfs;
+    @Bind(R.id.btn_create_shop)
+    Button btnCreateShop;
+    @Bind(R.id.btn_get_job)
+    Button btnGetJob;
+    @Bind(R.id.tv_nickname)
+    TextView nickname;
+
     private ApplyStatusVo barberStatusVo;
     private ShopApplyStatusVo shopStatusVo;
     private Gson gson;
     private String token;
     private String applyStatus;
+    private Drawable male, female;
 
     @Override
     protected void initArgs(Bundle bundle) {
@@ -71,17 +89,23 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         setContentView(R.layout.fragment_home);
         ButterKnife.bind(this, mView);
         btnBegin.setOnClickListener(this);
+        btnCreateShop.setOnClickListener(this);
+        btnGetJob.setOnClickListener(this);
+    }
 
+    private void initDrawables() {
+        male = getActivity().getDrawable(R.mipmap.main_icon_boy);
+        female = getActivity().getDrawable(R.mipmap.main_icon_girl);
+        male.setBounds(0, 0, male.getMinimumWidth(), male.getMinimumHeight());
+        female.setBounds(0, 0, female.getMinimumWidth(), female.getMinimumHeight());
     }
 
     @Override
     protected void initData() {
-        lineText.setText("谁终将声震人间，必长久深自缄缄默；谁终将点燃闪电，必长久如云漂泊.与怪物战斗的人，应当小心自己不要成为怪物。当你远远凝视深渊时，深渊也在凝视你。");
+        initDrawables();
         gson = new Gson();
         token = PreferenceUtils.getPrefString(getActivity().getApplicationContext(), "token", "1234567890");
-        doGetMemberInfo();
         doGetBarberGoodPic();
-//        doGetBarberApplyStatus();
     }
 
 
@@ -95,6 +119,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_begin:
+                //                startActivity(new Intent(getActivity(), ShopDetailActivity.class));
                 if (TextUtils.isEmpty(applyStatus)) {
                     return;
                 }
@@ -118,6 +143,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     case "14":
                         startActivity(new Intent(getActivity(), RegisterKfsFiveActivity.class));
                         break;
+                }
+                break;
+            case R.id.btn_create_shop:
+                switch (applyStatus) {
                     case "20":
                         Intent i20 = new Intent(getActivity(), JmkdOneActivity.class);
                         i20.putExtra("shopStatusVo", shopStatusVo);
@@ -136,12 +165,22 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         startActivity(new Intent(getActivity(), JmkdFiveActivity.class));
                         break;
                     case "25":
+                        startActivity(new Intent(getActivity(), JmkdSixActivity.class));
                         break;
                     case "26":
                         break;
                 }
-            break;
+                break;
+            case R.id.btn_get_job:
+                ToastShow("该功能正在开发中，尽情期待！");
+                break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setMemberInfo();
     }
 
     private void doGetMemberInfo() {
@@ -160,10 +199,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                                 KLog.i(response.body());
                                 MemberInfoVo vo = gson.fromJson(json.getString("data"), MemberInfoVo.class);
                                 mACache.put("memberInfoVo", vo);//保存个人信息
+                                Glide.with(BaseApplication.getContext()).load(vo.getHeadpic()).into(mImage);
+                                nickname.setText(vo.getNickname());
                                 if ("0".equals(vo.getRole())) {
                                     doGetBarberApplyStatus();
                                 } else if ("1".equals(vo.getRole())) {
                                     doGetShopApplyStatus();
+                                    lytKfs.setVisibility(View.VISIBLE);
+                                    ivKfsGood.setVisibility(View.GONE);
+                                    btnBegin.setVisibility(View.GONE);
+                                    ivKfs.setVisibility(View.VISIBLE);
                                 }
                             }
                         } catch (JSONException e) {
@@ -171,6 +216,26 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         }
                     }
                 });
+    }
+
+    private void setMemberInfo() {
+        MemberInfoVo vo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
+        Glide.with(BaseApplication.getContext()).load(vo.getHeadpic()).into(mImage);
+        nickname.setText(vo.getNickname());
+        if ("0".equals(vo.getSex())) {
+            nickname.setCompoundDrawables(null, null, male, null);
+        } else if ("1".equals(vo.getSex())) {
+            nickname.setCompoundDrawables(null, null, female, null);
+        }
+        if ("0".equals(vo.getRole())) {
+            doGetBarberApplyStatus();
+        } else if ("1".equals(vo.getRole())) {
+            doGetShopApplyStatus();
+            lytKfs.setVisibility(View.VISIBLE);
+            ivKfsGood.setVisibility(View.GONE);
+            btnBegin.setVisibility(View.GONE);
+            ivKfs.setVisibility(View.VISIBLE);
+        }
     }
 
     private void doGetBarberApplyStatus() {

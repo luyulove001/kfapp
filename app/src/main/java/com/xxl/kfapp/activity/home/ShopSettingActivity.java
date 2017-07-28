@@ -47,9 +47,9 @@ public class ShopSettingActivity extends BaseActivity {
     @Override
     protected void initView(Bundle bundle) {
         setContentView(R.layout.activity_shop_setting);
+        ButterKnife.bind(this);
         mTitleBar.setTitle("店铺设置");
         mTitleBar.setBackOnclickListener(this);
-        ButterKnife.bind(this);
 
         tvShopName.setText(shopName);
         tvPrice.setText(price);
@@ -59,7 +59,7 @@ public class ShopSettingActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ShopSettingActivity.this, RenameActivity.class);
-                i.putExtra("shopname",shopName);
+                i.putExtra("shopName",shopName);
                 startActivity(i);
             }
         });

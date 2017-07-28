@@ -5,8 +5,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
@@ -50,7 +52,7 @@ public class RegisterKfsTwoActivity extends BaseActivity implements View.OnClick
     @Bind(R.id.tv_customreason)
     TextView tvCustomReason;
     @Bind(R.id.lyt_reason_shsb)
-    TextView lytReasonShsb;
+    LinearLayout lytReasonShsb;
     @Bind(R.id.tv_tips)
     TextView tvTips;
 
@@ -72,31 +74,12 @@ public class RegisterKfsTwoActivity extends BaseActivity implements View.OnClick
         mTitleBar.setTitle("注册快发师申请");
         mTitleBar.setBackOnclickListener(this);
         initDrawables();
-        switch (statusVo.getChecksts()) {
-            case "0":
-                next.setClickable(false);
-                next.setBackgroundResource(R.drawable.bg_corner_gray);
-                next.setTextColor(getResources().getColor(R.color.gray));
-                break;
-            case "1":
-                tvChecking.setText("，您的初审已通过");
-                tvChecking.setCompoundDrawables(pass, null, null, null);
-                break;
-            case "2":
-                tvChecking.setText("真遗憾，您的初审未通过");
-                tvChecking.setCompoundDrawables(fair, null, null, null);
-                lytReasonShsb.setVisibility(View.VISIBLE);
-                tvFixedReason.setText(statusVo.getFixedreason());
-                tvCustomReason.setText(statusVo.getCustomreason());
-                next.setText("重新填写");
-                tvTips.setVisibility(View.VISIBLE);
-                break;
-        }
     }
 
     @Override
     protected void initData() {
         initInfoRecycleView();
+        doGetBarberApplyStatus();
     }
 
     private void initDrawables() {
@@ -195,5 +178,53 @@ public class RegisterKfsTwoActivity extends BaseActivity implements View.OnClick
             progressVos.add(vo);
         }
         progressAdapter.setNewData(progressVos);
+    }
+
+    private void doGetBarberApplyStatus() {
+        String token = PreferenceUtils.getPrefString(this.getApplicationContext(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.getBarberApplyStatus)
+                .tag(this)
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                KLog.d(response.body());
+                                statusVo = mGson.fromJson(json.getString("data"), ApplyStatusVo.class);
+                                if (statusVo.getChecksts() != null) {
+                                    statusVo.setChecksts("0");
+                                }
+                                switch (statusVo.getChecksts()) {
+                                    case "0":
+                                        next.setClickable(false);
+                                        next.setBackgroundResource(R.drawable.bg_corner_gray);
+                                        next.setTextColor(getResources().getColor(R.color.gray));
+                                        break;
+                                    case "1":
+                                        tvChecking.setText("，您的初审已通过");
+                                        tvChecking.setCompoundDrawables(pass, null, null, null);
+                                        break;
+                                    case "2":
+                                        tvChecking.setText("真遗憾，您的初审未通过");
+                                        tvChecking.setCompoundDrawables(fair, null, null, null);
+                                        lytReasonShsb.setVisibility(View.VISIBLE);
+                                        tvFixedReason.setText(statusVo.getFixedreason());
+                                        tvCustomReason.setText(statusVo.getCustomreason());
+                                        next.setText("重新填写");
+                                        tvTips.setVisibility(View.VISIBLE);
+                                        break;
+                                }
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 }

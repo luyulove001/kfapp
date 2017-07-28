@@ -53,10 +53,9 @@ public class ShopPriceActivity extends BaseActivity {
     @Override
     protected void initView(Bundle bundle) {
         setContentView(R.layout.activity_shop_price);
+        ButterKnife.bind(this);
         mTitleBar.setTitle("票价设置");
         mTitleBar.setBackOnclickListener(this);
-
-        ButterKnife.bind(this);
         btnChangeNormal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -281,8 +280,7 @@ public class ShopPriceActivity extends BaseActivity {
      * 促销价格和时段确认
      */
     private void showConfirmTimeOrPriceDialog(){
-        final AlertDialog.Builder normalDialog =
-                new AlertDialog.Builder(this);
+        final AlertDialog.Builder normalDialog =  new AlertDialog.Builder(this);
         normalDialog.setTitle("促销票价修改确认");
         normalDialog.setMessage("您是否确定修改促销价格与时段?");
         normalDialog.setPositiveButton("确定",

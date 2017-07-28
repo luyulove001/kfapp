@@ -88,7 +88,7 @@ public class JmkdThreeActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void initData() {
         initInfoRecycleView();
-        webView.loadUrl("http://km.qchouses.com/kftest/html/article.php?artid=3");
+        webView.loadUrl(Urls.baseH5Url + Urls.bidDepodit);
         if (TextUtils.isEmpty(applyid)) {
             applyid = PreferenceUtils.getPrefString(getApplication(), "applyid", "");
         }

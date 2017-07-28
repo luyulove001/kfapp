@@ -63,6 +63,8 @@ public class JmkdFourActivity extends BaseActivity implements View.OnClickListen
     RecyclerView pRecyclerView;
     @Bind(R.id.next)
     TextView next;
+    @Bind(R.id.tv_brandmoney)
+    TextView tvBrand;
     @Bind(R.id.next2)
     Button next2;
     @Bind(R.id.lyt_wxpay)
@@ -83,6 +85,8 @@ public class JmkdFourActivity extends BaseActivity implements View.OnClickListen
     private String paytype, applyid;//支付方式   申请id
     private PayHandler payHandler;
     private IWXAPI api;
+    private String brandmoney;
+
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -116,14 +120,17 @@ public class JmkdFourActivity extends BaseActivity implements View.OnClickListen
         lytAlipay.setOnClickListener(this);
         next2.setOnClickListener(this);
         next.setOnClickListener(this);
+        next2.setEnabled(false);
     }
 
     @Override
     protected void initData() {
         initInfoRecycleView();
+        brandmoney = PreferenceUtils.getPrefString(getApplication(), "brandmoney", "5000");
         if (TextUtils.isEmpty(applyid)) {
             applyid = PreferenceUtils.getPrefString(getApplication(), "applyid", "");
         }
+        tvBrand.setText("保证金:" + brandmoney);
         //注册微信appid
         api = WXAPIFactory.createWXAPI(this, Constant.WX_APPID);
         api.registerApp(Constant.WX_APPID);
@@ -232,6 +239,7 @@ public class JmkdFourActivity extends BaseActivity implements View.OnClickListen
     private void paySuccess() {
         lytDeposit.setVisibility(View.GONE);
         lytPaySuccess.setVisibility(View.VISIBLE);
+        next2.setEnabled(true);
         setData(2);
     }
 
@@ -278,9 +286,9 @@ public class JmkdFourActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+    //加盟保证金
     private void doCreateUserOrder() {
         String token = PreferenceUtils.getPrefString(getApplication(), "token", "1234567890");
-        String brandmoney = PreferenceUtils.getPrefString(getApplication(), "brandmoney", "5000");
         OkGo.<String>get(Urls.baseUrl + Urls.createUserOrder)
                 .params("token", token)
                 .params("applyid", applyid)
