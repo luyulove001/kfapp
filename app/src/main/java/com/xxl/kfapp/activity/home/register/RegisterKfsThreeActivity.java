@@ -1,4 +1,4 @@
-package com.xxl.kfapp.activity.home;
+package com.xxl.kfapp.activity.home.register;
 
 import android.content.Intent;
 import android.os.Bundle;

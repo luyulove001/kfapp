@@ -1,4 +1,4 @@
-package com.xxl.kfapp.activity.home;
+package com.xxl.kfapp.activity.home.register;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ScrollView;
 
 import com.xxl.kfapp.R;
+import com.xxl.kfapp.activity.home.jmkd.JmkdOneActivity;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.response.ProgressVo;

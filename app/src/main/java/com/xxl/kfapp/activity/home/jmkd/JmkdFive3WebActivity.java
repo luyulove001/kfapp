@@ -1,4 +1,4 @@
-package com.xxl.kfapp.activity.home;
+package com.xxl.kfapp.activity.home.jmkd;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

@@ -102,7 +102,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void initData() {
-        setIndexFragment(1);//设置首页
         doGetMemberInfo();
     }
 
@@ -281,6 +280,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 mACache.put("memberInfoVo", vo);//保存个人信息
                                 role = vo.getRole();
                                 jobsts = vo.getJobsts();
+                                setIndexFragment(1);//设置首页
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

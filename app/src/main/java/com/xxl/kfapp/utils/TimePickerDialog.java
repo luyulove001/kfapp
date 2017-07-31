@@ -36,7 +36,6 @@ public class TimePickerDialog {
     public TimePickerDialog(Context context) {
         super();
         mContext = context;
-        timePickerDialogInterface = (TimePickerDialogInterface) context;
     }
 
 
@@ -97,7 +96,6 @@ public class TimePickerDialog {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
                         dialog.dismiss();
 
                         if (mTag == 0) {
@@ -108,7 +106,8 @@ public class TimePickerDialog {
                             getDatePickerValue();
                             getTimePickerValue();
                         }
-                        timePickerDialogInterface.positiveListener();
+                        if (timePickerDialogInterface != null)
+                            timePickerDialogInterface.positiveListener();
 
                     }
                 });
@@ -117,8 +116,8 @@ public class TimePickerDialog {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
-                        timePickerDialogInterface.negativeListener();
+                        if (timePickerDialogInterface != null)
+                            timePickerDialogInterface.negativeListener();
                         dialog.dismiss();
                     }
                 });
@@ -129,7 +128,7 @@ public class TimePickerDialog {
      * 显示时间选择器
      */
     public void showTimePickerDialog() {
-        mTag=0;
+        mTag = 0;
         View view = initTimePicker();
         mAlertDialog = new AlertDialog.Builder(mContext);
         mAlertDialog.setTitle("选择时间");
@@ -142,18 +141,19 @@ public class TimePickerDialog {
      * 显示日期选择器
      */
     public void showDatePickerDialog() {
-        mTag=1;
+        mTag = 1;
         View view = initDatePicker();
         mAlertDialog = new AlertDialog.Builder(mContext);
         mAlertDialog.setTitle("选择日期");
         initDialog(view);
         mAlertDialog.show();
     }
+
     /**
      * 显示日期选择器
      */
     public void showDateAndTimePickerDialog() {
-        mTag=2;
+        mTag = 2;
         View view = initDateAndTimePicker();
         mAlertDialog = new AlertDialog.Builder(mContext);
         mAlertDialog.setTitle("选择时间");
@@ -218,7 +218,7 @@ public class TimePickerDialog {
 
     public int getMonth() {
         //返回的时间是0-11
-        return mMonth+1;
+        return mMonth + 1;
     }
 
     public int getMinute() {
@@ -235,7 +235,7 @@ public class TimePickerDialog {
     private void getDatePickerValue() {
         mYear = mDatePicker.getYear();
         mMonth = mDatePicker.getMonth();
-        mDay= mDatePicker.getDayOfMonth();
+        mDay = mDatePicker.getDayOfMonth();
     }
 
     /**
@@ -248,7 +248,8 @@ public class TimePickerDialog {
     }
 
     public interface TimePickerDialogInterface {
-        public void positiveListener();
-        public void negativeListener();
+        void positiveListener();
+
+        void negativeListener();
     }
 }

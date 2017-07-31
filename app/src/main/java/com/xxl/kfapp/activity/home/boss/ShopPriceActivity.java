@@ -1,4 +1,4 @@
-package com.xxl.kfapp.activity.home;
+package com.xxl.kfapp.activity.home.boss;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -71,6 +71,7 @@ public class ShopPriceActivity extends BaseActivity {
                 String day = String.valueOf(mBeginTimePickerDialog.getDay());
                 beginDate = year + "-" + month + "-" + day;
                 tvBeginTime.setText(beginDate);
+                mEndTimePickerDialog.showDatePickerDialog();
             }
 
             @Override
@@ -107,7 +108,8 @@ public class ShopPriceActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        token = PreferenceUtils.getPrefString(this.getApplicationContext(), "token", "1234567890");
+        token = PreferenceUtils.getPrefString(getApplicationContext(), "token", "1234567890");
+        token = "1234567890";
     }
 
     /**
@@ -116,7 +118,7 @@ public class ShopPriceActivity extends BaseActivity {
     private void changePrice(){
         OkGo.<String>get(Urls.baseUrl + Urls.updateShopPrice)
                 .tag(this)
-                .params("token", token)
+                .params("token", "1234567890")
                 .params("shopid", "6")
                 .params("price",btnChangeNormal.getText().toString())
                 .execute(new StringCallback() {
@@ -143,12 +145,13 @@ public class ShopPriceActivity extends BaseActivity {
      */
     private void changePriceAndDate(){
 
-        OkGo.<String>get(Urls.baseUrl + Urls.updateShopPrice)
+        OkGo.<String>get(Urls.baseUrl + Urls.updateShopCxPrice)
                 .tag(this)
                 .params("token", token)
                 .params("shopid", "6")
                 .params("startdate",tvBeginTime.getText().toString())
                 .params("enddate",tvEndTime.getText().toString())
+                .params("price", tvPrice.getText().toString())
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -237,6 +240,7 @@ public class ShopPriceActivity extends BaseActivity {
                     }
                 }else {
                     tvPrice.setText(etvUpdatePrice.getText().toString());
+                    showConfirmTimeOrPriceDialog();
                 }
 
             }

@@ -1,21 +1,15 @@
-package com.xxl.kfapp.activity.home;
+package com.xxl.kfapp.activity.home.boss;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
-import com.xxl.kfapp.activity.common.LoginActivity;
-import com.xxl.kfapp.activity.common.MainActivity;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
@@ -103,8 +97,8 @@ public class ShopDetailActivity extends BaseActivity {
     private void getDetail(){
         OkGo.<String>get(Urls.baseUrl + Urls.getBossShopDetailInfo)
                 .tag(this)
-                .params("token", token)
-                .params("shopid", "1")
+                .params("token", "1234567890")
+                .params("shopid", "2")
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {

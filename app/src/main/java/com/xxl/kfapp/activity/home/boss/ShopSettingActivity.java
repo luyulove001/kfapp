@@ -1,7 +1,6 @@
-package com.xxl.kfapp.activity.home;
+package com.xxl.kfapp.activity.home.boss;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -35,6 +34,10 @@ public class ShopSettingActivity extends BaseActivity {
     @Bind(R.id.lyt_unbind_shop)
     LinearLayout llUnbindShop;
 
+    private static final int ShopRename = 1;
+    private static final int ShopPrice = 2;
+    private static final int ShopBusiness = 3;
+
     @Override
     protected void initArgs(Intent intent) {
         intent = getIntent();
@@ -60,7 +63,7 @@ public class ShopSettingActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent i = new Intent(ShopSettingActivity.this, RenameActivity.class);
                 i.putExtra("shopName",shopName);
-                startActivity(i);
+                startActivityForResult(i, ShopRename);
             }
         });
 
@@ -69,7 +72,7 @@ public class ShopSettingActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent i = new Intent(ShopSettingActivity.this, ShopPriceActivity.class);
                 i.putExtra("price",price);
-                startActivity(i);
+                startActivityForResult(i, ShopPrice);
             }
         });
 
@@ -80,5 +83,21 @@ public class ShopSettingActivity extends BaseActivity {
 
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case ShopRename:
+                    tvShopName.setText(data.getStringExtra("shopName"));
+                    break;
+                case ShopPrice:
+                    tvPrice.setText(data.getStringExtra("price"));
+                    break;
+                case ShopBusiness:
+                    tvTime.setText(data.getStringExtra("business"));
+                    break;
+            }
+        }
+    }
 }

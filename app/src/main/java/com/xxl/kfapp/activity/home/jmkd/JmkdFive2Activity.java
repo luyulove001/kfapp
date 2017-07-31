@@ -1,8 +1,6 @@
-package com.xxl.kfapp.activity.home;
+package com.xxl.kfapp.activity.home.jmkd;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +25,6 @@ import com.xxl.kfapp.utils.AddressPickTask;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.ListViewDecoration;
-import com.xxl.kfapp.widget.RecycleViewDivider;
 import com.xxl.kfapp.widget.TitleBar;
 
 import java.util.ArrayList;

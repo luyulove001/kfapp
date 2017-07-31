@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.xxl.kfapp.activity.home.ShopRenameActivity">
+    tools:context="com.xxl.kfapp.activity.home.boss.ShopRenameActivity">
 
     <com.xxl.kfapp.widget.TitleBar
         android:id="@+id/mTitleBar"

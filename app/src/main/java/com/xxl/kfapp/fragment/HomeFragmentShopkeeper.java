@@ -1,5 +1,6 @@
 package com.xxl.kfapp.fragment;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
+import com.xxl.kfapp.activity.home.boss.ShopDetailActivity;
 import com.xxl.kfapp.base.BaseApplication;
 import com.xxl.kfapp.base.BaseFragment;
 import com.xxl.kfapp.model.response.BossCountInfoVo;
@@ -108,6 +110,7 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_shopcnt:
+                startActivity(new Intent(getActivity(), ShopDetailActivity.class));
                 break;
             case R.id.tv_online:
                 break;

@@ -1,4 +1,4 @@
-package com.xxl.kfapp.activity.home;
+package com.xxl.kfapp.activity.home.jmkd;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,7 +38,6 @@ import butterknife.ButterKnife;
 import cn.qqtheme.framework.entity.City;
 import cn.qqtheme.framework.entity.County;
 import cn.qqtheme.framework.entity.Province;
-import okhttp3.Request;
 import talex.zsw.baselibrary.util.klog.KLog;
 
 /**

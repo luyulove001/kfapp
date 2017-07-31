@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.xxl.kfapp.activity.home.ShopUnbindActivity">
+    tools:context="com.xxl.kfapp.activity.home.boss.ShopUnbindActivity">
 
     <com.xxl.kfapp.widget.TitleBar
         android:id="@+id/mTitleBar"
@@ -21,29 +21,25 @@
         android:padding="@dimen/x20">
 
 
-
         <RadioGroup
-            android:layout_marginTop="10dp"
             android:id="@+id/rg_way"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <RadioButton
-                android:layout_marginRight="30dp"
                 android:id="@+id/rb_close_shop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:drawablePadding="5dp"
                 android:padding="@dimen/x25"
-                android:text="关店"
                 android:tag="gd"
-                android:textSize="@dimen/big"
-                 />
+                android:text="关店"
+                android:textSize="@dimen/big"/>
 
             <RadioButton
-                android:layout_marginLeft="30dp"
                 android:id="@+id/rb_transfer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,10 +47,9 @@
                 android:layout_marginStart="@dimen/x180"
                 android:drawablePadding="5dp"
                 android:padding="@dimen/x25"
-                android:text="转让"
-                android:textSize="@dimen/big"
                 android:tag="zr"
-                />
+                android:text="转让"
+                android:textSize="@dimen/big"/>
         </RadioGroup>
 
     </LinearLayout>

@@ -7,13 +7,11 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
-import com.xxl.kfapp.activity.home.ShopDetailActivity;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
@@ -32,6 +30,9 @@ public class RenameActivity extends BaseActivity implements View.OnClickListener
     EditText etNickname;
     @Bind(R.id.clear_nickname)
     ImageView ivClear;
+    @Bind(R.id.ll_operate_record)
+    LinearLayout llOperateRecord;
+
     String shopName;
     private String token;
 

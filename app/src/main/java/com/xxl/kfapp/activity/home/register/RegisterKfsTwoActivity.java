@@ -1,4 +1,4 @@
-package com.xxl.kfapp.activity.home;
+package com.xxl.kfapp.activity.home.register;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -8,22 +8,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONException;
-import com.alibaba.fastjson.JSONObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.model.response.ApplyStatusVo;
 import com.xxl.kfapp.model.response.ProgressVo;
-import com.xxl.kfapp.model.response.ShopApplyStatusVo;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.TitleBar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,20 +34,16 @@ import talex.zsw.baselibrary.util.klog.KLog;
 /**
  * 作者：XNN
  * 日期：2017/6/7
- * 作用：加盟开店第二步 审核
+ * 作用：注册快发师第二步 审核
  */
 
-public class JmkdTwoActivity extends BaseActivity implements View.OnClickListener {
-
-
+public class RegisterKfsTwoActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.mTitleBar)
     TitleBar mTitleBar;
-    @Bind(R.id.pRecyclerView)
-    RecyclerView pRecyclerView;
-    @Bind(R.id.mScrollView)
-    ScrollView mScrollView;
     @Bind(R.id.next)
     Button next;
+    @Bind(R.id.pRecyclerView)
+    RecyclerView pRecyclerView;
     @Bind(R.id.tv_checking)
     TextView tvChecking;
     @Bind(R.id.tv_fixedreason)
@@ -59,22 +54,23 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
     LinearLayout lytReasonShsb;
     @Bind(R.id.tv_tips)
     TextView tvTips;
+
     private ProgressAdapter progressAdapter;
     private List<ProgressVo> progressVos;
-    private ShopApplyStatusVo statusVo;
+    private ApplyStatusVo statusVo;
     private Drawable pass, fair;
 
     @Override
     protected void initArgs(Intent intent) {
-        // TODO: 2017/7/21 根据意向地址显示列表
+        statusVo = (ApplyStatusVo) intent.getSerializableExtra("");
     }
 
     @Override
     protected void initView(Bundle bundle) {
-        setContentView(R.layout.activity_jmkd_two);
+        setContentView(R.layout.activity_registerkfs_two);
         ButterKnife.bind(this);
         next.setOnClickListener(this);
-        mTitleBar.setTitle("开店申请");
+        mTitleBar.setTitle("注册快发师申请");
         mTitleBar.setBackOnclickListener(this);
         initDrawables();
     }
@@ -82,7 +78,7 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void initData() {
         initInfoRecycleView();
-        doGetShopApplyStatus();
+        doGetBarberApplyStatus();
     }
 
     private void initDrawables() {
@@ -92,6 +88,31 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
         fair.setBounds(0, 0, fair.getMinimumWidth(), fair.getMinimumHeight());
     }
 
+    private void doUpdateApplyStatus() {
+        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.updateApplyStatus)
+                .tag(this)
+                .params("token", token)
+                .params("applysts", "12")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                KLog.i(response.body());
+                                startActivity(new Intent(RegisterKfsTwoActivity.this, RegisterKfsThreeActivity.class));
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
 
     @Override
     public void onClick(View v) {
@@ -106,7 +127,9 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
                             doUpdateApplyStatus();
                             break;
                         case "2":
-                            startActivity(new Intent(this, JmkdOneActivity.class));
+                            Intent intent = new Intent(RegisterKfsTwoActivity.this, RegisterKfsOneActivity.class);
+                            intent.putExtra("isRepeat", true);
+                            startActivity(intent);
                             finish();
                             break;
                     }
@@ -135,7 +158,7 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
 
     private void setData() {
         progressVos = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 5; i++) {
             ProgressVo vo = new ProgressVo();
             if (i == 0) {
                 vo.setName("申请加盟");
@@ -146,13 +169,9 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
             } else if (i == 2) {
                 vo.setName("阅读协议");
             } else if (i == 3) {
-                vo.setName("品牌保证金");
+                vo.setName("考试");
             } else if (i == 4) {
-                vo.setName("选址");
-            } else if (i == 5) {
-                vo.setName("装修设备");
-            } else if (i == 6) {
-                vo.setName("加盟成功");
+                vo.setName("申请成功");
             }
 
             progressVos.add(vo);
@@ -160,22 +179,25 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
         progressAdapter.setNewData(progressVos);
     }
 
-    private void doGetShopApplyStatus() {
-        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
-        OkGo.<String>get(Urls.baseUrl + Urls.getShopApplyStatus)
+    private void doGetBarberApplyStatus() {
+        String token = PreferenceUtils.getPrefString(this.getApplicationContext(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.getBarberApplyStatus)
                 .tag(this)
                 .params("token", token)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         try {
-                            JSONObject json = JSON.parseObject(response.body());
+                            JSONObject json = new JSONObject(response.body());
                             String code = json.getString("code");
-                            if (code.equals("100000")) {
-                                KLog.i(response.body());
-                                statusVo = mGson.fromJson(json.getString("data"), ShopApplyStatusVo.class);
-                                PreferenceUtils.setPrefString(getApplication(), "applyid", statusVo.getApplyid());
-                                PreferenceUtils.setPrefString(getApplication(), "brandmoney", statusVo.getBrandmoney());
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                KLog.d(response.body());
+                                statusVo = mGson.fromJson(json.getString("data"), ApplyStatusVo.class);
+                                if (statusVo.getChecksts() != null) {
+                                    statusVo.setChecksts("0");
+                                }
                                 switch (statusVo.getChecksts()) {
                                     case "0":
                                         next.setClickable(false);
@@ -183,51 +205,20 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
                                         next.setTextColor(getResources().getColor(R.color.gray));
                                         break;
                                     case "1":
-                                        tvChecking.setText("恭喜您，您的初审已通过");
-                                        tvChecking.setCompoundDrawablesRelative(pass, null, null, null);
+                                        tvChecking.setText("，您的初审已通过");
+                                        tvChecking.setCompoundDrawables(pass, null, null, null);
                                         break;
                                     case "2":
-                                        tvChecking.setText("真遗憾，您的审核未通过");
-                                        tvChecking.setCompoundDrawablesRelative(fair, null, null, null);
+                                        tvChecking.setText("真遗憾，您的初审未通过");
+                                        tvChecking.setCompoundDrawables(fair, null, null, null);
                                         lytReasonShsb.setVisibility(View.VISIBLE);
                                         tvFixedReason.setText(statusVo.getFixedreason());
                                         tvCustomReason.setText(statusVo.getCustomreason());
-                                        next.setText("重新选择区域");
+                                        next.setText("重新填写");
                                         tvTips.setVisibility(View.VISIBLE);
                                         break;
                                 }
-                            } else {
-                                sweetDialog(json.getString("msg"), 1, false);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-    }
 
-    private void doUpdateApplyStatus() {
-        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
-        OkGo.<String>get(Urls.baseUrl + Urls.updateShopApplyStatus)
-                .tag(this)
-                .params("token", token)
-                .params("applysts", statusVo.getApplysts())
-                .params("applyid", statusVo.getApplyid())
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        try {
-                            JSONObject json = JSON.parseObject(response.body());
-                            String code = json.getString("code");
-                            if (code.equals("100000")) {
-                                KLog.i(response.body());
-                                Intent intent = new Intent(JmkdTwoActivity.this, JmkdThreeActivity.class);
-                                intent.putExtra("applyid", statusVo.getApplyid());
-                                intent.putExtra("brandmoney", statusVo.getBrandmoney());
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                sweetDialog(json.getString("msg"), 1, false);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

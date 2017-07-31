@@ -44,6 +44,7 @@ public class Urls {
     public static final String getShopModifyRecord = "/barberapi/getShopModifyRecord";
 
     public static final String updateShopPrice = "/barberapi/updateShopPrice";
+    public static final String updateShopCxPrice = "/barberapi/updateShopCxPrice";
 
     public static final String getDictList = "/commapi/getDictList";
     public static final String uploadForApp = "/file/uploadForApp";

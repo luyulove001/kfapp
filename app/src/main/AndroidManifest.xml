@@ -57,34 +57,34 @@
             android:name=".zxing.CaptureActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.home.RegisterKfsOneActivity"
+            android:name=".activity.home.register.RegisterKfsOneActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.home.RegisterKfsTwoActivity"
+            android:name=".activity.home.register.RegisterKfsTwoActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.home.RegisterKfsThreeActivity"
+            android:name=".activity.home.register.RegisterKfsThreeActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.home.RegisterKfsFourActivity"
+            android:name=".activity.home.register.RegisterKfsFourActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.home.RegisterKfsFiveActivity"
+            android:name=".activity.home.register.RegisterKfsFiveActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.home.JmkdOneActivity"
+            android:name=".activity.home.jmkd.JmkdOneActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.home.JmkdTwoActivity"
+            android:name=".activity.home.jmkd.JmkdTwoActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.home.JmkdThreeActivity"
+            android:name=".activity.home.jmkd.JmkdThreeActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.home.JmkdFourActivity"
+            android:name=".activity.home.jmkd.JmkdFourActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.home.JmkdFiveActivity"
+            android:name=".activity.home.jmkd.JmkdFiveActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.common.LoginActivity"
@@ -112,23 +112,23 @@
             android:name=".activity.person.AddAddrActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.home.ShopDetailActivity"
+            android:name=".activity.home.boss.ShopDetailActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activity.home.ShopSettingActivity"
+            android:name=".activity.home.boss.ShopSettingActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activity.home.ShopRenameActivity"
+            android:name=".activity.home.boss.ShopRenameActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activity.home.ShopUnbindActivity"
+            android:name=".activity.home.boss.ShopUnbindActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activity.home.ShopPriceActivity"
+            android:name=".activity.home.boss.ShopPriceActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
@@ -151,11 +151,11 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"/>
-        <activity android:name=".activity.home.JmkdSixActivity"
+        <activity android:name=".activity.home.jmkd.JmkdSixActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".activity.home.JmkdFive2Activity"
+        <activity android:name=".activity.home.jmkd.JmkdFive2Activity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".activity.home.JmkdFive3WebActivity"
+        <activity android:name=".activity.home.jmkd.JmkdFive3WebActivity"
                   android:screenOrientation="portrait"/>
     </application>
 
