@@ -132,7 +132,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activity.home.WithdrawActivity"
+            android:name=".activity.home.boss.WithdrawActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
@@ -151,12 +151,36 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"/>
-        <activity android:name=".activity.home.jmkd.JmkdSixActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".activity.home.jmkd.JmkdFive2Activity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".activity.home.jmkd.JmkdFive3WebActivity"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.home.jmkd.JmkdSixActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.home.jmkd.JmkdFive2Activity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.home.jmkd.JmkdFive3WebActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.home.boss.ShopListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.home.jmkd.JmkdFivePrepayActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.common.ImageShower"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.home.boss.ShopAmountActivity">
+        </activity>
+        <activity android:name=".activity.home.boss.BarberListActivity">
+        </activity>
+        <activity android:name=".activity.home.boss.CheckInActivity">
+        </activity>
+        <activity android:name=".activity.home.boss.AddBarberActivity">
+        </activity>
+        <activity
+            android:name=".activity.home.boss.TicketListActivity"
+            android:label="@string/title_activity_ticket_list">
+        </activity>
     </application>
 
 </manifest>

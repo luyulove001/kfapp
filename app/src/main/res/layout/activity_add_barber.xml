@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical"
+    tools:context="com.xxl.kfapp.activity.home.boss.ShopSettingActivity">
+
+    <com.xxl.kfapp.widget.TitleBar
+        android:id="@+id/mTitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/x200"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_white"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="工号"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/et_staffno"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_white"
+            android:gravity="center_vertical"
+            android:hint="请输入工号"
+            android:inputType="number"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:textColor="@color/black2"
+            android:textSize="18sp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/x30"
+            android:src="@mipmap/arrow_right_gray"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <include layout="@layout/gray_line"/>
+
+    <LinearLayout
+        android:id="@+id/lyt_shop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/x200"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_white"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="店铺"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_shopname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_white"
+            android:gravity="center_vertical"
+            android:hint="请选择店铺"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:textColor="@color/black2"
+            android:textSize="18sp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/x30"
+            android:src="@mipmap/arrow_right_gray"/>
+    </LinearLayout>
+
+    <include layout="@layout/gray_line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/x200"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_white"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="手机号码"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_white"
+            android:gravity="center_vertical"
+            android:hint="请输入手机号码"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:textColor="@color/black2"
+            android:textSize="18sp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/x30"
+            android:src="@mipmap/arrow_right_gray"
+            android:visibility="gone"/>
+    </LinearLayout>
+</LinearLayout>

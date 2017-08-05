@@ -4,9 +4,17 @@
     "areaName": "北京市",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "110000",
         "areaName": "北京市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "110101",
             "areaName": "东城区"
@@ -80,9 +88,17 @@
     "areaName": "天津市",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "120000",
         "areaName": "天津市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "120101",
             "areaName": "和平区"
@@ -156,9 +172,17 @@
     "areaName": "河北省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "130100",
         "areaName": "石家庄市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "130102",
             "areaName": "长安区"
@@ -258,6 +282,10 @@
         "areaName": "唐山市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "130202",
             "areaName": "路南区"
           },
@@ -320,6 +348,10 @@
         "areaName": "秦皇岛市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "130302",
             "areaName": "海港区"
           },
@@ -353,6 +385,10 @@
         "areaId": "130400",
         "areaName": "邯郸市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "130402",
             "areaName": "邯山区"
@@ -436,6 +472,10 @@
         "areaName": "邢台市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "130502",
             "areaName": "桥东区"
           },
@@ -517,6 +557,10 @@
         "areaId": "130600",
         "areaName": "保定市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "130602",
             "areaName": "新市区"
@@ -624,6 +668,10 @@
         "areaName": "张家口市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "130702",
             "areaName": "桥东区"
           },
@@ -698,6 +746,10 @@
         "areaName": "承德市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "130802",
             "areaName": "双桥区"
           },
@@ -747,6 +799,10 @@
         "areaId": "130900",
         "areaName": "沧州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "130902",
             "areaName": "新华区"
@@ -818,6 +874,10 @@
         "areaName": "廊坊市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "131002",
             "areaName": "安次区"
           },
@@ -863,6 +923,10 @@
         "areaId": "131100",
         "areaName": "衡水市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "131102",
             "areaName": "桃城区"
@@ -916,9 +980,17 @@
     "areaName": "山西省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "140100",
         "areaName": "太原市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "140105",
             "areaName": "小店区"
@@ -965,6 +1037,10 @@
         "areaId": "140200",
         "areaName": "大同市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "140202",
             "areaName": "城区"
@@ -1016,6 +1092,10 @@
         "areaName": "阳泉市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "140302",
             "areaName": "城区"
           },
@@ -1041,6 +1121,10 @@
         "areaId": "140400",
         "areaName": "长治市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "140402",
             "areaName": "城区"
@@ -1100,6 +1184,10 @@
         "areaName": "晋城市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "140502",
             "areaName": "城区"
           },
@@ -1130,6 +1218,10 @@
         "areaName": "朔州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "140602",
             "areaName": "朔城区"
           },
@@ -1159,6 +1251,10 @@
         "areaId": "140700",
         "areaName": "晋中市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "140702",
             "areaName": "榆次区"
@@ -1209,6 +1305,10 @@
         "areaId": "140800",
         "areaName": "运城市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "140802",
             "areaName": "盐湖区"
@@ -1267,6 +1367,10 @@
         "areaId": "140900",
         "areaName": "忻州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "140902",
             "areaName": "忻府区"
@@ -1329,6 +1433,10 @@
         "areaId": "141000",
         "areaName": "临汾市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "141002",
             "areaName": "尧都区"
@@ -1404,6 +1512,10 @@
         "areaName": "吕梁市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "141102",
             "areaName": "离石区"
           },
@@ -1464,9 +1576,17 @@
     "areaName": "内蒙古自治区",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "150100",
         "areaName": "呼和浩特市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "150102",
             "areaName": "新城区"
@@ -1510,6 +1630,10 @@
         "areaName": "包头市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "150202",
             "areaName": "东河区"
           },
@@ -1552,6 +1676,10 @@
         "areaName": "乌海市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "150302",
             "areaName": "海勃湾区"
           },
@@ -1569,6 +1697,10 @@
         "areaId": "150400",
         "areaName": "赤峰市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "150402",
             "areaName": "红山区"
@@ -1624,6 +1756,10 @@
         "areaName": "通辽市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "150502",
             "areaName": "科尔沁区"
           },
@@ -1662,6 +1798,10 @@
         "areaName": "鄂尔多斯市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "150602",
             "areaName": "东胜区"
           },
@@ -1699,6 +1839,10 @@
         "areaId": "150700",
         "areaName": "呼伦贝尔市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "150702",
             "areaName": "海拉尔区"
@@ -1762,6 +1906,10 @@
         "areaName": "巴彦淖尔市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "150802",
             "areaName": "临河区"
           },
@@ -1795,6 +1943,10 @@
         "areaId": "150900",
         "areaName": "乌兰察布市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "150902",
             "areaName": "集宁区"
@@ -1846,6 +1998,10 @@
         "areaName": "兴安盟",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "152201",
             "areaName": "乌兰浩特市"
           },
@@ -1875,6 +2031,10 @@
         "areaId": "152500",
         "areaName": "锡林郭勒盟",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "152501",
             "areaName": "二连浩特市"
@@ -1930,6 +2090,10 @@
         "areaName": "阿拉善盟",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "152921",
             "areaName": "阿拉善左旗"
           },
@@ -1950,9 +2114,17 @@
     "areaName": "辽宁省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "210100",
         "areaName": "沈阳市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "210102",
             "areaName": "和平区"
@@ -2024,6 +2196,10 @@
         "areaName": "大连市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "210202",
             "areaName": "中山区"
           },
@@ -2070,6 +2246,10 @@
         "areaName": "鞍山市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "210302",
             "areaName": "铁东区"
           },
@@ -2103,6 +2283,10 @@
         "areaId": "210400",
         "areaName": "抚顺市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "210402",
             "areaName": "新抚区"
@@ -2138,6 +2322,10 @@
         "areaName": "本溪市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "210502",
             "areaName": "平山区"
           },
@@ -2168,6 +2356,10 @@
         "areaName": "丹东市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "210602",
             "areaName": "元宝区"
           },
@@ -2197,6 +2389,10 @@
         "areaId": "210700",
         "areaName": "锦州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "210702",
             "areaName": "古塔区"
@@ -2232,6 +2428,10 @@
         "areaName": "营口市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "210802",
             "areaName": "站前区"
           },
@@ -2261,6 +2461,10 @@
         "areaId": "210900",
         "areaName": "阜新市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "210902",
             "areaName": "海州区"
@@ -2296,6 +2500,10 @@
         "areaName": "辽阳市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "211002",
             "areaName": "白塔区"
           },
@@ -2330,6 +2538,10 @@
         "areaName": "盘锦市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "211102",
             "areaName": "双台子区"
           },
@@ -2351,6 +2563,10 @@
         "areaId": "211200",
         "areaName": "铁岭市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "211202",
             "areaName": "银州区"
@@ -2386,6 +2602,10 @@
         "areaName": "朝阳市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "211302",
             "areaName": "双塔区"
           },
@@ -2420,6 +2640,10 @@
         "areaName": "葫芦岛市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "211402",
             "areaName": "连山区"
           },
@@ -2452,9 +2676,17 @@
     "areaName": "吉林省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "220100",
         "areaName": "长春市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "220102",
             "areaName": "南关区"
@@ -2502,6 +2734,10 @@
         "areaName": "吉林市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "220202",
             "areaName": "昌邑区"
           },
@@ -2544,6 +2780,10 @@
         "areaName": "四平市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "220302",
             "areaName": "铁西区"
           },
@@ -2574,6 +2814,10 @@
         "areaName": "辽源市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "220402",
             "areaName": "龙山区"
           },
@@ -2595,6 +2839,10 @@
         "areaId": "220500",
         "areaName": "通化市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "220502",
             "areaName": "东昌区"
@@ -2630,6 +2878,10 @@
         "areaName": "白山市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "220602",
             "areaName": "浑江区"
           },
@@ -2660,6 +2912,10 @@
         "areaName": "松原市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "220702",
             "areaName": "宁江区"
           },
@@ -2686,6 +2942,10 @@
         "areaName": "白城市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "220802",
             "areaName": "洮北区"
           },
@@ -2711,6 +2971,10 @@
         "areaId": "222400",
         "areaName": "延边朝鲜族自治州",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "222401",
             "areaName": "延吉市"
@@ -2752,9 +3016,17 @@
     "areaName": "黑龙江省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "230100",
         "areaName": "哈尔滨市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "230102",
             "areaName": "道里区"
@@ -2834,6 +3106,10 @@
         "areaName": "齐齐哈尔市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "230202",
             "areaName": "龙沙区"
           },
@@ -2904,6 +3180,10 @@
         "areaName": "鸡西市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "230302",
             "areaName": "鸡冠区"
           },
@@ -2946,6 +3226,10 @@
         "areaName": "鹤岗市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "230402",
             "areaName": "向阳区"
           },
@@ -2984,6 +3268,10 @@
         "areaName": "双鸭山市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "230502",
             "areaName": "尖山区"
           },
@@ -3021,6 +3309,10 @@
         "areaId": "230600",
         "areaName": "大庆市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "230602",
             "areaName": "萨尔图区"
@@ -3063,6 +3355,10 @@
         "areaId": "230700",
         "areaName": "伊春市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "230702",
             "areaName": "伊春区"
@@ -3138,6 +3434,10 @@
         "areaName": "佳木斯市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "230803",
             "areaName": "向阳区"
           },
@@ -3184,6 +3484,10 @@
         "areaName": "七台河市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "230902",
             "areaName": "新兴区"
           },
@@ -3205,6 +3509,10 @@
         "areaId": "231000",
         "areaName": "牡丹江市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "231002",
             "areaName": "东安区"
@@ -3252,6 +3560,10 @@
         "areaName": "黑河市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "231102",
             "areaName": "爱辉区"
           },
@@ -3281,6 +3593,10 @@
         "areaId": "231200",
         "areaName": "绥化市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "231202",
             "areaName": "北林区"
@@ -3328,6 +3644,10 @@
         "areaName": "大兴安岭地区",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "232721",
             "areaName": "呼玛县"
           },
@@ -3348,9 +3668,17 @@
     "areaName": "上海市",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "310000",
         "areaName": "上海市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "310101",
             "areaName": "黄浦区"
@@ -3432,9 +3760,17 @@
     "areaName": "江苏省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "320100",
         "areaName": "南京市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "320102",
             "areaName": "玄武区"
@@ -3486,6 +3822,10 @@
         "areaName": "无锡市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "320202",
             "areaName": "崇安区"
           },
@@ -3523,6 +3863,10 @@
         "areaId": "320300",
         "areaName": "徐州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "320302",
             "areaName": "鼓楼区"
@@ -3570,6 +3914,10 @@
         "areaName": "常州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "320402",
             "areaName": "天宁区"
           },
@@ -3603,6 +3951,10 @@
         "areaId": "320500",
         "areaName": "苏州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "320505",
             "areaName": "虎丘区"
@@ -3646,6 +3998,10 @@
         "areaName": "南通市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "320602",
             "areaName": "崇川区"
           },
@@ -3684,6 +4040,10 @@
         "areaName": "连云港市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "320703",
             "areaName": "连云区"
           },
@@ -3717,6 +4077,10 @@
         "areaId": "320800",
         "areaName": "淮安市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "320802",
             "areaName": "清河区"
@@ -3755,6 +4119,10 @@
         "areaId": "320900",
         "areaName": "盐城市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "320902",
             "areaName": "亭湖区"
@@ -3798,6 +4166,10 @@
         "areaName": "扬州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "321002",
             "areaName": "广陵区"
           },
@@ -3827,6 +4199,10 @@
         "areaId": "321100",
         "areaName": "镇江市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "321102",
             "areaName": "京口区"
@@ -3858,6 +4234,10 @@
         "areaName": "泰州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "321202",
             "areaName": "海陵区"
           },
@@ -3888,6 +4268,10 @@
         "areaName": "宿迁市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "321302",
             "areaName": "宿城区"
           },
@@ -3916,9 +4300,17 @@
     "areaName": "浙江省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "330100",
         "areaName": "杭州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "330102",
             "areaName": "上城区"
@@ -3978,6 +4370,10 @@
         "areaName": "宁波市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "330203",
             "areaName": "海曙区"
           },
@@ -4027,6 +4423,10 @@
         "areaId": "330300",
         "areaName": "温州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "330302",
             "areaName": "鹿城区"
@@ -4078,6 +4478,10 @@
         "areaName": "嘉兴市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "330402",
             "areaName": "南湖区"
           },
@@ -4112,6 +4516,10 @@
         "areaName": "湖州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "330502",
             "areaName": "吴兴区"
           },
@@ -4137,6 +4545,10 @@
         "areaId": "330600",
         "areaName": "绍兴市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "330602",
             "areaName": "越城区"
@@ -4167,6 +4579,10 @@
         "areaId": "330700",
         "areaName": "金华市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "330702",
             "areaName": "婺城区"
@@ -4210,6 +4626,10 @@
         "areaName": "衢州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "330802",
             "areaName": "柯城区"
           },
@@ -4240,6 +4660,10 @@
         "areaName": "舟山市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "330902",
             "areaName": "定海区"
           },
@@ -4261,6 +4685,10 @@
         "areaId": "331000",
         "areaName": "台州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "331002",
             "areaName": "椒江区"
@@ -4303,6 +4731,10 @@
         "areaId": "331100",
         "areaName": "丽水市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "331102",
             "areaName": "莲都区"
@@ -4348,9 +4780,17 @@
     "areaName": "安徽省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "340100",
         "areaName": "合肥市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "340102",
             "areaName": "瑶海区"
@@ -4394,6 +4834,10 @@
         "areaName": "芜湖市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "340202",
             "areaName": "镜湖区"
           },
@@ -4432,6 +4876,10 @@
         "areaName": "蚌埠市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "340302",
             "areaName": "龙子湖区"
           },
@@ -4466,6 +4914,10 @@
         "areaName": "淮南市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "340402",
             "areaName": "大通区"
           },
@@ -4495,6 +4947,10 @@
         "areaId": "340500",
         "areaName": "马鞍山市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "340503",
             "areaName": "花山区"
@@ -4526,6 +4982,10 @@
         "areaName": "淮北市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "340602",
             "areaName": "杜集区"
           },
@@ -4548,6 +5008,10 @@
         "areaName": "铜陵市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "340702",
             "areaName": "铜官山区"
           },
@@ -4569,6 +5033,10 @@
         "areaId": "340800",
         "areaName": "安庆市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "340802",
             "areaName": "迎江区"
@@ -4620,6 +5088,10 @@
         "areaName": "黄山市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "341002",
             "areaName": "屯溪区"
           },
@@ -4653,6 +5125,10 @@
         "areaId": "341100",
         "areaName": "滁州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "341102",
             "areaName": "琅琊区"
@@ -4692,6 +5168,10 @@
         "areaName": "阜阳市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "341202",
             "areaName": "颍州区"
           },
@@ -4730,6 +5210,10 @@
         "areaName": "宿州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "341302",
             "areaName": "埇桥区"
           },
@@ -4755,6 +5239,10 @@
         "areaId": "341500",
         "areaName": "六安市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "341502",
             "areaName": "金安区"
@@ -4790,6 +5278,10 @@
         "areaName": "亳州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "341602",
             "areaName": "谯城区"
           },
@@ -4812,6 +5304,10 @@
         "areaName": "池州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "341702",
             "areaName": "贵池区"
           },
@@ -4833,6 +5329,10 @@
         "areaId": "341800",
         "areaName": "宣城市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "341802",
             "areaName": "宣州区"
@@ -4870,9 +5370,17 @@
     "areaName": "福建省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "350100",
         "areaName": "福州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "350102",
             "areaName": "鼓楼区"
@@ -4932,6 +5440,10 @@
         "areaName": "厦门市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "350203",
             "areaName": "思明区"
           },
@@ -4962,6 +5474,10 @@
         "areaName": "莆田市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "350302",
             "areaName": "城厢区"
           },
@@ -4987,6 +5503,10 @@
         "areaId": "350400",
         "areaName": "三明市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "350402",
             "areaName": "梅列区"
@@ -5042,6 +5562,10 @@
         "areaName": "泉州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "350502",
             "areaName": "鲤城区"
           },
@@ -5096,6 +5620,10 @@
         "areaName": "漳州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "350602",
             "areaName": "芗城区"
           },
@@ -5146,6 +5674,10 @@
         "areaName": "南平市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "350702",
             "areaName": "延平区"
           },
@@ -5192,6 +5724,10 @@
         "areaName": "龙岩市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "350802",
             "areaName": "新罗区"
           },
@@ -5225,6 +5761,10 @@
         "areaId": "350900",
         "areaName": "宁德市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "350902",
             "areaName": "蕉城区"
@@ -5270,9 +5810,17 @@
     "areaName": "江西省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "360100",
         "areaName": "南昌市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "360102",
             "areaName": "东湖区"
@@ -5316,6 +5864,10 @@
         "areaName": "景德镇市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "360202",
             "areaName": "昌江区"
           },
@@ -5337,6 +5889,10 @@
         "areaId": "360300",
         "areaName": "萍乡市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "360302",
             "areaName": "安源区"
@@ -5363,6 +5919,10 @@
         "areaId": "360400",
         "areaName": "九江市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "360402",
             "areaName": "庐山区"
@@ -5422,6 +5982,10 @@
         "areaName": "新余市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "360502",
             "areaName": "渝水区"
           },
@@ -5435,6 +5999,10 @@
         "areaId": "360600",
         "areaName": "鹰潭市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "360602",
             "areaName": "月湖区"
@@ -5453,6 +6021,10 @@
         "areaId": "360700",
         "areaName": "赣州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "360702",
             "areaName": "章贡区"
@@ -5532,6 +6104,10 @@
         "areaName": "吉安市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "360802",
             "areaName": "吉州区"
           },
@@ -5590,6 +6166,10 @@
         "areaName": "宜春市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "360902",
             "areaName": "袁州区"
           },
@@ -5635,6 +6215,10 @@
         "areaId": "361000",
         "areaName": "抚州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "361002",
             "areaName": "临川区"
@@ -5685,6 +6269,10 @@
         "areaId": "361100",
         "areaName": "上饶市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "361102",
             "areaName": "信州区"
@@ -5742,9 +6330,17 @@
     "areaName": "山东省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "370100",
         "areaName": "济南市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "370102",
             "areaName": "历下区"
@@ -5800,6 +6396,10 @@
         "areaName": "青岛市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "370202",
             "areaName": "市南区"
           },
@@ -5846,6 +6446,10 @@
         "areaName": "淄博市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "370302",
             "areaName": "淄川区"
           },
@@ -5884,6 +6488,10 @@
         "areaName": "枣庄市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "370402",
             "areaName": "市中区"
           },
@@ -5914,6 +6522,10 @@
         "areaName": "东营市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "370502",
             "areaName": "东营区"
           },
@@ -5939,6 +6551,10 @@
         "areaId": "370600",
         "areaName": "烟台市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "370602",
             "areaName": "芝罘区"
@@ -5994,6 +6610,10 @@
         "areaName": "潍坊市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "370702",
             "areaName": "潍城区"
           },
@@ -6047,6 +6667,10 @@
         "areaId": "370800",
         "areaName": "济宁市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "370802",
             "areaName": "市中区"
@@ -6102,6 +6726,10 @@
         "areaName": "泰安市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "370902",
             "areaName": "泰山区"
           },
@@ -6132,6 +6760,10 @@
         "areaName": "威海市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "371002",
             "areaName": "环翠区"
           },
@@ -6153,6 +6785,10 @@
         "areaId": "371100",
         "areaName": "日照市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "371102",
             "areaName": "东港区"
@@ -6176,6 +6812,10 @@
         "areaName": "莱芜市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "371202",
             "areaName": "莱城区"
           },
@@ -6189,6 +6829,10 @@
         "areaId": "371300",
         "areaName": "临沂市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "371302",
             "areaName": "兰山区"
@@ -6244,6 +6888,10 @@
         "areaName": "德州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "371402",
             "areaName": "德城区"
           },
@@ -6294,6 +6942,10 @@
         "areaName": "聊城市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "371502",
             "areaName": "东昌府区"
           },
@@ -6332,6 +6984,10 @@
         "areaName": "滨州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "371602",
             "areaName": "滨城区"
           },
@@ -6365,6 +7021,10 @@
         "areaId": "371700",
         "areaName": "菏泽市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "371702",
             "areaName": "牡丹区"
@@ -6410,9 +7070,17 @@
     "areaName": "河南省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "410100",
         "areaName": "郑州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "410102",
             "areaName": "中原区"
@@ -6468,6 +7136,10 @@
         "areaName": "开封市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "410202",
             "areaName": "龙亭区"
           },
@@ -6513,6 +7185,10 @@
         "areaId": "410300",
         "areaName": "洛阳市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "410302",
             "areaName": "老城区"
@@ -6580,6 +7256,10 @@
         "areaName": "平顶山市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "410402",
             "areaName": "新华区"
           },
@@ -6626,6 +7306,10 @@
         "areaName": "安阳市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "410502",
             "areaName": "文峰区"
           },
@@ -6668,6 +7352,10 @@
         "areaName": "鹤壁市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "410602",
             "areaName": "鹤山区"
           },
@@ -6693,6 +7381,10 @@
         "areaId": "410700",
         "areaName": "新乡市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "410702",
             "areaName": "红旗区"
@@ -6748,6 +7440,10 @@
         "areaName": "焦作市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "410802",
             "areaName": "解放区"
           },
@@ -6794,6 +7490,10 @@
         "areaName": "濮阳市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "410902",
             "areaName": "华龙区"
           },
@@ -6823,6 +7523,10 @@
         "areaId": "411000",
         "areaName": "许昌市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "411002",
             "areaName": "魏都区"
@@ -6854,6 +7558,10 @@
         "areaName": "漯河市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "411102",
             "areaName": "源汇区"
           },
@@ -6879,6 +7587,10 @@
         "areaId": "411200",
         "areaName": "三门峡市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "411202",
             "areaName": "湖滨区"
@@ -6909,6 +7621,10 @@
         "areaId": "411300",
         "areaName": "南阳市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "411302",
             "areaName": "宛城区"
@@ -6968,6 +7684,10 @@
         "areaName": "商丘市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "411402",
             "areaName": "梁园区"
           },
@@ -7009,6 +7729,10 @@
         "areaId": "411500",
         "areaName": "信阳市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "411502",
             "areaName": "负忧"
@@ -7056,6 +7780,10 @@
         "areaName": "周口市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "411602",
             "areaName": "川汇区"
           },
@@ -7101,6 +7829,10 @@
         "areaId": "411700",
         "areaName": "驻马店市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "411702",
             "areaName": "驿城区"
@@ -7148,6 +7880,10 @@
         "areaName": "省直辖县级行政区划",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "419001",
             "areaName": "济源市"
           }
@@ -7160,9 +7896,17 @@
     "areaName": "湖北省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "420100",
         "areaName": "武汉市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "420102",
             "areaName": "江岸区"
@@ -7238,6 +7982,10 @@
         "areaName": "黄石市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "420202",
             "areaName": "黄石港区"
           },
@@ -7267,6 +8015,10 @@
         "areaId": "420300",
         "areaName": "十堰市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "420302",
             "areaName": "茅箭区"
@@ -7305,6 +8057,10 @@
         "areaId": "420500",
         "areaName": "宜昌市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "420502",
             "areaName": "西陵区"
@@ -7364,6 +8120,10 @@
         "areaName": "襄阳市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "420602",
             "areaName": "襄城区"
           },
@@ -7406,6 +8166,10 @@
         "areaName": "鄂州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "420702",
             "areaName": "梁子湖区"
           },
@@ -7423,6 +8187,10 @@
         "areaId": "420800",
         "areaName": "荆门市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "420802",
             "areaName": "东宝区"
@@ -7449,6 +8217,10 @@
         "areaId": "420900",
         "areaName": "孝感市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "420902",
             "areaName": "孝南区"
@@ -7483,6 +8255,10 @@
         "areaId": "421000",
         "areaName": "荆州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "421002",
             "areaName": "沙市区"
@@ -7521,6 +8297,10 @@
         "areaId": "421100",
         "areaName": "黄冈市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "421102",
             "areaName": "黄州区"
@@ -7568,6 +8348,10 @@
         "areaName": "咸宁市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "421202",
             "areaName": "咸安区"
           },
@@ -7598,6 +8382,10 @@
         "areaName": "随州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "421303",
             "areaName": "曾都区"
           },
@@ -7615,6 +8403,10 @@
         "areaId": "422800",
         "areaName": "恩施土家族苗族自治州",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "422801",
             "areaName": "恩施市"
@@ -7654,6 +8446,10 @@
         "areaName": "省直辖县级行政区划",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "429004",
             "areaName": "仙桃市"
           },
@@ -7678,9 +8474,17 @@
     "areaName": "湖南省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "430100",
         "areaName": "长沙市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "430102",
             "areaName": "芙蓉区"
@@ -7724,6 +8528,10 @@
         "areaName": "株洲市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "430202",
             "areaName": "荷塘区"
           },
@@ -7766,6 +8574,10 @@
         "areaName": "湘潭市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "430302",
             "areaName": "雨湖区"
           },
@@ -7791,6 +8603,10 @@
         "areaId": "430400",
         "areaName": "衡阳市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "430405",
             "areaName": "珠晖区"
@@ -7846,6 +8662,10 @@
         "areaName": "邵阳市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "430502",
             "areaName": "双清区"
           },
@@ -7900,6 +8720,10 @@
         "areaName": "岳阳市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "430602",
             "areaName": "岳阳楼区"
           },
@@ -7941,6 +8765,10 @@
         "areaId": "430700",
         "areaName": "常德市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "430702",
             "areaName": "武陵区"
@@ -7984,6 +8812,10 @@
         "areaName": "张家界市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "430802",
             "areaName": "永定区"
           },
@@ -8005,6 +8837,10 @@
         "areaId": "430900",
         "areaName": "益阳市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "430902",
             "areaName": "资阳区"
@@ -8035,6 +8871,10 @@
         "areaId": "431000",
         "areaName": "郴州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "431002",
             "areaName": "北湖区"
@@ -8086,6 +8926,10 @@
         "areaName": "永州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "431102",
             "areaName": "零陵区"
           },
@@ -8135,6 +8979,10 @@
         "areaId": "431200",
         "areaName": "怀化市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "431202",
             "areaName": "鹤城区"
@@ -8190,6 +9038,10 @@
         "areaName": "娄底市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "431302",
             "areaName": "娄星区"
           },
@@ -8215,6 +9067,10 @@
         "areaId": "433100",
         "areaName": "湘西土家族苗族自治州",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "433101",
             "areaName": "吉首市"
@@ -8256,9 +9112,17 @@
     "areaName": "广东省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "440100",
         "areaName": "广州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "440103",
             "areaName": "荔湾区"
@@ -8314,6 +9178,10 @@
         "areaName": "韶关市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "440203",
             "areaName": "武江区"
           },
@@ -8359,6 +9227,10 @@
         "areaId": "440300",
         "areaName": "深圳市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "440303",
             "areaName": "罗湖区"
@@ -8406,6 +9278,10 @@
         "areaName": "珠海市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "440402",
             "areaName": "香洲区"
           },
@@ -8423,6 +9299,10 @@
         "areaId": "440500",
         "areaName": "汕头市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "440507",
             "areaName": "龙湖区"
@@ -8458,6 +9338,10 @@
         "areaName": "佛山市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "440604",
             "areaName": "禅城区"
           },
@@ -8483,6 +9367,10 @@
         "areaId": "440700",
         "areaName": "江门市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "440703",
             "areaName": "蓬江区"
@@ -8517,6 +9405,10 @@
         "areaId": "440800",
         "areaName": "湛江市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "440802",
             "areaName": "赤坎区"
@@ -8560,6 +9452,10 @@
         "areaName": "茂名市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "440902",
             "areaName": "茂南区"
           },
@@ -8589,6 +9485,10 @@
         "areaId": "441200",
         "areaName": "肇庆市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "441202",
             "areaName": "端州区"
@@ -8628,6 +9528,10 @@
         "areaName": "惠州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "441302",
             "areaName": "惠城区"
           },
@@ -8653,6 +9557,10 @@
         "areaId": "441400",
         "areaName": "梅州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "441402",
             "areaName": "梅江区"
@@ -8692,6 +9600,10 @@
         "areaName": "汕尾市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "441502",
             "areaName": "城区"
           },
@@ -8713,6 +9625,10 @@
         "areaId": "441600",
         "areaName": "河源市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "441602",
             "areaName": "源城区"
@@ -8744,6 +9660,10 @@
         "areaName": "阳江市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "441702",
             "areaName": "江城区"
           },
@@ -8765,6 +9685,10 @@
         "areaId": "441800",
         "areaName": "清远市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "441802",
             "areaName": "清城区"
@@ -8803,6 +9727,10 @@
         "areaId": "441900",
         "areaName": "东莞市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "441901003",
             "areaName": "东城街道"
@@ -8950,6 +9878,10 @@
         "areaName": "中山市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "442001001",
             "areaName": "石岐区街道"
           },
@@ -9052,6 +9984,10 @@
         "areaName": "潮州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "445102",
             "areaName": "湘桥区"
           },
@@ -9069,6 +10005,10 @@
         "areaId": "445200",
         "areaName": "揭阳市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "445202",
             "areaName": "榕城区"
@@ -9095,6 +10035,10 @@
         "areaId": "445300",
         "areaName": "云浮市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "445302",
             "areaName": "云城区"
@@ -9124,9 +10068,17 @@
     "areaName": "广西壮族自治区",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "450100",
         "areaName": "南宁市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "450102",
             "areaName": "兴宁区"
@@ -9182,6 +10134,10 @@
         "areaName": "柳州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "450202",
             "areaName": "城中区"
           },
@@ -9227,6 +10183,10 @@
         "areaId": "450300",
         "areaName": "桂林市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "450302",
             "areaName": "秀峰区"
@@ -9302,6 +10262,10 @@
         "areaName": "梧州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "450403",
             "areaName": "万秀区"
           },
@@ -9336,6 +10300,10 @@
         "areaName": "北海市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "450502",
             "areaName": "海城区"
           },
@@ -9357,6 +10325,10 @@
         "areaId": "450600",
         "areaName": "防城港市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "450602",
             "areaName": "港口区"
@@ -9380,6 +10352,10 @@
         "areaName": "钦州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "450702",
             "areaName": "钦南区"
           },
@@ -9401,6 +10377,10 @@
         "areaId": "450800",
         "areaName": "贵港市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "450802",
             "areaName": "港北区"
@@ -9427,6 +10407,10 @@
         "areaId": "450900",
         "areaName": "玉林市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "450902",
             "areaName": "玉州区"
@@ -9461,6 +10445,10 @@
         "areaId": "451000",
         "areaName": "百色市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "451002",
             "areaName": "右江区"
@@ -9516,6 +10504,10 @@
         "areaName": "贺州市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "451102",
             "areaName": "八步区"
           },
@@ -9537,6 +10529,10 @@
         "areaId": "451200",
         "areaName": "河池市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "451202",
             "areaName": "金城江区"
@@ -9588,6 +10584,10 @@
         "areaName": "来宾市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "451302",
             "areaName": "兴宾区"
           },
@@ -9617,6 +10617,10 @@
         "areaId": "451400",
         "areaName": "崇左市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "451402",
             "areaName": "江州区"
@@ -9654,9 +10658,17 @@
     "areaName": "海南省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "460100",
         "areaName": "海口市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "460105",
             "areaName": "秀英区"
@@ -9679,6 +10691,10 @@
         "areaId": "460200",
         "areaName": "三亚市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "460201100",
             "areaName": "海棠湾镇"
@@ -9734,6 +10750,10 @@
         "areaName": "三沙市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "460321",
             "areaName": "西沙群岛"
           },
@@ -9751,6 +10771,10 @@
         "areaId": "469000",
         "areaName": "省直辖县级行政区划",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "469001",
             "areaName": "五指山市"
@@ -9824,9 +10848,17 @@
     "areaName": "重庆市",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "500000",
         "areaName": "重庆市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "500101",
             "areaName": "万州区"
@@ -9988,9 +11020,17 @@
     "areaName": "四川省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "510100",
         "areaName": "成都市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "510104",
             "areaName": "锦江区"
@@ -10082,6 +11122,10 @@
         "areaName": "自贡市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "510302",
             "areaName": "自流井区"
           },
@@ -10112,6 +11156,10 @@
         "areaName": "攀枝花市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "510402",
             "areaName": "东区"
           },
@@ -10137,6 +11185,10 @@
         "areaId": "510500",
         "areaName": "泸州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "510502",
             "areaName": "江阳区"
@@ -10172,6 +11224,10 @@
         "areaName": "德阳市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "510603",
             "areaName": "旌阳区"
           },
@@ -10201,6 +11257,10 @@
         "areaId": "510700",
         "areaName": "绵阳市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "510703",
             "areaName": "涪城区"
@@ -10244,6 +11304,10 @@
         "areaName": "广元市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "510802",
             "areaName": "利州区"
           },
@@ -10278,6 +11342,10 @@
         "areaName": "遂宁市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "510903",
             "areaName": "船山区"
           },
@@ -10304,6 +11372,10 @@
         "areaName": "内江市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "511002",
             "areaName": "市中区"
           },
@@ -10329,6 +11401,10 @@
         "areaId": "511100",
         "areaName": "乐山市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "511102",
             "areaName": "市中区"
@@ -10380,6 +11456,10 @@
         "areaName": "南充市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "511302",
             "areaName": "顺庆区"
           },
@@ -10422,6 +11502,10 @@
         "areaName": "眉山市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "511402",
             "areaName": "东坡区"
           },
@@ -10451,6 +11535,10 @@
         "areaId": "511500",
         "areaName": "宜宾市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "511502",
             "areaName": "翠屏区"
@@ -10498,6 +11586,10 @@
         "areaName": "广安市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "511602",
             "areaName": "广安区"
           },
@@ -10527,6 +11619,10 @@
         "areaId": "511700",
         "areaName": "达州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "511702",
             "areaName": "通川区"
@@ -10561,6 +11657,10 @@
         "areaId": "511800",
         "areaName": "雅安市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "511802",
             "areaName": "雨城区"
@@ -10600,6 +11700,10 @@
         "areaName": "巴中市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "511902",
             "areaName": "巴州区"
           },
@@ -10626,6 +11730,10 @@
         "areaName": "资阳市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "512002",
             "areaName": "雁江区"
           },
@@ -10647,6 +11755,10 @@
         "areaId": "513200",
         "areaName": "阿坝藏族羌族自治州",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "513221",
             "areaName": "汶川县"
@@ -10705,6 +11817,10 @@
         "areaId": "513300",
         "areaName": "甘孜藏族自治州",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "513321",
             "areaName": "康定县"
@@ -10784,6 +11900,10 @@
         "areaName": "凉山彝族自治州",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "513401",
             "areaName": "西昌市"
           },
@@ -10860,9 +11980,17 @@
     "areaName": "贵州省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "520100",
         "areaName": "贵阳市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "520102",
             "areaName": "南明区"
@@ -10910,6 +12038,10 @@
         "areaName": "六盘水市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "520201",
             "areaName": "钟山区"
           },
@@ -10931,6 +12063,10 @@
         "areaId": "520300",
         "areaName": "遵义市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "520302",
             "areaName": "红花岗区"
@@ -10994,6 +12130,10 @@
         "areaName": "安顺市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "520402",
             "areaName": "西秀区"
           },
@@ -11023,6 +12163,10 @@
         "areaId": "520500",
         "areaName": "毕节市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "520502",
             "areaName": "七星关区"
@@ -11061,6 +12205,10 @@
         "areaId": "520600",
         "areaName": "铜仁市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "520602",
             "areaName": "碧江区"
@@ -11108,6 +12256,10 @@
         "areaName": "黔西南布依族苗族自治州",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "522301",
             "areaName": "兴义市"
           },
@@ -11145,6 +12297,10 @@
         "areaId": "522600",
         "areaName": "黔东南苗族侗族自治州",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "522601",
             "areaName": "凯里市"
@@ -11216,6 +12372,10 @@
         "areaName": "黔南布依族苗族自治州",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "522701",
             "areaName": "都匀市"
           },
@@ -11272,9 +12432,17 @@
     "areaName": "云南省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "530100",
         "areaName": "昆明市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "530102",
             "areaName": "五华区"
@@ -11338,6 +12506,10 @@
         "areaName": "曲靖市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "530302",
             "areaName": "麒麟区"
           },
@@ -11379,6 +12551,10 @@
         "areaId": "530400",
         "areaName": "玉溪市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "530402",
             "areaName": "红塔区"
@@ -11422,6 +12598,10 @@
         "areaName": "保山市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "530502",
             "areaName": "隆阳区"
           },
@@ -11447,6 +12627,10 @@
         "areaId": "530600",
         "areaName": "昭通市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "530602",
             "areaName": "昭阳区"
@@ -11498,6 +12682,10 @@
         "areaName": "丽江市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "530702",
             "areaName": "古城区"
           },
@@ -11523,6 +12711,10 @@
         "areaId": "530800",
         "areaName": "普洱市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "530802",
             "areaName": "思茅区"
@@ -11570,6 +12762,10 @@
         "areaName": "临沧市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "530902",
             "areaName": "临翔区"
           },
@@ -11607,6 +12803,10 @@
         "areaId": "532300",
         "areaName": "楚雄彝族自治州",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "532301",
             "areaName": "楚雄市"
@@ -11653,6 +12853,10 @@
         "areaId": "532500",
         "areaName": "红河哈尼族彝族自治州",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "532501",
             "areaName": "个旧市"
@@ -11712,6 +12916,10 @@
         "areaName": "文山壮族苗族自治州",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "532601",
             "areaName": "文山市"
           },
@@ -11750,6 +12958,10 @@
         "areaName": "西双版纳傣族自治州",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "532801",
             "areaName": "景洪市"
           },
@@ -11767,6 +12979,10 @@
         "areaId": "532900",
         "areaName": "大理白族自治州",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "532901",
             "areaName": "大理市"
@@ -11822,6 +13038,10 @@
         "areaName": "德宏傣族景颇族自治州",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "533102",
             "areaName": "瑞丽市"
           },
@@ -11848,6 +13068,10 @@
         "areaName": "怒江傈僳族自治州",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "533321",
             "areaName": "泸水县"
           },
@@ -11870,6 +13094,10 @@
         "areaName": "迪庆藏族自治州",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "533421",
             "areaName": "香格里拉县"
           },
@@ -11890,9 +13118,17 @@
     "areaName": "西藏自治区",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "540100",
         "areaName": "拉萨市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "540102",
             "areaName": "城关区"
@@ -11931,6 +13167,10 @@
         "areaId": "542100",
         "areaName": "昌都地区",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "542121",
             "areaName": "昌都县"
@@ -11981,6 +13221,10 @@
         "areaId": "542200",
         "areaName": "山南地区",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "542221",
             "areaName": "乃东县"
@@ -12035,6 +13279,10 @@
         "areaId": "542300",
         "areaName": "日喀则地区",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "542301",
             "areaName": "日喀则市"
@@ -12114,6 +13362,10 @@
         "areaName": "那曲地区",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "542421",
             "areaName": "那曲县"
           },
@@ -12164,6 +13416,10 @@
         "areaName": "阿里地区",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "542521",
             "areaName": "普兰县"
           },
@@ -12197,6 +13453,10 @@
         "areaId": "542600",
         "areaName": "林芝地区",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "542621",
             "areaName": "林芝县"
@@ -12234,9 +13494,17 @@
     "areaName": "陕西省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "610100",
         "areaName": "西安市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "610102",
             "areaName": "新城区"
@@ -12296,6 +13564,10 @@
         "areaName": "铜川市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "610202",
             "areaName": "王益区"
           },
@@ -12317,6 +13589,10 @@
         "areaId": "610300",
         "areaName": "宝鸡市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "610302",
             "areaName": "渭滨区"
@@ -12371,6 +13647,10 @@
         "areaId": "610400",
         "areaName": "咸阳市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "610402",
             "areaName": "秦都区"
@@ -12434,6 +13714,10 @@
         "areaName": "渭南市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "610502",
             "areaName": "临渭区"
           },
@@ -12483,6 +13767,10 @@
         "areaId": "610600",
         "areaName": "延安市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "610602",
             "areaName": "宝塔区"
@@ -12542,6 +13830,10 @@
         "areaName": "汉中市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "610702",
             "areaName": "汉台区"
           },
@@ -12591,6 +13883,10 @@
         "areaId": "610800",
         "areaName": "榆林市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "610802",
             "areaName": "榆阳区"
@@ -12646,6 +13942,10 @@
         "areaName": "安康市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "610902",
             "areaName": "汉滨区"
           },
@@ -12692,6 +13992,10 @@
         "areaName": "商洛市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "611002",
             "areaName": "商州区"
           },
@@ -12728,9 +14032,17 @@
     "areaName": "甘肃省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "620100",
         "areaName": "兰州市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "620102",
             "areaName": "城关区"
@@ -12770,6 +14082,10 @@
         "areaName": "嘉峪关市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "620201100",
             "areaName": "新城镇"
           },
@@ -12800,6 +14116,10 @@
         "areaName": "金昌市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "620302",
             "areaName": "金川区"
           },
@@ -12813,6 +14133,10 @@
         "areaId": "620400",
         "areaName": "白银市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "620402",
             "areaName": "白银区"
@@ -12839,6 +14163,10 @@
         "areaId": "620500",
         "areaName": "天水市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "620502",
             "areaName": "秦州区"
@@ -12874,6 +14202,10 @@
         "areaName": "武威市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "620602",
             "areaName": "凉州区"
           },
@@ -12895,6 +14227,10 @@
         "areaId": "620700",
         "areaName": "张掖市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "620702",
             "areaName": "甘州区"
@@ -12925,6 +14261,10 @@
         "areaId": "620800",
         "areaName": "平凉市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "620802",
             "areaName": "崆峒区"
@@ -12960,6 +14300,10 @@
         "areaName": "酒泉市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "620902",
             "areaName": "肃州区"
           },
@@ -12993,6 +14337,10 @@
         "areaId": "621000",
         "areaName": "庆阳市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "621002",
             "areaName": "西峰区"
@@ -13032,6 +14380,10 @@
         "areaName": "定西市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "621102",
             "areaName": "安定区"
           },
@@ -13065,6 +14417,10 @@
         "areaId": "621200",
         "areaName": "陇南市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "621202",
             "areaName": "武都区"
@@ -13108,6 +14464,10 @@
         "areaName": "临夏回族自治州",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "622901",
             "areaName": "临夏市"
           },
@@ -13145,6 +14505,10 @@
         "areaId": "623000",
         "areaName": "甘南藏族自治州",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "623001",
             "areaName": "合作市"
@@ -13186,9 +14550,17 @@
     "areaName": "青海省",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "630100",
         "areaName": "西宁市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "630102",
             "areaName": "城东区"
@@ -13224,6 +14596,10 @@
         "areaName": "海东市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "630202",
             "areaName": "乐都区"
           },
@@ -13254,6 +14630,10 @@
         "areaName": "海北藏族自治州",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "632221",
             "areaName": "门源回族自治县"
           },
@@ -13276,6 +14656,10 @@
         "areaName": "黄南藏族自治州",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "632321",
             "areaName": "同仁县"
           },
@@ -13297,6 +14681,10 @@
         "areaId": "632500",
         "areaName": "海南藏族自治州",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "632521",
             "areaName": "共和县"
@@ -13323,6 +14711,10 @@
         "areaId": "632600",
         "areaName": "果洛藏族自治州",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "632621",
             "areaName": "玛沁县"
@@ -13354,6 +14746,10 @@
         "areaName": "玉树藏族自治州",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "632701",
             "areaName": "玉树市"
           },
@@ -13384,6 +14780,10 @@
         "areaName": "海西蒙古族藏族自治州",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "632801",
             "areaName": "格尔木市"
           },
@@ -13412,9 +14812,17 @@
     "areaName": "宁夏回族自治区",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "640100",
         "areaName": "银川市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "640104",
             "areaName": "兴庆区"
@@ -13446,6 +14854,10 @@
         "areaName": "石嘴山市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "640202",
             "areaName": "大武口区"
           },
@@ -13463,6 +14875,10 @@
         "areaId": "640300",
         "areaName": "吴忠市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "640302",
             "areaName": "利通区"
@@ -13490,6 +14906,10 @@
         "areaName": "固原市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "640402",
             "areaName": "原州区"
           },
@@ -13516,6 +14936,10 @@
         "areaName": "中卫市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "640502",
             "areaName": "沙坡头区"
           },
@@ -13536,9 +14960,17 @@
     "areaName": "新疆维吾尔自治区",
     "cities": [
       {
+        "areaId": "",
+        "areaName": "全部"
+      },
+      {
         "areaId": "650100",
         "areaName": "乌鲁木齐市",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "650102",
             "areaName": "天山区"
@@ -13578,6 +15010,10 @@
         "areaName": "克拉玛依市",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "650202",
             "areaName": "独山子区"
           },
@@ -13600,6 +15036,10 @@
         "areaName": "吐鲁番地区",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "652101",
             "areaName": "吐鲁番市"
           },
@@ -13618,6 +15058,10 @@
         "areaName": "哈密地区",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "652201",
             "areaName": "哈密市"
           },
@@ -13635,6 +15079,10 @@
         "areaId": "652300",
         "areaName": "昌吉回族自治州",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "652301",
             "areaName": "昌吉市"
@@ -13670,6 +15118,10 @@
         "areaName": "博尔塔拉蒙古自治州",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "652701",
             "areaName": "博乐市"
           },
@@ -13691,6 +15143,10 @@
         "areaId": "652800",
         "areaName": "巴音郭楞蒙古自治州",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "652801",
             "areaName": "库尔勒市"
@@ -13734,6 +15190,10 @@
         "areaName": "阿克苏地区",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "652901",
             "areaName": "阿克苏市"
           },
@@ -13776,6 +15236,10 @@
         "areaName": "克孜勒苏柯尔克孜自治州",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "653001",
             "areaName": "阿图什市"
           },
@@ -13797,6 +15261,10 @@
         "areaId": "653100",
         "areaName": "喀什地区",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "653101",
             "areaName": "喀什市"
@@ -13852,6 +15320,10 @@
         "areaName": "和田地区",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "653201",
             "areaName": "和田市"
           },
@@ -13889,6 +15361,10 @@
         "areaId": "654000",
         "areaName": "伊犁哈萨克自治州",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "654002",
             "areaName": "伊宁市"
@@ -13936,6 +15412,10 @@
         "areaName": "塔城地区",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "654201",
             "areaName": "塔城市"
           },
@@ -13969,6 +15449,10 @@
         "areaId": "654300",
         "areaName": "阿勒泰地区",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "654301",
             "areaName": "阿勒泰市"
@@ -14004,6 +15488,10 @@
         "areaName": "自治区直辖县级行政区划",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "659001",
             "areaName": "石河子市"
           },
@@ -14031,6 +15519,14 @@
         "areaId": "800000",
         "areaName": "台湾",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "800001",
             "areaName": "台北市"
@@ -14134,6 +15630,10 @@
         "areaName": "香港",
         "counties": [
           {
+            "areaId": "",
+            "areaName": "全部"
+          },
+          {
             "areaId": "810001",
             "areaName": "中西区"
           },
@@ -14211,6 +15711,10 @@
         "areaId": "820000",
         "areaName": "澳门",
         "counties": [
+          {
+            "areaId": "",
+            "areaName": "全部"
+          },
           {
             "areaId": "820001",
             "areaName": "花地玛堂区"

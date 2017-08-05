@@ -7,12 +7,13 @@
 
             <!-- 色值 -->
             <solid android:color="@color/text_orange2" />
+            <corners android:radius="@dimen/x15"/>
         </shape>
     </item>
     <item>
         <shape>
             <solid android:color="@color/main_red" />
-            <corners android:radius="@dimen/x20"/>
+            <corners android:radius="@dimen/x15"/>
         </shape>
     </item>
 

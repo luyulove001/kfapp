@@ -38,7 +38,7 @@
                 android:paddingEnd="@dimen/x20"
                 android:paddingStart="@dimen/x20"
                 android:text="下沙物美店 NO.996"
-                android:textSize="@dimen/x40"/>
+                android:textSize="@dimen/x30"/>
 
             <TextView
                 android:id="@+id/tv_shopkeeper"
@@ -47,7 +47,8 @@
                 android:layout_marginTop="@dimen/x10"
                 android:paddingEnd="@dimen/x20"
                 android:paddingStart="@dimen/x20"
-                android:text="下沙物美店 NO.996"/>
+                android:text="下沙物美店 NO.996"
+                android:textSize="@dimen/x25"/>
 
             <TextView
                 android:id="@+id/tv_address"
@@ -56,7 +57,8 @@
                 android:layout_marginTop="@dimen/x10"
                 android:paddingEnd="@dimen/x20"
                 android:paddingStart="@dimen/x20"
-                android:text="下沙物美店 NO.996"/>
+                android:text="下沙物美店 NO.996"
+                android:textSize="@dimen/x25"/>
 
             <TextView
                 android:id="@+id/tv_start_business"
@@ -65,12 +67,13 @@
                 android:layout_marginTop="@dimen/x10"
                 android:paddingEnd="@dimen/x20"
                 android:paddingStart="@dimen/x20"
-                android:text="下沙物美店 NO.996"/>
+                android:text="下沙物美店 NO.996"
+                android:textSize="@dimen/x25"/>
 
             <LinearLayout
                 android:layout_width="@dimen/x430"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/y40"
+                android:layout_marginTop="@dimen/y20"
                 android:background="@drawable/bg_stroke_red"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -79,7 +82,7 @@
                     android:id="@+id/tv_open_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/x40"
+                    android:layout_marginTop="@dimen/x15"
                     android:paddingEnd="@dimen/x20"
                     android:paddingStart="@dimen/x20"
                     android:text="下沙物美店 NO.996"/>
@@ -88,8 +91,8 @@
                     android:id="@+id/tv_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/x20"
-                    android:layout_marginTop="@dimen/x20"
+                    android:layout_marginBottom="@dimen/x15"
+                    android:layout_marginTop="@dimen/x10"
                     android:paddingEnd="@dimen/x20"
                     android:paddingStart="@dimen/x20"
                     android:text="下沙物美店 NO.996"/>
@@ -124,6 +127,37 @@
             android:background="@color/gray_holo_dark"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/x360"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/x20"
+            android:paddingEnd="@dimen/x20"
+            android:paddingStart="@dimen/x20"
+            android:text="设备号"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/x20"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingEnd="@dimen/x20"
+            android:paddingStart="@dimen/x20"
+            android:text="密钥"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/x20"
+            android:paddingEnd="@dimen/x20"
+            android:paddingStart="@dimen/x20"
+            android:text="状态"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -134,16 +168,15 @@
             android:id="@+id/tv_sn"
             android:layout_width="@dimen/x360"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
+            android:layout_marginStart="@dimen/x20"
             android:paddingEnd="@dimen/x20"
             android:paddingStart="@dimen/x20"
             android:text="设备号"/>
 
         <TextView
-
+            android:id="@+id/tv_sn1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
             android:layout_weight="1"
             android:gravity="center"
             android:paddingEnd="@dimen/x20"
@@ -154,7 +187,7 @@
             android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
+            android:layout_marginEnd="@dimen/x20"
             android:paddingEnd="@dimen/x20"
             android:paddingStart="@dimen/x20"
             android:text="状态"/>
@@ -188,40 +221,8 @@
             android:background="@color/gray_holo_dark"/>
     </LinearLayout>
 
-    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
-        android:id="@+id/ls_haircut"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_barber"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="@dimen/x360"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
-            android:paddingEnd="@dimen/x20"
-            android:paddingStart="@dimen/x20"
-            android:text="设备号" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingEnd="@dimen/x20"
-            android:paddingStart="@dimen/x20"
-            android:text="密钥" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
-            android:paddingEnd="@dimen/x20"
-            android:paddingStart="@dimen/x20"
-            android:text="状态" />
-    </LinearLayout>
 </LinearLayout>

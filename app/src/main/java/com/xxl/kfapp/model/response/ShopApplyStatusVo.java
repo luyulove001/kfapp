@@ -2,10 +2,6 @@ package com.xxl.kfapp.model.response;
 
 import java.io.Serializable;
 
-/**
- * Created by Administrator on 2017/7/15.
- */
-
 public class ShopApplyStatusVo implements Serializable {
     private String shopid;
     private String checksts;
@@ -14,6 +10,42 @@ public class ShopApplyStatusVo implements Serializable {
     private String applyid;
     private String applysts;
     private String customreason;
+    private String prepayreason;
+    private String devicereason;
+    private String prepaychecksts;
+    private String devicechecksts;
+
+    public String getPrepayreason() {
+        return prepayreason;
+    }
+
+    public void setPrepayreason(String prepayreason) {
+        this.prepayreason = prepayreason;
+    }
+
+    public String getDevicereason() {
+        return devicereason;
+    }
+
+    public void setDevicereason(String devicereason) {
+        this.devicereason = devicereason;
+    }
+
+    public String getPrepaychecksts() {
+        return prepaychecksts;
+    }
+
+    public void setPrepaychecksts(String prepaychecksts) {
+        this.prepaychecksts = prepaychecksts;
+    }
+
+    public String getDevicechecksts() {
+        return devicechecksts;
+    }
+
+    public void setDevicechecksts(String devicechecksts) {
+        this.devicechecksts = devicechecksts;
+    }
 
     public String getShopid() {
         return shopid;

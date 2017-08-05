@@ -35,4 +35,9 @@
     <string name="error_field_required">账号不能为空</string>
     <string name="action_forgot_pwd">忘记密码?</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
+    <string name="title_activity_barber_work_state">BarberWorkStateActivity</string>
+    <string name="title_activity_ticket_list">TicketListActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

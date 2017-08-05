@@ -26,6 +26,7 @@ import com.xxl.kfapp.model.response.ProgressVo;
 import com.xxl.kfapp.model.response.ShopApplyInfoVo;
 import com.xxl.kfapp.model.response.ShopApplyStatusVo;
 import com.xxl.kfapp.utils.AddressPickTask;
+import com.xxl.kfapp.utils.AddressPickTaskAll;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.TitleBar;
@@ -106,10 +107,10 @@ public class JmkdOneActivity extends BaseActivity implements View.OnClickListene
     }
 
     public void onAddressPicker() {
-        AddressPickTask task = new AddressPickTask(this);
+        AddressPickTaskAll task = new AddressPickTaskAll(this);
         task.setHideProvince(false);
         task.setHideCounty(false);
-        task.setCallback(new AddressPickTask.Callback() {
+        task.setCallback(new AddressPickTaskAll.Callback() {
             @Override
             public void onAddressInitFailed() {
                 ToastShow("数据初始化失败");

@@ -18,6 +18,7 @@ import com.xxl.kfapp.R;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.response.AddrVo;
 import com.xxl.kfapp.utils.AddressPickTask;
+import com.xxl.kfapp.utils.AddressPickTaskAll;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.TitleBar;
@@ -101,10 +102,10 @@ public class AddAddrActivity extends BaseActivity {
     }
 
     public void onAddressPicker() {
-        AddressPickTask task = new AddressPickTask(this);
+        AddressPickTaskAll task = new AddressPickTaskAll(this);
         task.setHideProvince(false);
         task.setHideCounty(false);
-        task.setCallback(new AddressPickTask.Callback() {
+        task.setCallback(new AddressPickTaskAll.Callback() {
             @Override
             public void onAddressInitFailed() {
                 ToastShow("数据初始化失败");

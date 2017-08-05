@@ -13,7 +13,11 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
-import com.xxl.kfapp.activity.home.boss.ShopDetailActivity;
+import com.xxl.kfapp.activity.home.boss.BarberListActivity;
+import com.xxl.kfapp.activity.home.boss.CheckInActivity;
+import com.xxl.kfapp.activity.home.boss.ShopAmountActivity;
+import com.xxl.kfapp.activity.home.boss.ShopListActivity;
+import com.xxl.kfapp.activity.home.boss.TicketListActivity;
 import com.xxl.kfapp.base.BaseApplication;
 import com.xxl.kfapp.base.BaseFragment;
 import com.xxl.kfapp.model.response.BossCountInfoVo;
@@ -108,29 +112,52 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
 
     @Override
     public void onClick(View v) {
+        Intent i = new Intent();
         switch (v.getId()) {
             case R.id.tv_shopcnt:
-                startActivity(new Intent(getActivity(), ShopDetailActivity.class));
+                startActivity(new Intent(getActivity(), ShopListActivity.class));
                 break;
             case R.id.tv_online:
+                startActivity(new Intent(getActivity(), ShopListActivity.class));
                 break;
             case R.id.tv_offline:
+                startActivity(new Intent(getActivity(), ShopListActivity.class));
                 break;
             case R.id.lyt_totalamount:
+                i.setClass(getActivity(), ShopAmountActivity.class);
+                i.putExtra("isToday", false);
+                startActivity(i);
                 break;
             case R.id.lyt_totalbalance:
                 break;
             case R.id.lyt_totalbbcnt:
+                i.setClass(getActivity(), BarberListActivity.class);
+                startActivity(i);
                 break;
             case R.id.lyt_totalcnt:
+                i.setClass(getActivity(), TicketListActivity.class);
+                i.putExtra("isToday", false);
+                startActivity(i);
                 break;
             case R.id.lyt_totaldayamount:
+                i.setClass(getActivity(), ShopAmountActivity.class);
+                i.putExtra("isToday", true);
+                startActivity(i);
                 break;
             case R.id.lyt_totaldaycnt:
+                i.setClass(getActivity(), TicketListActivity.class);
+                i.putExtra("isToday", true);
+                startActivity(i);
                 break;
             case R.id.lyt_totalworkcnt:
+                i.setClass(getActivity(), CheckInActivity.class);
+                i.putExtra("isNormal", true);
+                startActivity(i);
                 break;
             case R.id.lyt_unnormal:
+                i.setClass(getActivity(), CheckInActivity.class);
+                i.putExtra("isNormal", false);
+                startActivity(i);
                 break;
         }
     }
@@ -147,8 +174,8 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
     }
 
     private void initDrawables() {
-        male = getActivity().getDrawable(R.mipmap.main_icon_boy);
-        female = getActivity().getDrawable(R.mipmap.main_icon_girl);
+        male = getActivity().getResources().getDrawable(R.mipmap.main_icon_boy);
+        female = getActivity().getResources().getDrawable(R.mipmap.main_icon_girl);
         male.setBounds(0, 0, male.getMinimumWidth(), male.getMinimumHeight());
         female.setBounds(0, 0, female.getMinimumWidth(), female.getMinimumHeight());
     }
@@ -157,7 +184,7 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
         String token = PreferenceUtils.getPrefString(BaseApplication.getContext(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.getBossCountInfo)
                 .tag(this)
-                .params("token", "1234567890")
+                .params("token", token)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {

@@ -52,7 +52,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     private Button btnLogout;
     private SlideFromBottomPopup mSlidePopup;
     private Bitmap head;//头像Bitmap
-    private static String path;//sd路径
+    private String path;//sd路径
     private AddrVo address;
     private Drawable male, female;
 
@@ -105,6 +105,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         lytHead.setOnClickListener(this);
 
         lytOrder.setVisibility(View.GONE);
+        initDrawables();
     }
 
     @Override
@@ -114,8 +115,8 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void initDrawables() {
-        male = getActivity().getDrawable(R.mipmap.main_icon_boy);
-        female = getActivity().getDrawable(R.mipmap.main_icon_girl);
+        male = getActivity().getResources().getDrawable(R.mipmap.main_icon_boy);
+        female = getActivity().getResources().getDrawable(R.mipmap.main_icon_girl);
         male.setBounds(0, 0, male.getMinimumWidth(), male.getMinimumHeight());
         female.setBounds(0, 0, female.getMinimumWidth(), female.getMinimumHeight());
     }

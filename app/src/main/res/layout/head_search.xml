@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y200"
+    android:background="@color/white"
+    android:padding="10dp">
+
+    <EditText
+        android:id="@+id/et_search_content"
+        android:layout_width="@dimen/x520"
+        android:layout_height="@dimen/y80"
+        android:layout_marginStart="@dimen/x20"
+        android:background="@drawable/bg_corner_red"
+        android:hint="理发师姓名或理发师工号"
+        android:drawableEnd="@mipmap/icon_search"
+        android:drawablePadding="5dp"
+        android:textSize="@dimen/x30"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:textColor="@drawable/text_white_red"/>
+
+    <Button
+        android:id="@+id/btn_all"
+        android:layout_width="@dimen/x120"
+        android:layout_height="@dimen/y80"
+        android:layout_marginEnd="@dimen/x20"
+        android:layout_marginStart="@dimen/x20"
+        android:layout_toEndOf="@+id/et_search_content"
+        android:background="@drawable/bg_btn_corner_red"
+        android:text="搜索"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/tv_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_search_content"
+        android:layout_marginStart="@dimen/x30"
+        android:layout_marginTop="@dimen/x30"
+        android:text="您共有3位理发师"
+        android:textColor="@color/text_black2"/>
+</RelativeLayout>

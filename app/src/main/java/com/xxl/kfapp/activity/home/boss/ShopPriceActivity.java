@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
@@ -16,9 +17,12 @@ import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.TimePickerDialog;
 import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.TitleBar;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.lang.reflect.Field;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -38,16 +42,17 @@ public class ShopPriceActivity extends BaseActivity {
     TextView tvPrice;
     AlertDialog.Builder builder;
     AlertDialog dialog;
-    private TimePickerDialog mBeginTimePickerDialog,mEndTimePickerDialog;//开始日期弹出框，结束日期弹出框
+    private TimePickerDialog mBeginTimePickerDialog, mEndTimePickerDialog;//开始日期弹出框，结束日期弹出框
     String token;
-    String price;//价格
-    String beginDate,endDate;//开始日期，结束日期
+    String price, shopid;//价格
+    String beginDate, endDate;//开始日期，结束日期
     EditText etvPrice;//非促销时段价格
     EditText etvUpdatePrice;//促销时段价格
+
     @Override
     protected void initArgs(Intent intent) {
-        intent = getIntent();
         price = intent.getStringExtra("price");
+        shopid = intent.getStringExtra("shopid");
     }
 
     @Override
@@ -91,6 +96,7 @@ public class ShopPriceActivity extends BaseActivity {
                 tvEndTime.setText(endDate);
                 showUpdatePriceDialog();
             }
+
             @Override
             public void negativeListener() {
 
@@ -115,12 +121,12 @@ public class ShopPriceActivity extends BaseActivity {
     /**
      * 修改价格接口
      */
-    private void changePrice(){
+    private void changePrice() {
         OkGo.<String>get(Urls.baseUrl + Urls.updateShopPrice)
                 .tag(this)
-                .params("token", "1234567890")
-                .params("shopid", "6")
-                .params("price",btnChangeNormal.getText().toString())
+                .params("token", token)
+                .params("shopid", shopid)
+                .params("price", btnChangeNormal.getText().toString())
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -143,14 +149,14 @@ public class ShopPriceActivity extends BaseActivity {
     /**
      * 修改促销价格和日期接口
      */
-    private void changePriceAndDate(){
+    private void changePriceAndDate() {
 
         OkGo.<String>get(Urls.baseUrl + Urls.updateShopCxPrice)
                 .tag(this)
                 .params("token", token)
                 .params("shopid", "6")
-                .params("startdate",tvBeginTime.getText().toString())
-                .params("enddate",tvEndTime.getText().toString())
+                .params("startdate", tvBeginTime.getText().toString())
+                .params("enddate", tvEndTime.getText().toString())
                 .params("price", tvPrice.getText().toString())
                 .execute(new StringCallback() {
                     @Override
@@ -174,7 +180,7 @@ public class ShopPriceActivity extends BaseActivity {
     /**
      * 非促销时段价格修改弹出框
      */
-    private void showChangePriceDialog(){
+    private void showChangePriceDialog() {
         builder = new AlertDialog.Builder(this);
         builder.setTitle("票价设置");
         View myLayout = View.inflate(this, R.layout.dlg_change_price, null);
@@ -189,7 +195,7 @@ public class ShopPriceActivity extends BaseActivity {
         builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if(etvPrice.getText().toString().equals("非促销时段票价设定") && etvPrice.getText().toString().equals("")){
+                if (etvPrice.getText().toString().equals("非促销时段票价设定") && etvPrice.getText().toString().equals("")) {
                     ToastShow("请输入价格");
                     try {
                         Field field = dialog.getClass().getSuperclass().getDeclaredField("mShowing");
@@ -198,7 +204,7 @@ public class ShopPriceActivity extends BaseActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }else {
+                } else {
                     btnChangeNormal.setText(etvPrice.getText().toString());
                     showConfirmDialog();
                 }
@@ -214,7 +220,7 @@ public class ShopPriceActivity extends BaseActivity {
     /**
      * 促销时段价格修改
      */
-    private void showUpdatePriceDialog(){
+    private void showUpdatePriceDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("票价设置");
         View myLayout = View.inflate(this, R.layout.dlg_update_price, null);
@@ -229,7 +235,8 @@ public class ShopPriceActivity extends BaseActivity {
         builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if(etvUpdatePrice.getText().toString().equals("促销时段票价设定") && etvUpdatePrice.getText().toString().equals("")){
+                if (etvUpdatePrice.getText().toString().equals("促销时段票价设定") && etvUpdatePrice.getText().toString()
+                        .equals("")) {
                     ToastShow("请输入价格");
                     try {
                         Field field = dialog.getClass().getSuperclass().getDeclaredField("mShowing");
@@ -238,7 +245,7 @@ public class ShopPriceActivity extends BaseActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }else {
+                } else {
                     tvPrice.setText(etvUpdatePrice.getText().toString());
                     showConfirmTimeOrPriceDialog();
                 }
@@ -256,7 +263,7 @@ public class ShopPriceActivity extends BaseActivity {
         * @setMessage 设置对话框消息提示
         * setXXX方法返回Dialog对象，因此可以链式设置属性
         */
-    private void showConfirmDialog(){
+    private void showConfirmDialog() {
 
         final AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(this);
@@ -283,8 +290,8 @@ public class ShopPriceActivity extends BaseActivity {
     /**
      * 促销价格和时段确认
      */
-    private void showConfirmTimeOrPriceDialog(){
-        final AlertDialog.Builder normalDialog =  new AlertDialog.Builder(this);
+    private void showConfirmTimeOrPriceDialog() {
+        final AlertDialog.Builder normalDialog = new AlertDialog.Builder(this);
         normalDialog.setTitle("促销票价修改确认");
         normalDialog.setMessage("您是否确定修改促销价格与时段?");
         normalDialog.setPositiveButton("确定",

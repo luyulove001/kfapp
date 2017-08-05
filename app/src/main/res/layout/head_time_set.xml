@@ -1,120 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:orientation="horizontal"
+              android:background="@color/white"
+              android:padding="5dp">
 
-    <com.xxl.kfapp.widget.TitleBar
-        android:id="@+id/mTitleBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_location"
-        android:layout_width="@dimen/x480"
+    <TextView
+        android:id="@+id/tv_starttime"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/x20"
-        android:layout_marginTop="@dimen/x40"
-        android:background="@drawable/bg_corner_red"
-        android:paddingBottom="15dp"
-        android:paddingTop="15dp"
-        android:text="申请提现"
-        android:textColor="@drawable/text_white_red"
-        android:textSize="@dimen/middle"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/x20"
-        android:background="@color/white"
+        android:background="@drawable/bg_shape_stroke_red"
+        android:drawableEnd="@mipmap/qc_fast_calendar"
+        android:drawablePadding="8dp"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/x20">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="@dimen/x1"
-            android:layout_weight="1"
-            android:background="@color/gray_holo_dark"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingEnd="@dimen/x30"
-            android:paddingStart="@dimen/x30"
-            android:text="提现记录"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="@dimen/x1"
-            android:layout_weight="1"
-            android:background="@color/gray_holo_dark"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
-            android:layout_weight="1"
-            android:paddingEnd="@dimen/x20"
-            android:paddingStart="@dimen/x20"
-            android:text="累计提现"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
-            android:paddingEnd="@dimen/x20"
-            android:paddingStart="@dimen/x20"
-            android:text="3000"
-            android:textColor="@color/main_red"/>
-    </LinearLayout>
+        android:hint="开始时间"
+        android:padding="5dp"/>
 
     <View
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/x20"
         android:layout_height="@dimen/x1"
-        android:background="@color/line2"/>
+        android:layout_marginStart="@dimen/x10"
+        android:background="@color/gray_holo_dark"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_endtime"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal">
+        android:layout_marginStart="@dimen/x10"
+        android:background="@drawable/bg_shape_stroke_red"
+        android:drawableEnd="@mipmap/qc_fast_calendar"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:hint="结束时间"
+        android:padding="5dp"/>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
-            android:layout_weight="1"
-            android:paddingEnd="@dimen/x20"
-            android:paddingStart="@dimen/x20"
-            android:text="日期"/>
+    <Button
+        android:id="@+id/btn_type"
+        android:layout_width="@dimen/x60"
+        android:layout_height="@dimen/x60"
+        android:layout_marginStart="@dimen/x10"
+        android:background="@mipmap/qc_fast_btn"
+        android:visibility="visible"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
-            android:paddingEnd="@dimen/x20"
-            android:paddingStart="@dimen/x20"
-            android:text="金额(元)"
-            android:textColor="@color/main_red"/>
-    </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"/>
+    <Button
+        android:id="@+id/btn_search"
+        android:layout_width="@dimen/x100"
+        android:layout_height="@dimen/x70"
+        android:layout_marginStart="@dimen/x20"
+        android:background="@drawable/bg_btn_corner_red"
+        android:text="搜索"
+        android:textColor="@color/white"
+        android:textSize="@dimen/x25"/>
 </LinearLayout>

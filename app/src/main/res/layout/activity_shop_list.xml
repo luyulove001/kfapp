@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bg_gray"
+              android:orientation="vertical">
+
+    <com.xxl.kfapp.widget.TitleBar
+        android:id="@+id/mTitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y200"
+        android:background="@color/white"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/btn_search_content"
+            android:layout_width="@dimen/x550"
+            android:layout_height="@dimen/y100"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/tv_num"
+            android:background="@drawable/bg_corner_red"
+            android:text="地址筛选"
+            android:textColor="@drawable/text_white_red"/>
+
+        <Button
+            android:id="@+id/btn_all"
+            android:layout_width="@dimen/x100"
+            android:layout_height="@dimen/y100"
+            android:layout_marginEnd="@dimen/x20"
+            android:layout_marginStart="@dimen/x20"
+            android:layout_toEndOf="@+id/btn_search_content"
+            android:background="@drawable/bg_btn_corner_red"
+            android:text="全部"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_search_content"
+            android:layout_marginStart="@dimen/x30"
+            android:layout_marginTop="@dimen/x20"
+            android:text="你共有2家店铺"
+            android:textColor="@color/text_black2"/>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_own_shop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"/>
+</LinearLayout>

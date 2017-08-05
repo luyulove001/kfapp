@@ -237,7 +237,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
      */
     private void showHeadPopup() {
         mSlidePopup = new SlideFromBottomPopup(this);
-        mSlidePopup.setTexts(new String[]{"支付宝支付", "微信支付", "取消"});
+        mSlidePopup.setTexts(new String[]{"支付宝支付", "微信支付", "线下转账"});
         mSlidePopup.setOnItemClickListener(new SlideFromBottomPopup.OnItemClickListener() {
             @Override
             public void onItemClick(View v) {
@@ -252,6 +252,9 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                         break;
                     case R.id.tx_3:
                         mSlidePopup.dismiss();
+                        Intent i = new Intent(JmkdFive3WebActivity.this, JmkdFivePrepayActivity.class);
+                        i.putExtra("shopid", shopid);
+                        startActivity(i);
                         break;
                 }
             }

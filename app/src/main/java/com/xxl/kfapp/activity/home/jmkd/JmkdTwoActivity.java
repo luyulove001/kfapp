@@ -85,8 +85,8 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initDrawables() {
-        pass = getDrawable(R.mipmap.sh_cg);
-        fair = getDrawable(R.mipmap.sh_sb);
+        pass = getResources().getDrawable(R.mipmap.sh_cg);
+        fair = getResources().getDrawable(R.mipmap.sh_sb);
         pass.setBounds(0, 0, pass.getMinimumWidth(), pass.getMinimumHeight());
         fair.setBounds(0, 0, fair.getMinimumWidth(), fair.getMinimumHeight());
     }

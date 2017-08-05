@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tv_ticketno"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_ticket_price"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/x20"
+            android:background="@drawable/bg_btn_corner_red"
+            android:gravity="center"
+            android:paddingBottom="3dp"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:paddingTop="3dp"
+            android:text="票号：1882991271"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x25"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_ticket_price"
+            android:layout_toStartOf="@+id/tv_ticket_price"
+            android:paddingBottom="3dp"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:paddingTop="3dp"
+            android:text="票价/元："
+            android:textSize="@dimen/x25"/>
+
+        <TextView
+            android:id="@+id/tv_ticket_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="9dp"
+            android:paddingBottom="3dp"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:paddingTop="3dp"
+            android:text="1"
+            android:textColor="@color/main_red"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x2"
+        android:background="@color/bg_gray"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/x20"
+            android:layout_marginTop="@dimen/x20"
+            android:text="理发师：李小敏"/>
+
+        <TextView
+            android:id="@+id/tv_shopname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView"
+            android:layout_alignEnd="@+id/tv_name"
+            android:text="物美下沙店"/>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/x40"
+            android:layout_height="@dimen/x40"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginStart="@dimen/x20"
+            android:layout_marginTop="@dimen/x10"
+            app:srcCompat="@mipmap/ic_shop"/>
+
+
+        <View
+            android:layout_width="@dimen/x2"
+            android:layout_height="@dimen/y120"
+            android:layout_marginEnd="@dimen/x20"
+            android:layout_toStartOf="@+id/tv_use"
+            android:background="@color/bg_gray"/>
+
+        <TextView
+            android:id="@+id/tv_use"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/tv_name"
+            android:layout_marginEnd="@dimen/x20"
+            android:text="理发时间：2017-08-02 16:26"/>
+
+        <TextView
+            android:id="@+id/tv_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tv_use"
+            android:layout_alignTop="@+id/tv_shopname"
+            android:text="购票时间：2017-08-02 16:26"/>
+    </RelativeLayout>
+</LinearLayout>

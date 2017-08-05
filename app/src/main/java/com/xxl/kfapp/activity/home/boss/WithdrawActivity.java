@@ -1,4 +1,4 @@
-package com.xxl.kfapp.activity.home;
+package com.xxl.kfapp.activity.home.boss;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ public class WithdrawActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle bundle) {
-        setContentView(R.layout.activity_withdraw);
+        setContentView(R.layout.activity_withdrawal);
     }
 
     @Override

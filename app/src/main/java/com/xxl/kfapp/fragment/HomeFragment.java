@@ -9,13 +9,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
+import com.xxl.kfapp.activity.home.jmkd.JmkdFive2Activity;
+import com.xxl.kfapp.activity.home.jmkd.JmkdFive3WebActivity;
 import com.xxl.kfapp.activity.home.jmkd.JmkdFiveActivity;
+import com.xxl.kfapp.activity.home.jmkd.JmkdFivePrepayActivity;
 import com.xxl.kfapp.activity.home.jmkd.JmkdFourActivity;
 import com.xxl.kfapp.activity.home.jmkd.JmkdOneActivity;
 import com.xxl.kfapp.activity.home.jmkd.JmkdSixActivity;
@@ -75,7 +79,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private ShopApplyStatusVo shopStatusVo;
     private Gson gson;
     private String token;
-    private String applyStatus;
+    private String applyStatus, shopid, prepaychecksts, devicechecksts;
     private Drawable male, female;
 
     @Override
@@ -93,8 +97,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void initDrawables() {
-        male = getActivity().getDrawable(R.mipmap.main_icon_boy);
-        female = getActivity().getDrawable(R.mipmap.main_icon_girl);
+        male = getActivity().getResources().getDrawable(R.mipmap.main_icon_boy);
+        female = getActivity().getResources().getDrawable(R.mipmap.main_icon_girl);
         male.setBounds(0, 0, male.getMinimumWidth(), male.getMinimumHeight());
         female.setBounds(0, 0, female.getMinimumWidth(), female.getMinimumHeight());
     }
@@ -161,7 +165,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         startActivity(new Intent(getActivity(), JmkdFourActivity.class));
                         break;
                     case "24":
-                        startActivity(new Intent(getActivity(), JmkdFiveActivity.class));
+                        if (!TextUtils.isEmpty(prepaychecksts)) {
+                            Intent i = new Intent(getActivity(), JmkdFivePrepayActivity.class);
+                            i.putExtra("shopStatusVo", shopStatusVo);
+                            startActivity(i);
+                        } else if (TextUtils.isEmpty(shopid)) {
+                            startActivity(new Intent(getActivity(), JmkdFiveActivity.class));
+                        } else {
+                            startActivity(new Intent(getActivity(), JmkdFive3WebActivity.class));
+                        }
                         break;
                     case "25":
                         startActivity(new Intent(getActivity(), JmkdSixActivity.class));
@@ -290,6 +302,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                                 KLog.i(response.body());
                                 shopStatusVo = gson.fromJson(json.getString("data"), ShopApplyStatusVo.class);
                                 applyStatus = shopStatusVo.getApplysts();
+                                shopid = shopStatusVo.getShopid();
+                                prepaychecksts = shopStatusVo.getPrepaychecksts();
+                                devicechecksts = shopStatusVo.getDevicechecksts();
                                 switch (shopStatusVo.getApplysts()) {
                                     //todo 设置进度显示
                                     case "20":

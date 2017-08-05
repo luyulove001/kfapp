@@ -37,7 +37,7 @@ import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.response.BarberInfoVo;
 import com.xxl.kfapp.model.response.DictVo;
 import com.xxl.kfapp.model.response.ProgressVo;
-import com.xxl.kfapp.utils.AddressPickTask;
+import com.xxl.kfapp.utils.AddressPickTaskAll;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.TitleBar;
@@ -415,8 +415,8 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
         intent.putExtra("crop", "true");
 
         // aspectX aspectY 是宽高的比例
-        intent.putExtra("aspectX", 16);
-        intent.putExtra("aspectY", 9);
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
 
         // outputX,outputY 是剪裁图片的宽高
         intent.putExtra("outputX", size);
@@ -577,10 +577,10 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
     }
 
     public void onAddressPicker() {
-        AddressPickTask task = new AddressPickTask(this);
+        AddressPickTaskAll task = new AddressPickTaskAll(this);
         task.setHideProvince(false);
         task.setHideCounty(false);
-        task.setCallback(new AddressPickTask.Callback() {
+        task.setCallback(new AddressPickTaskAll.Callback() {
             @Override
             public void onAddressInitFailed() {
                 ToastShow("数据初始化失败");

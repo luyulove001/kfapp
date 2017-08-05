@@ -20,7 +20,7 @@
             android:text="今天"/>
 
         <talex.zsw.baselibrary.widget.CircleImageView
-            android:id="@+id/iv_haircut"
+            android:id="@+id/iv_headpic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/x240"
