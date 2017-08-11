@@ -241,6 +241,7 @@ public class TimePickerDialog {
     /**
      * 获取时间选择的值
      */
+    @SuppressWarnings("deprecation")
     private void getTimePickerValue() {
         // api23这两个方法过时
         mHour = mTimePicker.getCurrentHour();// timePicker.getHour();

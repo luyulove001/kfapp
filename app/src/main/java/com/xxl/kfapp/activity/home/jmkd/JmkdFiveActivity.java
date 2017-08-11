@@ -41,7 +41,7 @@ import talex.zsw.baselibrary.util.klog.KLog;
  * 日期：2017/6/7
  * 作用：加盟开店第五步 选址
  */
-
+@SuppressWarnings("deprecation")
 public class JmkdFiveActivity extends BaseActivity implements View.OnClickListener {
 
 
@@ -88,8 +88,8 @@ public class JmkdFiveActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initDrawables() {
-        selected = getDrawable(R.mipmap.qq_red);
-        unselected = getDrawable(R.mipmap.qq_grey);
+        selected = getResources().getDrawable(R.mipmap.qq_red);
+        unselected = getResources().getDrawable(R.mipmap.qq_grey);
         selected.setBounds(0, 0, selected.getMinimumWidth(), selected.getMinimumHeight());
         unselected.setBounds(0, 0, unselected.getMinimumWidth(), unselected.getMinimumHeight());
     }

@@ -15,6 +15,7 @@ public abstract class PayHandler extends Handler {
     public static final int SDK_PAY_FLAG = 1;
     public static final int SDK_AUTH_FLAG = 2;
 
+    @SuppressWarnings("unchecked")
     public void handleMessage(Message msg) {
         switch (msg.what) {
             case SDK_PAY_FLAG: {

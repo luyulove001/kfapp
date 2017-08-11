@@ -173,7 +173,7 @@ public class CheckInActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initCheckInList(CheckInVo vo) {
-        adapter = new CheckInAdapter(vo.getRows());
+        adapter = new CheckInAdapter(vo.getRows(), this);
         adapter.openLoadAnimation();
         rvCheckIn.setAdapter(adapter);
         rvCheckIn.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler));

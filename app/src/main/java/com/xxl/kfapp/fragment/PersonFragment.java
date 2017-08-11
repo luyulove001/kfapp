@@ -45,7 +45,7 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class PersonFragment extends BaseFragment implements View.OnClickListener {
-    private TextView tvNickname, tvGender, tvJob, tvJobNum, tvPoints, tvOrder, tvAddress, tvNotify;
+    private TextView tvNickname, tvGender, tvJob, tvJobNum, tvPoints, tvOrder, tvAddress, tvNotify, tv_nickname;
     private RelativeLayout lytNickname, lytGender, lytOrder, lytNotify, lytHead;
     private LinearLayout lytAddress;
     private CircleImageView ivHead;
@@ -80,6 +80,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
 
         ivHead = (CircleImageView) headView.findViewById(R.id.mHead);
         lytHead = (RelativeLayout) headView.findViewById(R.id.lyt_head);
+        tv_nickname = (TextView) headView.findViewById(R.id.tv_nickname);
 
         tvNickname = (TextView) contentView.findViewById(R.id.nickname);
         tvGender = (TextView) contentView.findViewById(R.id.gender);
@@ -114,6 +115,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         setMemberInfo();
     }
 
+    @SuppressWarnings("deprecation")
     private void initDrawables() {
         male = getActivity().getResources().getDrawable(R.mipmap.main_icon_boy);
         female = getActivity().getResources().getDrawable(R.mipmap.main_icon_girl);
@@ -125,10 +127,10 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         memberInfoVo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
         Glide.with(BaseApplication.getContext()).load(memberInfoVo.getHeadpic()).into(ivHead);
         tvNickname.setText(memberInfoVo.getNickname());
-        if ("0".equals(memberInfoVo.getSex())) {
-            tvNickname.setCompoundDrawables(null, null, male, null);
-        } else if ("1".equals(memberInfoVo.getSex())) {
-            tvNickname.setCompoundDrawables(null, null, female, null);
+        if ("1".equals(memberInfoVo.getSex())) {
+            tv_nickname.setCompoundDrawables(null, null, male, null);
+        } else if ("2".equals(memberInfoVo.getSex())) {
+            tv_nickname.setCompoundDrawables(null, null, female, null);
         }
     }
 

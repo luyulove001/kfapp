@@ -21,7 +21,7 @@ public class TicketAdapter extends BaseQuickAdapter<TicketListVo.TicketVo> {
     protected void convert(BaseViewHolder baseViewHolder, TicketListVo.TicketVo vo) {
         baseViewHolder.setText(R.id.tv_name, "理发师：" + vo.getRealname());
         baseViewHolder.setText(R.id.tv_shopname, vo.getShopname());
-        baseViewHolder.setText(R.id.tv_create, "理发时间：" + vo.getShopname());
+        baseViewHolder.setText(R.id.tv_create, "购买时间：" + vo.getBuytime());
         baseViewHolder.setText(R.id.tv_ticketno, "票号：" + vo.getTicketno());
         baseViewHolder.setText(R.id.tv_ticket_price, vo.getPrice());
         baseViewHolder.setText(R.id.tv_use, "理发时间：" + vo.getChecktime());

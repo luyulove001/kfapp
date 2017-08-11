@@ -33,6 +33,7 @@ import talex.zsw.baselibrary.widget.RichText;
  * 作者：xnn
  * 描述:
  */
+@SuppressWarnings("deprecation")
 public abstract class BaseActivity extends AppCompatActivity {
     // TODO: 2017/7/21  loading view show in http get/post
     private boolean is = false;
@@ -170,6 +171,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         sweetAlertDialog.changeAlertType(type);
         sweetAlertDialog.setCancelable(cancelable);//不让点击返回按钮取消对话框
         sweetAlertDialog.setConfirmText("确定");
+        sweetAlertDialog.show();
+    }
+    public void sweetDialog(String information, int type, boolean cancelable, SweetAlertDialog.OnSweetClickListener confirmListener) {
+        if (sweetAlertDialog == null || !sweetAlertDialog.isShowing()) {
+            sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        }
+        //0正常,1错误,2成功,3警告,5进度条
+        sweetAlertDialog.setTitleText(information);
+        sweetAlertDialog.changeAlertType(type);
+        sweetAlertDialog.setCancelable(cancelable);//不让点击返回按钮取消对话框
+        sweetAlertDialog.setConfirmText("确定");
+        if (confirmListener != null) {
+            sweetAlertDialog.setConfirmClickListener(confirmListener);
+        }
         sweetAlertDialog.show();
     }
 

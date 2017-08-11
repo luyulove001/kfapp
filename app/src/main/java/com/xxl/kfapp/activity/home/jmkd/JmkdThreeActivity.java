@@ -78,6 +78,7 @@ public class JmkdThreeActivity extends BaseActivity implements View.OnClickListe
         });
     }
 
+    @SuppressWarnings("deprecation")
     private void setNextButton(boolean enable, int drawable, int color) {
         next.setEnabled(enable);
         next.setBackgroundResource(drawable);

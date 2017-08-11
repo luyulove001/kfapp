@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -65,7 +66,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private HomeFragmentShopkeeper shopkeeperFragment;
     private HomeFragmentKfs kfsFragment;
 
-    private String role, jobsts;
+    private String role, jobsts, shopid;
 
 
     @Override
@@ -87,8 +88,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mTitleBar.setLeftCode(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CaptureActivity.class));
-
+                Intent i = new Intent(MainActivity.this, CaptureActivity.class);
+                i.putExtra("startfrom", "CheckTicket");
+                startActivity(i);
             }
         });
         mTitleBar.setRightIV(new View.OnClickListener() {
@@ -276,11 +278,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 sweetDialog(json.getString("msg"), 1, false);
                             } else {
                                 KLog.i(response.body());
-                                MemberInfoVo vo = mGson.fromJson(json.getString("data"), MemberInfoVo.class);
-                                mACache.put("memberInfoVo", vo);//保存个人信息
-                                role = vo.getRole();
-                                jobsts = vo.getJobsts();
-                                setIndexFragment(1);//设置首页
+                                if (!TextUtils.isEmpty(json.getString("data"))) {
+                                    MemberInfoVo vo = mGson.fromJson(json.getString("data"), MemberInfoVo.class);
+                                    mACache.put("memberInfoVo", vo);//保存个人信息
+                                    role = vo.getRole();
+                                    jobsts = vo.getJobsts();
+                                    shopid = vo.getShopid();
+                                    setIndexFragment(1);//设置首页
+                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

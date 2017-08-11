@@ -179,6 +179,7 @@ public class RegisterKfsTwoActivity extends BaseActivity implements View.OnClick
         progressAdapter.setNewData(progressVos);
     }
 
+    @SuppressWarnings("deprecation")
     private void doGetBarberApplyStatus() {
         String token = PreferenceUtils.getPrefString(this.getApplicationContext(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.getBarberApplyStatus)

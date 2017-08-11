@@ -181,6 +181,8 @@
             android:name=".activity.home.boss.TicketListActivity"
             android:label="@string/title_activity_ticket_list">
         </activity>
+        <activity android:name=".activity.home.kfs.SignInActivity">
+        </activity>
     </application>
 
 </manifest>

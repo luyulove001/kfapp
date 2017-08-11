@@ -48,6 +48,7 @@ public class LinedEditText extends TextView {
     }
 
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void onDraw(Canvas canvas) {
         Paint mPaint = new Paint();

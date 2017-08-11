@@ -1,8 +1,8 @@
 package com.xxl.kfapp.utils;
 
 public class Urls {
-    public static final String baseUrl = "http://106.15.61.209:7881/plazz/api";
-//    public static final String baseUrl = "https://qch.qchouses.com/plazz/api";
+//    public static final String baseUrl = "http://106.15.61.209:7881/plazz/api";
+    public static final String baseUrl = "https://qch.qchouses.com/plazz/api";
     public static final String login = "/authapi/login";
     public static final String reg = "/authapi/reg";
     public static final String getIdentifyingCode = "/authapi/getIdentifyingCode";
@@ -47,9 +47,13 @@ public class Urls {
     public static final String insertShopStaff = "/barberapi/insertShopStaff";
     public static final String getShopStaffSignList = "/barberapi/getShopStaffSignList";
     public static final String getShopCutRecord = "/barberapi/getShopCutRecord";
-
     public static final String updateShopPrice = "/barberapi/updateShopPrice";
     public static final String updateShopCxPrice = "/barberapi/updateShopCxPrice";
+    public static final String getBarberCountInfo = "/barberapi/getBarberCountInfo";
+    public static final String getBarberCutRecord = "/barberapi/getBarberCutRecord";
+    public static final String getBarberSignInfo = "/barberapi/getBarberSignInfo";
+    public static final String barberSign = "/barberapi/barberSign";
+    public static final String getBarberSignUrlInfo = "/barberapi/getBarberSignUrlInfo";
 
     public static final String getDictList = "/commapi/getDictList";
     public static final String uploadForApp = "/file/uploadForApp";

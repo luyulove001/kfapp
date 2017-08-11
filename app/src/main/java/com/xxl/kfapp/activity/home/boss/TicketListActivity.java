@@ -57,11 +57,12 @@ public class TicketListActivity extends BaseActivity implements View.OnClickList
     private TimePickerDialog dialog;
     private String beginDate, endDate;
     private TicketAdapter adapter;
-    private boolean isToday;
+    private boolean isToday, isBoss;
 
     @Override
     protected void initArgs(Intent intent) {
         isToday = intent.getBooleanExtra("isToday", false);
+        isBoss = intent.getBooleanExtra("isBoss", false);
     }
 
     @Override
@@ -70,6 +71,7 @@ public class TicketListActivity extends BaseActivity implements View.OnClickList
         ButterKnife.bind(this);
         mTitleBar.setTitle("理发业绩");
         mTitleBar.setBackOnclickListener(this);
+        btnType.setVisibility(View.GONE);
         btnSearch.setOnClickListener(this);
         tvEndtime.setOnClickListener(this);
         tvStarttime.setOnClickListener(this);
@@ -78,8 +80,15 @@ public class TicketListActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void initData() {
-        if (isToday) getTodayData();
-        else getShopCutRecord("", "", "");
+        if (isToday) {
+            getTodayData();
+        } else {
+            if (isBoss) {
+                getShopCutRecord("", "", "");
+            } else {
+                getBarberCutRecord("", "", "");
+            }
+        }
     }
 
     private void getTodayData() {
@@ -87,7 +96,11 @@ public class TicketListActivity extends BaseActivity implements View.OnClickList
         tvEndtime.setText(today);
         endDate = beginDate = today;
         tvStarttime.setText(today);
-        getShopCutRecord(today, today, "");
+        if (isBoss) {
+            getShopCutRecord(today, today, "");
+        } else {
+            getBarberCutRecord(today, today, "");
+        }
     }
 
     @Override
@@ -166,10 +179,41 @@ public class TicketListActivity extends BaseActivity implements View.OnClickList
         String token = PreferenceUtils.getPrefString(getApplication(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.getShopCutRecord)
                 .tag(this)
-                .params("token", "1234567890")
+                .params("token", token)
                 .params("begindate", beginDate)
                 .params("enddate", endDate)
                 .params("shopid", shopid)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        mRefreshLayout.setRefreshing(false);
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (code.equals("100000")) {
+                                TicketListVo vo = mGson.fromJson(json.getString("data"), TicketListVo.class);
+                                if (vo != null) {
+                                    KLog.d(vo.getRows().size());
+                                    initTicketList(vo);
+                                }
+                            } else {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void getBarberCutRecord(String beginDate, String endDate, String page) {
+        String token = PreferenceUtils.getPrefString(getApplication(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.getBarberCutRecord)
+                .tag(this)
+                .params("token", token)
+                .params("begindate", beginDate)
+                .params("enddate", endDate)
+                .params("shopid", page)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {

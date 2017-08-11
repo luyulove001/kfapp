@@ -7,6 +7,7 @@ import android.content.Context;
 import java.util.LinkedList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
 import talex.zsw.baselibrary.util.klog.KLog;
 
 
@@ -28,7 +29,8 @@ public class BaseApplication extends Application {
         mApplicationContext = this;
         //初始化KLog
         KLog.init(true);
-
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
 
     }
 

@@ -78,7 +78,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/imageView"
-            android:layout_alignEnd="@+id/tv_name"
+            android:layout_toEndOf="@+id/imageView"
+            android:layout_marginStart="@dimen/x10"
             android:text="物美下沙店"/>
 
         <ImageView

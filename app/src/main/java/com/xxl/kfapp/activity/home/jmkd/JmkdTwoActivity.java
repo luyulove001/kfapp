@@ -84,6 +84,7 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
         doGetShopApplyStatus();
     }
 
+    @SuppressWarnings("deprecation")
     private void initDrawables() {
         pass = getResources().getDrawable(R.mipmap.sh_cg);
         fair = getResources().getDrawable(R.mipmap.sh_sb);

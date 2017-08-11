@@ -52,6 +52,7 @@ public class AddAddrActivity extends BaseActivity {
         vo = (AddrVo) intent.getSerializableExtra("addrVo");
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void initView(Bundle bundle) {
         setContentView(R.layout.ac_add_modify_address);

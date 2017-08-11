@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class BossCountInfoVo implements Serializable {
     private String applyflg;
-    private int totaldayamount;
+    private double totaldayamount;
     private String totalcnt;
     private String shopcnt;
     private String applyid;
@@ -30,11 +30,11 @@ public class BossCountInfoVo implements Serializable {
         this.applyflg = applyflg;
     }
 
-    public int getTotaldayamount() {
+    public double getTotaldayamount() {
         return totaldayamount;
     }
 
-    public void setTotaldayamount(int totaldayamount) {
+    public void setTotaldayamount(double totaldayamount) {
         this.totaldayamount = totaldayamount;
     }
 

@@ -1,6 +1,5 @@
 package com.xxl.kfapp.zxing;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -27,11 +26,11 @@ import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
@@ -43,19 +42,30 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
+import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.base.BaseApplication;
+import com.xxl.kfapp.utils.PreferenceUtils;
+import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.TitleBar;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Hashtable;
+import java.util.Locale;
 import java.util.Vector;
 
 import talex.zsw.baselibrary.util.klog.KLog;
+import talex.zsw.baselibrary.view.SweetAlertDialog.SweetAlertDialog;
 
 
-public class CaptureActivity extends Activity implements Callback {
+public class CaptureActivity extends BaseActivity implements Callback {
     public static final String QR_RESULT = "RESULT";
     private static final int REQUEST_CODE = 234;
 
@@ -76,30 +86,59 @@ public class CaptureActivity extends Activity implements Callback {
     private Bitmap scanBitmap;
     boolean flag = true;
     private TitleBar mTitleBar;
+    private String signFlag; //1 签到，2 签退
+    private String from, shopid;//from 判断从哪个页面过来，需要做什么操作
+    private String signurl;
+    private boolean isSignIn;
+    private SweetAlertDialog.OnSweetClickListener onSweetClickListener;
 
-    /**
-     * Called when the activity is first created.
-     */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initArgs(Intent intent) {
+        from = intent.getStringExtra("startfrom");
+        if ("SignIn".equals(from)) {
+            isSignIn = intent.getBooleanExtra("isSignIn", true);
+            shopid = intent.getStringExtra("shopid");
+        } else if ("CheckTicket".equals(from)) {
+
+        }
+    }
+
+    @Override
+    protected void initView(Bundle bundle) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_capture);
         mTitleBar = (TitleBar) findViewById(R.id.mTitleBar);
         surfaceView = (SurfaceView) findViewById(R.id.surfaceview);
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinderview);
         mTitleBar.setBackOnclickListener(this);
-
+        if (isSignIn) {
+            mTitleBar.setTitle("签到");
+            signFlag = "1";
+        } else {
+            mTitleBar.setTitle("签退");
+            signFlag = "2";
+        }
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+    }
+
+    @Override
+    protected void initData() {
         hasSurface = false;
         inactivityTimer = new InactivityTimer(this);
+        onSweetClickListener = new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                finish();
+            }
+        };
+        getBarberSignUrlInfo();
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -126,7 +165,7 @@ public class CaptureActivity extends Activity implements Callback {
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         if (handler != null) {
             handler.quitSynchronously();
@@ -155,14 +194,14 @@ public class CaptureActivity extends Activity implements Callback {
 
     private void photo() {
         Intent innerIntent = new Intent(); // "android.intent.action.GET_CONTENT"
-//		if (Build.VERSION.SDK_INT < 19)
-//		{
-//			innerIntent.setAction(Intent.ACTION_GET_CONTENT);
-//		}
-//		else
-//		{
-//			innerIntent.setAction(Intent.ACTION_OPEN_DOCUMENT);
-//		}
+        //		if (Build.VERSION.SDK_INT < 19)
+        //		{
+        //			innerIntent.setAction(Intent.ACTION_GET_CONTENT);
+        //		}
+        //		else
+        //		{
+        //			innerIntent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+        //		}
         innerIntent.setAction(Intent.ACTION_GET_CONTENT);
         innerIntent.setType("image/*");
         Intent wrapperIntent = Intent.createChooser(innerIntent, "选择二维码图片");
@@ -209,10 +248,11 @@ public class CaptureActivity extends Activity implements Callback {
                                 // 数据返回
                                 qrString = recode(result.toString());
                                 KLog.d("得到的条码1：" + qrString);
-//                                Intent intent = new Intent(CaptureActivity.this, RecruitListActivity.class);
-//                                intent.putExtra("code", qrString);
-//                                setResult(1, intent);
-//                                CaptureActivity.this.finish();
+                                //                                Intent intent = new Intent(CaptureActivity.this,
+                                // RecruitListActivity.class);
+                                //                                intent.putExtra("code", qrString);
+                                //                                setResult(1, intent);
+                                //                                CaptureActivity.this.finish();
                             }
                         }
                     }).start();
@@ -390,12 +430,121 @@ public class CaptureActivity extends Activity implements Callback {
     public void handleDecode(Result obj, Bitmap barcode) {
         qrString = obj.getText();
         KLog.d("得到的条码2：" + qrString);
-//        Intent intent = new Intent(CaptureActivity.this, PayResultActivity.class);
-//        intent.putExtra("barCode", qrString);
-//        intent.putExtra("payWay", payWay);
-//        intent.putExtra("money", money);
-//        startActivity(intent);
-        CaptureActivity.this.finish();
+        //        Intent intent = new Intent(CaptureActivity.this, PayResultActivity.class);
+        //        intent.putExtra("barCode", qrString);
+        //        intent.putExtra("payWay", payWay);
+        //        intent.putExtra("money", money);
+        //        startActivity(intent);
+
+        if ("SignIn".equals(from)) {
+            if (regexQrCode(qrString)) {
+                barberSign(shopid, signFlag);
+            } else {
+                sweetDialog("打卡失败", 1, false, onSweetClickListener);
+            }
+        } else if ("CheckTicket".equals(from)) {
+            updateBarberCheckTicket(qrString);
+        }
+
+    }
+
+    /**
+     * 匹配二维码
+     *
+     * @param qrcode 扫描得到的二维码
+     * @return 是否是需要的二维码
+     */
+    private boolean regexQrCode(String qrcode) {
+        if (qrcode.contains(signurl)) {
+            long time = Long.valueOf(qrcode.substring(qrcode.indexOf("&t=") + 3));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+            Calendar c = Calendar.getInstance();
+            String str = sdf.format(c.getTime());
+            String str1 = sdf.format(new Date(time * 1000));
+            if (str.equals(str1))
+                return true;
+        }
+        return false;
+    }
+
+    private void updateBarberCheckTicket(String ticketno) {
+        String token = PreferenceUtils.getPrefString(BaseApplication.getContext(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.updateBarberCheckTicket)
+                .tag(this)
+                .params("token", token)
+                .params("ticketno", ticketno)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            com.alibaba.fastjson.JSONObject json = JSON.parseObject(response.body());
+                            String code = json.getString("code");
+                            if (code.equals("100000")) {
+                                KLog.i(response.body());
+                                sweetDialog(json.getString("msg"), 0, false, onSweetClickListener);
+                            } else {
+                                sweetDialog(json.getString("msg"), 1, false, onSweetClickListener);
+                            }
+                        } catch (com.alibaba.fastjson.JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void getBarberSignUrlInfo() {
+        String token = PreferenceUtils.getPrefString(BaseApplication.getContext(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.getBarberSignUrlInfo)
+                .tag(this)
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            com.alibaba.fastjson.JSONObject json = JSON.parseObject(response.body());
+                            String code = json.getString("code");
+                            if (code.equals("100000")) {
+                                KLog.i(response.body());
+                                if (!TextUtils.isEmpty(json.getString("data"))) {
+                                    signurl = json.getJSONObject("data").getString("signurl");
+                                }
+                            } else {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            }
+                        } catch (com.alibaba.fastjson.JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void barberSign(String shopid, String signflag) {
+        String token = PreferenceUtils.getPrefString(BaseApplication.getContext(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.barberSign)
+                .tag(this)
+                .params("token", token)
+                .params("signflag", signflag)
+                .params("shopid", shopid)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            com.alibaba.fastjson.JSONObject json = JSON.parseObject(response.body());
+                            String code = json.getString("code");
+                            if (code.equals("100000")) {
+                                KLog.i(response.body());
+                                if (!TextUtils.isEmpty(json.getString("data"))) {
+                                    sweetDialog("打卡成功，打卡时间：" + json.getJSONObject("data").getString("rettime")
+                                            , 0, false, onSweetClickListener);
+                                }
+                            } else {
+                                sweetDialog(json.getString("msg"), 1, false, onSweetClickListener);
+                            }
+                        } catch (com.alibaba.fastjson.JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
     /**

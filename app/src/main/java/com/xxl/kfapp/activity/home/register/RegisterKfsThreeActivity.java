@@ -55,6 +55,7 @@ public class RegisterKfsThreeActivity extends BaseActivity implements View.OnCli
 
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void initView(Bundle bundle) {
         setContentView(R.layout.activity_registerkfs_three);

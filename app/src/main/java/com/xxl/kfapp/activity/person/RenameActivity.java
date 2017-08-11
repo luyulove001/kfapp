@@ -65,6 +65,7 @@ public class RenameActivity extends BaseActivity implements View.OnClickListener
         shopName = intent.getStringExtra("shopName");
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void initView(Bundle bundle) {
         setContentView(R.layout.ac_rename);

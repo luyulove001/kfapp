@@ -9,14 +9,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
-import com.xxl.kfapp.activity.home.jmkd.JmkdFive2Activity;
 import com.xxl.kfapp.activity.home.jmkd.JmkdFive3WebActivity;
 import com.xxl.kfapp.activity.home.jmkd.JmkdFiveActivity;
 import com.xxl.kfapp.activity.home.jmkd.JmkdFivePrepayActivity;
@@ -96,6 +94,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         btnGetJob.setOnClickListener(this);
     }
 
+    @SuppressWarnings("deprecation")
     private void initDrawables() {
         male = getActivity().getResources().getDrawable(R.mipmap.main_icon_boy);
         female = getActivity().getResources().getDrawable(R.mipmap.main_icon_girl);
@@ -122,7 +121,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_begin:
-                //                startActivity(new Intent(getActivity(), ShopDetailActivity.class));
+                //startActivity(new Intent(getActivity(), ShopDetailActivity.class));
                 if (TextUtils.isEmpty(applyStatus)) {
                     return;
                 }

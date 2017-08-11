@@ -36,6 +36,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+@SuppressWarnings("deprecation")
 public class ModifyAddrActivity extends BaseActivity {
     @Bind(R.id.mTitleBar)
     TitleBar mTitleBar;

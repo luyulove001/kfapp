@@ -137,6 +137,7 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
             case R.id.lyt_totalcnt:
                 i.setClass(getActivity(), TicketListActivity.class);
                 i.putExtra("isToday", false);
+                i.putExtra("isBoss", true);
                 startActivity(i);
                 break;
             case R.id.lyt_totaldayamount:
@@ -147,6 +148,7 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
             case R.id.lyt_totaldaycnt:
                 i.setClass(getActivity(), TicketListActivity.class);
                 i.putExtra("isToday", true);
+                i.putExtra("isBoss", true);
                 startActivity(i);
                 break;
             case R.id.lyt_totalworkcnt:
@@ -166,13 +168,14 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
         MemberInfoVo infoVo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
         Glide.with(BaseApplication.getContext()).load(infoVo.getHeadpic()).into(ivHeadpic);
         tvNickname.setText(infoVo.getNickname());
-        if ("0".equals(infoVo.getSex())) {
+        if ("1".equals(infoVo.getSex())) {
             tvNickname.setCompoundDrawables(null, null, male, null);
-        } else if ("1".equals(infoVo.getSex())) {
+        } else if ("2".equals(infoVo.getSex())) {
             tvNickname.setCompoundDrawables(null, null, female, null);
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void initDrawables() {
         male = getActivity().getResources().getDrawable(R.mipmap.main_icon_boy);
         female = getActivity().getResources().getDrawable(R.mipmap.main_icon_girl);
