@@ -19,7 +19,6 @@ import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -285,8 +284,9 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
         Pattern p;
         Matcher m;
         boolean b;
-        String regex = "^(^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$)|(^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])((\\d{4})|\\d{3}[Xx])$)$";
-//        p = Pattern.compile("/^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{4}$/");
+        String regex = "^(^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$)|(^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|" +
+                "(1[0-2]))(([0|1|2]\\d)|3[0-1])((\\d{4})|\\d{3}[Xx])$)$";
+        //        p = Pattern.compile("/^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{4}$/");
         p = Pattern.compile(regex);
         m = p.matcher(idcard);
         b = m.matches();
@@ -480,9 +480,9 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
                 idPhoto2.setImageBitmap(photo);
             }
             photo = getRoundedCornerBitmap(photo);
-//            			photo = getRoundedCornerBitmap(photo);
-//            			Drawable drawable = new BitmapDrawable(photo);
-//            			bytes = Bitmap2Bytes(photo);
+            //            			photo = getRoundedCornerBitmap(photo);
+            //            			Drawable drawable = new BitmapDrawable(photo);
+            //            			bytes = Bitmap2Bytes(photo);
             if (photo != null) {
                 //                uploadPhoto();
                 doUploadImage(getRealFilePath(this, imageUri), idPhoto);
@@ -605,7 +605,6 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
                                 etLinkman.setText(vo.getLinkman());
                                 etLinktel.setText(vo.getLinktel());
                                 etCertdisc.setText(vo.getCertdisc());
-                                etAddress.setText(vo.getAddress());
                                 Glide.with(getApplicationContext()).load(vo.getCardpos()).into(idPhoto1);
                                 Glide.with(getApplicationContext()).load(vo.getCardneg()).into(idPhoto2);
                                 cardneg = vo.getCardneg();
@@ -616,11 +615,21 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
                                 barberInfoVo.setAddcityname(vo.getAddcityname());
                                 barberInfoVo.setAddareacode(vo.getAddareacode());
                                 barberInfoVo.setAddareaname(vo.getAddareaname());
-//                                if (!TextUtils.isEmpty(vo.getWorklife()))
-//                                    tvWorklife.setText(mACache.getAsJSONArray("worklife").getInt(Integer.valueOf(vo.getWorklife()) - 1));
-//                                if (!TextUtils.isEmpty(vo.getEducation()))
-//                                    tvEducation.setText(mACache.getAsJSONArray("education").getInt(Integer.valueOf(vo.getEducation()) - 1));
                                 tvAddress.setText(vo.getAddprovincename() + vo.getAddcityname() + vo.getAddareaname());
+                                if (!TextUtils.isEmpty(vo.getWorklife()) && mACache.getAsJSONArray("worklife") !=
+                                        null) {
+                                    tvWorklife.setText(mACache.getAsJSONArray("worklife")
+                                            .getJSONObject(Integer.valueOf(vo.getWorklife()) - 1)
+                                            .getString("content"));
+                                    barberInfoVo.setWorklife(vo.getWorklife());
+                                }
+                                if (!TextUtils.isEmpty(vo.getEducation()) && mACache.getAsJSONArray("education") !=
+                                        null) {
+                                    tvEducation.setText(mACache.getAsJSONArray("education")
+                                            .getJSONObject(Integer.valueOf(vo.getEducation()) - 1)
+                                            .getString("content"));
+                                    barberInfoVo.setEducation(vo.getEducation());
+                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -690,10 +699,12 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
                                     vo.setValue(array.getJSONObject(i).getString("value"));
                                     if ("edu_type".equals(keyname)) {
                                         eduVos.add(vo);
-                                        mACache.put("education", array, (int) System.currentTimeMillis()/1000);
+                                        if (mACache.getAsJSONArray("education") == null)
+                                            mACache.put("education", array);
                                     } else if ("work_life".equals(keyname)) {
                                         workVos.add(vo);
-                                        mACache.put("worklife", array, (int) System.currentTimeMillis()/1000);
+                                        if (mACache.getAsJSONArray("worklife") == null)
+                                            mACache.put("worklife", array);
                                     }
                                 }
                             }
@@ -724,7 +735,7 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
                                 KLog.e(response.body());
                                 if (idPhoto == 1) {
                                     cardpos = json.getJSONObject("data").getString("path");
-                                } else if (idPhoto == 2){
+                                } else if (idPhoto == 2) {
                                     cardneg = json.getJSONObject("data").getString("path");
                                 }
                             }
@@ -735,21 +746,22 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
                 });
     }
 
-    public static String getRealFilePath( final Context context, final Uri uri ) {
-        if ( null == uri ) return null;
+    public static String getRealFilePath(final Context context, final Uri uri) {
+        if (null == uri) return null;
         final String scheme = uri.getScheme();
         String data = null;
-        if ( scheme == null )
+        if (scheme == null)
             data = uri.getPath();
-        else if ( ContentResolver.SCHEME_FILE.equals( scheme ) ) {
+        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
             data = uri.getPath();
-        } else if ( ContentResolver.SCHEME_CONTENT.equals( scheme ) ) {
-            Cursor cursor = context.getContentResolver().query( uri, new String[] { MediaStore.Images.ImageColumns.DATA }, null, null, null );
-            if ( null != cursor ) {
-                if ( cursor.moveToFirst() ) {
-                    int index = cursor.getColumnIndex( MediaStore.Images.ImageColumns.DATA );
-                    if ( index > -1 ) {
-                        data = cursor.getString( index );
+        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+            Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns
+                    .DATA}, null, null, null);
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                    if (index > -1) {
+                        data = cursor.getString(index);
                     }
                 }
                 cursor.close();

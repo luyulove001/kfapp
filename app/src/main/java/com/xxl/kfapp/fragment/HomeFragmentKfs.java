@@ -138,7 +138,11 @@ public class HomeFragmentKfs extends BaseFragment implements View.OnClickListene
 
     private void setMemberInfo() {
         MemberInfoVo infoVo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
-        Glide.with(BaseApplication.getContext()).load(infoVo.getHeadpic()).into(ivHeadpic);
+        if (TextUtils.isEmpty(infoVo.getHeadpic())) {
+            ivHeadpic.setImageResource(R.mipmap.default_head);
+        } else {
+            Glide.with(BaseApplication.getContext()).load(infoVo.getHeadpic()).into(ivHeadpic);
+        }
         tvNickname.setText(infoVo.getNickname());
         if ("1".equals(infoVo.getSex())) {
             tvNickname.setCompoundDrawables(null, null, male, null);

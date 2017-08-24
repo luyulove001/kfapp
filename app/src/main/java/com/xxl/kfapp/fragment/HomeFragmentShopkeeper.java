@@ -3,6 +3,7 @@ package com.xxl.kfapp.fragment;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -204,7 +205,11 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
 
     private void setMemberInfo() {
         MemberInfoVo infoVo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
-        Glide.with(BaseApplication.getContext()).load(infoVo.getHeadpic()).into(ivHeadpic);
+        if (TextUtils.isEmpty(infoVo.getHeadpic())) {
+            ivHeadpic.setImageResource(R.mipmap.default_head);
+        } else {
+            Glide.with(BaseApplication.getContext()).load(infoVo.getHeadpic()).into(ivHeadpic);
+        }
         tvNickname.setText(infoVo.getNickname());
         if ("1".equals(infoVo.getSex())) {
             tvNickname.setCompoundDrawables(null, null, male, null);

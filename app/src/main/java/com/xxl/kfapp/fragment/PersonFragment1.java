@@ -57,7 +57,7 @@ import talex.zsw.baselibrary.widget.CircleImageView;
 public class PersonFragment1 extends BaseFragment implements View.OnClickListener {
 
     @Bind(R.id.civ_head)
-    CircleImageView civHead;
+    CircleImageView ivHeadpic;
     @Bind(R.id.tv_nickname)
     TextView tvNickname;
     @Bind(R.id.lyt_head)
@@ -112,12 +112,16 @@ public class PersonFragment1 extends BaseFragment implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
-        MemberInfoVo memberInfoVo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
-        Glide.with(BaseApplication.getContext()).load(memberInfoVo.getHeadpic()).into(civHead);
-        tvNickname.setText(memberInfoVo.getNickname());
-        tvAddress.setText(memberInfoVo.getDispaddress());
+        MemberInfoVo infoVo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
+        if (TextUtils.isEmpty(infoVo.getHeadpic())) {
+            ivHeadpic.setImageResource(R.mipmap.default_head);
+        } else {
+            Glide.with(BaseApplication.getContext()).load(infoVo.getHeadpic()).into(ivHeadpic);
+        }
+        tvNickname.setText(infoVo.getNickname());
+        tvAddress.setText(infoVo.getDispaddress());
         tvAbout.setText(Constant.GetVersion(BaseApplication.getContext()));
-        if ("2".equals(memberInfoVo.getRole())) lytTui.setVisibility(View.VISIBLE);
+        if ("2".equals(infoVo.getRole())) lytTui.setVisibility(View.VISIBLE);
         getMemberShopApply();
         doGetShopApplyStatus();
         StatService.onResume(this);

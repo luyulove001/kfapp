@@ -288,8 +288,10 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
                     vo.setXz(false);
                 ksnrVoList.get(i).setXz(true);
                 kstmVoList.get(currentQuestion).setWc(true);
-                kstmAdapter.setNewData(kstmVoList);
-                ksnrAdapter.setNewData(ksnrVoList);
+                kstmAdapter.notifyDataSetChanged();
+                ksnrAdapter.notifyDataSetChanged();
+//                kstmAdapter.setNewData(kstmVoList);
+//                ksnrAdapter.setNewData(ksnrVoList);
             }
         });
         tmRecyclerView.setAdapter(ksnrAdapter);

@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,7 +49,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
     @Bind(R.id.mTitleBar)
     TitleBar mTitleBar;
     @Bind(R.id.civ_head)
-    CircleImageView civHead;
+    CircleImageView ivHeadpic;
     @Bind(R.id.lyt_head)
     RelativeLayout lytHead;
     @Bind(R.id.lyt_nickname)
@@ -122,7 +123,11 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
     protected void onResume() {
         super.onResume();
         memberInfoVo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
-        Glide.with(getApplicationContext()).load(memberInfoVo.getHeadpic()).into(civHead);
+        if (TextUtils.isEmpty(memberInfoVo.getHeadpic())) {
+            ivHeadpic.setImageResource(R.mipmap.default_head);
+        } else {
+            Glide.with(BaseApplication.getContext()).load(memberInfoVo.getHeadpic()).into(ivHeadpic);
+        }
         tvGender.setText("1".equals(memberInfoVo.getSex()) ? "男" : "女");
         tvJob.setText("2".equals(memberInfoVo.getJobsts()) ? "老板" : "理发师");//todo 0
         tvNickname.setText(memberInfoVo.getNickname());
@@ -271,7 +276,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         Bundle bundle = picdata.getExtras();
         if (bundle != null) {
             Bitmap photo = bundle.getParcelable("data");
-            civHead.setImageBitmap(photo);
+            ivHeadpic.setImageBitmap(photo);
             photo = getRoundedCornerBitmap(photo);
             if (photo != null) {
                 doUploadImage(RegisterKfsOneActivity.getRealFilePath(this, imgUri));
@@ -298,7 +303,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                                 KLog.e(response.body());
                                 headpic = json.getJSONObject("data").getString("path");
                                 memberInfoVo.setHeadpic(headpic);
-                                Glide.with(getApplicationContext()).load(headpic).into(civHead);
+                                Glide.with(getApplicationContext()).load(headpic).into(ivHeadpic);
                                 updateMemberInfo();
                             }
                         } catch (JSONException e) {
