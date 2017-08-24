@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -19,6 +19,7 @@ import com.xxl.kfapp.R;
 import com.xxl.kfapp.adapter.MenuAdapter;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.response.AddrVo;
+import com.xxl.kfapp.model.response.MemberInfoVo;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.ListViewDecoration;
@@ -35,6 +36,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import talex.zsw.baselibrary.util.klog.KLog;
 
 @SuppressWarnings("deprecation")
 public class ModifyAddrActivity extends BaseActivity {
@@ -63,7 +65,7 @@ public class ModifyAddrActivity extends BaseActivity {
         setContentView(R.layout.activity_modify_addr);
         ButterKnife.bind(this);
         mContext = this;
-        mTitleBar.setTitle("修改地址");
+        mTitleBar.setTitle("地址管理");
         mTitleBar.setBackOnclickListener(this);
         mTitleBar.getvTvRight().setTextColor(getResources().getColor(R.color.white));
         //侧滑菜单列表
@@ -119,9 +121,69 @@ public class ModifyAddrActivity extends BaseActivity {
             Intent intent = new Intent();
             intent.putExtra("address", vos.get(position));
             setResult(RESULT_OK, intent);
-            finish();
+            updateMemberInfo(vos.get(position));
         }
     };
+
+    private void updateMemberInfo(AddrVo addrVo) {
+        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.updateMemberInfo)
+                .tag(this)
+                .params("token", token)
+                .params("addrid", addrVo.getAddrid())
+                .params("addprovincename", addrVo.getAddprovincename())
+                .params("addprovincecode", addrVo.getAddprovincecode())
+                .params("addcityname", addrVo.getAddcityname())
+                .params("addcitycode", addrVo.getAddcitycode())
+                .params("addareaname", addrVo.getAddareaname())
+                .params("addareacode", addrVo.getAddareacode())
+                .params("address", addrVo.getAddress())
+                .execute(new StringCallback() {
+            @Override
+            public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                try {
+                    JSONObject json = JSON.parseObject(response.body());
+                    String code = json.getString("code");
+                    if (code.equals("100000")) {
+                        ToastShow("修改成功");
+                        doGetMemberInfo();
+                    } else {
+                        sweetDialog(json.getString("msg"), 1, false);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void doGetMemberInfo() {
+        String token = PreferenceUtils.getPrefString(getApplicationContext(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.getMemberInfo)
+                .tag(this)
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            org.json.JSONObject json = new org.json.JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                KLog.i(response.body());
+                                if (!TextUtils.isEmpty(json.getString("data"))) {
+                                    MemberInfoVo vo = mGson.fromJson(json.getString("data"), MemberInfoVo.class);
+                                    mACache.put("memberInfoVo", vo);//保存个人信息
+                                    finish();
+                                }
+                            }
+                        } catch (org.json.JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
 
     /**
      * 菜单点击监听。

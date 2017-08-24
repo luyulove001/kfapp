@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,6 +50,8 @@ public class ShopDetailActivity extends BaseActivity {
     TextView tvPrice;
     @Bind(R.id.tv_sn)
     TextView tvSn;
+    @Bind(R.id.tv_sn1)
+    TextView tvSn1;
     @Bind(R.id.tv_status)
     TextView tvStatus;
     @Bind(R.id.tv_staffcnt)
@@ -81,7 +84,7 @@ public class ShopDetailActivity extends BaseActivity {
     }
 
     private void setIntent() {
-        Intent intent = new Intent(this, ShopSettingActivity.class);
+        Intent intent = getIntent().setClass(this, ShopSettingActivity.class);
         intent.putExtra("shopName", shopName);
         intent.putExtra("startTime", startTime);
         intent.putExtra("endTime", endTime);
@@ -130,14 +133,20 @@ public class ShopDetailActivity extends BaseActivity {
                                 String shopNo = json.getJSONObject("data").getString("shopno");//编号
                                 tvShopName.setText(shopName + "  No." + shopNo);
                                 tvShopKeeper.setText("店主:" + json.getJSONObject("data").getString("nickname"));
-                                tvAddress.setText(json.getJSONObject("data").getString("address"));
+                                String address = json.getJSONObject("data").getString("address");
+                                if (TextUtils.isEmpty(address) || "null".equals(address))
+                                    tvAddress.setVisibility(View.GONE);
+                                else tvAddress.setText(address);
+
                                 tvStartBusiness.setText("开业时间:" + json.getJSONObject("data").getString("starttime"));
                                 startTime = json.getJSONObject("data").getString("begintime");
                                 endTime = json.getJSONObject("data").getString("endtime");
+                                if ("null".equals(startTime)) startTime = "08:00";
+                                if ("null".equals(endTime)) endTime = "20:00";
                                 tvOpenTime.setText("今日营业时间：" + startTime + " -" + endTime);
                                 price = json.getJSONObject("data").getString("nowprice");
                                 tvPrice.setText("今日票价：" + price + "元");
-
+                                tvSn1.setText(json.getJSONObject("data").getString("sn"));
                                 tvSn.setText(json.getJSONObject("data").getString("sn"));
                                 String onlinests = json.getJSONObject("data").getString("onlinests");
                                 if (onlinests.equals("1")) {

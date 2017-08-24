@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_gray"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bg_gray"
+              android:orientation="vertical">
 
     <com.xxl.kfapp.widget.TitleBar
         android:id="@+id/mTitleBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <FrameLayout
         android:id="@+id/mContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/white">
 
     </FrameLayout>
 
-    <include layout="@layout/include_line" />
+    <include layout="@layout/include_line"/>
 
     <LinearLayout
         android:id="@+id/mLLBottom"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="10dp"
         android:background="@color/white"
         android:orientation="horizontal">
 
@@ -42,7 +42,7 @@
             app:IT_text_selected_color="@color/main_red"
             app:IT_text_unselected_color="@color/gray"
             app:IT_unselected_color="@color/white"
-            app:IT_unselected_icon="@mipmap/tab_home" />
+            app:IT_unselected_icon="@mipmap/tab_home"/>
 
         <com.xxl.kfapp.widget.IconText
             android:id="@+id/mIconText2"
@@ -50,13 +50,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="商城"
+            android:visibility="gone"
             app:IT_selected="false"
             app:IT_selected_color="@color/white"
             app:IT_selected_icon="@mipmap/tab_store_p"
             app:IT_text_selected_color="@color/main_red"
             app:IT_text_unselected_color="@color/gray"
             app:IT_unselected_color="@color/white"
-            app:IT_unselected_icon="@mipmap/tab_store" />
+            app:IT_unselected_icon="@mipmap/tab_store"/>
 
         <com.xxl.kfapp.widget.IconText
             android:id="@+id/mIconText3"
@@ -64,13 +65,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="购物车"
+            android:visibility="gone"
             app:IT_selected="false"
             app:IT_selected_color="@color/white"
             app:IT_selected_icon="@mipmap/tab_spcart_p"
             app:IT_text_selected_color="@color/main_red"
             app:IT_text_unselected_color="@color/gray"
             app:IT_unselected_color="@color/white"
-            app:IT_unselected_icon="@mipmap/tab_spcart" />
+            app:IT_unselected_icon="@mipmap/tab_spcart"/>
 
         <com.xxl.kfapp.widget.IconText
             android:id="@+id/mIconText4"
@@ -78,13 +80,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="论坛"
+            android:visibility="gone"
             app:IT_selected="false"
             app:IT_selected_color="@color/white"
             app:IT_selected_icon="@mipmap/tab_forum_p"
             app:IT_text_selected_color="@color/main_red"
             app:IT_text_unselected_color="@color/gray"
             app:IT_unselected_color="@color/white"
-            app:IT_unselected_icon="@mipmap/tab_forum" />
+            app:IT_unselected_icon="@mipmap/tab_forum"/>
 
         <com.xxl.kfapp.widget.IconText
             android:id="@+id/mIconText5"
@@ -98,7 +101,7 @@
             app:IT_text_selected_color="@color/main_red"
             app:IT_text_unselected_color="@color/gray"
             app:IT_unselected_color="@color/white"
-            app:IT_unselected_icon="@mipmap/tab_person" />
+            app:IT_unselected_icon="@mipmap/tab_person"/>
 
     </LinearLayout>
 

@@ -209,7 +209,7 @@ public class JmkdFourActivity extends BaseActivity implements View.OnClickListen
         for (int i = 0; i < 7; i++) {
             ProgressVo vo = new ProgressVo();
             if (i == 0) {
-                vo.setName("申请加盟");
+                vo.setName("申请开店");
                 vo.setTag(2);
             } else if (i == 1) {
                 vo.setName("审核");

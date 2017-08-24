@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -52,6 +53,8 @@ public class RegisterKfsTwoActivity extends BaseActivity implements View.OnClick
     TextView tvCustomReason;
     @Bind(R.id.lyt_reason_shsb)
     LinearLayout lytReasonShsb;
+    @Bind(R.id.lyt_next)
+    LinearLayout lytNext;
     @Bind(R.id.tv_tips)
     TextView tvTips;
 
@@ -77,13 +80,19 @@ public class RegisterKfsTwoActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void initData() {
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initInfoRecycleView();
         doGetBarberApplyStatus();
     }
 
+    @SuppressWarnings("deprecation")
     private void initDrawables() {
-        pass = getDrawable(R.mipmap.sh_cg);
-        fair = getDrawable(R.mipmap.sh_sb);
+        pass = getResources().getDrawable(R.mipmap.sh_cg);
+        fair = getResources().getDrawable(R.mipmap.sh_sb);
         pass.setBounds(0, 0, pass.getMinimumWidth(), pass.getMinimumHeight());
         fair.setBounds(0, 0, fair.getMinimumWidth(), fair.getMinimumHeight());
     }
@@ -196,7 +205,7 @@ public class RegisterKfsTwoActivity extends BaseActivity implements View.OnClick
                             } else {
                                 KLog.d(response.body());
                                 statusVo = mGson.fromJson(json.getString("data"), ApplyStatusVo.class);
-                                if (statusVo.getChecksts() != null) {
+                                if (TextUtils.isEmpty(statusVo.getChecksts())) {
                                     statusVo.setChecksts("0");
                                 }
                                 switch (statusVo.getChecksts()) {
@@ -204,9 +213,10 @@ public class RegisterKfsTwoActivity extends BaseActivity implements View.OnClick
                                         next.setClickable(false);
                                         next.setBackgroundResource(R.drawable.bg_corner_gray);
                                         next.setTextColor(getResources().getColor(R.color.gray));
+                                        lytNext.setVisibility(View.GONE);
                                         break;
                                     case "1":
-                                        tvChecking.setText("，您的初审已通过");
+                                        tvChecking.setText("恭喜您，您的初审已通过");
                                         tvChecking.setCompoundDrawables(pass, null, null, null);
                                         break;
                                     case "2":
@@ -214,9 +224,14 @@ public class RegisterKfsTwoActivity extends BaseActivity implements View.OnClick
                                         tvChecking.setCompoundDrawables(fair, null, null, null);
                                         lytReasonShsb.setVisibility(View.VISIBLE);
                                         tvFixedReason.setText(statusVo.getFixedreason());
-                                        tvCustomReason.setText(statusVo.getCustomreason());
+                                        if (!TextUtils.isEmpty(statusVo.getCustomreason())) {
+                                            tvCustomReason.setText(statusVo.getCustomreason());
+                                        } else {
+                                            tvCustomReason.setVisibility(View.GONE);
+                                        }
                                         next.setText("重新填写");
                                         tvTips.setVisibility(View.VISIBLE);
+                                        lytNext.setVisibility(View.VISIBLE);
                                         break;
                                 }
 

@@ -136,26 +136,33 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
             btnSign.setText("签到");
             tvSignSuccess.setText("签到成功");
             tvSuccess.setText("恭喜你，今日上班签到成功！");
-            if (map.containsKey(day) && !TextUtils.isEmpty(map.get(day).getFromtime())) {
-                tvSignTime.setText("今日签到时间：" + map.get(day).getFromtime());
-                llSignResult.setVisibility(View.VISIBLE);
-                btnSign.setVisibility(View.GONE);
-            } else {
-                if (!TextUtils.isEmpty(map.get(day).getEndtime())) signOutSuccess = true;
-                btnSign.setVisibility(View.VISIBLE);
-                llSignResult.setVisibility(View.GONE);
+            if (map != null) {
+                if (map.containsKey(day)) {
+                    if (!TextUtils.isEmpty(map.get(day).getFromtime())) {
+                        tvSignTime.setText("今日签到时间：" + map.get(day).getFromtime());
+                        llSignResult.setVisibility(View.VISIBLE);
+                        btnSign.setVisibility(View.GONE);
+                    } else if (!TextUtils.isEmpty(map.get(day).getEndtime())) {
+                        signOutSuccess = true;
+                    }
+                } else {
+                    btnSign.setVisibility(View.VISIBLE);
+                    llSignResult.setVisibility(View.GONE);
+                }
             }
         } else {
             btnSign.setText("签退");
             tvSignSuccess.setText("签退成功");
             tvSuccess.setText("恭喜你，今日上班签退成功！");
-            if (map.containsKey(day) && !TextUtils.isEmpty(map.get(day).getEndtime())) {
-                tvSignTime.setText("今日签退时间：" + map.get(day).getFromtime());
-                llSignResult.setVisibility(View.VISIBLE);
-                btnSign.setVisibility(View.GONE);
-            } else {
-                btnSign.setVisibility(View.VISIBLE);
-                llSignResult.setVisibility(View.GONE);
+            if (map != null) {
+                if (map.containsKey(day) && !TextUtils.isEmpty(map.get(day).getEndtime())) {
+                    tvSignTime.setText("今日签退时间：" + map.get(day).getFromtime());
+                    llSignResult.setVisibility(View.VISIBLE);
+                    btnSign.setVisibility(View.GONE);
+                } else {
+                    btnSign.setVisibility(View.VISIBLE);
+                    llSignResult.setVisibility(View.GONE);
+                }
             }
         }
         initDaySignState(day);
@@ -163,7 +170,8 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initDaySignState(String day) {
-
+        if (map == null)
+            return;
         if (map.containsKey(day)) {
             SignListVo.SignVo vo = map.get(day);
             tvSignIn.setText(vo.getFromtime());
@@ -226,7 +234,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
                 }
                 String ym = bean.year + "-" + (bean.moth > 9 ? bean.moth : "0" + bean.moth)
                         + "-" + (bean.day > 9 ? bean.day : "0" + bean.day);
-                if (signListVo != null) {
+                if (signListVo != null && map != null) {
                     if (map.containsKey(ym)) {
                         flag.setVisibility(View.VISIBLE);
                         GradientDrawable bgShape = (GradientDrawable) flag.getBackground();

@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -21,6 +23,7 @@ import com.xxl.kfapp.activity.person.AddAddrActivity;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.response.AddrVo;
+import com.xxl.kfapp.model.response.AppConfigVo;
 import com.xxl.kfapp.model.response.ProgressVo;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
@@ -59,14 +62,21 @@ public class JmkdFiveActivity extends BaseActivity implements View.OnClickListen
     TextView tvNoAddress;
     @Bind(R.id.tv_have_address)
     TextView tvHaveAddress;
+    @Bind(R.id.et_shopname)
+    EditText etShopname;
+    @Bind(R.id.ll_have_address)
+    LinearLayout llHaveAddress;
     @Bind(R.id.tv_address)
     TextView tvAddress;
+    @Bind(R.id.tv_addrgood)
+    TextView tvAddrGood;
 
     private ProgressAdapter progressAdapter;
     private List<ProgressVo> progressVos;
     private Drawable selected, unselected;
     private String applyid;
     private boolean hasAddress;
+    private AddrVo addrVo;
 
     @Override
     protected void initArgs(Intent intent) {
@@ -100,7 +110,9 @@ public class JmkdFiveActivity extends BaseActivity implements View.OnClickListen
         if (TextUtils.isEmpty(applyid)) {
             applyid = PreferenceUtils.getPrefString(getApplication(), "applyid", "");
         }
-        doGetSelectAddrGoodPic();
+        //doGetSelectAddrGoodPic();
+        AppConfigVo vo = (AppConfigVo) mACache.getAsObject("appConfig");
+        if (vo != null) tvAddrGood.setText(vo.getAddgood());
     }
 
     @Override
@@ -114,28 +126,34 @@ public class JmkdFiveActivity extends BaseActivity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.next:
                 if (hasAddress) {
-                    startActivity(getIntent().setClass(this, JmkdSixActivity.class));
+                    if (TextUtils.isEmpty(etShopname.getText().toString())) {
+                        ToastShow("店名不能为空");
+                    } else {
+                        doUpdateShopApplyInfo(addrVo);
+                    }
                 } else {
                     startActivity(getIntent().setClass(this, JmkdFive2Activity.class));
+                    finish();
                 }
-                finish();
                 break;
             case R.id.tv_no_address:
-                tvAddress.setVisibility(View.GONE);
+                llHaveAddress.setVisibility(View.GONE);
                 tvNoAddress.setCompoundDrawables(null, null, selected, null);
                 tvHaveAddress.setCompoundDrawables(null, null, unselected, null);
                 setBtnNext(true, R.drawable.bg_corner_red, getResources().getColor(R.color.main_red));
                 hasAddress = false;
                 break;
             case R.id.tv_have_address:
-                tvAddress.setVisibility(View.VISIBLE);
+                llHaveAddress.setVisibility(View.VISIBLE);
                 tvHaveAddress.setCompoundDrawables(null, null, selected, null);
                 tvNoAddress.setCompoundDrawables(null, null, unselected, null);
                 hasAddress = true;
                 setBtnNext(false, R.drawable.bg_corner_gray, getResources().getColor(R.color.gray));
                 break;
             case R.id.tv_address:
-                startActivityForResult(new Intent(this, AddAddrActivity.class), 1);
+                Intent i = new Intent(this, AddAddrActivity.class);
+                i.putExtra("hasAddress", "1");
+                startActivityForResult(i, 1);
                 break;
         }
 
@@ -153,11 +171,11 @@ public class JmkdFiveActivity extends BaseActivity implements View.OnClickListen
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case 1:
-                    AddrVo vo = (AddrVo) data.getSerializableExtra("addrVo");
-                    tvAddress.setText(vo.getAddprovincename() + vo.getAddcityname()
-                            + vo.getAddareaname() + vo.getAddress());
+                    addrVo = (AddrVo) data.getSerializableExtra("addrVo");
+                    tvAddress.setText(addrVo.getAddprovincename() + addrVo.getAddcityname()
+                            + addrVo.getAddareaname() + addrVo.getAddress());
                     setBtnNext(true, R.drawable.bg_corner_red, getResources().getColor(R.color.main_red));
-                    doUpdateApplyStatus();
+                    //                    doUpdateApplyStatus();
                     break;
             }
         }
@@ -227,6 +245,38 @@ public class JmkdFiveActivity extends BaseActivity implements View.OnClickListen
                             } else {
                                 Glide.with(getApplicationContext()).load(json.getJSONObject("data").getString("yspic"))
                                         .into(ivSelectAddr);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void doUpdateShopApplyInfo(AddrVo vo) {
+        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.updateShopApplyInfo)
+                .tag(this)
+                .params("token", token)
+                .params("applysts", "25")
+                .params("addrflag", "1")
+                .params("selprovincecode", vo.getAddprovincecode())
+                .params("selcitycode", vo.getAddcitycode())
+                .params("selareacode", vo.getAddareacode())
+                .params("address", vo.getAddress())
+                .params("applyid", applyid)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                KLog.d(json.getString("data"));
+                                startActivity(getIntent().setClass(JmkdFiveActivity.this, JmkdSixActivity.class));
+                                finish();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

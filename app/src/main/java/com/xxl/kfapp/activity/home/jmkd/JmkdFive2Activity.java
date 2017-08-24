@@ -71,7 +71,7 @@ public class JmkdFive2Activity extends BaseActivity implements View.OnClickListe
         setContentView(R.layout.activity_jmkd_five2);
         ButterKnife.bind(this);
         next.setOnClickListener(this);
-        mTitleBar.setTitle("选址");
+        mTitleBar.setTitle("开店申请");
         mTitleBar.setBackOnclickListener(this);
         btnSelectAddr.setOnClickListener(this);
         btnAll.setOnClickListener(this);
@@ -245,7 +245,7 @@ public class JmkdFive2Activity extends BaseActivity implements View.OnClickListe
                                         .class);
                                 KLog.i(bidShopListVo.getShoplst().size());
                                 tvShopNum.setText("共有" +
-                                        bidShopListVo.getShoplst().size() + "家店铺供您竞拍");
+                                        bidShopListVo.getShoplst().size() + "家店铺供您选择");
                                 initShopList(bidShopListVo);
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);

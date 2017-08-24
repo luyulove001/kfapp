@@ -191,7 +191,7 @@ public class ShopAmountActivity extends BaseActivity implements View.OnClickList
                 .OnRecyclerViewItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-                Intent intent = getIntent().setClass(ShopAmountActivity.this, JmkdFive3WebActivity.class);
+                Intent intent = getIntent().setClass(ShopAmountActivity.this, IncomeListActivity.class);
                 intent.putExtra("shopid", vo.getCountlst().get(i).getShopid());
                 startActivity(intent);
             }

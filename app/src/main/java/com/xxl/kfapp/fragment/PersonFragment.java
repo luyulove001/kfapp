@@ -264,7 +264,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 break;
             case 5:
                 if (resultCode == RESULT_OK && data != null) {
-                    address = (AddrVo) data.getSerializableExtra("address");
+                    address = (AddrVo) data.getSerializableExtra("tvAddress");
                     tvAddress.setText(address.getDispaddress());
                 }
                 break;

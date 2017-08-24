@@ -38,7 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="请仔细阅读本协议，快发平台将根据以下条件和条款为您提供服务。"
-            android:textSize="@dimen/text_title"/>
+            android:textSize="@dimen/text_title"
+            android:visibility="gone"/>
 
         <WebView
             android:id="@+id/wv_protocol"

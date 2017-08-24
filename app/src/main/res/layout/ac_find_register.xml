@@ -35,17 +35,21 @@
                     android:drawablePadding="@dimen/x30"
                     android:drawableStart="@mipmap/qc_login_phone"
                     android:hint="@string/prompt_phone"
-                    android:inputType="phone"/>
+                    android:inputType="phone"
+                    android:textColorLink="@color/main_red"
+                    android:textColor="@color/gray_holo_dark"
+                    android:textSize="@dimen/x30"/>
 
                 <Button
                     android:id="@+id/send"
                     android:layout_width="@dimen/x230"
                     android:layout_height="@dimen/y65"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/x15"
                     android:layout_marginEnd="@dimen/x30"
+                    android:layout_marginTop="@dimen/x15"
                     android:background="@drawable/bg_btn_corner_red"
                     android:text="@string/send_code"
+                    android:textSize="@dimen/x30"
                     android:textColor="@color/white"/>
             </RelativeLayout>
 
@@ -58,7 +62,9 @@
                 android:hint="@string/prompt_code"
                 android:inputType="number"
                 android:paddingEnd="@dimen/x10"
-                android:paddingStart="@dimen/x95"/>
+                android:paddingStart="@dimen/x95"
+                android:textSize="@dimen/x30"
+                android:textColor="@color/gray_holo_dark"/>
 
             <EditText
                 android:id="@+id/nickname"
@@ -67,7 +73,9 @@
                 android:layout_marginTop="@dimen/x10"
                 android:drawablePadding="@dimen/x30"
                 android:drawableStart="@mipmap/login_account"
-                android:hint="@string/prompt_nickname"/>
+                android:hint="@string/prompt_nickname"
+                android:textSize="@dimen/x30"
+                android:textColor="@color/gray_holo_dark"/>
 
             <EditText
                 android:id="@+id/new_pwd"
@@ -77,7 +85,9 @@
                 android:drawablePadding="@dimen/x30"
                 android:drawableStart="@mipmap/login_pwd"
                 android:hint="@string/prompt_new_password"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                android:textSize="@dimen/x30"
+                android:textColor="@color/gray_holo_dark"/>
 
             <EditText
                 android:id="@+id/confirm_pwd"
@@ -87,7 +97,9 @@
                 android:drawablePadding="@dimen/x30"
                 android:drawableStart="@mipmap/login_pwd"
                 android:hint="@string/prompt_confirm_new_pwd"
-                android:inputType="textPassword"/>
+                android:textSize="@dimen/x30"
+                android:inputType="textPassword"
+                android:textColor="@color/gray_holo_dark"/>
 
             <Button
                 android:id="@+id/confirm_button"
@@ -98,7 +110,7 @@
                 android:background="@drawable/bg_btn_red"
                 android:text="@string/confirm"
                 android:textColor="@color/white"
-                android:textSize="@dimen/x40"/>
+                android:textSize="@dimen/x30"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

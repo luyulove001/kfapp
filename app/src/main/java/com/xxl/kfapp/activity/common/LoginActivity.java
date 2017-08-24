@@ -34,6 +34,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.base.BaseApplication;
 import com.xxl.kfapp.utils.Md5Algorithm;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
@@ -141,7 +142,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             mEmailView.setText(account);
         }
         mid = getMyUUID();
-        sign = System.currentTimeMillis() + "";
+        sign = System.currentTimeMillis() / 1000 + "";
         signdata = Md5Algorithm.signMD5("mid=" + mid + "&sign=" + sign);
     }
 
@@ -330,8 +331,8 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
 
     @Override
     public void onKeyboardShown(int keyboardSize) {
-//        mScrollView.smoothScrollTo(getWindowManager().getDefaultDisplay().getWidth(), getWindowManager()
-//                .getDefaultDisplay().getHeight());
+        //        mScrollView.smoothScrollTo(getWindowManager().getDefaultDisplay().getWidth(), getWindowManager()
+        //                .getDefaultDisplay().getHeight());
     }
 
     @Override
@@ -357,6 +358,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         tmSerial = "" + tm.getSimSerialNumber();
         androidId = "" + Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
         UUID deviceUuid = new UUID(androidId.hashCode(), ((long) tmDevice.hashCode() << 32) | tmSerial.hashCode());
+        PreferenceUtils.setPrefString(BaseApplication.getContext(), "uuid", deviceUuid.toString());
         return deviceUuid.toString();
     }
 
@@ -368,9 +370,9 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                 .params("logintype", "1")
                 .params("account", mEmailView.getText().toString())
                 .params("password", mPasswordView.getText().toString())
-                .params("mid", "1")
-                .params("sign", "1")
-                .params("signdata", "56a4fa737b067667f430d3dfbd19fe8a")
+                .params("mid", mid)
+                .params("sign", sign)
+                .params("signdata", signdata)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -383,6 +385,8 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                                 String token = json.getJSONObject("data").getString("token");
                                 PreferenceUtils.setPrefString(getApplicationContext(), "token", token);
                                 PreferenceUtils.setPrefString(getApplicationContext(), "account", mEmailView.getText
+                                        ().toString());
+                                PreferenceUtils.setPrefString(getApplicationContext(), "password", mPasswordView.getText
                                         ().toString());
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();

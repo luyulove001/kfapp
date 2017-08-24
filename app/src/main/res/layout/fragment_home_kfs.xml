@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y380"
+        android:layout_height="@dimen/y420"
         android:background="@mipmap/bg_home"
         android:gravity="center_horizontal"
         android:orientation="vertical">
@@ -16,6 +16,7 @@
             android:id="@+id/mImage"
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:scaleType="centerCrop"
             android:layout_marginTop="@dimen/x30"/>
 
         <LinearLayout
@@ -33,7 +34,7 @@
                 android:drawableEnd="@mipmap/main_icon_boy"
                 android:drawablePadding="5dp"
                 android:text="用户名"
-                android:textColor="@color/black2"
+                android:textColor="@color/white"
                 android:textSize="@dimen/text_title"/>
 
             <ImageView
@@ -46,7 +47,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/x10"
             android:background="#90404040"
             android:orientation="horizontal">

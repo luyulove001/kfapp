@@ -3,58 +3,47 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center_vertical"
-              android:orientation="vertical"
-              android:padding="@dimen/x30">
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tv_time_disp"
+            android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/x20"
             android:layout_marginStart="@dimen/x20"
-            android:padding="@dimen/x10"
+            android:padding="@dimen/x5"
             android:text="今天"/>
-
-        <talex.zsw.baselibrary.widget.CircleImageView
-            android:id="@+id/iv_headpic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/x240"
-            android:src="@mipmap/login_account"/>
 
         <TextView
             android:id="@+id/tv_pay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/x20"
-            android:layout_marginStart="@dimen/x420"
-            android:padding="@dimen/x10"
-            android:text="+10"
+            android:padding="@dimen/x5"
+            android:text="¥10"
+            android:textColor="@color/limegreen"
             android:textSize="@dimen/x40"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_date"
             android:layout_marginEnd="@dimen/x20"
             android:layout_marginStart="@dimen/x20"
-            android:padding="@dimen/x10"
+            android:padding="@dimen/x5"
             android:text="13:30"/>
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/tv_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/x230"
+            android:layout_centerInParent="true"
             android:padding="@dimen/x10"
             android:text="孔子"/>
 
@@ -62,8 +51,10 @@
             android:id="@+id/tv_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/x420"
-            android:padding="@dimen/x10"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/tv_pay"
+            android:layout_marginEnd="@dimen/x20"
+            android:padding="@dimen/x5"
             android:text="支付宝"/>
     </RelativeLayout>
 

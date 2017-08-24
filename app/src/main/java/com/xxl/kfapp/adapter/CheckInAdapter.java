@@ -46,7 +46,7 @@ public class CheckInAdapter extends BaseQuickAdapter<CheckInVo.CheckVo> {
 
         if ("1".equals(sign.getFromsts())) {
             baseViewHolder.setText(R.id.tv_late, "正常");
-            tvLate.setBackgroundColor(mContext.getResources().getColor(R.color.text_black2));
+            tvLate.setTextColor(mContext.getResources().getColor(R.color.text_black2));
             ivLate.setVisibility(View.GONE);
             tvLate.setVisibility(View.VISIBLE);
         } else if ("2".equals(sign.getFromsts())) {
@@ -55,7 +55,7 @@ public class CheckInAdapter extends BaseQuickAdapter<CheckInVo.CheckVo> {
             ivLate.setImageResource(R.mipmap.ic_late);
         } else {
             tvLate.setText("未签退");
-            tvLate.setBackgroundColor(mContext.getResources().getColor(R.color.text_orange));
+            tvLate.setTextColor(mContext.getResources().getColor(R.color.text_orange));
             tvLate.setVisibility(View.GONE);
             ivLate.setVisibility(View.VISIBLE);
         }

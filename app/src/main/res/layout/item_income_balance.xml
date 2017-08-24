@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/x20"
+        android:layout_marginTop="@dimen/x10"
+        android:padding="@dimen/x5"
+        android:textSize="@dimen/x20"
+        android:text="退票"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tv_type"
+        android:layout_below="@+id/tv_type"
+        android:padding="@dimen/x5"
+        android:text="2017-08-11 17:14"
+        android:textSize="@dimen/x20"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:layout_below="@id/tv_time"
+        android:layout_marginTop="@dimen/x10"
+        android:background="@color/gray_holo_dark"/>
+
+    <TextView
+        android:id="@+id/tv_rmb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/x45"
+        android:text="¥5"
+        android:layout_marginTop="@dimen/x20"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/x20"
+        android:text="元"
+        android:textSize="@dimen/x20"
+        android:layout_marginTop="@dimen/x30"/>
+
+    <TextView
+        android:id="@+id/tv_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/x20"
+        android:text="余额：0.7"
+        android:layout_below="@+id/tv_rmb"
+        android:textSize="@dimen/x20"
+        android:visibility="visible"/>
+</RelativeLayout>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -45,11 +46,21 @@ public class AddAddrActivity extends BaseActivity {
     EditText etName;
     @Bind(R.id.et_phone)
     EditText etPhone;
+    @Bind(R.id.ll_nickname)
+    LinearLayout llNickname;
+    @Bind(R.id.ll_phone)
+    LinearLayout llPhone;
+
+
     private AddrVo vo;
+    private String hasAddress;
+    private boolean hasAddr;
 
     @Override
     protected void initArgs(Intent intent) {
         vo = (AddrVo) intent.getSerializableExtra("addrVo");
+        hasAddress = intent.getStringExtra("hasAddress");
+        hasAddr = "1".equals(hasAddress);
     }
 
     @SuppressWarnings("deprecation")
@@ -59,25 +70,37 @@ public class AddAddrActivity extends BaseActivity {
         ButterKnife.bind(this);
         mTitleBar.setTitle("编辑地址");
         mTitleBar.setBackOnclickListener(this);
+        if (hasAddr) {
+            llNickname.setVisibility(View.GONE);
+            llPhone.setVisibility(View.GONE);
+        } else {
+            llNickname.setVisibility(View.VISIBLE);
+            llPhone.setVisibility(View.VISIBLE);
+        }
         mTitleBar.setRightTV("保存", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 vo.setAddress(etDetail.getText().toString());
                 vo.setUsername(etName.getText().toString());
                 vo.setPhone(etPhone.getText().toString());
-                Intent i = new Intent();
-                i.putExtra("addrVo", vo);
-                setResult(RESULT_OK, i);
                 if (TextUtils.isEmpty(vo.getAddress())) {
                     ToastShow("请填写详细地址");
-                } else if(TextUtils.isEmpty(vo.getAddareacode())) {
+                } else if (TextUtils.isEmpty(vo.getAddareacode())) {
                     ToastShow("请先选择地区");
-                } else if (TextUtils.isEmpty(vo.getUsername())) {
-                    ToastShow("请先填写联系人姓名");
-                }else if (TextUtils.isEmpty(vo.getPhone())) {
-                    ToastShow("请先填写联系人手机号");
                 } else {
-                    doUpdateAddr(vo);
+                    Intent i = new Intent();
+                    i.putExtra("addrVo", vo);
+                    setResult(RESULT_OK, i);
+                    finish();
+                }
+                if (!hasAddr) {
+                    if (TextUtils.isEmpty(vo.getUsername())) {
+                        ToastShow("请先填写联系人姓名");
+                    } else if (TextUtils.isEmpty(vo.getPhone())) {
+                        ToastShow("请先填写联系人手机号");
+                    } else {
+                        doUpdateAddr(vo);
+                    }
                 }
             }
         });

@@ -16,7 +16,6 @@ import butterknife.ButterKnife;
 
 public class ShopSettingActivity extends BaseActivity {
 
-    String startTime,endTime,shopName,price;
     @Bind(R.id.tv_shopname)
     TextView tvShopName;
     @Bind(R.id.tv_price)
@@ -34,6 +33,8 @@ public class ShopSettingActivity extends BaseActivity {
     @Bind(R.id.lyt_unbind_shop)
     LinearLayout llUnbindShop;
 
+    private String startTime, endTime, shopName, price, shopid;
+
     private static final int ShopRename = 1;
     private static final int ShopPrice = 2;
     private static final int ShopBusiness = 3;
@@ -45,6 +46,7 @@ public class ShopSettingActivity extends BaseActivity {
         endTime = intent.getStringExtra("endTime");
         shopName = intent.getStringExtra("shopName");
         price = intent.getStringExtra("price");
+        shopid = intent.getStringExtra("shopid");
     }
 
     @Override
@@ -62,7 +64,8 @@ public class ShopSettingActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ShopSettingActivity.this, RenameActivity.class);
-                i.putExtra("shopName",shopName);
+                i.putExtra("shopName", shopName);
+                i.putExtra("shopid", shopid);
                 startActivityForResult(i, ShopRename);
             }
         });
@@ -71,11 +74,22 @@ public class ShopSettingActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ShopSettingActivity.this, ShopPriceActivity.class);
-                i.putExtra("price",price);
+                i.putExtra("price", price);
+                i.putExtra("shopid", shopid);
                 startActivityForResult(i, ShopPrice);
             }
         });
 
+        llTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ShopSettingActivity.this, ShopTimeSetActivity.class);
+                i.putExtra("shopid", shopid);
+                i.putExtra("starttime", startTime);
+                i.putExtra("endtime", endTime);
+                startActivityForResult(i, ShopBusiness);
+            }
+        });
     }
 
     @Override

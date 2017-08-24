@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="@dimen/y550"
+              android:gravity="center"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+
+    <EditText
+        android:id="@+id/et_balance"
+        android:layout_width="@dimen/x350"
+        android:layout_height="@dimen/y60"
+        android:background="@drawable/bg_btn_corner_green"
+        android:gravity="center"
+        android:hint="本次最多提现10000元"
+        android:inputType="number"
+        android:layout_marginTop="@dimen/x50"
+        android:textSize="@dimen/x25"/>
+
+    <TextView
+        android:id="@+id/tv_cashrate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/x5"
+        android:layout_marginTop="@dimen/x10"
+        android:text="微信等第三方平台手续费：0.6%"
+        android:textSize="@dimen/x20"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x2"
+        android:background="@color/google_green"/>
+
+    <RelativeLayout
+        android:layout_width="@dimen/x600"
+        android:layout_height="@dimen/y100"
+        android:gravity="bottom|center_horizontal">
+
+        <TextView
+            android:id="@+id/dialog_button_ok"
+            android:layout_width="@dimen/x300"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/dialog_button_cancel"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/google_green"/>
+
+        <TextView
+            android:id="@+id/dialog_button_cancel"
+            android:layout_width="@dimen/x300"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            android:text="取消"/>
+
+        <View
+            android:layout_width="@dimen/x2"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/dialog_button_cancel"
+            android:background="@color/google_green"/>
+    </RelativeLayout>
+</LinearLayout>

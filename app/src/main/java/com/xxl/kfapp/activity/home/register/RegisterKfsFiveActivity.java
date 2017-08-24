@@ -4,22 +4,34 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
+import com.xxl.kfapp.activity.common.MainActivity;
 import com.xxl.kfapp.activity.home.jmkd.JmkdOneActivity;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.fragment.HomeFragmentKfs;
+import com.xxl.kfapp.model.response.MemberInfoVo;
 import com.xxl.kfapp.model.response.ProgressVo;
+import com.xxl.kfapp.utils.PreferenceUtils;
+import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.TitleBar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import talex.zsw.baselibrary.util.klog.KLog;
 
 /**
  * 作者：XNN
@@ -60,7 +72,7 @@ public class RegisterKfsFiveActivity extends BaseActivity implements View.OnClic
     @Override
     protected void initData() {
         initInfoRecycleView();
-
+        doGetMemberInfo();
     }
 
 
@@ -72,7 +84,7 @@ public class RegisterKfsFiveActivity extends BaseActivity implements View.OnClic
                 finish();
                 break;
             case R.id.btn_qz:
-//                startActivity(new Intent(this, RegisterKfsFourActivity.class));
+//                startActivity(new Intent(this, MainActivity.class));
                 finish();
                 break;
         }
@@ -121,6 +133,33 @@ public class RegisterKfsFiveActivity extends BaseActivity implements View.OnClic
             progressVos.add(vo);
         }
         progressAdapter.setNewData(progressVos);
+    }
+
+    private void doGetMemberInfo() {
+        String token = PreferenceUtils.getPrefString(getApplicationContext(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.getMemberInfo)
+                .tag(this)
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                KLog.i(response.body());
+                                if (!TextUtils.isEmpty(json.getString("data"))) {
+                                    MemberInfoVo vo = mGson.fromJson(json.getString("data"), MemberInfoVo.class);
+                                    mACache.put("memberInfoVo", vo);//保存个人信息
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
 }

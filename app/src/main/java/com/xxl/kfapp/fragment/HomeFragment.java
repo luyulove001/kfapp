@@ -28,6 +28,7 @@ import com.xxl.kfapp.activity.home.register.RegisterKfsFourActivity;
 import com.xxl.kfapp.activity.home.register.RegisterKfsOneActivity;
 import com.xxl.kfapp.activity.home.register.RegisterKfsThreeActivity;
 import com.xxl.kfapp.activity.home.register.RegisterKfsTwoActivity;
+import com.xxl.kfapp.activity.person.PersonInfoActivity;
 import com.xxl.kfapp.base.BaseApplication;
 import com.xxl.kfapp.base.BaseFragment;
 import com.xxl.kfapp.model.response.ApplyStatusVo;
@@ -92,6 +93,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         btnBegin.setOnClickListener(this);
         btnCreateShop.setOnClickListener(this);
         btnGetJob.setOnClickListener(this);
+        mImage.setOnClickListener(this);
     }
 
     @SuppressWarnings("deprecation")
@@ -148,10 +150,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 }
                 break;
             case R.id.btn_create_shop:
+                if (TextUtils.isEmpty(applyStatus)) {
+                    ToastShow("数据加载中，请稍后...");
+                    return;
+                }
                 switch (applyStatus) {
                     case "20":
                         Intent i20 = new Intent(getActivity(), JmkdOneActivity.class);
-                        i20.putExtra("shopStatusVo", shopStatusVo);
+                        i20.putExtra("apply", shopStatusVo.getApplyid());
                         startActivity(i20);
                         break;
                     case "21":
@@ -183,6 +189,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.btn_get_job:
                 ToastShow("该功能正在开发中，尽情期待！");
+                break;
+            case R.id.mImage:
+                startActivity(new Intent(getActivity(), PersonInfoActivity.class));
                 break;
         }
     }
@@ -232,9 +241,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         MemberInfoVo vo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
         Glide.with(BaseApplication.getContext()).load(vo.getHeadpic()).into(mImage);
         nickname.setText(vo.getNickname());
-        if ("0".equals(vo.getSex())) {
+        if ("1".equals(vo.getSex())) {
             nickname.setCompoundDrawables(null, null, male, null);
-        } else if ("1".equals(vo.getSex())) {
+        } else if ("2".equals(vo.getSex())) {
             nickname.setCompoundDrawables(null, null, female, null);
         }
         if ("0".equals(vo.getRole())) {
@@ -261,7 +270,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                             if (!code.equals("100000")) {
                                 sweetDialog(json.getString("msg"), 1, false);
                             } else {
-                                ToastShow(response.body());
                                 barberStatusVo = gson.fromJson(json.getString("data"), ApplyStatusVo.class);
                                 applyStatus = barberStatusVo.getApplysts();
                                 switch (barberStatusVo.getApplysts()) {
@@ -300,6 +308,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                             } else {
                                 KLog.i(response.body());
                                 shopStatusVo = gson.fromJson(json.getString("data"), ShopApplyStatusVo.class);
+                                PreferenceUtils.setPrefString(BaseApplication.getContext(), "applyid", shopStatusVo.getApplyid());
                                 applyStatus = shopStatusVo.getApplysts();
                                 shopid = shopStatusVo.getShopid();
                                 prepaychecksts = shopStatusVo.getPrepaychecksts();

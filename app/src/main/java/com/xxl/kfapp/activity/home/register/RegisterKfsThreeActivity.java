@@ -15,6 +15,7 @@ import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.model.response.AppConfigVo;
 import com.xxl.kfapp.model.response.ProgressVo;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
@@ -85,7 +86,8 @@ public class RegisterKfsThreeActivity extends BaseActivity implements View.OnCli
     @Override
     protected void initData() {
         initInfoRecycleView();
-        webView.loadUrl(Urls.baseH5Url + Urls.kfPromise);
+        AppConfigVo vo = (AppConfigVo) mACache.getAsObject("appConfig");
+        webView.loadUrl(vo.getBarberprotocol());
     }
 
 

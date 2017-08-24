@@ -202,7 +202,7 @@
                             android:layout_height="wrap_content"
                             android:drawablePadding="2dp"
                             android:drawableRight="@mipmap/icon_xing"
-                            android:text="现居住地址"
+                            android:text="常居住地址"
                             android:textSize="@dimen/text_list_text" />
 
                     </LinearLayout>
@@ -215,7 +215,7 @@
                         android:padding="10dp"
                         android:drawablePadding="5dp"
                         android:drawableRight="@mipmap/allow_right"
-                        android:text="孟子"
+                        android:hint="请填写常居住地址"
                         android:textColor="@color/black2" />
                 </LinearLayout>
 
@@ -288,7 +288,7 @@
                         android:layout_weight="1"
                         android:drawablePadding="5dp"
                         android:drawableRight="@mipmap/allow_right"
-                        android:text="本科"
+                        android:hint="请选择学历"
                         android:textColor="@color/black2" />
                 </LinearLayout>
 
@@ -402,7 +402,7 @@
                         android:layout_weight="1"
                         android:drawablePadding="5dp"
                         android:drawableRight="@mipmap/allow_right"
-                        android:text="3"
+                        android:hint="请选择工作年限"
                         android:textColor="@color/black2" />
                 </LinearLayout>
 
@@ -425,7 +425,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawablePadding="2dp"
-                            android:drawableRight="@mipmap/icon_xing"
                             android:text="资质"
                             android:textSize="@dimen/text_list_text" />
 

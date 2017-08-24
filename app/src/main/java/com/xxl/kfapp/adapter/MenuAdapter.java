@@ -53,7 +53,7 @@ public class MenuAdapter extends SwipeMenuAdapter<MenuAdapter.DefaultViewHolder>
 
     @Override
     public View onCreateContentView(ViewGroup parent, int viewType) {
-        return LayoutInflater.from(parent.getContext()).inflate(R.layout.item_common, parent, false);
+        return LayoutInflater.from(parent.getContext()).inflate(R.layout.item_address, parent, false);
     }
 
     @Override
@@ -65,26 +65,32 @@ public class MenuAdapter extends SwipeMenuAdapter<MenuAdapter.DefaultViewHolder>
 
     @Override
     public void onBindViewHolder(MenuAdapter.DefaultViewHolder holder, int position) {
-        holder.setData(titles.get(position).getDispaddress());
+        holder.setData(titles.get(position));
         if (!TextUtils.isEmpty(addrId) && addrId.equals(titles.get(position).getAddrid())) {
             holder.setImage();
         }
     }
 
     static class DefaultViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tvTitle;
+        TextView tvAddr;
+        TextView tvNickname;
+        TextView tvPhone;
         ImageView ivSelect;
         ModifyAddrActivity.OnItemClickListener mOnItemClickListener;
 
         public DefaultViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            tvTitle = (TextView) itemView.findViewById(R.id.tv_address);
+            tvAddr = (TextView) itemView.findViewById(R.id.tv_address);
+            tvNickname = (TextView) itemView.findViewById(R.id.tv_nickname);
+            tvPhone = (TextView) itemView.findViewById(R.id.tv_phone);
             ivSelect = (ImageView) itemView.findViewById(R.id.ic_select);
         }
 
-        public void setData(String title) {
-            this.tvTitle.setText(title);
+        public void setData(AddrVo addr) {
+            this.tvAddr.setText(addr.getDispaddress());
+            this.tvNickname.setText(addr.getUsername());
+            this.tvPhone.setText(addr.getPhone());
         }
 
         public void setImage() {

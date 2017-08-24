@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/lyt_item"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x150"
+                android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_msg_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/x20"
+        android:layout_marginTop="@dimen/x20"
+        android:src="@mipmap/ic_msg_read"/>
+
+    <TextView
+        android:id="@+id/tv_msg_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/x20"
+        android:layout_marginTop="@dimen/x20"
+        android:layout_toEndOf="@+id/iv_msg_state"
+        android:ellipsize="end"
+        android:maxEms="8"
+        android:maxLines="1"
+        android:padding="@dimen/x5"
+        android:text="您有新的退票申请，请zhuyi"/>
+
+    <TextView
+        android:id="@+id/tv_receive_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/x20"
+        android:layout_marginTop="@dimen/x20"
+        android:padding="@dimen/x5"
+        android:text="2017-08-12"
+        android:textColor="@color/gray"/>
+
+    <TextView
+        android:id="@+id/tv_msg_disp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_msg_type"
+        android:layout_marginStart="@dimen/x20"
+        android:layout_toEndOf="@+id/iv_msg_state"
+        android:padding="@dimen/x5"
+        android:text="jdfslaj"/>
+</RelativeLayout>

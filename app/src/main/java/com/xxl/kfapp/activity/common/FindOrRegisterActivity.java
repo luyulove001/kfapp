@@ -51,7 +51,6 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
 
     private String phone, signdata, sign, mid, password, newPwd, code;
     private ProgressDialog mDialog;
-    private boolean prompt = true, checkUpResult = true;
     private KeyboardWatcher keyboardWatcher;
     private boolean isForgot = false;
     private CountDownTimer timer;
@@ -110,8 +109,8 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
 
     @Override
     public void onKeyboardShown(int keyboardSize) {
-//        mScrollView.smoothScrollTo(getWindowManager().getDefaultDisplay().getWidth(), getWindowManager()
-//                .getDefaultDisplay().getHeight());
+        //        mScrollView.smoothScrollTo(getWindowManager().getDefaultDisplay().getWidth(), getWindowManager()
+        //                .getDefaultDisplay().getHeight());
     }
 
     @Override
@@ -124,6 +123,8 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
         newPwd = etConfirm.getText().toString().trim();
         code = etCode.getText().toString().trim();
         String nickname = etNickname.getText().toString().trim();
+        boolean prompt = true;
+        boolean checkUpResult = true;
 
         if (phone.equals("") && prompt) {
             Toast.makeText(this, "手机号不能为空", Toast.LENGTH_SHORT).show();
@@ -163,18 +164,18 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
         }
 
         if (isForgot) {
-            doForgotPwd();
+            doForgotPwd(checkUpResult);
         } else {
             if (nickname.equals("") && prompt) {
                 Toast.makeText(this, "昵称不能为空", Toast.LENGTH_SHORT).show();
                 checkUpResult = false;
                 prompt = false;
             }
-            doRegister();
+            doRegister(checkUpResult);
         }
     }
 
-    private void doForgotPwd() {
+    private void doForgotPwd(boolean checkUpResult) {
         if (checkUpResult) {
             mDialog.show();
             btnConfirm.setEnabled(false);
@@ -217,7 +218,7 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
         return b;
     }
 
-    private void doRegister() {
+    private void doRegister(boolean checkUpResult) {
         if (checkUpResult) {
             mDialog.show();
             btnConfirm.setEnabled(false);
@@ -227,18 +228,21 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
                     .params("account", phone)
                     .params("password", password)
                     .params("identifyingcode", code)
+                    .params("nickname", etNickname.getText().toString())
                     .params("mid", "1")
                     .params("sign", "1")
                     .params("signdata", "56a4fa737b067667f430d3dfbd19fe8a")
                     .execute(new StringCallback() {
                         @Override
                         public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                            btnConfirm.setEnabled(true);
                             mDialog.dismiss();
                             try {
                                 JSONObject json = new JSONObject(response.body());
                                 String code = json.getString("code");
                                 if (code.equals("100000")) {
-                                    startActivity(new Intent(FindOrRegisterActivity.this, MainActivity.class));
+                                    startActivity(new Intent(FindOrRegisterActivity.this, LoginActivity.class));
+                                    finish();
                                 } else {
                                     sweetDialog(json.getString("msg"), 1, false);
                                 }

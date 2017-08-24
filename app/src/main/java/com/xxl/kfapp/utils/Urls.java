@@ -2,6 +2,7 @@ package com.xxl.kfapp.utils;
 
 public class Urls {
 //    public static final String baseUrl = "http://106.15.61.209:7881/plazz/api";
+//    public static final String baseUrl = "http://192.168.0.111:8090/plazz/api";
     public static final String baseUrl = "https://qch.qchouses.com/plazz/api";
     public static final String login = "/authapi/login";
     public static final String reg = "/authapi/reg";
@@ -12,6 +13,7 @@ public class Urls {
     public static final String updateMemberAddress = "/personalapi/updateMemberAddress";
     public static final String deleteUserAddr = "/personalapi/deleteUserAddr";
     public static final String getMemberInfo = "/personalapi/getMemberInfo";
+    public static final String updateMemberInfo = "/personalapi/updateMemberInfo";
 
     public static final String insertBarberApply = "/barberapi/insertBarberApply";
     public static final String getBarberApplyStatus = "/barberapi/getBarberApplyStatus";
@@ -54,11 +56,26 @@ public class Urls {
     public static final String getBarberSignInfo = "/barberapi/getBarberSignInfo";
     public static final String barberSign = "/barberapi/barberSign";
     public static final String getBarberSignUrlInfo = "/barberapi/getBarberSignUrlInfo";
+    public static final String getMemberShopApply = "/barberapi/getMemberShopApply";
+    public static final String getUserOrderList = "/barberapi/getUserOrderList";
+    public static final String getUserNoticeList = "/barberapi/getUserNoticeList";
+    public static final String updateUserNoticeReadSts = "/barberapi/updateUserNoticeReadSts";
+    public static final String getUserTicketBackList = "/barberapi/getUserTicketBackList";
+    public static final String getUserBackTicketDetailInfo = "/barberapi/getUserBackTicketDetailInfo";
+    public static final String updateTicketBackInfo = "/barberapi/updateTicketBackInfo";
+    public static final String getUserNoticeCount = "/barberapi/getUserNoticeCount";
+    public static final String getShopBalanceList = "/barberapi/getShopBalanceList";
+    public static final String getShopIncome = "/barberapi/getShopIncome";
+    public static final String getShopCashApplyRecord = "/barberapi/getShopCashApplyRecord";
+    public static final String getShopCashApplyInfo = "/barberapi/getShopCashApplyInfo";
+    public static final String getAppConfig = "/barberapi/getAppConfig";
+    public static final String insertShopCashApply = "/barberapi/insertShopCashApply";
 
     public static final String getDictList = "/commapi/getDictList";
     public static final String uploadForApp = "/file/uploadForApp";
 
-    public static final String baseH5Url = "http://qchtest.qchouses.com/h5/article.php";
+    public static final String baseH5Url = "https://qch.qchouses.com/h5/article.php";
+    public static final String baseBidUrl = "https://qch.qchouses.com/h5/auction.php";
     public static final String bidDepodit = "?artid=3";
     public static final String kfPromise = "?artid=2";
     public static final String bidH5 = "?shopid=";

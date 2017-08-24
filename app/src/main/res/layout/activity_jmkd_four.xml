@@ -106,13 +106,12 @@
 
                 <ImageView
                     android:id="@+id/iv_wx_selected"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/x48"
+                    android:layout_height="@dimen/y48"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginEnd="10dp"
                     android:src="@mipmap/qq_grey"
-                    android:textColor="@color/black2"
-                    android:textSize="@dimen/text_title"/>
+                    android:textColor="@color/black2"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -134,13 +133,12 @@
 
                 <ImageView
                     android:id="@+id/iv_ali_selected"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/x48"
+                    android:layout_height="@dimen/y48"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginEnd="10dp"
                     android:src="@mipmap/qq_grey"
-                    android:textColor="@color/black2"
-                    android:textSize="@dimen/text_title"/>
+                    android:textColor="@color/black2"/>
             </RelativeLayout>
         </LinearLayout>
 

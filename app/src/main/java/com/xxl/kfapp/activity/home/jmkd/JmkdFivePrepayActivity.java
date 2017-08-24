@@ -16,14 +16,17 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.activity.common.ImageShower;
 import com.xxl.kfapp.activity.home.register.RegisterKfsOneActivity;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.adapter.TextAdapter;
 import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.model.response.AppConfigVo;
 import com.xxl.kfapp.model.response.FeeListVo;
 import com.xxl.kfapp.model.response.ProgressVo;
 import com.xxl.kfapp.model.response.TextVo;
@@ -39,8 +42,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -249,9 +255,13 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
                                 textVos.add(textVo);
                                 txtAdapter = new TextAdapter(textVos);
                                 rvFee.setAdapter(txtAdapter);
-                                tvCompanyname.setText(feeListVo.getCompanyname());
-                                tvCompanyaccount.setText(feeListVo.getCompanyaccount());
-                                tvEndtime.setText(feeListVo.getEnddata());
+                                AppConfigVo vo = (AppConfigVo) mACache.getAsObject("appConfig");
+                                tvCompanyname.setText(vo.getTranscompanyname());
+                                tvCompanyaccount.setText(vo.getTransbankinfo());
+                                Calendar c = Calendar.getInstance();
+                                c.add(Calendar.DAY_OF_MONTH, Integer.valueOf(vo.getTranscheckdays()));
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+                                tvEndtime.setText(sdf.format(c.getTime()));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

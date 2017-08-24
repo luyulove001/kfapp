@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +23,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
+import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -31,10 +33,14 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.base.BaseApplication;
 import com.xxl.kfapp.base.PayHandler;
+import com.xxl.kfapp.model.response.FeeListVo;
 import com.xxl.kfapp.model.response.MemberInfoVo;
 import com.xxl.kfapp.model.response.ProgressVo;
 import com.xxl.kfapp.model.response.SelectAddrstsInfoVo;
+import com.xxl.kfapp.model.response.ShopApplyStatusVo;
+import com.xxl.kfapp.model.response.TextVo;
 import com.xxl.kfapp.utils.Constant;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
@@ -69,7 +75,9 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
     private ProgressAdapter progressAdapter;
     private SelectAddrstsInfoVo infoVo;
     private String applyid, shopid;
-    private int nowprice;
+    private int nowprice, amount;
+    private ShopApplyStatusVo applyStatusVo;
+    private FeeListVo feeListVo;
     //支付相关
     private PayHandler payHandler;
     private IWXAPI api;
@@ -79,7 +87,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
         public void onReceive(Context context, Intent intent) {
             switch (intent.getAction()) {
                 case Constant.ACTION_PAY_SUCCESS:
-
+                    doGetSelectAddrStsInfo(applyid, shopid);
                     break;
                 case Constant.ACTION_PAY_FAIL:
                     break;
@@ -100,7 +108,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_jmkd_five3_web);
         ButterKnife.bind(this);
         next.setOnClickListener(this);
-        mTitleBar.setTitle("选址");
+        mTitleBar.setTitle("开店申请");
         mTitleBar.setBackOnclickListener(this);
 
     }
@@ -109,11 +117,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
     protected void initData() {
         initInfoRecycleView();
         initWebView();
-        if (TextUtils.isEmpty(applyid)) {
-            applyid = PreferenceUtils.getPrefString(getApplication(), "applyid", "");
-        }
-        doGetSelectAddrStsInfo(applyid, shopid);
-        doUpdateShopViewCount(shopid);
+        getShopApplyStatus();
         //注册微信appid
         api = WXAPIFactory.createWXAPI(this, Constant.WX_APPID);
         api.registerApp(Constant.WX_APPID);
@@ -129,6 +133,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
             public void payResult(String resultStatus) {
                 if (TextUtils.equals(resultStatus, "9000")) {
                     ToastShow("支付宝支付成功");
+                    doGetSelectAddrStsInfo(applyid, shopid);
                 } else {
                     ToastShow("支付宝支付失败, 请重新支付");
                 }
@@ -148,7 +153,9 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setDefaultTextEncodingName("UTF-8");//设置默认为utf-8
-        webView.loadUrl(Urls.baseH5Url + Urls.bidH5 + shopid);
+        webView.getSettings().setBlockNetworkImage(false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
     }
 
 
@@ -159,19 +166,21 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                 if (infoVo != null) {
                     if ("3".equals(infoVo.getSalests())) {
                         if ("1".equals(infoVo.getBidsts())) {
-                            doUpdateApplyStatus(applyid);//到竞拍支付页面
-                        } else if ("0".equals(infoVo.getBidsts())) {
+                            //doUpdateApplyStatus(applyid);//到竞拍支付页面
+                            doGetShopFeeList();
+                            showBidSuccessPopup();
+                        } else {
                             startActivity(getIntent().setClass(JmkdFive3WebActivity.this, JmkdFive2Activity.class));
                             finish();
                         }
-                    } else if ("2".equals(infoVo.getSalests())){
+                    } else if ("2".equals(infoVo.getSalests())) {
                         if ("1".equals(infoVo.getBidmoneysts())) {
                             onOptionPicker(getBidStrs(nowprice));
-                        } else if ("0".equals(infoVo.getBidmoneysts())) {
+                        } else {
                             showHeadPopup();
                         }
                     } else if ("1".equals(infoVo.getSalests())) {
-                        if ("0".equals(infoVo.getBidmoneysts())) {
+                        if (!"1".equals(infoVo.getBidmoneysts())) {
                             showHeadPopup();
                         }
                     }
@@ -237,7 +246,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
      */
     private void showHeadPopup() {
         mSlidePopup = new SlideFromBottomPopup(this);
-        mSlidePopup.setTexts(new String[]{"支付宝支付", "微信支付", "线下转账"});
+        mSlidePopup.setTexts(new String[]{"支付宝支付", "微信支付", "取消"});
         mSlidePopup.setOnItemClickListener(new SlideFromBottomPopup.OnItemClickListener() {
             @Override
             public void onItemClick(View v) {
@@ -248,6 +257,37 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                         break;
                     case R.id.tx_2:
                         doCreateUserOrder("2");
+                        mSlidePopup.dismiss();
+                        break;
+                    case R.id.tx_3:
+                        mSlidePopup.dismiss();
+                        //                        Intent i = new Intent(JmkdFive3WebActivity.this,
+                        // JmkdFivePrepayActivity.class);
+                        //                        i.putExtra("shopid", shopid);
+                        //                        startActivity(i);
+                        break;
+                }
+            }
+        });
+        mSlidePopup.showPopupWindow();
+    }
+
+    /**
+     * 设置支付方式弹出窗
+     */
+    private void showBidSuccessPopup() {
+        mSlidePopup = new SlideFromBottomPopup(this);
+        mSlidePopup.setTexts(new String[]{"支付宝支付", "微信支付", "线下转账"});
+        mSlidePopup.setOnItemClickListener(new SlideFromBottomPopup.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v) {
+                switch (v.getId()) {
+                    case R.id.tx_1:
+                        doCreateUserOrder3("1");
+                        mSlidePopup.dismiss();
+                        break;
+                    case R.id.tx_2:
+                        doCreateUserOrder3("2");
                         mSlidePopup.dismiss();
                         break;
                     case R.id.tx_3:
@@ -267,13 +307,12 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
         picker.setCanceledOnTouchOutside(false);
         picker.setDividerRatio(WheelView.DividerConfig.FILL);
         picker.setShadowColor(Color.RED, 40);
-        picker.setSelectedIndex(1);
+        picker.setSelectedIndex(0);
         picker.setCycleDisable(true);
-        picker.setTextSize(11);
+        picker.setTextSize(14);
         picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
             public void onOptionPicked(int index, String item) {
-                ToastShow("index=" + index + ", item=" + item);
                 doInsertPriceRecord(item);
             }
         });
@@ -305,8 +344,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                             String code = json.getString("code");
                             if (code.equals("100000")) {
                                 KLog.i(response.body());
-                                infoVo = mGson.fromJson(json.getString("data"),
-                                        SelectAddrstsInfoVo.class);
+                                infoVo = mGson.fromJson(json.getString("data"), SelectAddrstsInfoVo.class);
                                 nowprice = Integer.valueOf(infoVo.getNowprice());
                                 initButtonView(infoVo);
                             } else {
@@ -324,22 +362,22 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
             if ("1".equals(infoVo.getBidsts())) {
                 if ("1".equals(infoVo.getPrepaycertsts())) {
                     next.setText("下一步");
-                } else if ("0".equals(infoVo.getPrepaycertsts())) {
+                } else {
                     next.setText("竞拍成功，请付款");
                 }
-            } else if ("0".equals(infoVo.getBidsts())) {
+            } else {
                 next.setText("竞拍已结束");
             }
         } else if ("2".equals(infoVo.getSalests())) {
             if ("1".equals(infoVo.getBidmoneysts())) {//投标保证金缴纳状态
                 next.setText("出价");
-            } else if ("0".equals(infoVo.getBidmoneysts())) {
+            } else {
                 next.setText("交保证金报名");
             }
         } else if ("1".equals(infoVo.getSalests())) {
             if ("1".equals(infoVo.getBidmoneysts())) {//投标保证金缴纳状态
                 next.setText("等待出价");
-            } else if ("0".equals(infoVo.getBidmoneysts())) {
+            } else {
                 next.setText("交保证金报名");
             }
         }
@@ -376,12 +414,13 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
         String token = PreferenceUtils.getPrefString(getApplication(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.createUserOrder)
                 .params("token", token)
-                .params("applyid", getIntent().getStringExtra("applyid"))
+                .params("applyid", applyid)
                 .params("quantity", "1")
-                .params("price", getIntent().getStringExtra("brandmoney"))
-                .params("amount", getIntent().getStringExtra("brandmoney"))
+                .params("price", infoVo.getBond())
+                .params("amount", infoVo.getBond())
                 .params("paytype", paytype)
                 .params("ordertype", "2")
+                .params("shopid", shopid)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -390,8 +429,6 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                             String code = json.getString("code");
                             if (code.equals("100000")) {
                                 KLog.i(response.body());
-                                // startActivity(new Intent(JmkdFourActivity.this, JmkdFiveActivity.class));
-                                // finish();
                                 if ("1".equals(paytype)) {
                                     alipay(json.getJSONObject("data").getString("orderstring"));
                                 } else if ("2".equals(paytype)) {
@@ -401,6 +438,69 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                                 sweetDialog(json.getString("msg"), 1, false);
                             }
                         } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    //开店预付费
+    private void doCreateUserOrder3(final String paytype) {
+        String token = PreferenceUtils.getPrefString(getApplication(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.createUserOrder)
+                .params("token", token)
+                .params("applyid", applyid)
+                .params("quantity", "1")
+                .params("price", amount)
+                .params("amount", amount)
+                .params("paytype", "3")
+                .params("ordertype", "3")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        try {
+                            com.alibaba.fastjson.JSONObject json = JSON.parseObject(response.body());
+                            String code = json.getString("code");
+                            if (code.equals("100000")) {
+                                KLog.i(response.body());
+                                if ("1".equals(paytype)) {
+                                    alipay(json.getJSONObject("data").getString("orderstring"));
+                                } else if ("2".equals(paytype)) {
+                                    wxPay(json.getJSONObject("data"));
+                                }
+                            } else {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            }
+                        } catch (com.alibaba.fastjson.JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void doGetShopFeeList() {
+        String token = PreferenceUtils.getPrefString(getApplicationContext(), "token", "1234567890");
+        OkGo.<String>post(Urls.baseUrl + Urls.getShopFeeList)
+                .tag(this)
+                .params("token", token)
+                .params("shopid", shopid)
+                .params("applyid", applyid)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            org.json.JSONObject json = new org.json.JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                amount = 0;
+                                feeListVo = mGson.fromJson(json.getString("data"), FeeListVo.class);
+                                for (FeeListVo.Fee fee : feeListVo.getFeelst()) {
+                                    amount += Integer.valueOf(fee.getAmount());
+                                }
+                            }
+                        } catch (org.json.JSONException e) {
                             e.printStackTrace();
                         }
                     }
@@ -473,11 +573,12 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                                     } else if ("0".equals(json.getString("bidsts"))) {
                                         ToastShow("很遗憾竞拍失败，请重新选择竞拍");
                                     }
-//                                } else if ("2".equals(json.getString("salests"))) {
-//                                    ToastShow("出价成功");
-//                                    nowprice = Integer.valueOf(saleprice);
+                                    //                                } else if ("2".equals(json.getString("salests")
+                                    // )) {
+                                    //                                    ToastShow("出价成功");
+                                    //                                    nowprice = Integer.valueOf(saleprice);
                                 } else {
-//                                    ToastShow("竞价还未开始，请稍后");
+                                    //                                    ToastShow("竞价还未开始，请稍后");
                                     ToastShow("出价成功");
                                     nowprice = Integer.valueOf(saleprice);
                                 }
@@ -508,6 +609,40 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                                 sweetDialog(json.getString("msg"), 1, false);
                             }
                         } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void getShopApplyStatus() {
+        String token = PreferenceUtils.getPrefString(BaseApplication.getContext(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.getShopApplyStatus)
+                .tag(this)
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            org.json.JSONObject json = new org.json.JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                KLog.i(response.body());
+                                Gson gson = new Gson();
+                                applyStatusVo = gson.fromJson(json.getString("data"), ShopApplyStatusVo.class);
+                                if (!TextUtils.isEmpty(applyStatusVo.getShopid())) {
+                                    shopid = applyStatusVo.getShopid();
+                                }
+                                applyid = applyStatusVo.getApplyid();
+                                PreferenceUtils.setPrefString(BaseApplication.getContext(), "applyid", applyStatusVo
+                                        .getApplyid());
+                                webView.loadUrl(Urls.baseBidUrl + Urls.bidH5 + shopid);
+                                doGetSelectAddrStsInfo(applyid, shopid);
+                                doUpdateShopViewCount(shopid);
+                            }
+                        } catch (org.json.JSONException e) {
                             e.printStackTrace();
                         }
                     }

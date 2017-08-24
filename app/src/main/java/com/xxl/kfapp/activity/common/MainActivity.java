@@ -14,12 +14,14 @@ import android.widget.Toast;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
+import com.xxl.kfapp.activity.person.NotificationCenterActivity;
 import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.base.BaseApplication;
 import com.xxl.kfapp.fragment.ForumFragment;
 import com.xxl.kfapp.fragment.HomeFragment;
 import com.xxl.kfapp.fragment.HomeFragmentKfs;
 import com.xxl.kfapp.fragment.HomeFragmentShopkeeper;
-import com.xxl.kfapp.fragment.PersonFragment;
+import com.xxl.kfapp.fragment.PersonFragment1;
 import com.xxl.kfapp.fragment.SPcartFragment;
 import com.xxl.kfapp.fragment.StoreFragment;
 import com.xxl.kfapp.model.response.MemberInfoVo;
@@ -34,6 +36,7 @@ import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 import talex.zsw.baselibrary.util.klog.KLog;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -62,11 +65,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private StoreFragment storeFragment;
     private SPcartFragment sPcartFragment;
     private ForumFragment forumFragment;
-    private PersonFragment personFragment;
+    private PersonFragment1 personFragment;
     private HomeFragmentShopkeeper shopkeeperFragment;
     private HomeFragmentKfs kfsFragment;
 
     private String role, jobsts, shopid;
+    private boolean hasNewMsg, isMain;
 
 
     @Override
@@ -96,15 +100,36 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mTitleBar.setRightIV(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, NotificationCenterActivity.class);
+                startActivity(i);
+            }
+        });
+        mTitleBar.setRightIV2(R.mipmap.ic_notication_new, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });
+        mTitleBar.getvIvRight2().setPadding(25, 0, 0, 0);
+        mTitleBar.getvIvRight2().setVisibility(View.GONE);
+        mTitleBar.getvIvRight().setPadding(0, 0, 25, 0);
         mFragmentManager = getSupportFragmentManager();
     }
 
     @Override
     protected void initData() {
         doGetMemberInfo();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUserNoticeCount();
+        MemberInfoVo vo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
+        if (vo != null) {
+            jobsts = vo.getJobsts();
+            role = vo.getRole();
+        }
     }
 
     @Override
@@ -171,6 +196,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     shopkeeperFragment = new HomeFragmentShopkeeper();
                     transaction.add(R.id.mContent, shopkeeperFragment);
                 }
+                mTitleBar.getvIvRight().setVisibility(View.VISIBLE);
+                mTitleBar.getvIvLeftCode().setVisibility(View.VISIBLE);
+                if (hasNewMsg) {
+                    mTitleBar.getvIvRight2().setVisibility(View.VISIBLE);
+                } else {
+                    mTitleBar.getvIvRight2().setVisibility(View.GONE);
+                }
+                isMain = true;
                 break;
             case 2:
                 if (storeFragment == null) {
@@ -198,11 +231,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case 5:
                 if (personFragment == null) {
-                    personFragment = new PersonFragment();
+                    personFragment = new PersonFragment1();
                     transaction.add(R.id.mContent, personFragment);
                 } else {
                     transaction.show(personFragment);
                 }
+                mTitleBar.getvIvRight().setVisibility(View.GONE);
+                mTitleBar.getvIvLeftCode().setVisibility(View.GONE);
+                mTitleBar.getvIvRight2().setVisibility(View.GONE);
+                isMain = false;
                 break;
         }
         transaction.commit();
@@ -284,7 +321,46 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                     role = vo.getRole();
                                     jobsts = vo.getJobsts();
                                     shopid = vo.getShopid();
+                                    if (TextUtils.isEmpty(PreferenceUtils.getPrefString(getApplicationContext(), "alias", ""))) {
+                                        JPushInterface.setAlias(BaseApplication.getContext(), 1, vo.getMemberid());
+                                        PreferenceUtils.getPrefString(getApplicationContext(), "alias", vo.getMemberid());
+                                    }
                                     setIndexFragment(1);//设置首页
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void getUserNoticeCount() {
+        String token = PreferenceUtils.getPrefString(getApplicationContext(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.getUserNoticeCount)
+                .tag(this)
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                KLog.i(response.body());
+                                if (!TextUtils.isEmpty(json.getString("data"))) {
+                                    int count = Integer.parseInt(json.getJSONObject("data").getString("msgcnt"));
+                                    if (count > 0) {
+                                        if (isMain) {
+                                            mTitleBar.getvIvRight2().setVisibility(View.VISIBLE);
+                                        }
+                                        hasNewMsg = true;
+                                    } else {
+                                        mTitleBar.getvIvRight2().setVisibility(View.GONE);
+                                        hasNewMsg = false;
+                                    }
                                 }
                             }
                         } catch (JSONException e) {

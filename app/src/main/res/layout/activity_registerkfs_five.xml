@@ -55,12 +55,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
                     android:drawableLeft="@mipmap/sh_cg"
                     android:drawablePadding="5dp"
-                    android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="恭喜您，成为一名快发师"
-                    android:textSize="@dimen/middle" />
+                    android:textSize="@dimen/middle"/>
 
                 <Button
                     android:id="@+id/btn_kd"
@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:background="@color/white"
-                    android:text="我要开店" />
+                    android:text="我要开店"/>
 
                 <Button
                     android:id="@+id/btn_qz"
@@ -78,7 +78,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:background="@color/white"
-                    android:text="我要求职" />
+                    android:text="我要求职"/>
 
 
             </LinearLayout>

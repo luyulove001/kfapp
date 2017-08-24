@@ -29,6 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/x10"
+        android:layout_marginEnd="@dimen/x30"
         android:background="@drawable/bg_shape_stroke_red"
         android:drawableEnd="@mipmap/qc_fast_calendar"
         android:drawablePadding="8dp"
@@ -41,6 +42,7 @@
         android:layout_width="@dimen/x60"
         android:layout_height="@dimen/x60"
         android:layout_marginStart="@dimen/x10"
+        android:layout_marginEnd="@dimen/x20"
         android:background="@mipmap/qc_fast_btn"
         android:visibility="visible"/>
 

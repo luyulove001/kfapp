@@ -10,13 +10,83 @@
         android:layout_height="wrap_content"/>
 
     <LinearLayout
+        android:id="@+id/lyt_wx_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="@dimen/x30"
+        android:layout_marginStart="@dimen/x30"
+        android:layout_marginTop="@dimen/x30"
+        android:background="@drawable/bg_dash_line"
+        android:gravity="center"
+        android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/x10"
+            android:padding="@dimen/x5"
+            android:text="你提现的微信信息"
+            android:textSize="@dimen/x30"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x2"
+            android:layout_marginEnd="@dimen/x30"
+            android:layout_marginStart="@dimen/x30"
+            android:layout_marginTop="@dimen/x10"
+            android:background="@color/bg_gray"/>
+
+        <talex.zsw.baselibrary.widget.CircleImageView
+            android:id="@+id/civ_head"
+            android:layout_width="@dimen/x80"
+            android:layout_height="@dimen/y80"
+            android:layout_marginTop="@dimen/x10"/>
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x10"
+            android:layout_marginTop="@dimen/x10"
+            android:padding="@dimen/x5"
+            android:text="20"
+            android:textSize="@dimen/x35"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/x30"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/qc_fast_balance"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/x5"
+            android:text="余额  ¥"
+            android:textSize="@dimen/x30"/>
+
+        <TextView
+            android:id="@+id/tv_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/x5"
+            android:text="20"
+            android:textColor="@color/main_red"
+            android:textSize="@dimen/x35"/>
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_location"
+        android:id="@+id/btn_apply"
         android:layout_width="@dimen/x480"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -28,6 +98,18 @@
         android:text="申请提现"
         android:textColor="@drawable/text_white_red"
         android:textSize="@dimen/middle"/>
+
+    <TextView
+        android:id="@+id/tv_tixian"
+        android:layout_width="@dimen/x240"
+        android:layout_height="@dimen/y60"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/x20"
+        android:background="@mipmap/tixianshuoming"
+        android:gravity="center"
+        android:padding="@dimen/x5"
+        android:text="提现说明"
+        android:textSize="@dimen/x30"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -74,6 +156,7 @@
             android:text="累计提现"/>
 
         <TextView
+            android:id="@+id/tv_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/x20"
@@ -109,11 +192,11 @@
             android:layout_margin="@dimen/x20"
             android:paddingEnd="@dimen/x20"
             android:paddingStart="@dimen/x20"
-            android:text="金额(元)"
-            android:textColor="@color/main_red"/>
+            android:text="金额(元)"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_cash_apply"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"/>

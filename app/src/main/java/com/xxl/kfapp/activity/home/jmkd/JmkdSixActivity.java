@@ -94,7 +94,8 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
         public void onReceive(Context context, Intent intent) {
             switch (intent.getAction()) {
                 case Constant.ACTION_PAY_SUCCESS:
-
+                    startActivity(new Intent(JmkdSixActivity.this, JmkdSevenActivity.class));
+                    finish();
                     break;
                 case Constant.ACTION_PAY_FAIL:
                     break;
@@ -114,7 +115,7 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
         setContentView(R.layout.activity_jmkd_six);
         ButterKnife.bind(this);
         next.setOnClickListener(this);
-        mTitleBar.setTitle("装修设备");
+        mTitleBar.setTitle("开店申请");
         mTitleBar.setBackOnclickListener(this);
         ivLess.setOnClickListener(this);
         ivMore.setOnClickListener(this);
@@ -139,6 +140,8 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
             public void payResult(String resultStatus) {
                 if (TextUtils.equals(resultStatus, "9000")) {
                     ToastShow("支付宝支付成功");
+                    startActivity(new Intent(JmkdSixActivity.this, JmkdSevenActivity.class));
+                    finish();
                 } else {
                     ToastShow("支付宝支付失败, 请重新支付");
                 }
@@ -238,10 +241,9 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-                //                Intent intent = getIntent().setClass(JmkdFive2Activity.this, JmkdFive3WebActivity
-                // .class);
-                //                intent.putExtra("shopid", vo.getShoplst().get(i).getShopid());
-                //                startActivity(intent);
+                //Intent intent = getIntent().setClass(JmkdFive2Activity.this, JmkdFive3WebActivity.class);
+                //intent.putExtra("shopid", vo.getShoplst().get(i).getShopid());
+                //startActivity(intent);
                 ImageView ivSelect = (ImageView) view.findViewById(R.id.iv_goods_select);
                 if (isSelects[i]) {
                     ivSelect.setImageResource(R.mipmap.qq_grey);
@@ -282,7 +284,7 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
         for (int i = 0; i < 7; i++) {
             ProgressVo vo = new ProgressVo();
             if (i == 0) {
-                vo.setName("申请加盟");
+                vo.setName("申请开店");
                 vo.setTag(2);
             } else if (i == 1) {
                 vo.setName("审核");

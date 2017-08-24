@@ -23,7 +23,6 @@
         <TextView
             android:layout_width="@dimen/x200"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_white"
             android:gravity="center_vertical"
             android:padding="10dp"
             android:text="店名"
@@ -34,7 +33,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/btn_white"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:padding="10dp"
@@ -62,7 +60,6 @@
         <TextView
             android:layout_width="@dimen/x200"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_white"
             android:gravity="center_vertical"
             android:padding="10dp"
             android:text="票价"
@@ -73,7 +70,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/btn_white"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:padding="10dp"
@@ -101,7 +97,6 @@
         <TextView
             android:layout_width="@dimen/x200"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_white"
             android:gravity="center_vertical"
             android:padding="10dp"
             android:text="营业时间"
@@ -112,7 +107,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/btn_white"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:padding="10dp"
@@ -141,7 +135,6 @@
         <TextView
             android:layout_width="@dimen/x200"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_white"
             android:gravity="center_vertical"
             android:padding="10dp"
             android:text="解绑门店"
@@ -151,7 +144,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/btn_white"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:padding="10dp"

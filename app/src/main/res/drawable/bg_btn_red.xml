@@ -6,7 +6,7 @@
         <shape>
 
             <!-- 色值 -->
-            <solid android:color="@color/text_orange2" />
+            <solid android:color="@color/text_black2" />
         </shape>
     </item>
     <item>

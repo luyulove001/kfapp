@@ -2,19 +2,29 @@ package com.xxl.kfapp.activity.person;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.alibaba.fastjson.JSON;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
+import com.xxl.kfapp.adapter.ShopRenameAdapter;
+import com.xxl.kfapp.adapter.TicketAdapter;
 import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.model.response.AddrVo;
+import com.xxl.kfapp.model.response.MemberInfoVo;
+import com.xxl.kfapp.model.response.ShopRenameRecordVo;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
+import com.xxl.kfapp.widget.ListViewDecoration;
 import com.xxl.kfapp.widget.TitleBar;
 
 import org.json.JSONException;
@@ -22,8 +32,9 @@ import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import talex.zsw.baselibrary.util.klog.KLog;
 
-public class RenameActivity extends BaseActivity implements View.OnClickListener{
+public class RenameActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.mTitleBar)
     TitleBar mTitleBar;
     @Bind(R.id.input_nickname)
@@ -32,9 +43,12 @@ public class RenameActivity extends BaseActivity implements View.OnClickListener
     ImageView ivClear;
     @Bind(R.id.ll_operate_record)
     LinearLayout llOperateRecord;
+    @Bind(R.id.rv_rename_record)
+    RecyclerView rvRename;
 
-    String shopName;
+    private String shopName, shopid;
     private String token;
+    private boolean isShopRename;
 
     private TextWatcher mTextWatcher = new TextWatcher() {
         private CharSequence temp;
@@ -61,8 +75,9 @@ public class RenameActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void initArgs(Intent intent) {
-        intent = getIntent();
         shopName = intent.getStringExtra("shopName");
+        shopid = intent.getStringExtra("shopid");
+        isShopRename = !TextUtils.isEmpty(shopName);
     }
 
     @SuppressWarnings("deprecation")
@@ -71,15 +86,27 @@ public class RenameActivity extends BaseActivity implements View.OnClickListener
         setContentView(R.layout.ac_rename);
         ButterKnife.bind(this);
         ivClear.setOnClickListener(this);
-        mTitleBar.setTitle("修改昵称");
+        if (isShopRename) {
+            mTitleBar.setTitle("修改店名");
+        } else {
+            mTitleBar.setTitle("修改昵称");
+        }
         mTitleBar.setBackOnclickListener(this);
         mTitleBar.setRightTV("保存", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reName();
-                Intent i = new Intent();
-                i.putExtra("nickname", etNickname.getText().toString());
-                setResult(RESULT_OK, i);
+                if (TextUtils.isEmpty(etNickname.getText().toString())) {
+                    ToastShow("输入内容不能为空");
+                    return;
+                }
+                if (isShopRename) {
+                    reName();
+                    Intent i = new Intent();
+                    i.putExtra("shopName", etNickname.getText().toString());
+                    setResult(RESULT_OK, i);
+                } else {
+                    updateMemberInfo(etNickname.getText().toString());
+                }
                 finish();
             }
         });
@@ -90,7 +117,10 @@ public class RenameActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void initData() {
         token = PreferenceUtils.getPrefString(this.getApplicationContext(), "token", "1234567890");
-
+        if (isShopRename) {
+            llOperateRecord.setVisibility(View.VISIBLE);
+            getShopModifyRecord();
+        }
     }
 
     @Override
@@ -105,13 +135,13 @@ public class RenameActivity extends BaseActivity implements View.OnClickListener
     /**
      * 修改店名
      */
-    private void reName(){
+    private void reName() {
         OkGo.<String>get(Urls.baseUrl + Urls.updateShopInfo)
                 .tag(this)
                 .params("token", token)
-                .params("shopid", "1")
-                .params("oidname",shopName)
-                .params("newname",etNickname.getText().toString())
+                .params("shopid", shopid)
+                .params("oidname", shopName)
+                .params("newname", etNickname.getText().toString())
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -131,14 +161,42 @@ public class RenameActivity extends BaseActivity implements View.OnClickListener
                 });
     }
 
+    private void updateMemberInfo(final String nickname) {
+        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.updateMemberInfo)
+                .tag(this)
+                .params("token", token)
+                .params("nickname", nickname)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            com.alibaba.fastjson.JSONObject json = JSON.parseObject(response.body());
+                            String code = json.getString("code");
+                            if (code.equals("100000")) {
+                                ToastShow("修改成功");
+                                MemberInfoVo vo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
+                                vo.setNickname(nickname);
+                                mACache.put("memberInfoVo", vo);//保存个人信息
+                            } else {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            }
+                        } catch (com.alibaba.fastjson.JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+
     /**
      * 获取店名修改记录
      */
-    private void getShopModifyRecord(){
+    private void getShopModifyRecord() {
         OkGo.<String>get(Urls.baseUrl + Urls.getShopModifyRecord)
                 .tag(this)
                 .params("token", token)
-                .params("shopid", "6")
+                .params("shopid", shopid)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -146,9 +204,9 @@ public class RenameActivity extends BaseActivity implements View.OnClickListener
                             JSONObject json = new JSONObject(response.body());
                             String code = json.getString("code");
                             if (code.equals("100000")) {
-                                JSONObject rdlist = json.getJSONObject("data").getJSONObject("rdlist");//TODO 列表数据未绑定
-
-
+                                ShopRenameRecordVo vo = mGson.fromJson(json.getString("data"), ShopRenameRecordVo
+                                        .class);
+                                initRV(vo);
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
                             }
@@ -157,5 +215,17 @@ public class RenameActivity extends BaseActivity implements View.OnClickListener
                         }
                     }
                 });
+    }
+
+    private void initRV(ShopRenameRecordVo vo) {
+        ShopRenameAdapter adapter = new ShopRenameAdapter(vo.getRdlst());
+        adapter.openLoadAnimation();
+        rvRename.setAdapter(adapter);
+        rvRename.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.setSmoothScrollbarEnabled(true);
+        layoutManager.setAutoMeasureEnabled(true);
+        rvRename.setLayoutManager(layoutManager);
     }
 }

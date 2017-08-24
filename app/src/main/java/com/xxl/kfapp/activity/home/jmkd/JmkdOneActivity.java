@@ -66,12 +66,11 @@ public class JmkdOneActivity extends BaseActivity implements View.OnClickListene
     private ProgressAdapter progressAdapter;
     private List<ProgressVo> progressVos;
     private ShopApplyInfoVo shopInfoVo;
-    private ShopApplyStatusVo shopApplyStatusVo;
+    private String applyid;
 
     @Override
     protected void initArgs(Intent intent) {
-        if (intent.getSerializableExtra("shopStatusVo") != null)
-            shopApplyStatusVo = (ShopApplyStatusVo) intent.getSerializableExtra("shopStatusVo");
+        applyid = intent.getStringExtra("applyid");
     }
 
     @Override
@@ -86,19 +85,21 @@ public class JmkdOneActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void initData() {
-        shopInfoVo = new ShopApplyInfoVo();
-        initInfoRecycleView();
-
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        shopInfoVo = new ShopApplyInfoVo();
+        initInfoRecycleView();
+    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
 
             case R.id.next:
-                startActivity(new Intent(this, JmkdTwoActivity.class));
-                finish();
+                doUpdateShopApply();
                 break;
             case R.id.lyt_want_address:
                 onAddressPicker();
@@ -137,7 +138,6 @@ public class JmkdOneActivity extends BaseActivity implements View.OnClickListene
                     shopInfoVo.setAddareacode(county.getAreaId());
                     shopInfoVo.setAddareaname(county.getAreaName());
                 }
-                doUpdateShopApply();
             }
         });
         task.execute("浙江", "杭州", "滨江");
@@ -201,8 +201,8 @@ public class JmkdOneActivity extends BaseActivity implements View.OnClickListene
                 .params("addcitycode", shopInfoVo.getAddcitycode())
                 .params("addareacode", shopInfoVo.getAddareacode())
                 .params("applysts", "21");
-        if (!TextUtils.isEmpty(shopApplyStatusVo.getApplyid())) {
-            request.params("applyid", shopApplyStatusVo.getApplyid());
+        if (!TextUtils.isEmpty(applyid)) {
+            request.params("applyid", applyid);
         }
         request.execute(new StringCallback() {
             @Override
@@ -212,6 +212,8 @@ public class JmkdOneActivity extends BaseActivity implements View.OnClickListene
                     String code = json.getString("code");
                     if (code.equals("100000")) {
                         KLog.i(response.body());
+                        startActivity(new Intent(JmkdOneActivity.this, JmkdTwoActivity.class));
+                        finish();
                     } else {
                         sweetDialog(json.getString("msg"), 1, false);
                     }

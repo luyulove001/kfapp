@@ -1,6 +1,7 @@
 package com.xxl.kfapp.activity.home.jmkd;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -49,6 +50,8 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
     ScrollView mScrollView;
     @Bind(R.id.next)
     Button next;
+    @Bind(R.id.lyt_next)
+    LinearLayout lytNext;
     @Bind(R.id.tv_checking)
     TextView tvChecking;
     @Bind(R.id.tv_fixedreason)
@@ -106,7 +109,9 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
                             doUpdateApplyStatus();
                             break;
                         case "2":
-                            startActivity(new Intent(this, JmkdOneActivity.class));
+                            Intent i = new Intent(this, JmkdOneActivity.class);
+                            i.putExtra("applyid", statusVo.getApplyid());
+                            startActivity(i);
                             finish();
                             break;
                     }
@@ -138,7 +143,7 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
         for (int i = 0; i < 7; i++) {
             ProgressVo vo = new ProgressVo();
             if (i == 0) {
-                vo.setName("申请加盟");
+                vo.setName("申请开店");
                 vo.setTag(2);
             } else if (i == 1) {
                 vo.setName("审核");
@@ -180,7 +185,8 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
                                     case "0":
                                         next.setClickable(false);
                                         next.setBackgroundResource(R.drawable.bg_corner_gray);
-                                        next.setTextColor(getResources().getColor(R.color.gray));
+                                        next.setTextColor(Color.argb(255, 128, 128, 128));
+                                        lytNext.setVisibility(View.GONE);
                                         break;
                                     case "1":
                                         tvChecking.setText("恭喜您，您的初审已通过");

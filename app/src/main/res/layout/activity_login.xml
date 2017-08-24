@@ -15,11 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:orientation="vertical">
 
         <!-- Login progress -->
         <ProgressBar
@@ -39,11 +35,15 @@
                 android:id="@+id/email_login_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/x350"
+                    android:layout_height="@dimen/y200"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="@dimen/y30"
                     android:layout_marginTop="@dimen/y40"
@@ -61,7 +61,8 @@
                         android:inputType="phone"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:textColor="@color/black2"/>
+                        android:textColor="@color/black2"
+                        android:textSize="@dimen/x30"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -79,8 +80,8 @@
                         android:imeOptions="actionUnspecified"
                         android:inputType="textPassword"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:textColor="@color/black2"/>
+                        android:textColor="@color/black2"
+                        android:textSize="@dimen/x30"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -91,7 +92,8 @@
                     android:layout_gravity="end"
                     android:layout_marginTop="3dp"
                     android:text="@string/action_forgot_pwd"
-                    android:textColor="@color/main_red"/>
+                    android:textColor="@color/main_red"
+                    android:textSize="@dimen/x23"/>
 
                 <Button
                     android:id="@+id/account_sign_in_button"
@@ -102,7 +104,7 @@
                     android:background="@drawable/bg_btn_red"
                     android:text="@string/action_sign_in_short"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/x40"/>
+                    android:textSize="@dimen/x30"/>
 
                 <Button
                     android:id="@+id/account_register_button"
@@ -113,7 +115,7 @@
                     android:background="@drawable/bg_stroke_red"
                     android:text="@string/action_register"
                     android:textColor="@drawable/text_white_red"
-                    android:textSize="@dimen/x40"/>
+                    android:textSize="@dimen/x30"/>
 
             </LinearLayout>
         </ScrollView>

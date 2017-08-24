@@ -2,7 +2,7 @@
 <resources>
 
     <!--系统 -->
-    <color name="colorPrimary">#283844</color>
+    <color name="colorPrimary">#cc6d65</color>
     <color name="colorPrimaryDark">#B14F45</color>
     <color name="colorAccent">#028CD2</color>
     <color name="primary_text">#DC3E2F</color>
@@ -10,7 +10,7 @@
     <color name="window_background">#F8F8F8</color>
     <color name="masking">#20000000</color>
     <color name="line">#CCC</color>
-    <color name="line2">#344451</color>
+    <color name="line2">#c7c4c4</color>
     <!-- 文本颜色 -->
     <color name="text_black">#283844</color>
     <color name="text_black2">#666666</color>
@@ -56,6 +56,9 @@
     <color name="result_view">#b0000000</color>
     <color name="status_text">#ffffffff</color>
     <color name="viewfinder_laser">#ffcc0000</color>
+    <color name="warn">#f96375</color>
     <!-- Android standard ICS color -->
     <color name="viewfinder_mask">#60000000</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

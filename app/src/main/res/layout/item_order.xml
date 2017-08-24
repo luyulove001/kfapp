@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_order_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/x20"
+        android:layout_marginTop="@dimen/x10"
+        android:padding="@dimen/x5"
+        android:text="品牌保证金"/>
+
+    <ImageView
+        android:id="@+id/iv_pay_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/x10"
+        android:layout_marginTop="@dimen/x18"
+        android:layout_toEndOf="@+id/tv_order_name"
+        android:src="@mipmap/qc_fast_weix"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tv_order_name"
+        android:layout_below="@+id/tv_order_name"
+        android:padding="@dimen/x5"
+        android:text="2017-08-11 17:14"
+        android:textSize="@dimen/x20"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:layout_below="@id/tv_time"
+        android:layout_marginTop="@dimen/x10"
+        android:background="@color/gray_holo_dark"/>
+
+    <TextView
+        android:id="@+id/tv_rmb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/x20"
+        android:text="¥5"
+        android:layout_marginTop="@dimen/x20"/>
+
+    <TextView
+        android:id="@+id/tv_refund"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/x20"
+        android:text="退款"
+        android:layout_below="@+id/tv_rmb"
+        android:textColor="@color/main_red"
+        android:visibility="gone"/>
+</RelativeLayout>

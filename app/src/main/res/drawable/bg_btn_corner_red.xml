@@ -6,8 +6,8 @@
         <shape>
 
             <!-- 色值 -->
-            <solid android:color="@color/text_orange2" />
-            <corners android:radius="@dimen/x15"/>
+            <solid android:color="@color/text_black2" />
+            <corners android:radius="@dimen/x10"/>
         </shape>
     </item>
     <item>

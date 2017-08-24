@@ -118,6 +118,9 @@ public class CaptureActivity extends BaseActivity implements Callback {
             mTitleBar.setTitle("签退");
             signFlag = "2";
         }
+        if ("CheckTicket".equals(from)) {
+            mTitleBar.setTitle("验票");
+        }
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 

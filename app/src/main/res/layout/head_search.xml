@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/y200"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:padding="10dp">
 
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_search_content"
         android:layout_marginStart="@dimen/x30"
-        android:layout_marginTop="@dimen/x30"
+        android:layout_marginTop="@dimen/x20"
         android:text="您共有3位理发师"
         android:textColor="@color/text_black2"/>
 </RelativeLayout>

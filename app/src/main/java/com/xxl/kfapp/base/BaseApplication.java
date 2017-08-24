@@ -3,11 +3,17 @@ package com.xxl.kfapp.base;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
 
+import com.xxl.kfapp.utils.PreferenceUtils;
+
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import talex.zsw.baselibrary.util.klog.KLog;
 
 
@@ -45,6 +51,7 @@ public class BaseApplication extends Application {
 
     public void exit() {
         exitApp();
+        PreferenceUtils.setPrefBoolean(getContext(), "isFirst", true);
         System.exit(0);
     }
 

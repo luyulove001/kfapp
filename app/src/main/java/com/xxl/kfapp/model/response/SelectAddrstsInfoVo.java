@@ -16,6 +16,43 @@ public class SelectAddrstsInfoVo implements Serializable {
     private String addrange;
     private String bidsts;
 
+    private String endpaysts;
+    private String prepayreason;
+    private String prepaychecksts;
+    private String startprice;
+
+    public String getEndpaysts() {
+        return endpaysts;
+    }
+
+    public void setEndpaysts(String endpaysts) {
+        this.endpaysts = endpaysts;
+    }
+
+    public String getPrepayreason() {
+        return prepayreason;
+    }
+
+    public void setPrepayreason(String prepayreason) {
+        this.prepayreason = prepayreason;
+    }
+
+    public String getPrepaychecksts() {
+        return prepaychecksts;
+    }
+
+    public void setPrepaychecksts(String prepaychecksts) {
+        this.prepaychecksts = prepaychecksts;
+    }
+
+    public String getStartprice() {
+        return startprice;
+    }
+
+    public void setStartprice(String startprice) {
+        this.startprice = startprice;
+    }
+
     public String getNowprice() {
         return nowprice;
     }

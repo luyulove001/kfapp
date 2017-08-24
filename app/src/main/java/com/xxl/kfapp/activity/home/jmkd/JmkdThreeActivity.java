@@ -19,6 +19,7 @@ import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.model.response.AppConfigVo;
 import com.xxl.kfapp.model.response.ProgressVo;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
@@ -88,7 +89,8 @@ public class JmkdThreeActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void initData() {
         initInfoRecycleView();
-        webView.loadUrl(Urls.baseH5Url + Urls.bidDepodit);
+        AppConfigVo vo = (AppConfigVo) mACache.getAsObject("appConfig");
+        webView.loadUrl(vo.getShopprotocol());
         if (TextUtils.isEmpty(applyid)) {
             applyid = PreferenceUtils.getPrefString(getApplication(), "applyid", "");
         }
@@ -128,7 +130,7 @@ public class JmkdThreeActivity extends BaseActivity implements View.OnClickListe
         for (int i = 0; i < 7; i++) {
             ProgressVo vo = new ProgressVo();
             if (i == 0) {
-                vo.setName("申请加盟");
+                vo.setName("申请开店");
                 vo.setTag(2);
             } else if (i == 1) {
                 vo.setName("审核");
@@ -156,7 +158,7 @@ public class JmkdThreeActivity extends BaseActivity implements View.OnClickListe
         OkGo.<String>get(Urls.baseUrl + Urls.updateShopApplyStatus)
                 .tag(this)
                 .params("token", token)
-                .params("applysts", "24")
+                .params("applysts", "23")
                 .params("applyid", applyid)
                 .execute(new StringCallback() {
                     @Override

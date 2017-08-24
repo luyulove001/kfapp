@@ -45,7 +45,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="20dp"/>
+                android:layout_margin="20dp"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -53,7 +54,7 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/bg_dash_line"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -61,10 +62,11 @@
                     android:layout_gravity="center_horizontal"
                     android:paddingTop="5dp"
                     android:text="快发师选址优势"
-                    android:textColor="@color/text_black"
+                    android:textColor="@color/text_black2"
                     android:textSize="@dimen/big"/>
 
                 <TextView
+                    android:id="@+id/tv_addrgood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
@@ -105,17 +107,96 @@
                     android:text="我有地址"
                     android:textSize="@dimen/title"/>
 
-                <TextView
-                    android:id="@+id/tv_address"
+                <include layout="@layout/include_line2"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_have_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:background="@color/bg_gray"
-                    android:drawableEnd="@mipmap/allow_right"
-                    android:gravity="center_vertical"
-                    android:padding="10dp"
-                    android:text="详细地址"
-                    android:textSize="@dimen/title"/>
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        android:id="@+id/lyt_shopname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="center_vertical"
+                            android:padding="10dp"
+                            android:text="店铺名称"
+                            android:textSize="@dimen/title"/>
+
+                        <EditText
+                            android:id="@+id/et_shopname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/iv_right"
+                            android:background="@null"
+                            android:gravity="right"
+                            android:hint="例如:物美下沙店"
+                            android:maxEms="10"
+                            android:maxLines="1"
+                            android:padding="10dp"
+                            android:textColor="@color/black2"
+                            android:textSize="@dimen/title"
+                            android:visibility="visible"/>
+
+                        <ImageView
+                            android:id="@+id/iv_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/x30"
+                            android:src="@mipmap/arrow_right_gray"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/lyt_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="center_vertical"
+                            android:padding="10dp"
+                            android:text="店铺地址"
+                            android:textSize="@dimen/title"/>
+
+                        <TextView
+                            android:id="@+id/tv_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/iv_right1"
+                            android:gravity="center_vertical"
+                            android:hint="请选择"
+                            android:maxEms="10"
+                            android:maxLines="1"
+                            android:padding="10dp"
+                            android:textColor="@color/black2"
+                            android:textSize="@dimen/title"
+                            android:visibility="visible"/>
+
+                        <ImageView
+                            android:id="@+id/iv_right1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/x30"
+                            android:src="@mipmap/arrow_right_gray"/>
+                    </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

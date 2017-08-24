@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -18,8 +19,10 @@ import com.xxl.kfapp.activity.home.boss.CheckInActivity;
 import com.xxl.kfapp.activity.home.boss.ShopAmountActivity;
 import com.xxl.kfapp.activity.home.boss.ShopListActivity;
 import com.xxl.kfapp.activity.home.boss.TicketListActivity;
+import com.xxl.kfapp.activity.home.boss.WithdrawListActivity;
 import com.xxl.kfapp.base.BaseApplication;
 import com.xxl.kfapp.base.BaseFragment;
+import com.xxl.kfapp.model.response.ApplyListVo;
 import com.xxl.kfapp.model.response.BossCountInfoVo;
 import com.xxl.kfapp.model.response.MemberInfoVo;
 import com.xxl.kfapp.utils.PreferenceUtils;
@@ -77,13 +80,19 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
     LinearLayout lytTotalCnt;
     @Bind(R.id.lyt_totaldaycnt)
     LinearLayout lytTotalDayCnt;
+    @Bind(R.id.lyt_apply)
+    LinearLayout lytApply;
+    @Bind(R.id.iv_close)
+    ImageView ivClose;
+    @Bind(R.id.iv_kfs)
+    ImageView ivKfs;
 
-
+    private boolean isFirst = true;
     private Drawable male, female;
 
     @Override
     protected void initArgs(Bundle bundle) {
-
+        isFirst = PreferenceUtils.getPrefBoolean(BaseApplication.getContext(), "isFirst", false);
     }
 
     @Override
@@ -101,6 +110,9 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
         lytTotalDayCnt.setOnClickListener(this);
         lytTotalWorkCnt.setOnClickListener(this);
         lytUnnormal.setOnClickListener(this);
+        lytApply.setOnClickListener(this);
+        ivClose.setOnClickListener(this);
+        ivKfs.setVisibility(View.GONE);
     }
 
     @Override
@@ -129,6 +141,8 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
                 startActivity(i);
                 break;
             case R.id.lyt_totalbalance:
+                i.setClass(getActivity(), WithdrawListActivity.class);
+                startActivity(i);
                 break;
             case R.id.lyt_totalbbcnt:
                 i.setClass(getActivity(), BarberListActivity.class);
@@ -161,6 +175,22 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
                 i.putExtra("isNormal", false);
                 startActivity(i);
                 break;
+            case R.id.iv_close:
+                lytApply.setVisibility(View.GONE);
+                PreferenceUtils.setPrefBoolean(getContext(), "isFirst", false);
+                break;
+            case R.id.lyt_apply:
+                break;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isFirst) {
+            getMemberShopApply();
+        } else {
+            lytApply.setVisibility(View.GONE);
         }
     }
 
@@ -181,6 +211,36 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
         female = getActivity().getResources().getDrawable(R.mipmap.main_icon_girl);
         male.setBounds(0, 0, male.getMinimumWidth(), male.getMinimumHeight());
         female.setBounds(0, 0, female.getMinimumWidth(), female.getMinimumHeight());
+    }
+
+    private void getMemberShopApply() {
+        String token = PreferenceUtils.getPrefString(BaseApplication.getContext(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.getMemberShopApply)
+                .tag(this)
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            com.alibaba.fastjson.JSONObject json = JSON.parseObject(response.body());
+                            String code = json.getString("code");
+                            if (code.equals("100000")) {
+                                Gson gson = new Gson();
+                                ApplyListVo applyListVo = gson.fromJson(json.getString("data"), ApplyListVo.class);
+                                if (applyListVo != null && applyListVo.getApplylst().size() != 0 && PreferenceUtils
+                                        .getPrefBoolean(BaseApplication.getContext(), "isFirst", false)) {
+                                    PreferenceUtils.setPrefString(BaseApplication.getContext(),
+                                            "applyid", applyListVo.getApplylst().get(0).getApplyid());
+                                    lytApply.setVisibility(View.VISIBLE);
+                                }
+                            } else {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            }
+                        } catch (com.alibaba.fastjson.JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
     private void doGetBossCountInfo() {

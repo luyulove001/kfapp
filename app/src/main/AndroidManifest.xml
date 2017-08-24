@@ -90,11 +90,13 @@
             android:name=".activity.common.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN"/> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".activity.person.RenameActivity"
@@ -120,7 +122,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activity.home.boss.ShopRenameActivity"
+            android:name=".activity.home.boss.ShopTimeSetActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
@@ -183,6 +185,50 @@
         </activity>
         <activity android:name=".activity.home.kfs.SignInActivity">
         </activity>
+        <activity android:name=".activity.person.PersonInfoActivity"/>
+        <activity android:name=".activity.person.OrderListActivity">
+        </activity>
+        <activity android:name=".activity.person.NotificationCenterActivity">
+        </activity>
+        <activity android:name=".activity.home.boss.RefundActivity">
+        </activity>
+        <activity android:name=".activity.home.boss.IncomeListActivity">
+        </activity>
+        <activity android:name=".activity.home.boss.RefundDetailActivity">
+        </activity>
+        <activity android:name=".activity.home.boss.WithdrawListActivity">
+        </activity>
+        <activity android:name=".activity.home.boss.BalanceDetailActivity">
+        </activity>
+        <activity android:name=".activity.common.WebViewActivity">
+        </activity>
+        <activity
+            android:name=".activity.common.SplashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.home.jmkd.JmkdSevenActivity">
+        </activity>
+
+        <receiver
+            android:name=".base.JPushReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION" />
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+                <category android:name="com.xxl.kfapp" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

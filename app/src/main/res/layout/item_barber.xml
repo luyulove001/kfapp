@@ -16,6 +16,7 @@
             android:layout_height="@dimen/y80"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/y20"
+            android:scaleType="centerCrop"
             android:src="@color/red_btn_bg_color"/>
 
         <TextView

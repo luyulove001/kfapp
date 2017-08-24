@@ -19,6 +19,7 @@ import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -53,6 +54,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -207,6 +210,11 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
             prompt = false;
             checkUpResult = false;
         }
+        if (!checkIDCard(idcard) && prompt) {
+            ToastShow("身份证号码格式错误");
+            prompt = false;
+            checkUpResult = false;
+        }
         if (TextUtils.isEmpty(cardpos) && prompt) {
             ToastShow("身份证照片不能为空");
             prompt = false;
@@ -237,6 +245,16 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
             prompt = false;
             checkUpResult = false;
         }
+        if (TextUtils.isEmpty(barberInfoVo.getEducation()) && prompt) {
+            ToastShow("请选择学历");
+            prompt = false;
+            checkUpResult = false;
+        }
+        if (TextUtils.isEmpty(barberInfoVo.getWorklife()) && prompt) {
+            ToastShow("请选择工作年限");
+            prompt = false;
+            checkUpResult = false;
+        }
         if (checkUpResult) {
             barberInfoVo.setCardid(etIdcard.getText().toString());
             barberInfoVo.setCertdisc(etCertdisc.getText().toString());
@@ -248,6 +266,18 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
             barberInfoVo.setCardneg(cardneg);
             doInsertBarber(barberInfoVo);
         }
+    }
+
+    public static boolean checkIDCard(String idcard) {
+        Pattern p;
+        Matcher m;
+        boolean b;
+        String regex = "^(^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$)|(^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])((\\d{4})|\\d{3}[Xx])$)$";
+//        p = Pattern.compile("/^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{4}$/");
+        p = Pattern.compile(regex);
+        m = p.matcher(idcard);
+        b = m.matches();
+        return b;
     }
 
     private String[] getStrings(List<DictVo> vos) {
@@ -263,13 +293,12 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
         picker.setCanceledOnTouchOutside(false);
         picker.setDividerRatio(WheelView.DividerConfig.FILL);
         picker.setShadowColor(Color.RED, 40);
-        picker.setSelectedIndex(1);
+        picker.setSelectedIndex(0);
         picker.setCycleDisable(true);
         picker.setTextSize(14);
         picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
             public void onOptionPicked(int index, String item) {
-                ToastShow("index=" + index + ", item=" + item);
                 if (isEdu) {
                     tvEducation.setText(item);
                     barberInfoVo.setEducation(index + 1 + "");
@@ -314,7 +343,7 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
         for (int i = 0; i < 5; i++) {
             ProgressVo vo = new ProgressVo();
             if (i == 0) {
-                vo.setName("申请加盟");
+                vo.setName("申请资料");
                 vo.setTag(1);
             } else if (i == 1) {
                 vo.setName("审核");
@@ -334,6 +363,7 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
 
     //=================================身份证照片选择=============================================
     private void setupCustomView() {
+        hideInputMethod();
         mSweetSheet = new SweetSheet(rLayout);
         int x = DimenUtils.dpToPx(getResources(), 190);
         CustomDelegate customDelegate =
@@ -565,8 +595,18 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
                                 etAddress.setText(vo.getAddress());
                                 Glide.with(getApplicationContext()).load(vo.getCardpos()).into(idPhoto1);
                                 Glide.with(getApplicationContext()).load(vo.getCardneg()).into(idPhoto2);
-                                tvWorklife.setText(mACache.getAsJSONArray("worklife").getInt(Integer.valueOf(vo.getWorklife()) - 1));
-                                tvWorklife.setText(mACache.getAsJSONArray("education").getInt(Integer.valueOf(vo.getEducation()) - 1));
+                                cardneg = vo.getCardneg();
+                                cardpos = vo.getCardpos();
+                                barberInfoVo.setAddprovincecode(vo.getAddprovincecode());
+                                barberInfoVo.setAddprovincename(vo.getAddprovincename());
+                                barberInfoVo.setAddcitycode(vo.getAddcitycode());
+                                barberInfoVo.setAddcityname(vo.getAddcityname());
+                                barberInfoVo.setAddareacode(vo.getAddareacode());
+                                barberInfoVo.setAddareaname(vo.getAddareaname());
+//                                if (!TextUtils.isEmpty(vo.getWorklife()))
+//                                    tvWorklife.setText(mACache.getAsJSONArray("worklife").getInt(Integer.valueOf(vo.getWorklife()) - 1));
+//                                if (!TextUtils.isEmpty(vo.getEducation()))
+//                                    tvEducation.setText(mACache.getAsJSONArray("education").getInt(Integer.valueOf(vo.getEducation()) - 1));
                                 tvAddress.setText(vo.getAddprovincename() + vo.getAddcityname() + vo.getAddareaname());
                             }
                         } catch (JSONException e) {
@@ -589,7 +629,6 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
             @Override
             public void onAddressPicked(Province province, City city, County county) {
                 if (county == null) {
-                    ToastShow(province.getAreaName() + city.getAreaName());
                     tvAddress.setText(province.getAreaName() + city.getAreaName());
                     barberInfoVo.setAddprovincecode(province.getAreaId());
                     barberInfoVo.setAddprovincename(province.getAreaName());
@@ -598,7 +637,6 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
                     barberInfoVo.setAddareacode(city.getAreaId());
                     barberInfoVo.setAddareaname(city.getAreaName());
                 } else {
-                    ToastShow(province.getAreaName() + city.getAreaName() + county.getAreaName());
                     tvAddress.setText(province.getAreaName() + city.getAreaName() + county.getAreaName());
                     barberInfoVo.setAddprovincecode(province.getAreaId());
                     barberInfoVo.setAddprovincename(province.getAreaName());
