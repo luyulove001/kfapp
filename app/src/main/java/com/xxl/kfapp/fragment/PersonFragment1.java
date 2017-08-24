@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.baidu.mobstat.StatService;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -119,6 +120,13 @@ public class PersonFragment1 extends BaseFragment implements View.OnClickListene
         if ("2".equals(memberInfoVo.getRole())) lytTui.setVisibility(View.VISIBLE);
         getMemberShopApply();
         doGetShopApplyStatus();
+        StatService.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 
     @Override

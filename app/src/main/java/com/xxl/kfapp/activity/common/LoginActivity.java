@@ -30,6 +30,7 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.baidu.mobstat.StatService;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
@@ -144,6 +145,18 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         mid = getMyUUID();
         sign = System.currentTimeMillis() / 1000 + "";
         signdata = Md5Algorithm.signMD5("mid=" + mid + "&sign=" + sign);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 
     private void populateAutoComplete() {

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
+import com.baidu.mobstat.StatService;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -50,8 +51,19 @@ public class OrderListActivity extends BaseActivity {
         getUserOrderList();
     }
 
-    private void getUserOrderList()
-    {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
+
+    private void getUserOrderList() {
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.getUserOrderList)
                 .tag(this)

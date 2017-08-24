@@ -8,6 +8,7 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.baidu.mobstat.StatService;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.utils.Urls;
@@ -41,6 +42,7 @@ public class WebViewActivity extends BaseActivity {
     @Override
     protected void initData() {
         initWebView();
+        StatService.bindJSInterface(this, webView);
     }
 
     private void initWebView() {

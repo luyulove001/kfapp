@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
+import com.baidu.mobstat.StatService;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
@@ -53,6 +54,18 @@ public class JmkdSevenActivity extends BaseActivity implements View.OnClickListe
         if (TextUtils.isEmpty(applyid)) {
             applyid = PreferenceUtils.getPrefString(getApplication(), "applyid", "");
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 
 

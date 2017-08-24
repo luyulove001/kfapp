@@ -88,4 +88,5 @@ dependencies {
     compile 'cn.jiguang.sdk:jpush:3.0.8'
     compile 'cn.jiguang.sdk:jcore:1.1.6'
     compile project(':mylibrary')
+    compile files('libs/Baidu_Mtj_3.7.6.1.jar')
 }

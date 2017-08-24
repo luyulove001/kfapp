@@ -12,6 +12,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.baidu.mobstat.StatService;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -83,6 +84,17 @@ public class JmkdFive2Activity extends BaseActivity implements View.OnClickListe
         doGetShopApplyInfo(PreferenceUtils.getPrefString(getApplication(), "applyid", ""));
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
 
     @Override
     public void onClick(View v) {

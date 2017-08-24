@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.baidu.mobstat.StatService;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
@@ -98,6 +99,18 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
         mid = "1";
         sign = System.currentTimeMillis() + "";
         signdata = Md5Algorithm.signMD5("mid=" + mid + "&sign=" + sign);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 
     @Override

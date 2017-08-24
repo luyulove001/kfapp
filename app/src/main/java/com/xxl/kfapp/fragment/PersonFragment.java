@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baidu.mobstat.StatService;
 import com.bumptech.glide.Glide;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.activity.common.LoginActivity;
@@ -113,6 +114,18 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     protected void initData() {
         path = Environment.getExternalStorageDirectory().getPath() + "/myHead/";
         setMemberInfo();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 
     @SuppressWarnings("deprecation")

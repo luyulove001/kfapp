@@ -2,6 +2,7 @@ package com.xxl.kfapp.fragment;
 
 import android.os.Bundle;
 
+import com.baidu.mobstat.StatService;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.base.BaseFragment;
 
@@ -29,5 +30,17 @@ public class StoreFragment extends BaseFragment {
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

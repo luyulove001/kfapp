@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.baidu.mobstat.StatService;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -75,6 +76,7 @@ public class BarberListActivity extends BaseActivity implements View.OnClickList
     protected void onResume() {
         super.onResume();
         doGetBossShopStaffList();
+        StatService.onResume(this);
     }
 
     private void doGetBossShopStaffList() {
@@ -102,6 +104,12 @@ public class BarberListActivity extends BaseActivity implements View.OnClickList
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 
     private void initBarberList(StaffVo vo) {

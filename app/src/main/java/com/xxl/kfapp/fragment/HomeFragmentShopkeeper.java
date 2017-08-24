@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.baidu.mobstat.StatService;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -123,6 +124,12 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
+
+    @Override
     public void onClick(View v) {
         Intent i = new Intent();
         switch (v.getId()) {
@@ -192,6 +199,7 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
         } else {
             lytApply.setVisibility(View.GONE);
         }
+        StatService.onResume(this);
     }
 
     private void setMemberInfo() {

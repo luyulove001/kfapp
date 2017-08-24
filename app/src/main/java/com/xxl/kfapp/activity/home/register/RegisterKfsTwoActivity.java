@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.baidu.mobstat.StatService;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
@@ -87,6 +88,13 @@ public class RegisterKfsTwoActivity extends BaseActivity implements View.OnClick
         super.onResume();
         initInfoRecycleView();
         doGetBarberApplyStatus();
+        StatService.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 
     @SuppressWarnings("deprecation")

@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.baidu.mobstat.StatService;
 import com.codbking.calendar.CaledarAdapter;
 import com.codbking.calendar.CaledarTopViewChangeListener;
 import com.codbking.calendar.CalendarBean;
@@ -86,6 +87,13 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         isSignIn = intent.getBooleanExtra("isSignIn", true);
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
+
     @Override
     protected void initView(Bundle bundle) {
         setContentView(R.layout.activity_sign_in);
@@ -125,6 +133,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         super.onResume();
         String today = new SimpleDateFormat("yyyy-MM", Locale.CHINA).format(Calendar.getInstance().getTime());
         getBarberSignInfo(today, shopid);
+        StatService.onResume(this);
     }
 
     private void initView() {

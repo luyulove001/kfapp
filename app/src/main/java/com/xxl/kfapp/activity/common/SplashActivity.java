@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.widget.Button;
 
 import com.alibaba.fastjson.JSON;
+import com.baidu.mobstat.StatService;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
@@ -59,6 +60,7 @@ public class SplashActivity extends BaseActivity {
                 }
             }
         }, 3000);
+        StatService.start(this);
     }
 
     private void getAppConfig() {

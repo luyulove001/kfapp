@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
+import com.baidu.mobstat.StatService;
 import com.bumptech.glide.Glide;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.base.BaseActivity;
@@ -52,6 +53,18 @@ public class ImageShower extends BaseActivity {
 	public boolean onTouchEvent(MotionEvent event) {
 		finish();
 		return true;
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		StatService.onResume(this);
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		StatService.onPause(this);
 	}
 
 }

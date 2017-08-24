@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.baidu.mobstat.StatService;
 import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -95,6 +96,18 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
         appConfigVo = (AppConfigVo) mACache.getAsObject("appConfig");
         getShopCashApplyInfo();
         getShopCashApplyRecord();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 
     private void getShopCashApplyRecord() {

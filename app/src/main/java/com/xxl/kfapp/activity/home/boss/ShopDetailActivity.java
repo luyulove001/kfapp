@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.baidu.mobstat.StatService;
 import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -98,9 +99,16 @@ public class ShopDetailActivity extends BaseActivity {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         getDetail();
+        StatService.onResume(this);
     }
 
     private void initTextRV() {

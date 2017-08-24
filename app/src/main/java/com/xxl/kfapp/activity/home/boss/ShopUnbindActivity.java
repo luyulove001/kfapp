@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.baidu.mobstat.StatService;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.utils.PreferenceUtils;
@@ -46,6 +47,18 @@ public class ShopUnbindActivity extends BaseActivity {
     @Override
     protected void initData() {
         token = PreferenceUtils.getPrefString(this.getApplicationContext(), "token", "1234567890");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 
 

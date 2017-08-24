@@ -36,6 +36,11 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.READ_PROFILE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".base.BaseApplication"
@@ -44,6 +49,42 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MyDesign">
+
+        <!-- 您从百度网站获取的APP KEY -->
+        <meta-data
+            android:name="BaiduMobAd_STAT_ID"
+            android:value="bbc85469d0" /> <!-- abcd1234 -->
+        <!-- 渠道商编号 -->
+        <meta-data
+            android:name="BaiduMobAd_CHANNEL"
+            android:value="Baidu Market" />
+
+        <!-- 是否开启错误日志统计，默认为false -->
+        <meta-data
+            android:name="BaiduMobAd_EXCEPTION_LOG"
+            android:value="false" />
+        <!-- 日志发送策略，可选值：APP_START、ONCE_A_DAY、SET_TIME_INTERVAL，默认为APP_START -->
+        <meta-data
+            android:name="BaiduMobAd_SEND_STRATEGY"
+            android:value="APP_START" />
+        <!-- 日志发送策略 为SET_TIME_INTERVAL时，需设定时间间隔(取消下行注释)。取值为1-24的整数，默认为1 -->
+        <!-- <meta-data android:name="BaiduMobAd_TIME_INTERVAL" android:value="2" /> -->
+        <!-- 日志仅在wifi网络下发送，默认为false -->
+        <meta-data
+            android:name="BaiduMobAd_ONLY_WIFI"
+            android:value="false" />
+        <!-- 是否获取基站位置信息 ,默认为true -->
+        <meta-data
+            android:name="BaiduMobAd_CELL_LOCATION"
+            android:value="true" />
+        <!-- 是否获取GPS位置信息，默认为true -->
+        <meta-data
+            android:name="BaiduMobAd_GPS_LOCATION"
+            android:value="true" />
+        <!-- 是否获取WIFI位置信息，默认为true -->
+        <meta-data
+            android:name="BaiduMobAd_WIFI_LOCATION"
+            android:value="true" />
         <activity
             android:name=".activity.common.MainActivity"
             android:screenOrientation="portrait">
@@ -171,49 +212,50 @@
         <activity
             android:name=".activity.common.ImageShower"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activity.home.boss.ShopAmountActivity">
-        </activity>
-        <activity android:name=".activity.home.boss.BarberListActivity">
-        </activity>
-        <activity android:name=".activity.home.boss.CheckInActivity">
-        </activity>
-        <activity android:name=".activity.home.boss.AddBarberActivity">
-        </activity>
+        <activity android:name=".activity.home.boss.ShopAmountActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.home.boss.BarberListActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.home.boss.CheckInActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.home.boss.AddBarberActivity"
+                  android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.home.boss.TicketListActivity"
-            android:label="@string/title_activity_ticket_list">
-        </activity>
-        <activity android:name=".activity.home.kfs.SignInActivity">
-        </activity>
-        <activity android:name=".activity.person.PersonInfoActivity"/>
-        <activity android:name=".activity.person.OrderListActivity">
-        </activity>
-        <activity android:name=".activity.person.NotificationCenterActivity">
-        </activity>
-        <activity android:name=".activity.home.boss.RefundActivity">
-        </activity>
-        <activity android:name=".activity.home.boss.IncomeListActivity">
-        </activity>
-        <activity android:name=".activity.home.boss.RefundDetailActivity">
-        </activity>
-        <activity android:name=".activity.home.boss.WithdrawListActivity">
-        </activity>
-        <activity android:name=".activity.home.boss.BalanceDetailActivity">
-        </activity>
-        <activity android:name=".activity.common.WebViewActivity">
-        </activity>
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.home.kfs.SignInActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.person.PersonInfoActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.person.OrderListActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.person.NotificationCenterActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.home.boss.RefundActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.home.boss.IncomeListActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.home.boss.RefundDetailActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.home.boss.WithdrawListActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.home.boss.BalanceDetailActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.common.WebViewActivity"
+                  android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.common.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/FullscreenTheme">
+            android:theme="@style/FullscreenTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.home.jmkd.JmkdSevenActivity">
-        </activity>
+        <activity android:name=".activity.home.jmkd.JmkdSevenActivity"
+                  android:screenOrientation="portrait"/>
 
         <receiver
             android:name=".base.JPushReceiver"

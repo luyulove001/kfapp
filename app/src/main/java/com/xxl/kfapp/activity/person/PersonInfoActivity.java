@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.baidu.mobstat.StatService;
 import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -112,6 +113,12 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         memberInfoVo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
@@ -121,6 +128,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         tvNickname.setText(memberInfoVo.getNickname());
         tvPoints.setText(memberInfoVo.getIntegrate());
         tvStaffno.setText(memberInfoVo.getStaff());
+        StatService.onResume(this);
     }
 
     private void updateMemberInfo() {

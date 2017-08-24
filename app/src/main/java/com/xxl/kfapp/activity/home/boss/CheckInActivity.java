@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.baidu.mobstat.StatService;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
@@ -69,6 +70,18 @@ public class CheckInActivity extends BaseActivity implements View.OnClickListene
         tvEndtime.setOnClickListener(this);
         tvStarttime.setOnClickListener(this);
         mRefreshLayout.setOnRefreshListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 
     @Override

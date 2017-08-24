@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
+import com.baidu.mobstat.StatService;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -77,6 +78,13 @@ public class NotificationCenterActivity extends BaseActivity implements View.OnC
     protected void onResume() {
         super.onResume();
         getUserNoticeList();
+        StatService.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 
     private void getUserNoticeList() {

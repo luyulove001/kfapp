@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.baidu.mobstat.StatService;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -112,6 +113,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         doGetBarberGoodPic();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
+
 
     @Override
     public void onDestroyView() {
@@ -200,6 +207,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         setMemberInfo();
+        StatService.onResume(this);
     }
 
     private void doGetMemberInfo() {
@@ -308,7 +316,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                             } else {
                                 KLog.i(response.body());
                                 shopStatusVo = gson.fromJson(json.getString("data"), ShopApplyStatusVo.class);
-                                PreferenceUtils.setPrefString(BaseApplication.getContext(), "applyid", shopStatusVo.getApplyid());
+                                PreferenceUtils.setPrefString(BaseApplication.getContext(), "applyid", shopStatusVo
+                                        .getApplyid());
                                 applyStatus = shopStatusVo.getApplysts();
                                 shopid = shopStatusVo.getShopid();
                                 prepaychecksts = shopStatusVo.getPrepaychecksts();

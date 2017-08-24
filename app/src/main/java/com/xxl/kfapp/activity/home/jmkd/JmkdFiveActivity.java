@@ -15,6 +15,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.baidu.mobstat.StatService;
 import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -113,6 +114,18 @@ public class JmkdFiveActivity extends BaseActivity implements View.OnClickListen
         //doGetSelectAddrGoodPic();
         AppConfigVo vo = (AppConfigVo) mACache.getAsObject("appConfig");
         if (vo != null) tvAddrGood.setText(vo.getAddgood());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 
     @Override
