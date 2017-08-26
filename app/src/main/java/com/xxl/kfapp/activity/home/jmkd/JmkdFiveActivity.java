@@ -298,29 +298,4 @@ public class JmkdFiveActivity extends BaseActivity implements View.OnClickListen
                 });
     }
 
-    private void doUpdateApplyStatus() {
-        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
-        OkGo.<String>get(Urls.baseUrl + Urls.updateShopApplyStatus)
-                .tag(this)
-                .params("token", token)
-                .params("applysts", "25")
-                .params("applyid", applyid)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        try {
-                            com.alibaba.fastjson.JSONObject json = JSON.parseObject(response.body());
-                            String code = json.getString("code");
-                            if (code.equals("100000")) {
-                                KLog.i(response.body());
-                            } else {
-                                sweetDialog(json.getString("msg"), 1, false);
-                            }
-                        } catch (com.alibaba.fastjson.JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-    }
-
 }

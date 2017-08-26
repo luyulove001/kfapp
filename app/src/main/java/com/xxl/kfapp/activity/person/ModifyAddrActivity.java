@@ -52,13 +52,15 @@ public class ModifyAddrActivity extends BaseActivity {
     private MenuAdapter mMenuAdapter;
     private List<AddrVo> vos;
     private String addrId;
+    private boolean unset;
 
     public static final int AddAddress = 2;
     public static final int UpdateAddress = 1;
 
     @Override
     protected void initArgs(Intent intent) {
-        addrId = getIntent().getStringExtra("addrid");
+        addrId = intent.getStringExtra("addrid");
+        unset = intent.getBooleanExtra("unset", false);
     }
 
     @Override
@@ -89,6 +91,7 @@ public class ModifyAddrActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        doGetAddressList();
         StatService.onResume(this);
     }
 
@@ -111,7 +114,8 @@ public class ModifyAddrActivity extends BaseActivity {
 
             // 添加右侧的，如果不添加，则右侧不会出现菜单。
             {
-                SwipeMenuItem addItem = new SwipeMenuItem(mContext).setBackgroundDrawable(R.drawable.select_orange)// 点击的背景。
+                SwipeMenuItem addItem = new SwipeMenuItem(mContext).setBackgroundDrawable(R.drawable.select_orange)//
+                        // 点击的背景。
                         .setText("编辑").setTextColor(getResources().getColor(R.color.white)).setWidth(width) // 宽度。
                         .setHeight(height); // 高度。
                 swipeRightMenu.addMenuItem(addItem); // 添加一个按钮到右侧菜单。
@@ -134,7 +138,12 @@ public class ModifyAddrActivity extends BaseActivity {
             Intent intent = new Intent();
             intent.putExtra("address", vos.get(position));
             setResult(RESULT_OK, intent);
-            updateMemberInfo(vos.get(position));
+            if (!unset) {
+                updateMemberInfo(vos.get(position));
+            } else {
+                finish();
+            }
+
         }
     };
 
@@ -152,22 +161,22 @@ public class ModifyAddrActivity extends BaseActivity {
                 .params("addareacode", addrVo.getAddareacode())
                 .params("address", addrVo.getAddress())
                 .execute(new StringCallback() {
-            @Override
-            public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                try {
-                    JSONObject json = JSON.parseObject(response.body());
-                    String code = json.getString("code");
-                    if (code.equals("100000")) {
-                        ToastShow("修改成功");
-                        doGetMemberInfo();
-                    } else {
-                        sweetDialog(json.getString("msg"), 1, false);
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = JSON.parseObject(response.body());
+                            String code = json.getString("code");
+                            if (code.equals("100000")) {
+                                ToastShow("修改成功");
+                                doGetMemberInfo();
+                            } else {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+                });
     }
 
     private void doGetMemberInfo() {
@@ -264,7 +273,7 @@ public class ModifyAddrActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        doGetAddressList();
+
     }
 
     public interface OnItemClickListener {

@@ -25,7 +25,7 @@ public class Urls {
     public static final String getShopApplyStatus = "/barberapi/getShopApplyStatus";
     public static final String getShopApplyInfo = "/barberapi/getShopApplyInfo";
     public static final String updateShopApply = "/barberapi/updateShopApply";
-    public static final String updateShopApplyStatus = "/barberapi/updateShopApplyStatus";
+    public static final String updateShopApplyStatus = "/authapi/updateShopApplyStatus";
     public static final String updateBarberCheckTicket = "/barberapi/updateBarberCheckTicket";
     public static final String getBarberTicketList = "/barberapi/getBarberTicketList";
     public static final String createUserOrder = "/barberapi/createUserOrder";

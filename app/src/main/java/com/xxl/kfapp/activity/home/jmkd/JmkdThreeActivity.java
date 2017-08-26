@@ -22,6 +22,7 @@ import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.response.AppConfigVo;
 import com.xxl.kfapp.model.response.ProgressVo;
+import com.xxl.kfapp.utils.Md5Algorithm;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.TitleBar;
@@ -168,11 +169,16 @@ public class JmkdThreeActivity extends BaseActivity implements View.OnClickListe
 
     private void doUpdateApplyStatus() {
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        String uuid = PreferenceUtils.getPrefString(getAppApplication(), "uuid", "1");
         OkGo.<String>get(Urls.baseUrl + Urls.updateShopApplyStatus)
                 .tag(this)
                 .params("token", token)
                 .params("applysts", "23")
                 .params("applyid", applyid)
+                .params("mid", uuid)
+                .params("sign", System.currentTimeMillis() / 1000 + "")
+                .params("signdata", Md5Algorithm.signMD5("mid=" + uuid + "&sign="
+                        + System.currentTimeMillis() / 1000 + ""))
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {

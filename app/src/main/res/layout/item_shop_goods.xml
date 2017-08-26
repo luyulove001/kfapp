@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/lyt_item"
               android:layout_width="match_parent"
-              android:layout_height="@dimen/x250"
+              android:layout_height="@dimen/x200"
               android:orientation="horizontal">
 
     <ImageView
@@ -21,8 +21,8 @@
 
     <ImageView
         android:id="@+id/iv_goods_pic"
-        android:layout_width="@dimen/x250"
-        android:layout_height="@dimen/y250"
+        android:layout_width="@dimen/x200"
+        android:layout_height="@dimen/y200"
         android:padding="@dimen/x20"
         android:src="@color/appmsg_custom"/>
 
@@ -81,22 +81,26 @@
             android:id="@+id/tv_goods_disc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/x10"
+            android:ellipsize="end"
+            android:maxLines="3"
             android:paddingEnd="@dimen/x20"
             android:paddingStart="@dimen/x20"
-            android:text="下沙物美店 NO.996"/>
+            android:text="下沙物美店 NO.996"
+            android:textSize="@dimen/x30"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/x1"
             android:layout_marginTop="@dimen/x50"
-            android:background="@color/gray_holo_dark"/>
+            android:background="@color/gray_holo_dark"
+            android:visibility="gone"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tv_csname"

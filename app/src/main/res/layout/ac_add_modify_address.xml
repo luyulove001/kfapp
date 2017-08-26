@@ -33,6 +33,7 @@
             android:background="@null"
             android:hint="请填写姓名"
             android:padding="10dp"
+            android:textColor="@color/text_black2"
             android:textColorHint="@color/gray_holo_light"
             android:textSize="@dimen/x30"/>
     </LinearLayout>
@@ -63,6 +64,7 @@
             android:hint="请填写手机号"
             android:inputType="phone"
             android:padding="10dp"
+            android:textColor="@color/text_black2"
             android:textColorHint="@color/gray_holo_light"
             android:textSize="@dimen/x30"/>
     </LinearLayout>
@@ -125,13 +127,13 @@
             android:id="@+id/et_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/x20"
             android:background="@null"
             android:gravity="end"
             android:hint="请填写详细地址"
             android:padding="10dp"
             android:textColor="@color/gray"
             android:textColorHint="@color/gray_holo_light"
-            android:layout_marginEnd="@dimen/x20"
             android:textSize="@dimen/x30"/>
     </LinearLayout>
 </LinearLayout>

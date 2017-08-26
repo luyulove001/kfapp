@@ -2,6 +2,7 @@ package com.xxl.kfapp.activity.home.jmkd;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,13 +24,10 @@ import com.xxl.kfapp.R;
 import com.xxl.kfapp.activity.common.ImageShower;
 import com.xxl.kfapp.activity.home.register.RegisterKfsOneActivity;
 import com.xxl.kfapp.adapter.ProgressAdapter;
-import com.xxl.kfapp.adapter.TextAdapter;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.response.AppConfigVo;
-import com.xxl.kfapp.model.response.FeeListVo;
 import com.xxl.kfapp.model.response.ProgressVo;
 import com.xxl.kfapp.model.response.ShopApplyStatusVo;
-import com.xxl.kfapp.model.response.TextVo;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.SlideFromBottomPopup;
@@ -42,23 +40,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import talex.zsw.baselibrary.util.klog.KLog;
 
-public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClickListener {
+public class JmkdSixDeviceActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.mTitleBar)
     TitleBar mTitleBar;
     @Bind(R.id.pRecyclerView)
     RecyclerView pRecyclerView;
-    @Bind(R.id.rv_fee)
-    RecyclerView rvFee;
     @Bind(R.id.mScrollView)
     ScrollView mScrollView;
     @Bind(R.id.next)
@@ -69,46 +62,69 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
     TextView tvCompanyaccount;
     @Bind(R.id.tv_companyname)
     TextView tvCompanyname;
-    @Bind(R.id.tv_endtime)
-    TextView tvEndtime;
     @Bind(R.id.lyt_watch)
     LinearLayout lytWatch;
     @Bind(R.id.iv_prepay)
     ImageView ivPrepay;
+    @Bind(R.id.ll_btn1)
+    LinearLayout llBtn1;
+    @Bind(R.id.ll_trans)
+    LinearLayout llTrans;
+    @Bind(R.id.next1)
+    Button next1;
+    @Bind(R.id.tv_checking)
+    TextView tvChecking;
+    @Bind(R.id.tv_tips)
+    TextView tvTips;
+    @Bind(R.id.ll_btn)
+    LinearLayout llBtn;
+    @Bind(R.id.tv_fixedreason)
+    TextView tvFixedReason;
+    @Bind(R.id.tv_customreason)
+    TextView tvCustomReason;
+    @Bind(R.id.lyt_reason_shsb)
+    LinearLayout lytReasonShsb;
+    @Bind(R.id.ll_checking)
+    LinearLayout llChecking;
 
     private ProgressAdapter progressAdapter;
-    private TextAdapter txtAdapter;
-    private String imgWatch;
+    private String imgWatch, gusertel, gusername, guseraddr;
     private SlideFromBottomPopup mSlidePopup;
-    private String path, applyid, shopid;
-    private ShopApplyStatusVo shopStatusVo;
+    private String path, applyid;
     private int amount = 0;
     private Uri imgUri;
+    private ShopApplyStatusVo applyStatusVo;
 
     @Override
     protected void initArgs(Intent intent) {
-        shopStatusVo = (ShopApplyStatusVo) intent.getSerializableExtra("shopStatusVo");
+        amount = intent.getIntExtra("amount", 0);
+        gusertel = intent.getStringExtra("phone");
+        gusername = intent.getStringExtra("nickname");
+        guseraddr = intent.getStringExtra("address");
+
     }
 
     @Override
     protected void initView(Bundle bundle) {
-        setContentView(R.layout.activity_jmkd_five_prepay);
+        setContentView(R.layout.activity_jmkd_six_device);
         ButterKnife.bind(this);
         next.setOnClickListener(this);
         mTitleBar.setTitle("开店申请");
         mTitleBar.setBackOnclickListener(this);
         lytWatch.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
+        next1.setOnClickListener(this);
+        initDrawables();
     }
 
     @Override
     protected void initData() {
         path = Environment.getExternalStorageDirectory().getPath() + "/myPic/";
-        shopid = shopStatusVo.getShopid();
-        applyid = shopStatusVo.getApplyid();
         initInfoRecycleView();
-        initTextRV();
-        doGetShopFeeList(shopid, applyid);
+        AppConfigVo vo = (AppConfigVo) mACache.getAsObject("appConfig");
+        tvCompanyname.setText(vo.getTranscompanyname());
+        tvCompanyaccount.setText(vo.getTransbankinfo());
+        doGetShopApplyStatus();
     }
 
     @Override
@@ -123,14 +139,6 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
         StatService.onPause(this);
     }
 
-    private void initTextRV() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        layoutManager.setSmoothScrollbarEnabled(true);
-        layoutManager.setAutoMeasureEnabled(true);
-        rvFee.setLayoutManager(layoutManager);
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -141,7 +149,7 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                doUpdateShopApplyInfo(applyid);
+                doUpdateShopApplyInfo();
                 break;
             case R.id.lyt_watch:
                 if (!TextUtils.isEmpty(imgWatch)) {
@@ -153,6 +161,10 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
                 }
                 break;
             case R.id.btn_cancel:
+                finish();
+                break;
+            case R.id.next1:
+                startActivity(new Intent(JmkdSixDeviceActivity.this, JmkdSixActivity.class));
                 finish();
                 break;
         }
@@ -193,15 +205,90 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
                 vo.setTag(2);
             } else if (i == 4) {
                 vo.setName("选址");
-                vo.setTag(1);
+                vo.setTag(2);
             } else if (i == 5) {
                 vo.setName("装修设备");
+                vo.setTag(1);
             } else if (i == 6) {
                 vo.setName("加盟成功");
             }
             progressVos.add(vo);
         }
         progressAdapter.setNewData(progressVos);
+    }
+
+    private void doGetShopApplyStatus() {
+        String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.getShopApplyStatus)
+                .tag(this)
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                KLog.i(response.body());
+                                applyStatusVo = mGson.fromJson(json.getString("data"), ShopApplyStatusVo.class);
+                                applyid = applyStatusVo.getApplyid();
+                                if (TextUtils.isEmpty(gusertel)) {
+                                    if (!TextUtils.isEmpty(applyStatusVo.getDevicechecksts())
+                                            && !"null".equals(applyStatusVo.getDevicechecksts())) {
+                                        if ("0".equals(applyStatusVo.getDevicechecksts())) {
+                                            AppConfigVo appConfig = (AppConfigVo) mACache.getAsObject("appConfig");
+                                            tvChecking.setText("设备费凭证审核中，一般" + appConfig.getTranscheckdays()
+                                                    + "个工作日，请耐心等待");
+                                            llBtn.setVisibility(View.GONE);
+                                            llBtn1.setVisibility(View.GONE);
+                                            llTrans.setVisibility(View.GONE);
+                                        } else if ("2".equals(applyStatusVo.getDevicechecksts())) {
+                                            llBtn1.setVisibility(View.VISIBLE);
+                                            llBtn.setVisibility(View.GONE);
+                                            llTrans.setVisibility(View.GONE);
+                                            tvTips.setVisibility(View.VISIBLE);
+                                            lytReasonShsb.setVisibility(View.VISIBLE);
+                                            tvChecking.setText("真遗憾，您的审核未通过");
+                                            tvChecking.setCompoundDrawablesRelative(fair, null, null, null);
+                                            if (!TextUtils.isEmpty(applyStatusVo.getDevicereason())) {
+                                                tvFixedReason.setText(applyStatusVo.getDevicereason());
+                                                tvFixedReason.setVisibility(View.VISIBLE);
+                                            }
+                                            //if (!TextUtils.isEmpty(applyStatusVo.getCustomreason()))
+                                            //tvCustomReason.setText(applyStatusVo.getCustomreason());
+                                            next1.setText("重新上传");
+                                        }
+                                    } else {
+                                        showTrans();
+                                    }
+                                } else {
+                                    showTrans();
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void showTrans() {
+        llBtn.setVisibility(View.VISIBLE);
+        llBtn1.setVisibility(View.GONE);
+        llChecking.setVisibility(View.GONE);
+        llTrans.setVisibility(View.VISIBLE);
+    }
+
+    private Drawable pass, fair;
+
+    @SuppressWarnings("deprecation")
+    private void initDrawables() {
+        pass = getResources().getDrawable(R.mipmap.sh_cg);
+        fair = getResources().getDrawable(R.mipmap.sh_sb);
+        pass.setBounds(0, 0, pass.getMinimumWidth(), pass.getMinimumHeight());
+        fair.setBounds(0, 0, fair.getMinimumWidth(), fair.getMinimumHeight());
     }
 
     /**
@@ -236,53 +323,6 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
         mSlidePopup.showPopupWindow();
     }
 
-    private void doGetShopFeeList(String shopid, String applyid) {
-        String token = PreferenceUtils.getPrefString(getApplicationContext(), "token", "1234567890");
-        OkGo.<String>post(Urls.baseUrl + Urls.getShopFeeList)
-                .tag(this)
-                .params("token", token)
-                .params("shopid", shopid)
-                .params("applyid", applyid)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        try {
-                            JSONObject json = new JSONObject(response.body());
-                            String code = json.getString("code");
-                            if (!code.equals("100000")) {
-                                sweetDialog(json.getString("msg"), 1, false);
-                            } else {
-                                List<TextVo> textVos = new ArrayList<>();
-                                TextVo textVo;
-                                amount = 0;
-                                FeeListVo feeListVo = mGson.fromJson(json.getString("data"), FeeListVo.class);
-                                for (FeeListVo.Fee fee : feeListVo.getFeelst()) {
-                                    textVo = new TextVo();
-                                    textVo.setTxt1(fee.getCostname());
-                                    textVo.setTxt2(fee.getAmount() + fee.getUnit());
-                                    textVos.add(textVo);
-                                    amount += Integer.valueOf(fee.getAmount());
-                                }
-                                textVo = new TextVo();
-                                textVo.setTxt1("合计需付款");
-                                textVo.setTxt2(amount + "元");
-                                textVos.add(textVo);
-                                txtAdapter = new TextAdapter(textVos);
-                                rvFee.setAdapter(txtAdapter);
-                                AppConfigVo vo = (AppConfigVo) mACache.getAsObject("appConfig");
-                                tvCompanyname.setText(vo.getTranscompanyname());
-                                tvCompanyaccount.setText(vo.getTransbankinfo());
-                                Calendar c = Calendar.getInstance();
-                                c.add(Calendar.DAY_OF_MONTH, Integer.valueOf(vo.getTranscheckdays()));
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
-                                tvEndtime.setText(sdf.format(c.getTime()));
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-    }
 
     private void doUploadImage(String path) {
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
@@ -308,7 +348,7 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
                 });
     }
 
-    private void doUpdateShopApplyInfo(String applyid) {
+    private void doUpdateShopApplyInfo() {
         if (TextUtils.isEmpty(imgWatch)) {
             ToastShow("请先上传凭证照片");
         } else {
@@ -316,12 +356,15 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
             OkGo.<String>get(Urls.baseUrl + Urls.updateShopApplyInfo)
                     .tag(this)
                     .params("token", token)
-                    .params("prepayway", "3")
-                    .params("prepay", amount)
+                    .params("devpayway", "3")
+                    .params("deviceamount", amount)
                     .params("applyid", applyid)
-                    .params("prepaycert", imgWatch)
-                    .params("prepaycertsts", "0")
-                    .params("prepaychecksts", "0")
+                    .params("devicecert", imgWatch)
+                    .params("devicecertsts", "0")
+                    .params("devicechecksts", "0")
+                    .params("gusertel", gusertel)
+                    .params("gusername", gusername)
+                    .params("guseraddr", guseraddr)
                     .execute(new StringCallback() {
                         @Override
                         public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -332,8 +375,8 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
                                     sweetDialog(json.getString("msg"), 1, false);
                                 } else {
                                     KLog.d(json.getString("data"));
-                                    ToastShow("审核中，请耐心等候");
-                                    finish();
+                                    ToastShow(json.getString("msg"));
+                                    showChecking();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -341,6 +384,13 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
                         }
                     });
         }
+    }
+
+    private void showChecking() {
+        llChecking.setVisibility(View.VISIBLE);
+        llTrans.setVisibility(View.GONE);
+        llBtn1.setVisibility(View.GONE);
+        llBtn.setVisibility(View.GONE);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

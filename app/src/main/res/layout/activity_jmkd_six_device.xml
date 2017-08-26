@@ -40,47 +40,14 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical"
-            android:padding="15dp">
+            android:padding="15dp"
+            android:visibility="visible">
 
             <LinearLayout
+                android:id="@+id/ll_trans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:padding="10dp"
-                    android:text="费用明细"
-                    android:textSize="@dimen/title"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:padding="10dp"
-                    android:text="金额(元)"
-                    android:textSize="@dimen/title"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/bg_gray"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_fee"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:visibility="visible"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/bg_dash_line"
                 android:orientation="vertical"
                 android:visibility="visible">
@@ -101,7 +68,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/x15"
-                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
@@ -129,7 +95,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/x15"
-                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
@@ -158,7 +123,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:gravity="center"
                     android:layout_marginTop="@dimen/x15"
                     android:orientation="horizontal">
 
@@ -191,10 +155,76 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/x20"
+                android:layout_weight="1"
+                android:background="@color/bg_gray"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_checking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_checking"
+                        android:layout_width="@dimen/x480"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@mipmap/sh_ing"
+                        android:paddingBottom="20dp"
+                        android:paddingTop="20dp"
+                        android:text="正在奋力审核中..."
+                        android:textSize="@dimen/title"/>
+
+                    <LinearLayout
+                        android:id="@+id/lyt_reason_shsb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:background="@drawable/bg_sh_reason"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"/>
+
+                        <TextView
+                            android:id="@+id/tv_fixedreason"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/x15"
+                            android:drawableStart="@mipmap/sh_dian"
+                            android:padding="@dimen/x10"
+                            android:visibility="gone"
+                            android:text="@string/action_forgot_pwd"/>
+
+                        <TextView
+                            android:id="@+id/tv_customreason"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/x15"
+                            android:drawableStart="@mipmap/sh_dian"
+                            android:padding="@dimen/x10"
+                            android:visibility="gone"
+                            android:text="@string/action_forgot_pwd"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -206,11 +236,11 @@
                     android:id="@+id/tv_endtime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/main_red"
-                    android:textSize="@dimen/x35"
-                    android:paddingStart="2dp"
                     android:paddingEnd="2dp"
-                    android:text="2017-07-01"/>
+                    android:paddingStart="2dp"
+                    android:text="2017-07-01"
+                    android:textColor="@color/main_red"
+                    android:textSize="@dimen/x35"/>
 
                 <TextView
                     android:id="@+id/textView3"
@@ -218,13 +248,50 @@
                     android:layout_height="wrap_content"
                     android:text="前完成付款"/>
             </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="否则竞拍资格取消，保证金没收"/>
+                android:text="否则竞拍资格取消，保证金没收"
+                android:visibility="gone"/>
         </LinearLayout>
     </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/ll_btn1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="10dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="请上传支付凭证，重新提交审核"
+            android:textSize="@dimen/small"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/next1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_corner_red"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="提交"
+            android:textColor="@drawable/text_white_red"
+            android:textSize="@dimen/middle"/>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -232,6 +299,7 @@
         android:background="@color/main_red"/>
 
     <LinearLayout
+        android:id="@+id/ll_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"

@@ -22,6 +22,7 @@ import com.xxl.kfapp.activity.home.boss.ShopAmountActivity;
 import com.xxl.kfapp.activity.home.boss.ShopListActivity;
 import com.xxl.kfapp.activity.home.boss.TicketListActivity;
 import com.xxl.kfapp.activity.home.boss.WithdrawListActivity;
+import com.xxl.kfapp.activity.person.PersonInfoActivity;
 import com.xxl.kfapp.base.BaseApplication;
 import com.xxl.kfapp.base.BaseFragment;
 import com.xxl.kfapp.model.response.ApplyListVo;
@@ -115,6 +116,7 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
         lytApply.setOnClickListener(this);
         ivClose.setOnClickListener(this);
         ivKfs.setVisibility(View.GONE);
+        ivHeadpic.setOnClickListener(this);
     }
 
     @Override
@@ -188,6 +190,9 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
                 PreferenceUtils.setPrefBoolean(getContext(), "isFirst", false);
                 break;
             case R.id.lyt_apply:
+                break;
+            case R.id.mImage:
+                startActivity(new Intent(getActivity(), PersonInfoActivity.class));
                 break;
         }
     }

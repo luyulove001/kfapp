@@ -35,23 +35,23 @@ public class GoodsOneAdapter extends BaseQuickAdapter<ShopGoodListVo.GoodsInfo> 
         baseViewHolder.getView(R.id.tv_goods_num).setVisibility(View.GONE);
         ImageView ivGoods = baseViewHolder.getView(R.id.iv_goods_pic);
         Glide.with(BaseApplication.getContext()).load(goodsInfo.getPic()).into(ivGoods);
-        final ImageView ivSelect = baseViewHolder.getView(R.id.iv_goods_select);
-        ivSelect.setVisibility(View.VISIBLE);
-        ivSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isSelect) {
-                    ivSelect.setImageResource(R.mipmap.qq_grey);
-                    isSelect = false;
-                } else {
-                    ivSelect.setImageResource(R.mipmap.qq_red);
-                    isSelect = true;
-                }
-                if (onSelectListener != null) {
-                    onSelectListener.onSelect(isSelect);
-                }
-            }
-        });
+//        final ImageView ivSelect = baseViewHolder.getView(R.id.iv_goods_select);
+//        ivSelect.setVisibility(View.VISIBLE);
+//        ivSelect.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (isSelect) {
+//                    ivSelect.setImageResource(R.mipmap.qq_grey);
+//                    isSelect = false;
+//                } else {
+//                    ivSelect.setImageResource(R.mipmap.qq_red);
+//                    isSelect = true;
+//                }
+//                if (onSelectListener != null) {
+//                    onSelectListener.onSelect(isSelect);
+//                }
+//            }
+//        });
     }
 
     public interface OnSelectListener {

@@ -22,7 +22,7 @@ public class GoodsMoreAdapter extends BaseQuickAdapter<ShopGoodListVo.GoodsInfo>
     @Override
     protected void convert(BaseViewHolder baseViewHolder, ShopGoodListVo.GoodsInfo goodsInfo) {
         baseViewHolder.setOnClickListener(R.id.lyt_item, new OnItemChildClickListener());
-        baseViewHolder.setText(R.id.tv_goods_name, goodsInfo.getGoodsname());
+        baseViewHolder.setText(R.id.tv_goods_name, goodsInfo.getGoodsname() + " x ");
         baseViewHolder.setText(R.id.tv_goods_disc, goodsInfo.getMemo());
         baseViewHolder.setText(R.id.tv_goods_price, Constant.addComma(goodsInfo.getPrice() * goodsInfo.getNum() + ""));
         baseViewHolder.setText(R.id.tv_goods_num, goodsInfo.getNum() + "");

@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.baidu.mobstat.StatService;
 import com.xxl.kfapp.R;
+import com.xxl.kfapp.activity.common.MainActivity;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.fragment.HomeFragmentShopkeeper;
@@ -73,7 +74,7 @@ public class JmkdSevenActivity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                startActivity(new Intent(JmkdSevenActivity.this, HomeFragmentShopkeeper.class));
+                startActivity(new Intent(JmkdSevenActivity.this, MainActivity.class));
                 finish();
                 break;
         }

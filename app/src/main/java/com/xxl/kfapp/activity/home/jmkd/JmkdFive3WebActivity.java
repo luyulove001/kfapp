@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
@@ -18,6 +19,8 @@ import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
@@ -36,13 +39,14 @@ import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.base.BaseApplication;
 import com.xxl.kfapp.base.PayHandler;
+import com.xxl.kfapp.model.response.AppConfigVo;
 import com.xxl.kfapp.model.response.FeeListVo;
 import com.xxl.kfapp.model.response.MemberInfoVo;
 import com.xxl.kfapp.model.response.ProgressVo;
 import com.xxl.kfapp.model.response.SelectAddrstsInfoVo;
 import com.xxl.kfapp.model.response.ShopApplyStatusVo;
-import com.xxl.kfapp.model.response.TextVo;
 import com.xxl.kfapp.utils.Constant;
+import com.xxl.kfapp.utils.Md5Algorithm;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.SlideFromBottomPopup;
@@ -71,6 +75,20 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
     Button next;
     @Bind(R.id.web_bid)
     WebView webView;
+    @Bind(R.id.tv_checking)
+    TextView tvChecking;
+    @Bind(R.id.tv_tips)
+    TextView tvTips;
+    @Bind(R.id.ll_btn)
+    LinearLayout llBtn;
+    @Bind(R.id.tv_fixedreason)
+    TextView tvFixedReason;
+    @Bind(R.id.tv_customreason)
+    TextView tvCustomReason;
+    @Bind(R.id.lyt_reason_shsb)
+    LinearLayout lytReasonShsb;
+    @Bind(R.id.ll_checking)
+    LinearLayout llChecking;
     private SlideFromBottomPopup mSlidePopup;
 
     private ProgressAdapter progressAdapter;
@@ -111,14 +129,13 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
         next.setOnClickListener(this);
         mTitleBar.setTitle("开店申请");
         mTitleBar.setBackOnclickListener(this);
-
+        initDrawables();
     }
 
     @Override
     protected void initData() {
         initInfoRecycleView();
         initWebView();
-        getShopApplyStatus();
         //注册微信appid
         api = WXAPIFactory.createWXAPI(this, Constant.WX_APPID);
         api.registerApp(Constant.WX_APPID);
@@ -146,6 +163,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
     protected void onResume() {
         super.onResume();
         StatService.onResume(this);
+        getShopApplyStatus();
     }
 
     @Override
@@ -180,8 +198,22 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                     if ("3".equals(infoVo.getSalests())) {
                         if ("1".equals(infoVo.getBidsts())) {
                             //doUpdateApplyStatus(applyid);//到竞拍支付页面
-                            doGetShopFeeList();
-                            showBidSuccessPopup();
+                            //showBidSuccessPopup();
+                            if ("1".equals(infoVo.getPrepaysts())) {
+                                doUpdateApplyStatus();
+                            } else {
+                                if ("2".equals(infoVo.getPrepaychecksts())) {
+                                    webView.setVisibility(View.VISIBLE);
+                                    llChecking.setVisibility(View.GONE);
+                                    webView.loadUrl(Urls.baseBidUrl + Urls.bidH5 + shopid);
+                                    infoVo.setPrepaychecksts("0");
+                                    tvTips.setVisibility(View.GONE);
+                                    next.setText("竞拍成功，请付款");
+                                    doUpdateShopViewCount(shopid);
+                                } else {
+                                    doGetShopFeeList();
+                                }
+                            }
                         } else {
                             startActivity(getIntent().setClass(JmkdFive3WebActivity.this, JmkdFive2Activity.class));
                             finish();
@@ -306,7 +338,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                     case R.id.tx_3:
                         mSlidePopup.dismiss();
                         Intent i = new Intent(JmkdFive3WebActivity.this, JmkdFivePrepayActivity.class);
-                        i.putExtra("shopid", shopid);
+                        i.putExtra("shopStatusVo", applyStatusVo);
                         startActivity(i);
                         break;
                 }
@@ -342,7 +374,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
         return strs;
     }
 
-    private void doGetSelectAddrStsInfo(String applyid, String shopid) {
+    private void doGetSelectAddrStsInfo(String applyid, final String shopid) {
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.getSelectAddrStsInfo)
                 .tag(this)
@@ -360,6 +392,40 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                                 infoVo = mGson.fromJson(json.getString("data"), SelectAddrstsInfoVo.class);
                                 nowprice = Integer.valueOf(infoVo.getNowprice());
                                 initButtonView(infoVo);
+                                if ("1".equals(infoVo.getPrepaysts())) {
+                                    selectAddrSuccess();
+                                    webView.setVisibility(View.GONE);
+                                } else {
+                                    if (TextUtils.isEmpty(infoVo.getPrepaychecksts())) {
+                                        tvChecking.setVisibility(View.GONE);
+                                        webView.loadUrl(Urls.baseBidUrl + Urls.bidH5 + shopid);
+                                        doUpdateShopViewCount(shopid);
+                                    } else {
+                                        webView.setVisibility(View.GONE);
+                                        if ("0".equals(infoVo.getPrepaychecksts())) {
+                                            AppConfigVo appConfig = (AppConfigVo) mACache.getAsObject("appConfig");
+                                            tvChecking.setText("预付费凭证审核中，一般" + appConfig.getTranscheckdays()
+                                                    + "个工作日，请耐心等待");
+                                            llBtn.setVisibility(View.GONE);
+                                            lytReasonShsb.setVisibility(View.GONE);
+                                            tvChecking.setCompoundDrawablesRelative(ing, null, null, null);
+                                            llChecking.setVisibility(View.VISIBLE);
+                                        } else if ("2".equals(infoVo.getPrepaychecksts())) {
+                                            llBtn.setVisibility(View.VISIBLE);
+                                            tvChecking.setText("真遗憾，您的审核未通过");
+                                            tvChecking.setCompoundDrawablesRelative(fair, null, null, null);
+                                            lytReasonShsb.setVisibility(View.VISIBLE);
+                                            if (!TextUtils.isEmpty(applyStatusVo.getPrepayreason())) {
+                                                tvFixedReason.setText(applyStatusVo.getPrepayreason());
+                                                tvFixedReason.setVisibility(View.VISIBLE);
+                                            }
+                                            //if (!TextUtils.isEmpty(applyStatusVo.getCustomreason()))
+                                            //tvCustomReason.setText(applyStatusVo.getCustomreason());
+                                            next.setText("重新上传");
+                                            tvTips.setVisibility(View.VISIBLE);
+                                        }
+                                    }
+                                }
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
                             }
@@ -373,10 +439,14 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
     private void initButtonView(SelectAddrstsInfoVo infoVo) {
         if ("3".equals(infoVo.getSalests())) {//竞拍状态
             if ("1".equals(infoVo.getBidsts())) {
-                if ("1".equals(infoVo.getPrepaycertsts())) {
+                if ("1".equals(infoVo.getPrepaysts())) {
                     next.setText("下一步");
                 } else {
-                    next.setText("竞拍成功，请付款");
+                    if ("2".equals(infoVo.getPrepaychecksts())) {
+                        next.setText("重新上传");
+                    } else {
+                        next.setText("竞拍成功，请付款");
+                    }
                 }
             } else {
                 next.setText("竞拍已结束");
@@ -396,13 +466,23 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    private void doUpdateApplyStatus(String applyid) {
+    private void selectAddrSuccess() {
+        tvChecking.setText("选址成功，您离开店只有一步之遥了");
+        tvChecking.setCompoundDrawablesRelative(pass, null, null, null);
+    }
+
+    private void doUpdateApplyStatus() {
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        String uuid = PreferenceUtils.getPrefString(getAppApplication(), "uuid", "1");
         OkGo.<String>get(Urls.baseUrl + Urls.updateShopApplyStatus)
                 .tag(this)
                 .params("token", token)
                 .params("applysts", "25")
                 .params("applyid", applyid)
+                .params("mid", uuid)
+                .params("sign", System.currentTimeMillis() / 1000 + "")
+                .params("signdata", Md5Algorithm.signMD5("mid=" + uuid + "&sign="
+                        + System.currentTimeMillis() / 1000 + ""))
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -466,8 +546,9 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                 .params("quantity", "1")
                 .params("price", amount)
                 .params("amount", amount)
-                .params("paytype", "3")
+                .params("paytype", paytype)
                 .params("ordertype", "3")
+                .params("fees", mGson.toJson(feeListVo.getFeelst()))
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -512,6 +593,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                                 for (FeeListVo.Fee fee : feeListVo.getFeelst()) {
                                     amount += Integer.valueOf(fee.getAmount());
                                 }
+                                showBidSuccessPopup();
                             }
                         } catch (org.json.JSONException e) {
                             e.printStackTrace();
@@ -605,6 +687,34 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                 });
     }
 
+    /**
+     * 线下转账，预付费
+     */
+    private void updateShopApplyInfo() {
+        String token = PreferenceUtils.getPrefString(getApplication(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.updateShopApplyInfo)
+                .params("token", token)
+                .params("applyid", applyid)
+                .params("prepayway", "3")
+                .params("prepay", amount)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        try {
+                            JSONObject json = JSON.parseObject(response.body());
+                            String code = json.getString("code");
+                            if (code.equals("100000")) {
+                                KLog.i(response.body());
+                            } else {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
     private void doUpdateShopViewCount(String shopid) {
         String token = PreferenceUtils.getPrefString(getApplication(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.updateShopViewCount)
@@ -651,14 +761,25 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                                 applyid = applyStatusVo.getApplyid();
                                 PreferenceUtils.setPrefString(BaseApplication.getContext(), "applyid", applyStatusVo
                                         .getApplyid());
-                                webView.loadUrl(Urls.baseBidUrl + Urls.bidH5 + shopid);
                                 doGetSelectAddrStsInfo(applyid, shopid);
-                                doUpdateShopViewCount(shopid);
+
                             }
                         } catch (org.json.JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 });
+    }
+
+    private Drawable pass, fair, ing;
+
+    @SuppressWarnings("deprecation")
+    private void initDrawables() {
+        pass = getResources().getDrawable(R.mipmap.sh_cg);
+        fair = getResources().getDrawable(R.mipmap.sh_sb);
+        ing = getResources().getDrawable(R.mipmap.sh_ing);
+        pass.setBounds(0, 0, pass.getMinimumWidth(), pass.getMinimumHeight());
+        fair.setBounds(0, 0, fair.getMinimumWidth(), fair.getMinimumHeight());
+        ing.setBounds(0, 0, ing.getMinimumWidth(), ing.getMinimumHeight());
     }
 }

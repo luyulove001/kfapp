@@ -290,8 +290,8 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
                 kstmVoList.get(currentQuestion).setWc(true);
                 kstmAdapter.notifyDataSetChanged();
                 ksnrAdapter.notifyDataSetChanged();
-//                kstmAdapter.setNewData(kstmVoList);
-//                ksnrAdapter.setNewData(ksnrVoList);
+                //                kstmAdapter.setNewData(kstmVoList);
+                //                ksnrAdapter.setNewData(ksnrVoList);
             }
         });
         tmRecyclerView.setAdapter(ksnrAdapter);
@@ -438,13 +438,14 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void refuse() {
         mScrollView.setVisibility(View.GONE);
         lytSubmit.setVisibility(View.GONE);
         lytTestAgain.setVisibility(View.VISIBLE);
         lytTestCount.setVisibility(View.VISIBLE);
         tvTestCount.setText("很抱歉，您不是我们所需要的人才");
-        testFail = getDrawable(R.mipmap.sh_sb);
+        testFail = getResources().getDrawable(R.mipmap.sh_sb);
         testFail.setBounds(0, 0, testFail.getMinimumWidth(), testFail.getMinimumHeight());
         tvTestCount.setCompoundDrawables(testFail, null, null, null);
         lytTestAgain.setVisibility(View.GONE);

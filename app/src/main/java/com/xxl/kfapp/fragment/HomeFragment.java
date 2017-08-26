@@ -22,6 +22,7 @@ import com.xxl.kfapp.activity.home.jmkd.JmkdFivePrepayActivity;
 import com.xxl.kfapp.activity.home.jmkd.JmkdFourActivity;
 import com.xxl.kfapp.activity.home.jmkd.JmkdOneActivity;
 import com.xxl.kfapp.activity.home.jmkd.JmkdSixActivity;
+import com.xxl.kfapp.activity.home.jmkd.JmkdSixDeviceActivity;
 import com.xxl.kfapp.activity.home.jmkd.JmkdThreeActivity;
 import com.xxl.kfapp.activity.home.jmkd.JmkdTwoActivity;
 import com.xxl.kfapp.activity.home.register.RegisterKfsFiveActivity;
@@ -178,9 +179,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         break;
                     case "24":
                         if (!TextUtils.isEmpty(prepaychecksts)) {
-                            Intent i = new Intent(getActivity(), JmkdFivePrepayActivity.class);
-                            i.putExtra("shopStatusVo", shopStatusVo);
-                            startActivity(i);
+                            if ("0".equals(prepaychecksts)) {
+                                startActivity(new Intent(getActivity(), JmkdFive3WebActivity.class));
+                            } else if ("1".equals(prepaychecksts)) {
+                                Intent i = new Intent(getActivity(), JmkdFivePrepayActivity.class);
+                                i.putExtra("shopStatusVo", shopStatusVo);
+                                startActivity(i);
+                            } else if ("2".equals(prepaychecksts)) {
+                                startActivity(new Intent(getActivity(), JmkdFive3WebActivity.class));
+                            }
                         } else if (TextUtils.isEmpty(shopid)) {
                             startActivity(new Intent(getActivity(), JmkdFiveActivity.class));
                         } else {
@@ -188,7 +195,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         }
                         break;
                     case "25":
-                        startActivity(new Intent(getActivity(), JmkdSixActivity.class));
+                        if (!TextUtils.isEmpty(shopStatusVo.getDevicechecksts())
+                                && !"null".equals(shopStatusVo.getDevicechecksts())) {
+                            //Intent i = new Intent(getActivity(), JmkdSixDeviceActivity.class);
+                            //i.putExtra("applyStatusVo", shopStatusVo);
+                            startActivity(new Intent(getActivity(), JmkdSixDeviceActivity.class));
+                        } else {
+                            startActivity(new Intent(getActivity(), JmkdSixActivity.class));
+                        }
                         break;
                     case "26":
                         break;

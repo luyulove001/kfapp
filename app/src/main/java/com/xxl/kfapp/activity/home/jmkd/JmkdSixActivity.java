@@ -4,8 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Message;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -22,7 +23,6 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
 import com.baidu.mobstat.StatService;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -30,12 +30,15 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.xxl.kfapp.R;
+import com.xxl.kfapp.activity.person.ModifyAddrActivity;
 import com.xxl.kfapp.adapter.GoodsMoreAdapter;
 import com.xxl.kfapp.adapter.GoodsOneAdapter;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.base.PayHandler;
 import com.xxl.kfapp.model.request.GoodsVo;
+import com.xxl.kfapp.model.response.AddrVo;
+import com.xxl.kfapp.model.response.MemberInfoVo;
 import com.xxl.kfapp.model.response.ProgressVo;
 import com.xxl.kfapp.model.response.ShopGoodListVo;
 import com.xxl.kfapp.utils.Constant;
@@ -78,6 +81,14 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
     TextView tvGoodsNumber;
     @Bind(R.id.tv_goods_amount)
     TextView tvGoodsAmount;
+    @Bind(R.id.tv_recipient)
+    TextView tvRecipient;
+    @Bind(R.id.tv_address)
+    TextView tvAddress;
+    @Bind(R.id.tv_phone)
+    TextView tvPhone;
+    @Bind(R.id.ll_receipt)
+    RelativeLayout llReceipt;
     private SlideFromBottomPopup mSlidePopup;
 
     private ProgressAdapter progressAdapter;
@@ -120,6 +131,7 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
         mTitleBar.setBackOnclickListener(this);
         ivLess.setOnClickListener(this);
         ivMore.setOnClickListener(this);
+        llReceipt.setOnClickListener(this);
     }
 
     @Override
@@ -148,6 +160,14 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
                 }
             }
         };
+        setMemberAddressInfo();
+    }
+
+    private void setMemberAddressInfo() {
+        MemberInfoVo memberInfoVo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
+        tvRecipient.setText("收货人：" + memberInfoVo.getNickname());
+        tvAddress.setText("收货地址：" + memberInfoVo.getDispaddress());
+        tvPhone.setText(memberInfoVo.getPhone());
     }
 
     @Override
@@ -194,6 +214,22 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
                 }
                 setGoodsAmount();
                 break;
+            case R.id.ll_receipt:
+                Intent i = new Intent(JmkdSixActivity.this, ModifyAddrActivity.class);
+                i.putExtra("unset", true);
+                startActivityForResult(i, 1);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            AddrVo vo = (AddrVo) data.getSerializableExtra("address");
+            tvRecipient.setText("收货人：" + vo.getUsername());
+            tvAddress.setText("收货地址：" + vo.getDispaddress());
+            tvPhone.setText(vo.getPhone());
         }
     }
 
@@ -202,7 +238,7 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
      */
     private void showHeadPopup() {
         mSlidePopup = new SlideFromBottomPopup(this);
-        mSlidePopup.setTexts(new String[]{"支付宝支付", "微信支付", "取消"});
+        mSlidePopup.setTexts(new String[]{"支付宝支付", "微信支付", "线下转账"});
         mSlidePopup.setOnItemClickListener(new SlideFromBottomPopup.OnItemClickListener() {
             @Override
             public void onItemClick(View v) {
@@ -217,6 +253,15 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
                         break;
                     case R.id.tx_3:
                         mSlidePopup.dismiss();
+                        //                        updateShopApplyInfo();
+                        Intent i = new Intent(JmkdSixActivity.this, JmkdSixDeviceActivity.class);
+                        //                        i.putExtra("shopid", shopid);
+                        i.putExtra("amount", amount);
+                        i.putExtra("phone", tvPhone.getText().toString());
+                        i.putExtra("nickname", tvRecipient.getText().toString());
+                        i.putExtra("address", tvAddress.getText().toString());
+                        startActivity(i);
+                        finish();
                         break;
                 }
             }
@@ -250,25 +295,26 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
     private void initGoodsList() {
         oneAdapter = new GoodsOneAdapter(vo.getOnelst());
         oneAdapter.openLoadAnimation();
-        oneAdapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter.OnRecyclerViewItemChildClickListener() {
-
-            @Override
-            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-                //Intent intent = getIntent().setClass(JmkdFive2Activity.this, JmkdFive3WebActivity.class);
-                //intent.putExtra("shopid", vo.getShoplst().get(i).getShopid());
-                //startActivity(intent);
-                ImageView ivSelect = (ImageView) view.findViewById(R.id.iv_goods_select);
-                if (isSelects[i]) {
-                    ivSelect.setImageResource(R.mipmap.qq_grey);
-                    isSelects[i] = false;
-                    setGoodsAmount();
-                } else {
-                    ivSelect.setImageResource(R.mipmap.qq_red);
-                    isSelects[i] = true;
-                    setGoodsAmount();
-                }
-            }
-        });
+        //        oneAdapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter
+        // .OnRecyclerViewItemChildClickListener() {
+        //
+        //            @Override
+        //            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+        //                //Intent intent = getIntent().setClass(JmkdFive2Activity.this, JmkdFive3WebActivity.class);
+        //                //intent.putExtra("shopid", vo.getShoplst().get(i).getShopid());
+        //                //startActivity(intent);
+        //                ImageView ivSelect = (ImageView) view.findViewById(R.id.iv_goods_select);
+        //                if (isSelects[i]) {
+        //                    ivSelect.setImageResource(R.mipmap.qq_grey);
+        //                    isSelects[i] = false;
+        //                    setGoodsAmount();
+        //                } else {
+        //                    ivSelect.setImageResource(R.mipmap.qq_red);
+        //                    isSelects[i] = true;
+        //                    setGoodsAmount();
+        //                }
+        //            }
+        //        });
 
         rvGoodsOne.setAdapter(oneAdapter);
         rvGoodsOne.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler_10px));
@@ -401,11 +447,11 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
         for (int i = 0; i < vo.getOnelst().size(); i++) {
             goodsVo = new GoodsVo();
             goodsVo.setGoodsid(i + 3 + "");
-            if (isSelects[i]) {
-                goodsVo.setQuantity("1");
-            } else {
-                goodsVo.setQuantity("0");
-            }
+//            if (isSelects[i]) {
+//                goodsVo.setQuantity("1");
+//            } else {
+//                goodsVo.setQuantity("0");
+//            }
             goodsVos.add(goodsVo);
         }
         return mGson.toJson(goodsVos);
@@ -462,12 +508,14 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void setGoodsAmount() {
+        amount = 0;
         List<ShopGoodListVo.GoodsInfo> infos = vo.getMorelst();
+        List<ShopGoodListVo.GoodsInfo> onelst = vo.getOnelst();
         for (int i = 0; i < infos.size(); i++) {
             amount += infos.get(i).getNum() * infos.get(i).getPrice();
         }
-        for (int i = 0; i < isSelects.length; i++) {
-            if (isSelects[i]) amount += vo.getOnelst().get(i).getPrice();
+        for (int i = 0; i < onelst.size(); i++) {
+            amount += onelst.get(i).getPrice();
         }
         tvGoodsAmount.setText("¥" + Constant.addComma(amount + ""));
     }

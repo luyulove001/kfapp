@@ -32,8 +32,65 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/white"
+        android:background="@color/bg_gray"
+        android:layout_marginTop="@dimen/x20"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_checking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_checking"
+                android:layout_width="@dimen/x480"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:drawablePadding="10dp"
+                android:drawableStart="@mipmap/sh_ing"
+                android:paddingBottom="20dp"
+                android:paddingTop="20dp"
+                android:text="正在奋力审核中..."
+                android:textSize="@dimen/title"/>
+
+            <LinearLayout
+                android:id="@+id/lyt_reason_shsb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/bg_sh_reason"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tv_fixedreason"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/x15"
+                    android:drawableStart="@mipmap/sh_dian"
+                    android:padding="@dimen/x10"
+                    android:visibility="gone"
+                    android:text="@string/action_forgot_pwd"/>
+
+                <TextView
+                    android:id="@+id/tv_customreason"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/x15"
+                    android:drawableStart="@mipmap/sh_dian"
+                    android:padding="@dimen/x10"
+                    android:visibility="gone"
+                    android:text="@string/action_forgot_pwd"/>
+            </LinearLayout>
+        </LinearLayout>
 
         <WebView
             android:id="@+id/web_bid"
@@ -41,11 +98,10 @@
             android:layout_height="match_parent"
             android:background="@color/white"/>
 
-        <include layout="@layout/include_line2"/>
     </LinearLayout>
 
-
     <LinearLayout
+        android:id="@+id/ll_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -56,9 +112,11 @@
         android:paddingTop="10dp">
 
         <TextView
+            android:id="@+id/tv_tips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="注意打*的必填"
+            android:layout_gravity="center"
+            android:text="请上传支付凭证，重新提交审核"
             android:textSize="@dimen/small"
             android:visibility="gone"/>
 
@@ -74,4 +132,8 @@
             android:textColor="@drawable/text_white_red"
             android:textSize="@dimen/middle"/>
     </LinearLayout>
+
+    <include layout="@layout/include_line2"/>
+
+
 </LinearLayout>

@@ -17,6 +17,7 @@ import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.activity.home.boss.TicketListActivity;
 import com.xxl.kfapp.activity.home.kfs.SignInActivity;
+import com.xxl.kfapp.activity.person.PersonInfoActivity;
 import com.xxl.kfapp.base.BaseApplication;
 import com.xxl.kfapp.base.BaseFragment;
 import com.xxl.kfapp.model.response.BarberCountInfoVo;
@@ -99,6 +100,9 @@ public class HomeFragmentKfs extends BaseFragment implements View.OnClickListene
                 i.putExtra("shopid", vo.getShopid());
                 startActivity(i);
                 break;
+            case R.id.mImage:
+                startActivity(new Intent(getActivity(), PersonInfoActivity.class));
+                break;
         }
     }
 
@@ -115,6 +119,7 @@ public class HomeFragmentKfs extends BaseFragment implements View.OnClickListene
         llTodal.setOnClickListener(this);
         llSignIn.setOnClickListener(this);
         llSignOut.setOnClickListener(this);
+        ivHeadpic.setOnClickListener(this);
     }
 
     @Override
