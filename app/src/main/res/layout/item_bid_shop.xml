@@ -51,6 +51,7 @@
             android:id="@+id/tv_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:maxLines="1"
             android:paddingEnd="@dimen/x20"
             android:paddingStart="@dimen/x20"
@@ -130,10 +131,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="5dp"
-                    android:drawableStart="@mipmap/main_icon_boy"
+                    android:drawableStart="@mipmap/qc_kaidain_clock"
+                    android:gravity="center"
                     android:paddingEnd="@dimen/x20"
                     android:paddingStart="@dimen/x20"
-                    android:text="距离开拍时间"/>
+                    android:text="距离开拍时间"
+                    android:textSize="@dimen/x25"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

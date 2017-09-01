@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_gray"
     android:orientation="vertical"
     tools:context="com.xxl.kfapp.activity.home.boss.ShopUnbindActivity">
 
@@ -15,17 +16,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/x40"
+        android:layout_marginTop="@dimen/x20"
+        android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="@dimen/x20">
-
+        android:padding="@dimen/x10">
 
         <RadioGroup
             android:id="@+id/rg_way"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <RadioButton
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:drawablePadding="5dp"
-                android:padding="@dimen/x25"
+                android:padding="@dimen/x20"
                 android:tag="gd"
                 android:text="关店"
                 android:textSize="@dimen/big"/>
@@ -46,12 +46,155 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="@dimen/x180"
                 android:drawablePadding="5dp"
-                android:padding="@dimen/x25"
+                android:padding="@dimen/x20"
                 android:tag="zr"
                 android:text="转让"
                 android:textSize="@dimen/big"/>
         </RadioGroup>
 
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_close_reason"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x250"
+        android:layout_marginTop="@dimen/x20"
+        android:background="@color/white"
+        android:gravity="top"
+        android:hint="关闭原因"
+        android:padding="@dimen/x10"
+        android:textColor="@color/text_black2"
+        android:textSize="@dimen/title"/>
+
+
+    <LinearLayout
+        android:id="@+id/ll_trans"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x20"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/lyt_staffno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/x200"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="工号"
+                android:textSize="@dimen/title"/>
+
+            <EditText
+                android:id="@+id/et_staffno"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入接收人工号"
+                android:inputType="number"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:textColor="@color/black2"
+                android:textSize="@dimen/title"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/x30"
+                android:src="@mipmap/arrow_right_gray"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <include layout="@layout/gray_line"/>
+
+
+        <LinearLayout
+            android:id="@+id/lyt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/x200"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="姓名"
+                android:textSize="@dimen/title"/>
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入接收人姓名"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:textColor="@color/black2"
+                android:textSize="@dimen/title"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/x30"
+                android:src="@mipmap/arrow_right_gray"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <include layout="@layout/gray_line"/>
+
+        <LinearLayout
+            android:id="@+id/lyt_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/x200"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="电话"
+                android:textSize="@dimen/title"/>
+
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入接收人电话"
+                android:inputType="phone"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:textColor="@color/black2"
+                android:textSize="@dimen/title"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/x30"
+                android:src="@mipmap/arrow_right_gray"
+                android:visibility="gone"/>
+        </LinearLayout>
     </LinearLayout>
 
     <Button
@@ -65,5 +208,6 @@
         android:paddingTop="15dp"
         android:text="确定"
         android:textColor="@drawable/text_white_red"
-        android:textSize="@dimen/middle"/>
+        android:textSize="@dimen/middle"
+        android:visibility="gone"/>
 </LinearLayout>

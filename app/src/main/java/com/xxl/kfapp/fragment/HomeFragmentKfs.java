@@ -182,24 +182,34 @@ public class HomeFragmentKfs extends BaseFragment implements View.OnClickListene
                                 Gson gson = new Gson();
                                 vo = gson.fromJson(json.getString("data"), BarberCountInfoVo.class);
                                 tvIntegrate.setText(vo.getIntegrate());
-                                tvWorktime.setText(vo.getBegintime() + "-" + vo.getEndtime());
-                                tvWorkaddr.setText(vo.getShopname());
+                                if ("null".equals(vo.getBegintime()) || TextUtils.isEmpty(vo.getBegintime()))
+                                    vo.setBegintime("");
+                                if ("null".equals(vo.getEndtime()) || TextUtils.isEmpty(vo.getBegintime()))
+                                    vo.setEndtime("");
+                                tvWorktime.setText("工作时间：" + vo.getBegintime() + "-" + vo.getEndtime());
+                                tvWorkaddr.setText("工作地址：" + vo.getShopname());
                                 tvCutToday.setText(vo.getDaytotal());
                                 tvCutCount.setText(vo.getTotal());
                                 tvSignTime.setText(vo.getSignfromtime());
                                 tvSignOutTime.setText(vo.getSignendtime());
-                                if (TextUtils.isEmpty(vo.getFromsts()) || "2".equals(vo.getFromsts())) {
+                                if (!TextUtils.isEmpty(vo.getFromsts()) && "2".equals(vo.getFromsts())) {
                                     ivSignIn.setVisibility(View.GONE);
                                     ivLate.setVisibility(View.VISIBLE);
                                 } else if ("1".equals(vo.getFromsts())) {
                                     ivSignIn.setVisibility(View.VISIBLE);
                                     ivLate.setVisibility(View.GONE);
+                                } else {
+                                    ivSignIn.setVisibility(View.GONE);
+                                    ivLate.setVisibility(View.GONE);
                                 }
-                                if (TextUtils.isEmpty(vo.getEndsts()) || "3".equals(vo.getEndsts())) {
+                                if (!TextUtils.isEmpty(vo.getEndsts()) && "3".equals(vo.getEndsts())) {
                                     ivSignOut.setVisibility(View.GONE);
                                     ivTui.setVisibility(View.VISIBLE);
                                 } else if ("1".equals(vo.getEndsts())) {
                                     ivSignOut.setVisibility(View.VISIBLE);
+                                    ivTui.setVisibility(View.GONE);
+                                } else {
+                                    ivSignOut.setVisibility(View.GONE);
                                     ivTui.setVisibility(View.GONE);
                                 }
                             }

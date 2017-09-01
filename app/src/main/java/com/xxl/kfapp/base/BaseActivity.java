@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -20,10 +21,14 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.xxl.kfapp.utils.AddressPickTask;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cn.qqtheme.framework.entity.City;
+import cn.qqtheme.framework.entity.County;
+import cn.qqtheme.framework.entity.Province;
 import talex.zsw.baselibrary.util.ACache;
 import talex.zsw.baselibrary.util.StringUtils;
 import talex.zsw.baselibrary.view.SweetAlertDialog.SweetAlertDialog;
@@ -46,9 +51,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected BaseApplication mApplication;
     private InputMethodManager mInputMethodManager;
+    private OnAddressSelectListener onAddressSelectListener;
 
     public ACache mACache;
     public Gson mGson;
+    public AddressPickTask task;//可以优化，以后实现
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (mGson == null) {
             mGson = new Gson();
         }
+        if (task == null)
+            initAddress();
         mInputMethodManager = (InputMethodManager) this
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -106,6 +115,32 @@ public abstract class BaseActivity extends AppCompatActivity {
         System.gc();
     }
 
+    private void initAddress() {
+        task = new AddressPickTask(this);
+        task.setHideProvince(false);
+        task.setHideCounty(false);
+        task.setCallback(new AddressPickTask.Callback() {
+            @Override
+            public void onAddressInitFailed() {
+                ToastShow("数据初始化失败");
+            }
+
+            @Override
+            public void onAddressPicked(Province province, City city, County county) {
+               if (onAddressSelectListener != null)
+                   onAddressSelectListener.onAddressSelect(province, city, county);
+            }
+        });
+    }
+
+    public interface OnAddressSelectListener {
+        void onAddressSelect(Province province, City city, County county);
+    }
+
+    public void setOnAddressSelectListener(OnAddressSelectListener listener) {
+        onAddressSelectListener = listener;
+    }
+
     /**
      * 获取Application
      */
@@ -126,6 +161,23 @@ public abstract class BaseActivity extends AppCompatActivity {
                     .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         } catch (Exception ignored) {
 
+        }
+    }
+
+    public void showDialog()
+    {
+        if (sweetAlertDialog != null && sweetAlertDialog.isShowing())
+        {
+            sweetAlertDialog.setTitleText("正在加载数据");
+            sweetAlertDialog.changeAlertType(SweetAlertDialog.PROGRESS_TYPE);
+        }
+        else
+        {
+            sweetAlertDialog =
+                    new SweetAlertDialog(BaseActivity.this, SweetAlertDialog.PROGRESS_TYPE)
+                            .setTitleText("正在加载数据");
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.show();
         }
     }
 
@@ -242,6 +294,25 @@ public abstract class BaseActivity extends AppCompatActivity {
             return;
         }
         sweetAlertDialog.dismiss();
+    }
+
+    public void disDialog()
+    {
+        if (sweetAlertDialog != null && sweetAlertDialog.isShowing())
+        {
+            sweetAlertDialog.dismiss();
+        }
+    }
+
+    public void disDialog(int time)
+    {
+        new Handler().postDelayed(new Runnable()
+        {
+            @Override public void run()
+            {
+                disDialog();
+            }
+        }, time);
     }
 
     public void setWebData(String content, WebView mWebView, RichText mRichText,

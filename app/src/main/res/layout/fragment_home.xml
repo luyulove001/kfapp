@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:msb="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/white"
@@ -7,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y335"
+        android:layout_height="@dimen/y260"
         android:background="@mipmap/bg_home"
         android:gravity="center"
         android:orientation="vertical">
@@ -21,7 +22,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -84,13 +85,65 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"/>
 
-    <ImageView
-        android:id="@+id/btn_begin"
+    <TextView
+        android:id="@id/tv_tips"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawablePadding="5dp"
+        android:layout_marginTop="@dimen/x20"
+        android:text="您还差一点点就可开店成功"
+        android:textSize="@dimen/x30"
+        android:visibility="gone"/>
+
+
+    <RelativeLayout
+        android:id="@+id/ll_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="20dp"
+            android:layout_toStartOf="@+id/msb"
+            android:layout_centerVertical="true"
+            android:background="@drawable/prograss_left"/>
+
+        <susion.com.mediaseekbar.MediaSeekBar
+            android:id="@+id/msb"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            msb:customThumb="@drawable/custom_seekbar_thumb2"
+            msb:hasBufferColor="#808080"
+            msb:hasPlayColor="#40b201"
+            msb:progressWidth="20dp"/>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/icon_ksf_circle"
+            android:layout_marginEnd="25dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_begin"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:src="@mipmap/img_button_home"/>
+        android:background="@mipmap/right_shine"
+        android:text="继续操作"
+        android:textColor="@color/white"
+        android:textSize="@dimen/x35"/>
 
     <LinearLayout
         android:id="@+id/lyt_kfs"
@@ -99,16 +152,17 @@
         android:layout_margin="10dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="@dimen/x20"
+        android:padding="@dimen/x10"
         android:visibility="gone">
 
         <TextView
+            android:id="@+id/tv_congratulation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="5dp"
             android:drawableStart="@mipmap/sh_cg"
             android:text="恭喜你！已成为快发师"
-            android:textSize="@dimen/x40"/>
+            android:textSize="@dimen/x35"/>
 
         <Button
             android:id="@+id/btn_create_shop"
@@ -116,7 +170,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/x20"
             android:layout_marginStart="@dimen/x20"
-            android:layout_marginTop="@dimen/x40"
+            android:layout_marginTop="@dimen/x10"
             android:background="@drawable/bg_corner_red"
             android:paddingBottom="15dp"
             android:paddingTop="15dp"

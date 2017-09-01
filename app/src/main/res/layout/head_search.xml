@@ -11,14 +11,14 @@
         android:layout_width="@dimen/x520"
         android:layout_height="@dimen/y80"
         android:layout_marginStart="@dimen/x20"
-        android:background="@drawable/bg_corner_red"
+        android:background="@drawable/bg_corner_shape_red"
         android:hint="理发师姓名或理发师工号"
         android:drawableEnd="@mipmap/icon_search"
         android:drawablePadding="5dp"
         android:textSize="@dimen/x30"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
-        android:textColor="@drawable/text_white_red"/>
+        android:textColor="@color/text_black2"/>
 
     <Button
         android:id="@+id/btn_all"

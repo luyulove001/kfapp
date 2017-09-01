@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
+import android.support.multidex.MultiDex;
 
 import com.xxl.kfapp.utils.PreferenceUtils;
 
@@ -40,6 +41,11 @@ public class BaseApplication extends Application {
 
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 
     public void addActivity(Activity activity) {
         activityList.add(activity);

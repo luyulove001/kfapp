@@ -21,6 +21,7 @@ import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.model.response.AppConfigVo;
 import com.xxl.kfapp.model.response.ProgressVo;
 import com.xxl.kfapp.model.response.ShopApplyStatusVo;
 import com.xxl.kfapp.utils.Md5Algorithm;
@@ -64,6 +65,9 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
     LinearLayout lytReasonShsb;
     @Bind(R.id.tv_tips)
     TextView tvTips;
+    @Bind(R.id.tv_checking_date)
+    TextView tvCheckingDate;
+
     private ProgressAdapter progressAdapter;
     private List<ProgressVo> progressVos;
     private ShopApplyStatusVo statusVo;
@@ -201,6 +205,9 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
                                         next.setBackgroundResource(R.drawable.bg_corner_gray);
                                         next.setTextColor(Color.argb(255, 128, 128, 128));
                                         lytNext.setVisibility(View.GONE);
+                                        tvCheckingDate.setVisibility(View.VISIBLE);
+                                        AppConfigVo vo = (AppConfigVo) mACache.getAsObject("appConfig");
+                                        tvCheckingDate.setText("预计" + vo.getBarbercheckdays() + "个工作日，请耐心等待");
                                         break;
                                     case "1":
                                         tvChecking.setText("恭喜您，您的初审已通过");

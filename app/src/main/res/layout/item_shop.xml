@@ -10,6 +10,7 @@
         android:layout_width="@dimen/x250"
         android:layout_height="@dimen/y250"
         android:padding="@dimen/x20"
+        android:scaleType="centerCrop"
         android:src="@color/appmsg_custom"/>
 
     <View

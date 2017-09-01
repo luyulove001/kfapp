@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -58,10 +59,13 @@ public class JmkdFive2Activity extends BaseActivity implements View.OnClickListe
     Button btnAll;
     @Bind(R.id.tv_shop_num)
     TextView tvShopNum;
+    @Bind(R.id.ll_return)
+    LinearLayout llReturn;
 
     private ProgressAdapter progressAdapter;
     private BidShopAdapter bidShopAdapter;
     private List<ProgressVo> progressVos;
+    private String mProvince = "浙江", mCity = "杭州", mCounty = "滨江";
 
     @Override
     protected void initArgs(Intent intent) {
@@ -81,6 +85,7 @@ public class JmkdFive2Activity extends BaseActivity implements View.OnClickListe
     @Override
     protected void initData() {
         initInfoRecycleView();
+        initShopList();
         doGetShopApplyInfo(PreferenceUtils.getPrefString(getApplication(), "applyid", ""));
     }
 
@@ -100,6 +105,8 @@ public class JmkdFive2Activity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
+                startActivity(new Intent(this, JmkdFiveActivity.class));
+                finish();
                 break;
             case R.id.btn_addr_select:
                 onAddressPicker();
@@ -122,16 +129,20 @@ public class JmkdFive2Activity extends BaseActivity implements View.OnClickListe
 
             @Override
             public void onAddressPicked(Province province, City city, County county) {
+                mProvince = province.getAreaName();
+                mCity = city.getAreaName();
                 if (county == null) {
                     ToastShow(province.getAreaName() + city.getAreaName());
                     doGetAucteShopList(province.getAreaId(), city.getAreaId(), "");
+                    mCounty = "";
                 } else {
                     ToastShow(province.getAreaName() + city.getAreaName() + county.getAreaName());
                     doGetAucteShopList(province.getAreaId(), city.getAreaId(), county.getAreaId());
+                    mCounty = county.getAreaName();
                 }
             }
         });
-        task.execute("浙江", "杭州", "滨江");
+        task.execute(mProvince, mCity, mCounty);
     }
 
     /**
@@ -157,20 +168,7 @@ public class JmkdFive2Activity extends BaseActivity implements View.OnClickListe
 
     }
 
-    private void initShopList(final BidShopListVo vo) {
-        bidShopAdapter = new BidShopAdapter(vo.getShoplst());
-        bidShopAdapter.openLoadAnimation();
-        bidShopAdapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter
-                .OnRecyclerViewItemChildClickListener() {
-
-            @Override
-            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-                Intent intent = getIntent().setClass(JmkdFive2Activity.this, JmkdFive3WebActivity.class);
-                intent.putExtra("shopid", vo.getShoplst().get(i).getShopid());
-                startActivity(intent);
-            }
-        });
-        rvBidShop.setAdapter(bidShopAdapter);
+    private void initShopList() {
         rvBidShop.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler_10px));
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -253,12 +251,27 @@ public class JmkdFive2Activity extends BaseActivity implements View.OnClickListe
                             String code = json.getString("code");
                             if (code.equals("100000")) {
                                 KLog.i(response.body());
-                                BidShopListVo bidShopListVo = mGson.fromJson(json.getString("data"), BidShopListVo
+                                final BidShopListVo bidShopListVo = mGson.fromJson(json.getString("data"), BidShopListVo
                                         .class);
                                 KLog.i(bidShopListVo.getShoplst().size());
                                 tvShopNum.setText("共有" +
                                         bidShopListVo.getShoplst().size() + "家店铺供您选择");
-                                initShopList(bidShopListVo);
+                                bidShopAdapter = new BidShopAdapter(bidShopListVo.getShoplst());
+                                bidShopAdapter.openLoadAnimation();
+                                bidShopAdapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter
+                                        .OnRecyclerViewItemChildClickListener() {
+
+                                    @Override
+                                    public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                                        Intent intent = getIntent().setClass(JmkdFive2Activity.this,
+                                                JmkdFive3WebActivity.class);
+                                        intent.putExtra("shopid", bidShopListVo.getShoplst().get(i).getShopid());
+                                        startActivity(intent);
+                                    }
+                                });
+                                rvBidShop.setAdapter(bidShopAdapter);
+                                llReturn.setVisibility(View.VISIBLE);
+                                next.setText("没有想要的，重新选址");
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
                             }

@@ -55,6 +55,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -83,43 +84,39 @@
 
     <include layout="@layout/gray_line"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/lyt_apply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:background="@color/white"
-        android:orientation="horizontal"
         android:visibility="gone">
 
         <TextView
+            android:id="@+id/tv_apply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:padding="10dp"
             android:text="开店申请"
             android:textSize="18sp"/>
 
-        <TextView
-            android:id="@+id/apply"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:padding="10dp"
-            android:textColor="@color/black2"
-            android:textSize="18sp"/>
-
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/x30"
             android:src="@mipmap/arrow_right_gray"/>
-    </LinearLayout>
 
-    <include layout="@layout/gray_line"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:layout_below="@+id/tv_apply"
+            android:background="@color/text_gray"/>
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:id="@+id/lyt_order"
@@ -168,6 +165,7 @@
         android:visibility="gone">
 
         <TextView
+            android:id="@+id/tv_tui"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -184,7 +182,6 @@
             android:layout_marginStart="@dimen/x220"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="酒店订单"
             android:textColor="@color/black2"
             android:textSize="18sp"
             android:visibility="gone"/>
@@ -196,9 +193,13 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/x30"
             android:src="@mipmap/arrow_right_gray"/>
-    </RelativeLayout>
 
-    <include layout="@layout/gray_line"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:layout_below="@+id/tv_tui"
+            android:background="@color/text_gray"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/lyt_notify"
@@ -217,16 +218,20 @@
 
         <TextView
             android:id="@+id/notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/x40"
+            android:layout_height="@dimen/y40"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/x220"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:textColor="@color/black2"
-            android:textSize="18sp"/>
+            android:layout_marginEnd="@dimen/x20"
+            android:layout_toStartOf="@+id/iv_arrow_right"
+            android:background="@drawable/bg_circle"
+            android:gravity="center"
+            android:text="99+"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x20"
+            android:visibility="gone"/>
 
         <ImageView
+            android:id="@+id/iv_arrow_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

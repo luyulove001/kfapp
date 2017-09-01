@@ -40,7 +40,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/bg_gray"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -94,6 +94,7 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/ll_return"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"

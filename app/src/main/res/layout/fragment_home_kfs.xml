@@ -56,7 +56,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -65,7 +67,6 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/x10"
                     android:drawableStart="@mipmap/ic_clock"
-                    android:text="工作时间：10：00-22:00"
                     android:textColor="@color/white"
                     android:textSize="@dimen/x28"/>
 
@@ -76,7 +77,6 @@
                     android:layout_marginTop="@dimen/x10"
                     android:drawablePadding="@dimen/x10"
                     android:drawableStart="@mipmap/ic_locat"
-                    android:text="工作地址：10：00-22:00"
                     android:textColor="@color/white"
                     android:textSize="@dimen/x28"/>
             </LinearLayout>
@@ -101,7 +101,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/x5"
-                    android:text="1000005"
                     android:textColor="@color/white"
                     android:textSize="@dimen/x38"/>
 
@@ -135,7 +134,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/x10"
-                android:text="100"
                 android:textColor="@color/dodgerblue"
                 android:textSize="@dimen/x35"/>
 
@@ -169,7 +167,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/x10"
-                android:text="100"
                 android:textColor="@color/dodgerblue"
                 android:textSize="@dimen/x35"/>
 
@@ -202,7 +199,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/x10"
-                android:text="100"
                 android:textColor="@color/main_red"
                 android:textSize="@dimen/x35"/>
 
@@ -250,7 +246,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/x10"
-                    android:text="10:30"
                     android:textColor="@color/black2"
                     android:textSize="@dimen/text_title"/>
 
@@ -259,13 +254,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/x10"
-                    android:src="@mipmap/ic_sign"/>
+                    android:src="@mipmap/ic_sign"
+                    android:visibility="gone"/>
 
                 <ImageView
                     android:id="@+id/iv_late"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_late"/>
+                    android:src="@mipmap/ic_late"
+                    android:visibility="gone"/>
             </LinearLayout>
 
             <TextView
@@ -304,7 +301,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/x10"
-                    android:text="22:30"
                     android:textColor="@color/black2"
                     android:textSize="@dimen/text_title"/>
 
@@ -313,12 +309,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/x10"
+                    android:visibility="gone"
                     android:src="@mipmap/ic_sign"/>
 
                 <ImageView
                     android:id="@+id/iv_tui"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:src="@mipmap/ic_tui"/>
             </LinearLayout>
 

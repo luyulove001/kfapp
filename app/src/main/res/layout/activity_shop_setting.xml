@@ -12,6 +12,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <RelativeLayout
+        android:id="@+id/lyt_pic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="门店图片"
+            android:textSize="18sp"/>
+
+        <ImageView
+            android:id="@+id/iv_pic"
+            android:layout_width="@dimen/x120"
+            android:layout_height="@dimen/y120"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="@dimen/x40"
+            android:layout_marginLeft="@dimen/x200"
+            android:layout_marginTop="@dimen/x40"
+            android:src="@mipmap/img_add"
+            android:scaleType="centerCrop"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x30"
+            android:src="@mipmap/arrow_right_gray"
+            android:scaleType="centerCrop"/>
+
+    </RelativeLayout>
+
+    <include layout="@layout/gray_line"/>
+
     <LinearLayout
         android:id="@+id/lyt_shopname"
         android:layout_width="match_parent"
@@ -43,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/x30"
+            android:layout_marginRight="@dimen/x30"
             android:src="@mipmap/arrow_right_gray"/>
     </LinearLayout>
 
@@ -80,7 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/x30"
+            android:layout_marginRight="@dimen/x30"
             android:src="@mipmap/arrow_right_gray"/>
     </LinearLayout>
 
@@ -118,7 +157,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/x30"
+            android:layout_marginRight="@dimen/x30"
             android:src="@mipmap/arrow_right_gray"/>
     </LinearLayout>
 
@@ -141,20 +180,21 @@
             android:textSize="18sp"/>
 
         <TextView
+            android:id="@+id/tv_applysts"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:padding="10dp"
-            android:textColor="@color/black2"
-            android:textSize="18sp"/>
+            android:textColor="@color/text_black2"
+            android:textSize="@dimen/big"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/x30"
+            android:layout_marginRight="@dimen/x30"
             android:src="@mipmap/arrow_right_gray"/>
     </LinearLayout>
 </LinearLayout>

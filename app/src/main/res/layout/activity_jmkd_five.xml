@@ -89,7 +89,7 @@
                     android:id="@+id/tv_no_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableRight="@mipmap/qq_grey"
+                    android:drawableRight="@mipmap/qq_red"
                     android:gravity="center_vertical"
                     android:padding="10dp"
                     android:text="我没地址"

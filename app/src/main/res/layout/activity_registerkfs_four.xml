@@ -74,7 +74,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="1染色剂染色剂染色剂染色剂染色剂染色剂染色剂染色剂"
                 android:textSize="@dimen/text_list_title" />
 
             <include layout="@layout/include_line2" />
@@ -160,11 +159,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:drawableStart="@mipmap/sh_ing"
+            android:drawableStart="@mipmap/sh_sb"
             android:drawablePadding="5dp"
-            android:text="您还有2次考试机会"
-            android:textSize="@dimen/big" />
+            android:text="您还有 次考试机会"
+            android:textSize="@dimen/title" />
 
+        <TextView
+            android:id="@+id/tv_point"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y200"
+            android:layout_margin="20dp"
+            android:background="@drawable/bg_dash_line"
+            android:gravity="center"
+            android:textSize="@dimen/title"
+            android:text="本次您考了：分"/>
+
+        <Button
+            android:id="@+id/btn_true_answer"
+            android:layout_width="@dimen/x300"
+            android:layout_height="@dimen/y80"
+            android:background="@drawable/bg_corner_red"
+            android:layout_gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="正确答案"
+            android:textColor="@drawable/text_white_red"
+            android:textSize="@dimen/middle" />
     </LinearLayout>
 
     <LinearLayout

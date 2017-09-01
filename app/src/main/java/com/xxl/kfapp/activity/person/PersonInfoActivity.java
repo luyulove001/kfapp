@@ -122,17 +122,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
-        memberInfoVo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
-        if (TextUtils.isEmpty(memberInfoVo.getHeadpic())) {
-            ivHeadpic.setImageResource(R.mipmap.default_head);
-        } else {
-            Glide.with(BaseApplication.getContext()).load(memberInfoVo.getHeadpic()).into(ivHeadpic);
-        }
-        tvGender.setText("1".equals(memberInfoVo.getSex()) ? "男" : "女");
-        tvJob.setText("2".equals(memberInfoVo.getJobsts()) ? "老板" : "理发师");//todo 0
-        tvNickname.setText(memberInfoVo.getNickname());
-        tvPoints.setText(memberInfoVo.getIntegrate());
-        tvStaffno.setText(memberInfoVo.getStaff());
+        doGetMemberInfo();
         StatService.onResume(this);
     }
 
@@ -209,13 +199,13 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                     case R.id.tx_1:
                         tvGender.setText("男");
                         sex = "1";
-                        memberInfoVo.setSex(sex);
+                        updateMemberInfo();
                         mSlidePopup.dismiss();
                         break;
                     case R.id.tx_2:
                         tvGender.setText("女");
                         sex = "2";
-                        memberInfoVo.setSex(sex);
+                        updateMemberInfo();
                         mSlidePopup.dismiss();
                         break;
                     case R.id.tx_3:
@@ -241,6 +231,12 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                 break;
             case PHOTO_REQUEST_CUT:// 返回的结果
                 if (data != null) setPicToView(data);
+                break;
+            case 4:
+                if (resultCode == RESULT_OK)
+                {
+                    tvNickname.setText(data.getStringExtra("nickname"));
+                }
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -282,6 +278,44 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                 doUploadImage(RegisterKfsOneActivity.getRealFilePath(this, imgUri));
             }
         }
+    }
+
+    private void doGetMemberInfo() {
+        String token = PreferenceUtils.getPrefString(getApplicationContext(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.getMemberInfo)
+                .tag(this)
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                KLog.i(response.body());
+                                if (!TextUtils.isEmpty(json.getString("data"))) {
+                                    memberInfoVo = mGson.fromJson(json.getString("data"), MemberInfoVo.class);
+                                    mACache.put("memberInfoVo", memberInfoVo);//保存个人信息
+                                    if (TextUtils.isEmpty(memberInfoVo.getHeadpic())) {
+                                        ivHeadpic.setImageResource(R.mipmap.default_head);
+                                    } else {
+                                        Glide.with(BaseApplication.getContext()).load(memberInfoVo.getHeadpic()).into(ivHeadpic);
+                                    }
+                                    tvGender.setText("1".equals(memberInfoVo.getSex()) ? "男" : "女");
+                                    tvJob.setText("2".equals(memberInfoVo.getJobsts()) ? "老板" : "快发师");
+                                    if ("0".equals(memberInfoVo.getJobsts())) tvJob.setText("");
+                                    tvNickname.setText(memberInfoVo.getNickname());
+                                    tvPoints.setText(memberInfoVo.getIntegrate());
+                                    tvStaffno.setText(memberInfoVo.getStaff());
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
     private void doUploadImage(String path) {

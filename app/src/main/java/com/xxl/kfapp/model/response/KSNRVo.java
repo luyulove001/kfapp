@@ -21,6 +21,15 @@ public class KSNRVo implements Serializable {
     }
 
     private boolean xz = false;
+    private boolean answer = false;
+
+    public boolean isAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(boolean answer) {
+        this.answer = answer;
+    }
 
     public boolean isXz() {
         return xz;

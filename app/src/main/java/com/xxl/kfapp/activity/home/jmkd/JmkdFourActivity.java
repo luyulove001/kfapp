@@ -80,7 +80,7 @@ public class JmkdFourActivity extends BaseActivity implements View.OnClickListen
 
     private ProgressAdapter progressAdapter;
     private List<ProgressVo> progressVos;
-    private String paytype, applyid;//支付方式   申请id
+    private String paytype = "2", applyid;//支付方式   申请id
     private PayHandler payHandler;
     private IWXAPI api;
     private String brandmoney;
@@ -119,6 +119,7 @@ public class JmkdFourActivity extends BaseActivity implements View.OnClickListen
         next2.setOnClickListener(this);
         next.setOnClickListener(this);
         next2.setEnabled(false);
+        ivWx.setImageResource(R.mipmap.qq_red);
     }
 
     @Override
@@ -298,6 +299,7 @@ public class JmkdFourActivity extends BaseActivity implements View.OnClickListen
 
     //加盟保证金
     private void doCreateUserOrder() {
+        next.setClickable(false);
         String token = PreferenceUtils.getPrefString(getApplication(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.createUserOrder)
                 .params("token", token)
@@ -307,9 +309,11 @@ public class JmkdFourActivity extends BaseActivity implements View.OnClickListen
                 .params("amount", brandmoney)
                 .params("paytype", paytype)
                 .params("ordertype", "1")
+                .params("testflag", "1")
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
+                        next.setClickable(true);
                         try {
                             JSONObject json = JSON.parseObject(response.body());
                             String code = json.getString("code");

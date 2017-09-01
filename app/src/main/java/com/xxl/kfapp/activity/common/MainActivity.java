@@ -72,6 +72,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private String role, jobsts, shopid;
     private boolean hasNewMsg, isMain;
+    private int nowPage = 1;
 
 
     @Override
@@ -119,18 +120,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void initData() {
-        doGetMemberInfo();
+//        doGetMemberInfo();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         getUserNoticeCount();
-        MemberInfoVo vo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
-        if (vo != null) {
-            jobsts = vo.getJobsts();
-            role = vo.getRole();
-        }
+//        MemberInfoVo vo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
+//        if (vo != null) {
+//            jobsts = vo.getJobsts();
+//            role = vo.getRole();
+//        }
+        doGetMemberInfo();
         StatService.onResume(this);
     }
 
@@ -163,22 +165,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.mIconText1:
                 mTitleBar.setTitle("首页");
                 setIndexFragment(1);
+                nowPage = 1;
                 break;
             case R.id.mIconText2:
                 mTitleBar.setTitle("商城");
                 setIndexFragment(2);
+                nowPage = 2;
                 break;
             case R.id.mIconText3:
                 mTitleBar.setTitle("购物车");
                 setIndexFragment(3);
+                nowPage = 3;
                 break;
             case R.id.mIconText4:
                 mTitleBar.setTitle("论坛");
                 setIndexFragment(4);
+                nowPage = 4;
                 break;
             case R.id.mIconText5:
                 mTitleBar.setTitle("我的");
                 setIndexFragment(5);
+                nowPage = 5;
                 break;
 
         }
@@ -333,7 +340,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                         JPushInterface.setAlias(BaseApplication.getContext(), 1, vo.getMemberid());
                                         PreferenceUtils.getPrefString(getApplicationContext(), "alias", vo.getMemberid());
                                     }
-                                    setIndexFragment(1);//设置首页
+                                    setIndexFragment(nowPage);//设置首页
                                 }
                             }
                         } catch (JSONException e) {
@@ -360,14 +367,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 KLog.i(response.body());
                                 if (!TextUtils.isEmpty(json.getString("data"))) {
                                     int count = Integer.parseInt(json.getJSONObject("data").getString("msgcnt"));
+                                    PreferenceUtils.setPrefInt(BaseApplication.getContext(), "noticeCount", count);
                                     if (count > 0) {
                                         if (isMain) {
                                             mTitleBar.getvIvRight2().setVisibility(View.VISIBLE);
                                         }
                                         hasNewMsg = true;
+                                        mIconText5.setFlag(true);
                                     } else {
                                         mTitleBar.getvIvRight2().setVisibility(View.GONE);
                                         hasNewMsg = false;
+                                        mIconText5.setFlag(false);
                                     }
                                 }
                             }

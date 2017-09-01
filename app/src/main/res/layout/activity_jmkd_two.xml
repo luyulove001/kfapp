@@ -51,6 +51,14 @@
                 android:drawablePadding="5dp"
                 android:text="正在奋力审核中..."
                 android:textSize="@dimen/big"/>
+            <TextView
+                android:id="@+id/tv_checking_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="正在奋力审核中..."
+                android:textSize="@dimen/title"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:id="@+id/lyt_reason_shsb"

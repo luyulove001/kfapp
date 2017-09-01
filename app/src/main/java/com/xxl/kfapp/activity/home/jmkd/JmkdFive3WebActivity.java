@@ -89,6 +89,8 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
     LinearLayout lytReasonShsb;
     @Bind(R.id.ll_checking)
     LinearLayout llChecking;
+    @Bind(R.id.btn_refresh)
+    Button btnRefresh;
     private SlideFromBottomPopup mSlidePopup;
 
     private ProgressAdapter progressAdapter;
@@ -230,6 +232,9 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                         }
                     }
                 }
+                break;
+            case R.id.btn_refresh:
+                doGetSelectAddrStsInfo(applyid, shopid);
                 break;
         }
     }
@@ -454,6 +459,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
         } else if ("2".equals(infoVo.getSalests())) {
             if ("1".equals(infoVo.getBidmoneysts())) {//投标保证金缴纳状态
                 next.setText("出价");
+                btnRefresh.setVisibility(View.VISIBLE);
             } else {
                 next.setText("交保证金报名");
             }
@@ -463,6 +469,9 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
             } else {
                 next.setText("交保证金报名");
             }
+            next.setTextColor(Color.parseColor("#666666"));
+            next.setBackgroundResource(R.drawable.bg_corner_gray);
+            next.setClickable(false);
         }
     }
 
@@ -514,6 +523,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                 .params("paytype", paytype)
                 .params("ordertype", "2")
                 .params("shopid", shopid)
+                .params("testflag", "1")
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -549,6 +559,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                 .params("paytype", paytype)
                 .params("ordertype", "3")
                 .params("fees", mGson.toJson(feeListVo.getFeelst()))
+                .params("testflag", "1")
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {

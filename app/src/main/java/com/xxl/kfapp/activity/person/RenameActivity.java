@@ -91,6 +91,8 @@ public class RenameActivity extends BaseActivity implements View.OnClickListener
             mTitleBar.setTitle("修改店名");
         } else {
             mTitleBar.setTitle("修改昵称");
+            rvRename.setVisibility(View.GONE);
+            llOperateRecord.setVisibility(View.GONE);
         }
         mTitleBar.setBackOnclickListener(this);
         mTitleBar.setRightTV("保存", new View.OnClickListener() {
@@ -105,10 +107,10 @@ public class RenameActivity extends BaseActivity implements View.OnClickListener
                     Intent i = new Intent();
                     i.putExtra("shopName", etNickname.getText().toString());
                     setResult(RESULT_OK, i);
+                    finish();
                 } else {
                     updateMemberInfo(etNickname.getText().toString());
                 }
-                finish();
             }
         });
         mTitleBar.getvTvRight().setTextColor(getResources().getColor(R.color.white));
@@ -191,6 +193,10 @@ public class RenameActivity extends BaseActivity implements View.OnClickListener
                                 MemberInfoVo vo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
                                 vo.setNickname(nickname);
                                 mACache.put("memberInfoVo", vo);//保存个人信息
+                                Intent i = new Intent();
+                                i.putExtra("nickname", etNickname.getText().toString());
+                                setResult(RESULT_OK, i);
+                                finish();
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
                             }

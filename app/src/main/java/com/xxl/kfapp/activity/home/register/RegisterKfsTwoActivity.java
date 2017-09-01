@@ -17,6 +17,7 @@ import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.model.response.AppConfigVo;
 import com.xxl.kfapp.model.response.ApplyStatusVo;
 import com.xxl.kfapp.model.response.ProgressVo;
 import com.xxl.kfapp.utils.PreferenceUtils;
@@ -58,6 +59,8 @@ public class RegisterKfsTwoActivity extends BaseActivity implements View.OnClick
     LinearLayout lytNext;
     @Bind(R.id.tv_tips)
     TextView tvTips;
+    @Bind(R.id.tv_checking_date)
+    TextView tvCheckingDate;
 
     private ProgressAdapter progressAdapter;
     private List<ProgressVo> progressVos;
@@ -222,6 +225,9 @@ public class RegisterKfsTwoActivity extends BaseActivity implements View.OnClick
                                         next.setBackgroundResource(R.drawable.bg_corner_gray);
                                         next.setTextColor(getResources().getColor(R.color.gray));
                                         lytNext.setVisibility(View.GONE);
+                                        tvCheckingDate.setVisibility(View.VISIBLE);
+                                        AppConfigVo vo = (AppConfigVo) mACache.getAsObject("appConfig");
+                                        tvCheckingDate.setText("预计" + vo.getBarbercheckdays() + "个工作日，请耐心等待");
                                         break;
                                     case "1":
                                         tvChecking.setText("恭喜您，您的初审已通过");

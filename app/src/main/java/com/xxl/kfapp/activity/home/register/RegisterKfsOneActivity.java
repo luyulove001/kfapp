@@ -522,6 +522,7 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
 
 
     private void doInsertBarber(BarberInfoVo vo) {
+        next.setClickable(false);
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.insertBarberApply)
                 .tag(this)
@@ -542,6 +543,7 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        next.setClickable(true);
                         try {
                             JSONObject json = new JSONObject(response.body());
                             String code = json.getString("code");

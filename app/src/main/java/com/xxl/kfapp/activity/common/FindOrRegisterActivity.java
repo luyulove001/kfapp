@@ -15,7 +15,9 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.base.BaseApplication;
 import com.xxl.kfapp.utils.Md5Algorithm;
+import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.TitleBar;
 
@@ -28,6 +30,7 @@ import java.util.regex.Pattern;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import talex.zsw.baselibrary.util.KeyboardWatcher;
+import talex.zsw.baselibrary.view.SweetAlertDialog.SweetAlertDialog;
 
 public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatcher.OnKeyboardToggleListener
         , View.OnClickListener {
@@ -96,8 +99,8 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
                 btnSend.setText("重新获取");
             }
         };
-        mid = "1";
-        sign = System.currentTimeMillis() + "";
+        mid = PreferenceUtils.getPrefString(BaseApplication.getContext(), "uuid", "");
+        sign = System.currentTimeMillis() / 1000 + "";
         signdata = Md5Algorithm.signMD5("mid=" + mid + "&sign=" + sign);
     }
 
@@ -139,7 +142,7 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
         boolean prompt = true;
         boolean checkUpResult = true;
 
-        if (phone.equals("") && prompt) {
+        if (phone.equals("")) {
             Toast.makeText(this, "手机号不能为空", Toast.LENGTH_SHORT).show();
             checkUpResult = false;
             prompt = false;
@@ -182,7 +185,6 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
             if (nickname.equals("") && prompt) {
                 Toast.makeText(this, "昵称不能为空", Toast.LENGTH_SHORT).show();
                 checkUpResult = false;
-                prompt = false;
             }
             doRegister(checkUpResult);
         }
@@ -198,9 +200,9 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
                     .params("phone", phone)
                     .params("password", password)
                     .params("identifyingcode", code)
-                    .params("mid", "1")
-                    .params("sign", "1")
-                    .params("signdata", "56a4fa737b067667f430d3dfbd19fe8a")
+                    .params("mid", mid)
+                    .params("sign", sign)
+                    .params("signdata", signdata)
                     .execute(new StringCallback() {
                         @Override
                         public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -231,6 +233,44 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
         return b;
     }
 
+    private void doLogin() {
+        OkGo.<String>get(Urls.baseUrl + Urls.login)
+                .tag(this)
+                .params("logintype", "1")
+                .params("account", phone)
+                .params("password", password)
+                .params("mid", mid)
+                .params("sign", sign)
+                .params("signdata", signdata)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (code.equals("100000")) {
+                                String token = json.getJSONObject("data").getString("token");
+                                PreferenceUtils.setPrefString(getApplicationContext(), "token", token);
+                                startActivity(new Intent(FindOrRegisterActivity.this, MainActivity.class));
+                                finish();
+                            } else {
+                                sweetDialog(json.getString("msg"), 1, false, new SweetAlertDialog
+                                        .OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                        Intent i = new Intent(FindOrRegisterActivity.this, LoginActivity.class);
+                                        FindOrRegisterActivity.this.startActivity(i);
+                                        FindOrRegisterActivity.this.finish();
+                                    }
+                                });
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
     private void doRegister(boolean checkUpResult) {
         if (checkUpResult) {
             mDialog.show();
@@ -242,9 +282,9 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
                     .params("password", password)
                     .params("identifyingcode", code)
                     .params("nickname", etNickname.getText().toString())
-                    .params("mid", "1")
-                    .params("sign", "1")
-                    .params("signdata", "56a4fa737b067667f430d3dfbd19fe8a")
+                    .params("mid", mid)
+                    .params("sign", sign)
+                    .params("signdata", signdata)
                     .execute(new StringCallback() {
                         @Override
                         public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -254,8 +294,9 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
                                 JSONObject json = new JSONObject(response.body());
                                 String code = json.getString("code");
                                 if (code.equals("100000")) {
-                                    startActivity(new Intent(FindOrRegisterActivity.this, LoginActivity.class));
-                                    finish();
+                                    // startActivity(new Intent(FindOrRegisterActivity.this, LoginActivity.class));
+                                    // finish();
+                                    doLogin();
                                 } else {
                                     sweetDialog(json.getString("msg"), 1, false);
                                 }
@@ -270,7 +311,7 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
     private void doGetIdentifyCode() {
         phone = etPhone.getText().toString().trim();
         boolean b = true, c = true;
-        if (phone.equals("") && b) {
+        if (phone.equals("")) {
             Toast.makeText(this, "手机号不能为空", Toast.LENGTH_SHORT).show();
             c = false;
             b = false;
@@ -278,7 +319,6 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
         if (!checkPhoneNumber(phone) && b) {
             Toast.makeText(this, "手机号格式不正确", Toast.LENGTH_SHORT).show();
             c = false;
-            b = false;
         }
 
         if (c) {
@@ -294,9 +334,9 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
                     .tag(this)
                     .params("phone", phone)
                     .params("use", use)
-                    .params("mid", "1")
-                    .params("sign", "1")
-                    .params("signdata", "56a4fa737b067667f430d3dfbd19fe8a")
+                    .params("mid", mid)
+                    .params("sign", sign)
+                    .params("signdata", signdata)
                     .execute(new StringCallback() {
                         @Override
                         public void onSuccess(com.lzy.okgo.model.Response<String> response) {

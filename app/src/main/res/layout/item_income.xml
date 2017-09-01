@@ -16,6 +16,7 @@
             android:layout_marginEnd="@dimen/x20"
             android:layout_marginStart="@dimen/x20"
             android:padding="@dimen/x5"
+            android:textSize="@dimen/x35"
             android:text="今天"/>
 
         <TextView

@@ -32,6 +32,24 @@ public class ShopGoodListVo implements Serializable {
         private String csid;
         private String pic;
         private int num;
+        private String ydflag;
+        private String gid;
+
+        public String getGid() {
+            return gid;
+        }
+
+        public void setGid(String gid) {
+            this.gid = gid;
+        }
+
+        public String getYdflag() {
+            return ydflag;
+        }
+
+        public void setYdflag(String ydflag) {
+            this.ydflag = ydflag;
+        }
 
         public int getNum() {
             return num;

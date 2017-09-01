@@ -62,7 +62,7 @@ public class ShopDetailActivity extends BaseActivity {
     private TextAdapter txtAdapter;
 
     private String token;
-    String startTime, endTime, shopName, price;
+    private String startTime, endTime, shopName, price, shoppic;
 
     @Override
     protected void initArgs(Intent intent) {
@@ -90,6 +90,7 @@ public class ShopDetailActivity extends BaseActivity {
         intent.putExtra("startTime", startTime);
         intent.putExtra("endTime", endTime);
         intent.putExtra("price", price);
+        intent.putExtra("shoppic", shoppic);
         startActivity(intent);
     }
 
@@ -134,9 +135,12 @@ public class ShopDetailActivity extends BaseActivity {
                             JSONObject json = new JSONObject(response.body());
                             String code = json.getString("code");
                             if (code.equals("100000")) {
-                                Glide.with(ShopDetailActivity.this).load(json.getJSONObject("data").getString
-                                        ("shoppic")).into
-                                        (ivShop);
+                                shoppic = json.getJSONObject("data").getString("shoppic");
+                                if (TextUtils.isEmpty(shoppic)){
+                                    ivShop.setImageResource(R.mipmap.qc_fast_pic);
+                                } else {
+                                    Glide.with(ShopDetailActivity.this).load(shoppic).into(ivShop);
+                                }
                                 shopName = json.getJSONObject("data").getString("shopname");//名称
                                 String shopNo = json.getJSONObject("data").getString("shopno");//编号
                                 tvShopName.setText(shopName + "  No." + shopNo);

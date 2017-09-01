@@ -94,7 +94,8 @@ public class JmkdFiveActivity extends BaseActivity implements View.OnClickListen
         tvNoAddress.setOnClickListener(this);
         tvHaveAddress.setOnClickListener(this);
         tvAddress.setOnClickListener(this);
-        setBtnNext(false, R.drawable.bg_corner_gray, getResources().getColor(R.color.gray));
+        hasAddress = false;
+//        setBtnNext(false, R.drawable.bg_corner_gray, getResources().getColor(R.color.gray));
         initDrawables();
     }
 

@@ -1,9 +1,9 @@
 package com.xxl.kfapp.utils;
 
 public class Urls {
-//    public static final String baseUrl = "http://106.15.61.209:7881/plazz/api";
+    public static final String baseUrl = "http://106.15.61.209:7881/plazz/api";
 //    public static final String baseUrl = "http://192.168.0.111:8090/plazz/api";
-    public static final String baseUrl = "https://qch.qchouses.com/plazz/api";
+//    public static final String baseUrl = "https://qch.qchouses.com/plazz/api";
     public static final String login = "/authapi/login";
     public static final String reg = "/authapi/reg";
     public static final String getIdentifyingCode = "/authapi/getIdentifyingCode";
@@ -70,13 +70,17 @@ public class Urls {
     public static final String getShopCashApplyInfo = "/barberapi/getShopCashApplyInfo";
     public static final String getAppConfig = "/barberapi/getAppConfig";
     public static final String insertShopCashApply = "/barberapi/insertShopCashApply";
+    public static final String insertShopCloseApply = "/barberapi/insertShopCloseApply";
+    public static final String getShopSetInfo = "/barberapi/getShopSetInfo";
 
     public static final String getDictList = "/commapi/getDictList";
     public static final String uploadForApp = "/file/uploadForApp";
 
     public static final String baseH5Url = "https://qch.qchouses.com/h5/article.php";
-    public static final String baseBidUrl = "https://qch.qchouses.com/h5/auction.php";
+//    public static final String baseBidUrl = "https://qch.qchouses.com/h5/auction.php";
+    public static final String baseBidUrl = "http://qchtest.qchouses.com/h5/auction.php";
     public static final String bidDepodit = "?artid=3";
     public static final String kfPromise = "?artid=2";
     public static final String bidH5 = "?shopid=";
+    public static final String device = "https://qch.qchouses.com/h5/device.php?id=";
 }

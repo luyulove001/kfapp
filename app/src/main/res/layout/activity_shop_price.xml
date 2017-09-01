@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_gray"
     android:orientation="vertical"
     tools:context="com.xxl.kfapp.activity.home.boss.ShopTimeSetActivity">
 
@@ -15,160 +16,177 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/x30"
-        android:layout_marginTop="@dimen/x30"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:orientation="vertical">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="@dimen/x1"
-            android:layout_weight="1"
-            android:background="@color/gray_holo_dark"/>
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingEnd="@dimen/x30"
-            android:paddingStart="@dimen/x30"
-            android:textSize="@dimen/x50"
-            android:text="10 元"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="@dimen/x1"
-            android:layout_weight="1"
-            android:background="@color/gray_holo_dark"/>
-    </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/x10"
-        android:text="非促销时段票价"/>
-
-    <Button
-        android:id="@+id/btn_change_normal"
-        android:layout_width="@dimen/x450"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/x30"
-        android:layout_gravity="center"
-        android:background="@drawable/bg_corner_red"
-        android:paddingBottom="15dp"
-        android:paddingTop="15dp"
-        android:text="修改"
-        android:textColor="@drawable/text_white_red"
-        android:textSize="@dimen/middle" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/x30"
-        android:layout_marginTop="@dimen/x30"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:background="@color/white">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="@dimen/x1"
-            android:layout_weight="1"
-            android:background="@color/gray_holo_dark"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingEnd="@dimen/x30"
-            android:paddingStart="@dimen/x30"
-            android:text="促销时段票价"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="@dimen/x1"
-            android:layout_weight="1"
-            android:background="@color/gray_holo_dark"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/white">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
-            android:paddingEnd="@dimen/x20"
-            android:paddingStart="@dimen/x20"
-            android:text="开始时间"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
-            android:layout_weight="1"
+            android:layout_marginTop="@dimen/x30"
+            android:background="@color/white"
             android:gravity="center"
-            android:paddingEnd="@dimen/x20"
-            android:paddingStart="@dimen/x20"
-            android:text="结束时间"/>
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/x30">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/x1"
+                android:layout_weight="1"
+                android:background="@color/gray_holo_dark"/>
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/x30"
+                android:paddingStart="@dimen/x30"
+                android:text="10 元"
+                android:textSize="@dimen/x50"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/x1"
+                android:layout_weight="1"
+                android:background="@color/gray_holo_dark"/>
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
-            android:paddingEnd="@dimen/x20"
-            android:paddingStart="@dimen/x20"
-            android:text="促销价(元)"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/x10"
+            android:text="非促销时段票价"/>
+
+        <Button
+            android:id="@+id/btn_change_normal"
+            android:layout_width="@dimen/x450"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/x20"
+            android:layout_marginTop="@dimen/x30"
+            android:background="@drawable/bg_corner_red"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="修改"
+            android:textColor="@drawable/text_white_red"
+            android:textSize="@dimen/middle"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/white">
+        android:layout_marginTop="@dimen/x20"
+        android:background="@color/white"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_begintime"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
-            android:paddingEnd="@dimen/x20"
-            android:paddingStart="@dimen/x20"
-            android:text="开始时间"/>
-
-        <TextView
-            android:id="@+id/tv_endtime"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
-            android:layout_weight="1"
+            android:background="@color/white"
             android:gravity="center"
-            android:paddingEnd="@dimen/x20"
-            android:paddingStart="@dimen/x20"
-            android:text="结束时间"/>
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/x30">
 
-        <TextView
-            android:id="@+id/tv_price"
-            android:layout_width="wrap_content"
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/x1"
+                android:layout_weight="1"
+                android:background="@color/gray_holo_dark"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/x30"
+                android:paddingStart="@dimen/x30"
+                android:text="促销时段票价"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/x1"
+                android:layout_weight="1"
+                android:background="@color/gray_holo_dark"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x20"
-            android:paddingEnd="@dimen/x20"
-            android:paddingStart="@dimen/x20"
-            android:text="促销价(元)"/>
-    </LinearLayout>
+            android:background="@color/white"
+            android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btn_change_active"
-        android:layout_width="@dimen/x450"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/x30"
-        android:layout_gravity="center"
-        android:background="@drawable/bg_corner_red"
-        android:paddingBottom="15dp"
-        android:paddingTop="15dp"
-        android:text="修改"
-        android:textColor="@drawable/text_white_red"
-        android:textSize="@dimen/middle" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/x20"
+                android:paddingEnd="@dimen/x20"
+                android:paddingStart="@dimen/x20"
+                android:text="开始时间"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/x20"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingEnd="@dimen/x20"
+                android:paddingStart="@dimen/x20"
+                android:text="结束时间"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/x20"
+                android:paddingEnd="@dimen/x20"
+                android:paddingStart="@dimen/x20"
+                android:text="促销价(元)"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_begintime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/x20"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_endtime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/x20"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingEnd="@dimen/x20"
+                android:paddingStart="@dimen/x20"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_active_price"
+                android:layout_width="@dimen/x180"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/x20"
+                android:gravity="end"
+                android:paddingEnd="@dimen/x20"
+                android:paddingStart="@dimen/x20"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_change_active"
+            android:layout_width="@dimen/x450"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/x20"
+            android:layout_marginTop="@dimen/x30"
+            android:background="@drawable/bg_corner_red"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="修改"
+            android:textColor="@drawable/text_white_red"
+            android:textSize="@dimen/middle"/>
+    </LinearLayout>
 </LinearLayout>

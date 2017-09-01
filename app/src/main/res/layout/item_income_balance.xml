@@ -11,7 +11,7 @@
         android:layout_marginStart="@dimen/x20"
         android:layout_marginTop="@dimen/x10"
         android:padding="@dimen/x5"
-        android:textSize="@dimen/x20"
+        android:textSize="@dimen/x30"
         android:text="退票"/>
 
     <TextView

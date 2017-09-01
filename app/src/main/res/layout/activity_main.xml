@@ -20,7 +20,7 @@
 
     </FrameLayout>
 
-    <include layout="@layout/include_line"/>
+    <!--<include layout="@layout/include_line"/>-->
 
     <LinearLayout
         android:id="@+id/mLLBottom"

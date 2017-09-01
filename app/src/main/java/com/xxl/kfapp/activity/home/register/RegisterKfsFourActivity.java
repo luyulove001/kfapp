@@ -18,6 +18,7 @@ import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.adapter.KSNRAdapter;
 import com.xxl.kfapp.adapter.KSTMAdapter;
+import com.xxl.kfapp.adapter.KSTMAnswerAdapter;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.request.TestAnswerVo;
@@ -79,8 +80,10 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
     LinearLayout lytTestCount;
     @Bind(R.id.lyt_submit)
     LinearLayout lytSubmit;
-
-    private Drawable testFail;
+    @Bind(R.id.btn_true_answer)
+    Button btnTrue;
+    @Bind(R.id.tv_point)
+    TextView tvPoint;
 
     private ProgressAdapter progressAdapter;
     private KSTMAdapter kstmAdapter;
@@ -91,6 +94,10 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
     private int currentPosition = 5;
     private int currentQuestion = 0;
     private ApplyStatusVo applyStatusVo;
+
+    private int rightCount = 0;
+    private QuestionListVo questionListVo;
+    private List<KSTMVo> kstmASVoList;
 
     @Override
     protected void initArgs(Intent intent) {
@@ -105,6 +112,8 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
         mTitleBar.setBackOnclickListener(this);
         tvUp.setOnClickListener(this);
         tvNext.setOnClickListener(this);
+        reTry.setOnClickListener(this);
+        btnTrue.setOnClickListener(this);
     }
 
     @Override
@@ -154,6 +163,13 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
                 lytTestAgain.setVisibility(View.GONE);
                 lytTestCount.setVisibility(View.GONE);
                 initViewData();
+                break;
+            case R.id.btn_true_answer:
+                mScrollView.setVisibility(View.VISIBLE);
+                lytSubmit.setVisibility(View.GONE);
+                lytTestAgain.setVisibility(View.VISIBLE);
+                lytTestCount.setVisibility(View.GONE);
+                setTureData();
                 break;
         }
 
@@ -224,9 +240,45 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
             kstmVoList.add(vo);
         }
 
+        kstmASVoList = kstmVoList;
         kstmAdapter.setNewData(kstmVoList);
         ksnrAdapter.setNewData(ksnrVoList);
         setCurrentQuestion(0);
+        closeDialog();
+    }
+
+    private void setTureData() {
+        final KSTMAnswerAdapter kstmAdapter = new KSTMAnswerAdapter(kstmASVoList);
+        kstmAdapter.openLoadAnimation();
+        kstmAdapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter.OnRecyclerViewItemChildClickListener
+                () {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                if (i > currentPosition - 2) {
+                    ksRecyclerView.smoothScrollToPosition(i + 2);
+                    currentPosition = i + 2;
+                } else if (i >= 2 && i < currentPosition - 2) {
+                    ksRecyclerView.smoothScrollToPosition(i - 2);
+                    currentPosition = i - 2;
+                } else {
+                    ksRecyclerView.smoothScrollToPosition(0);
+                }
+                currentQuestion = i;
+                ksnrAdapter.setNewData(kstmASVoList.get(i).getInfo());
+                ksTitle.setText(i + 1 + "." + kstmASVoList.get(i).getQuestion());
+            }
+        });
+        ksnrAdapter.setNewData(kstmASVoList.get(0).getInfo());
+        setKstmAdapter(kstmAdapter);
+    }
+
+    private void setKstmAdapter(KSTMAnswerAdapter kstmAdapter) {
+        ksRecyclerView.setAdapter(kstmAdapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        layoutManager.setSmoothScrollbarEnabled(true);
+        layoutManager.setAutoMeasureEnabled(true);
+        ksRecyclerView.setLayoutManager(layoutManager);
     }
 
     /**
@@ -290,8 +342,8 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
                 kstmVoList.get(currentQuestion).setWc(true);
                 kstmAdapter.notifyDataSetChanged();
                 ksnrAdapter.notifyDataSetChanged();
-                //                kstmAdapter.setNewData(kstmVoList);
-                //                ksnrAdapter.setNewData(ksnrVoList);
+                //kstmAdapter.setNewData(kstmVoList);
+                //ksnrAdapter.setNewData(ksnrVoList);
             }
         });
         tmRecyclerView.setAdapter(ksnrAdapter);
@@ -346,7 +398,7 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
                             if (!code.equals("100000")) {
                                 sweetDialog(json.getString("msg"), 1, false);
                             } else {
-                                QuestionListVo questionListVo = mGson.fromJson(json.getString("data"), QuestionListVo
+                                questionListVo = mGson.fromJson(json.getString("data"), QuestionListVo
                                         .class);
                                 setKSData(questionListVo);
                             }
@@ -358,6 +410,7 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
     }
 
     private void doGetBarberApplyStatus() {
+        showDialog();
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.getBarberApplyStatus)
                 .tag(this)
@@ -371,9 +424,9 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
                             if (!code.equals("100000")) {
                                 sweetDialog(json.getString("msg"), 1, false);
                             } else {
-                                ToastShow(response.body());
                                 applyStatusVo = mGson.fromJson(json.getString("data"), ApplyStatusVo.class);
                                 int count = Integer.valueOf(applyStatusVo.getTestcnt());
+                                tvTotal.setText("共10题，您有" + count + "次考试机会");
                                 if (count <= 0) {
                                     refuse();
                                 } else {
@@ -421,10 +474,24 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
                                         lytSubmit.setVisibility(View.GONE);
                                         lytTestAgain.setVisibility(View.VISIBLE);
                                         lytTestCount.setVisibility(View.VISIBLE);
+                                        for (int i = 0; i < questionListVo.getqList().size(); i++) {
+                                            for (int j = 0; j < kstmVoList.get(i).getInfo().size(); j++) {
+                                                if (kstmVoList.get(i).getInfo().get(j).getId()
+                                                        .equals(questionListVo.getqList().get(i).getAnswer())) {
+                                                    kstmVoList.get(i).getInfo().get(j).setAnswer(true);
+                                                    if (kstmVoList.get(i).getInfo().get(j).isXz()) {
+                                                        kstmASVoList.get(i).setAnswer(true);
+                                                        rightCount += 1;
+                                                    }
+                                                }
+                                            }
+                                        }
                                         int count = Integer.valueOf(json.getString("testcnt"));
                                         if (count > 0) {
                                             ToastShow("很抱歉，您尚未通过考试");
-                                            tvTestCount.setText("您还有" + count + "次考试机会");
+                                            tvTestCount.setText("您还有" + count + "次考试机会, 希望顺利通过");
+                                            tvPoint.setText("本次您考了：" + (rightCount * 10) + "分");
+                                            rightCount = 0;
                                         } else {
                                             refuse();
                                         }
@@ -440,12 +507,13 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
 
     @SuppressWarnings("deprecation")
     private void refuse() {
+        closeDialog();
         mScrollView.setVisibility(View.GONE);
         lytSubmit.setVisibility(View.GONE);
         lytTestAgain.setVisibility(View.VISIBLE);
         lytTestCount.setVisibility(View.VISIBLE);
-        tvTestCount.setText("很抱歉，您不是我们所需要的人才");
-        testFail = getResources().getDrawable(R.mipmap.sh_sb);
+        tvTestCount.setText("很抱歉，您不是我们所需要类型的人才");
+        Drawable testFail = getResources().getDrawable(R.mipmap.sh_sb);
         testFail.setBounds(0, 0, testFail.getMinimumWidth(), testFail.getMinimumHeight());
         tvTestCount.setCompoundDrawables(testFail, null, null, null);
         lytTestAgain.setVisibility(View.GONE);

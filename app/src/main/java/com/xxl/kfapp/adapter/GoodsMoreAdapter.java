@@ -30,6 +30,9 @@ public class GoodsMoreAdapter extends BaseQuickAdapter<ShopGoodListVo.GoodsInfo>
         baseViewHolder.getView(R.id.line).setVisibility(View.GONE);
         ImageView ivGoods = baseViewHolder.getView(R.id.iv_goods_pic);
         Glide.with(BaseApplication.getContext()).load(goodsInfo.getPic()).into(ivGoods);
+//        if ("1".equals(goodsInfo.getYdflag()) && goodsInfo.getNum() > 1) {
+//            baseViewHolder.setText(R.id.tv_goods_num, goodsInfo.getNum() - 1 + "");
+//        }
     }
 
 }

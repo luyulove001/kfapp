@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/white"
+              android:background="@color/bg_gray"
               android:orientation="vertical">
 
     <LinearLayout
@@ -69,7 +69,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/x10"
-                        android:text="100"
                         android:textColor="@color/white"/>
 
                     <TextView
@@ -99,7 +98,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/x10"
-                        android:text="100"
                         android:textColor="@color/white"/>
 
                     <TextView
@@ -129,7 +127,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/x10"
-                        android:text="100"
                         android:textColor="@color/white"/>
 
                     <TextView
@@ -142,15 +139,11 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x20"
-        android:background="@color/bg_gray"/>
-
     <LinearLayout
         android:id="@+id/lyt_apply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x20"
         android:background="@color/warn"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -180,14 +173,10 @@
             android:src="@mipmap/qc_close_w"/>
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x20"
-        android:background="@color/bg_gray"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/y100"
+        android:layout_marginTop="@dimen/x20"
         android:background="@color/white"
         android:orientation="horizontal">
 
@@ -201,7 +190,7 @@
             android:drawableStart="@mipmap/ic_shop"
             android:gravity="center"
             android:padding="@dimen/x10"
-            android:text="我的店铺：5"/>
+            android:text="我的店铺："/>
 
         <View
             android:layout_width="@dimen/x2"
@@ -215,7 +204,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="@dimen/x10"
-            android:text="今日正常：5"/>
+            android:text="今日正常："/>
 
         <View
             android:layout_width="@dimen/x2"
@@ -229,17 +218,14 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="@dimen/x10"
-            android:text="今日离线：5"/>
+            android:text="今日离线："/>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x20"
-        android:background="@color/bg_gray"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/x20"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -263,7 +249,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x10"
                 android:padding="@dimen/x10"
-                android:text="理发师：2"/>
+                android:text="理发师："/>
         </LinearLayout>
 
         <View
@@ -292,7 +278,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x10"
                 android:padding="@dimen/x10"
-                android:text="今日上班：2"/>
+                android:text="今日上班："/>
         </LinearLayout>
 
         <View
@@ -317,7 +303,7 @@
                 android:layout_marginTop="@dimen/x10"
                 android:gravity="center"
                 android:padding="@dimen/x10"
-                android:text="迟到：2"/>
+                android:text="迟到："/>
 
             <TextView
                 android:id="@+id/tv_totalworkztcnt"
@@ -326,7 +312,7 @@
                 android:layout_marginTop="@dimen/x10"
                 android:gravity="center"
                 android:padding="@dimen/x10"
-                android:text="早退：2"/>
+                android:text="早退："/>
         </LinearLayout>
     </LinearLayout>
 
@@ -338,6 +324,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -361,7 +348,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x20"
                 android:padding="@dimen/x10"
-                android:text="累计理发：100"/>
+                android:text="累计理发："/>
         </LinearLayout>
 
         <View
@@ -390,12 +377,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x20"
                 android:padding="@dimen/x10"
-                android:text="今日理发：100"/>
+                android:text="今日理发："/>
         </LinearLayout>
     </LinearLayout>
 
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="@dimen/x2"
-        android:background="@color/line2"/>
+        android:background="@color/line2"/>-->
 </LinearLayout>

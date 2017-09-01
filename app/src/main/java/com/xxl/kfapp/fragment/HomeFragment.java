@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.baidu.mobstat.StatService;
@@ -45,6 +46,7 @@ import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import susion.com.mediaseekbar.MediaSeekBar;
 import talex.zsw.baselibrary.util.klog.KLog;
 import talex.zsw.baselibrary.widget.CircleImageView;
 
@@ -56,7 +58,7 @@ import talex.zsw.baselibrary.widget.CircleImageView;
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
     @Bind(R.id.btn_begin)
-    ImageView btnBegin;
+    Button btnBegin;
     @Bind(R.id.mImage)
     CircleImageView mImage;
     @Bind(R.id.textTitle)
@@ -75,6 +77,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     Button btnGetJob;
     @Bind(R.id.tv_nickname)
     TextView nickname;
+    @Bind(R.id.msb)
+    MediaSeekBar seekBar;
+    @Bind(R.id.tv_tips)
+    TextView tvTips;
+    @Bind(R.id.tv_congratulation)
+    TextView tvCongratulation;
+    @Bind(R.id.ll_seekbar)
+    RelativeLayout llSeekBar;
 
     private ApplyStatusVo barberStatusVo;
     private ShopApplyStatusVo shopStatusVo;
@@ -96,6 +106,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         btnCreateShop.setOnClickListener(this);
         btnGetJob.setOnClickListener(this);
         mImage.setOnClickListener(this);
+        seekBar.setCanOperator(false);
+        seekBar.setMaxProgress(100);
     }
 
     @SuppressWarnings("deprecation")
@@ -111,7 +123,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         initDrawables();
         gson = new Gson();
         token = PreferenceUtils.getPrefString(getActivity().getApplicationContext(), "token", "1234567890");
-        doGetBarberGoodPic();
     }
 
     @Override
@@ -294,25 +305,46 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                             } else {
                                 barberStatusVo = gson.fromJson(json.getString("data"), ApplyStatusVo.class);
                                 applyStatus = barberStatusVo.getApplysts();
+                                int i = 0;
+                                tvTips.setVisibility(View.GONE);
                                 switch (barberStatusVo.getApplysts()) {
-                                    //todo 设置进度显示
                                     case "10":
+//                                        i = (int) (1 / 5.0 * 100);
+                                        doGetBarberGoodPic();
+                                        btnBegin.setText("我要成为快发师");
+                                        btnBegin.setBackgroundResource(R.mipmap.qc_right_shine);
                                         break;
                                     case "11":
+                                        i = (int) (2 / 5.0 * 100);
+                                        showBarberTips();
                                         break;
                                     case "12":
+                                        i = (int) (3 / 5.0 * 100);
+                                        showBarberTips();
                                         break;
                                     case "13":
+                                        i = (int) (4 / 5.0 * 100);
+                                        showBarberTips();
                                         break;
                                     case "14":
+                                        i = (int) (5 / 5.0 * 100);
+                                        showBarberTips();
                                         break;
                                 }
+                                seekBar.setCurrentProgress(i);
+                                seekBar.setHasBufferProgress(100);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 });
+    }
+
+    private void showBarberTips() {
+        tvTips.setText("您还差一点点就可成为快发师");
+        tvTips.setVisibility(View.VISIBLE);
+        llSeekBar.setVisibility(View.VISIBLE);
     }
 
     private void doGetShopApplyStatus() {
@@ -336,29 +368,51 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                                 shopid = shopStatusVo.getShopid();
                                 prepaychecksts = shopStatusVo.getPrepaychecksts();
                                 devicechecksts = shopStatusVo.getDevicechecksts();
+                                int i = 0;
                                 switch (shopStatusVo.getApplysts()) {
-                                    //todo 设置进度显示
                                     case "20":
+//                                        i = (int) (1 / 7.0 * 100);
                                         break;
                                     case "21":
+                                        i = (int) (2 / 7.0 * 100);
+                                        showShopTips();
                                         break;
                                     case "22":
+                                        i = (int) (3 / 7.0 * 100);
+                                        showShopTips();
                                         break;
                                     case "23":
+                                        i = (int) (4 / 7.0 * 100);
+                                        showShopTips();
                                         break;
                                     case "24":
+                                        i = (int) (5 / 7.0 * 100);
+                                        showShopTips();
                                         break;
                                     case "25":
+                                        i = (int) (6 / 7.0 * 100);
+                                        showShopTips();
                                         break;
                                     case "26":
+                                        i = (int) (7 / 7.0 * 100);
+                                        showShopTips();
                                         break;
                                 }
+                                seekBar.setCurrentProgress(i);
+                                seekBar.setHasBufferProgress(100);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 });
+    }
+
+    private void showShopTips() {
+        tvCongratulation.setVisibility(View.GONE);
+        btnCreateShop.setText("继续操作");
+        llSeekBar.setVisibility(View.VISIBLE);
+        tvTips.setVisibility(View.VISIBLE);
     }
 
     private void doGetBarberGoodPic() {

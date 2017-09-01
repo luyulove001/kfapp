@@ -78,7 +78,8 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:background="@color/white"
-                    android:text="我要求职"/>
+                    android:text="我要求职"
+                    android:visibility="gone"/>
 
 
             </LinearLayout>

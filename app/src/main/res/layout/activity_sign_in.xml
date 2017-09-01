@@ -195,8 +195,8 @@
                     android:layout_width="@dimen/x180"
                     android:layout_height="@dimen/y180"
                     android:background="@drawable/bg_cecle_red"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_sign_in"
@@ -206,14 +206,16 @@
 
                     <TextView
                         android:id="@+id/tv_in_state"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="正常"
+                        android:layout_width="@dimen/x120"
+                        android:layout_height="@dimen/x40"
                         android:layout_marginTop="@dimen/x5"
-                        android:paddingStart="@dimen/x25"
+                        android:background="@drawable/bg_shape_corner_blue"
+                        android:gravity="center"
                         android:paddingEnd="@dimen/x25"
+                        android:paddingStart="@dimen/x25"
+                        android:text="正常"
                         android:textColor="@color/white"
-                        android:background="@drawable/bg_shape_corner_blue"/>
+                        android:textSize="@dimen/x25"/>
                 </LinearLayout>
 
                 <TextView
@@ -235,8 +237,8 @@
                     android:layout_width="@dimen/x180"
                     android:layout_height="@dimen/y180"
                     android:background="@drawable/bg_cecle_red"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_sign_out"
@@ -246,15 +248,18 @@
 
                     <TextView
                         android:id="@+id/tv_out_state"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="迟到"
+                        android:layout_width="@dimen/x120"
+                        android:layout_height="@dimen/x40"
                         android:layout_marginTop="@dimen/x5"
-                        android:paddingStart="@dimen/x25"
+                        android:background="@drawable/bg_shape_corner_red"
+                        android:gravity="center"
                         android:paddingEnd="@dimen/x25"
+                        android:paddingStart="@dimen/x25"
+                        android:text="迟到"
                         android:textColor="@color/white"
-                        android:background="@drawable/bg_shape_corner_red"/>
+                        android:textSize="@dimen/x25"/>
                 </LinearLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

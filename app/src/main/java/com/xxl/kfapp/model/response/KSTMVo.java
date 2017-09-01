@@ -13,6 +13,14 @@ public class KSTMVo implements Serializable {
     private int num;
     private boolean wc = false;
 
+    private boolean answer = false;
+    public boolean isAnswer() {
+        return answer;
+    }
+    public void setAnswer(boolean answer) {
+        this.answer = answer;
+    }
+
     private String title;
     private List<KSNRVo> info;
     private String qid;

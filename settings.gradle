@@ -1,1 +1,1 @@
-include ':app', ':baselibrary', ':mylibrary'
+include ':app', ':baselibrary', ':mylibrary', ':mediaseekbar'

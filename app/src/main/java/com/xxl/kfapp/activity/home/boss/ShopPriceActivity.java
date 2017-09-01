@@ -3,7 +3,11 @@ package com.xxl.kfapp.activity.home.boss;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.TextUtils;
+import android.text.method.NumberKeyListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +18,8 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.model.response.ShopSetVo;
+import com.xxl.kfapp.model.response.SignListVo;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.TimePickerDialog;
 import com.xxl.kfapp.utils.Urls;
@@ -41,19 +47,22 @@ public class ShopPriceActivity extends BaseActivity {
     TitleBar mTitleBar;
     @Bind(R.id.tv_price)
     TextView tvPrice;
+    @Bind(R.id.tv_active_price)
+    TextView tvActivePrice;
     AlertDialog.Builder builder;
     AlertDialog dialog;
     private TimePickerDialog mBeginTimePickerDialog, mEndTimePickerDialog;//开始日期弹出框，结束日期弹出框
     String token;
-    String price, shopid;//价格
+    String shopid;//价格
     String beginDate, endDate;//开始日期，结束日期
     EditText etvPrice;//非促销时段价格
     EditText etvUpdatePrice;//促销时段价格
+    private ShopSetVo shopSetVo;
 
     @Override
     protected void initArgs(Intent intent) {
-        price = intent.getStringExtra("price");
-        shopid = intent.getStringExtra("shopid");
+        shopSetVo = (ShopSetVo) intent.getSerializableExtra("shopSetVo");
+        shopid = shopSetVo.getShopid();
     }
 
     @Override
@@ -68,6 +77,47 @@ public class ShopPriceActivity extends BaseActivity {
                 showChangePriceDialog();
             }
         });
+        initTimePicker();
+        btnChangeActive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBeginTimePickerDialog.showDatePickerDialog();
+            }
+        });
+        if (shopSetVo != null) {
+            if (!TextUtils.isEmpty(shopSetVo.getChecksts()) && "1".equals(shopSetVo.getChecksts())) {
+                tvPrice.setText(shopSetVo.getCheckprice() + "元");
+                btnChangeNormal.setText("审核中");
+                btnChangeNormal.setTextColor(Color.parseColor("#666666"));
+                btnChangeNormal.setBackgroundResource(R.drawable.bg_corner_gray);
+                btnChangeNormal.setClickable(false);
+            } else {
+                tvPrice.setText(shopSetVo.getPrice() + "元");
+            }
+            if (!TextUtils.isEmpty(shopSetVo.getActprice())) {
+                tvBeginTime.setVisibility(View.VISIBLE);
+                tvEndTime.setVisibility(View.VISIBLE);
+                tvActivePrice.setVisibility(View.VISIBLE);
+            } else {
+                btnChangeActive.setText("添加活动");
+            }
+            if (!TextUtils.isEmpty(shopSetVo.getActchecksts()) && "1".equals(shopSetVo.getActchecksts())) {
+                tvActivePrice.setText(shopSetVo.getActcheckprice() + "元");
+                btnChangeActive.setText("审核中");
+                btnChangeActive.setTextColor(Color.parseColor("#666666"));
+                btnChangeActive.setBackgroundResource(R.drawable.bg_corner_gray);
+                btnChangeActive.setClickable(false);
+                tvBeginTime.setText(shopSetVo.getStartdate());
+                tvEndTime.setText(shopSetVo.getEnddate());
+            } else {
+                tvActivePrice.setText(shopSetVo.getActcheckprice() + "元");
+                tvBeginTime.setText(shopSetVo.getStartdate());
+                tvEndTime.setText(shopSetVo.getEnddate());
+            }
+        }
+    }
+
+    private void initTimePicker() {
         mBeginTimePickerDialog = new TimePickerDialog(this);
         mBeginTimePickerDialog.setTimePickerDialogInterface(new TimePickerDialog.TimePickerDialogInterface() {
             @Override
@@ -103,20 +153,11 @@ public class ShopPriceActivity extends BaseActivity {
 
             }
         });
-
-        btnChangeActive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBeginTimePickerDialog.showDatePickerDialog();
-            }
-        });
-
     }
 
     @Override
     protected void initData() {
         token = PreferenceUtils.getPrefString(getApplicationContext(), "token", "1234567890");
-        token = "1234567890";
     }
 
     @Override
@@ -147,7 +188,6 @@ public class ShopPriceActivity extends BaseActivity {
                             JSONObject json = new JSONObject(response.body());
                             String code = json.getString("code");
                             if (code.equals("100000")) {
-                                ToastShow("修改成功");
                                 finish();
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
@@ -163,14 +203,13 @@ public class ShopPriceActivity extends BaseActivity {
      * 修改促销价格和日期接口
      */
     private void changePriceAndDate() {
-
         OkGo.<String>get(Urls.baseUrl + Urls.updateShopCxPrice)
                 .tag(this)
                 .params("token", token)
-                .params("shopid", "6")
+                .params("shopid", shopid)
                 .params("startdate", tvBeginTime.getText().toString())
                 .params("enddate", tvEndTime.getText().toString())
-                .params("price", tvPrice.getText().toString())
+                .params("price", tvActivePrice.getText().toString())
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -178,7 +217,6 @@ public class ShopPriceActivity extends BaseActivity {
                             JSONObject json = new JSONObject(response.body());
                             String code = json.getString("code");
                             if (code.equals("100000")) {
-                                ToastShow("修改成功");
                                 finish();
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
@@ -238,6 +276,19 @@ public class ShopPriceActivity extends BaseActivity {
         builder.setTitle("票价设置");
         View myLayout = View.inflate(this, R.layout.dlg_update_price, null);
         etvUpdatePrice = (EditText) myLayout.findViewById(R.id.etv_update_price);
+        etvUpdatePrice.setKeyListener(new NumberKeyListener() {
+            @Override
+            protected char[] getAcceptedChars() {
+                return new char[] { '1', '2', '3', '4', '5', '6', '7', '8',
+                        '9', '0', '.' };
+            }
+
+            @Override
+            public int getInputType() {
+                return InputType.TYPE_CLASS_PHONE;
+            }
+        });
+        etvUpdatePrice.setTextColor(Color.parseColor("#666666"));
         builder.setView(myLayout);
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
@@ -259,7 +310,7 @@ public class ShopPriceActivity extends BaseActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    tvPrice.setText(etvUpdatePrice.getText().toString());
+                    tvActivePrice.setText(etvUpdatePrice.getText().toString());
                     showConfirmTimeOrPriceDialog();
                 }
 

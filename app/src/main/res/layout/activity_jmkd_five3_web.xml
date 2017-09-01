@@ -105,7 +105,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:paddingBottom="10dp"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
@@ -122,15 +122,30 @@
 
         <Button
             android:id="@+id/next"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:layout_weight="1"
             android:background="@drawable/bg_corner_red"
             android:paddingBottom="15dp"
             android:paddingTop="15dp"
             android:text="提交"
             android:textColor="@drawable/text_white_red"
             android:textSize="@dimen/middle"/>
+
+        <Button
+            android:id="@+id/btn_refresh"
+            android:layout_width="@dimen/x120"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/x30"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_btn_red"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="刷新"
+            android:textColor="@color/white"
+            android:textSize="@dimen/middle"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <include layout="@layout/include_line2"/>

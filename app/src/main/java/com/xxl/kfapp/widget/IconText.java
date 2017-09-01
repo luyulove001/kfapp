@@ -27,6 +27,7 @@ import talex.zsw.baselibrary.view.Animation.ViewAnimator;
 public class IconText extends RelativeLayout {
     private TextView mTextView;
     private ImageView mImageView;
+    private View mFlag;
     private RelativeLayout mRelativeLayout;
 
     public static final int DEFAULT_TEXT_SIZE = 9;
@@ -62,6 +63,7 @@ public class IconText extends RelativeLayout {
 
         mTextView = (TextView) rootView.findViewById(R.id.mTextView);
         mImageView = (ImageView) rootView.findViewById(R.id.mImageView);
+        mFlag = rootView.findViewById(R.id.mFlag);
         mRelativeLayout = (RelativeLayout) rootView.findViewById(R.id.mRelativeLayout);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.IconText);
@@ -79,22 +81,22 @@ public class IconText extends RelativeLayout {
         unselectedColor = typedArray.getColor(R.styleable.IconText_IT_unselected_color,
                 DEFAULT_UNSELECTED_COLOR);
 
-//		padding = typedArray.getDimensionPixelSize(R.styleable.IconText_IT_padding, 10);
-//		mIconHeight = typedArray.getDimensionPixelSize(R.styleable.IconText_IT_icon_height, 80);
+        //		padding = typedArray.getDimensionPixelSize(R.styleable.IconText_IT_padding, 10);
+        //		mIconHeight = typedArray.getDimensionPixelSize(R.styleable.IconText_IT_icon_height, 80);
         selectedIcon = typedArray.getDrawable(R.styleable.IconText_IT_selected_icon);
         unselectedIcon = typedArray.getDrawable(R.styleable.IconText_IT_unselected_icon);
 
         mTextView.setText(text);
         if (textSize != 0) {
-//			mTextView.setTextSize(textSize);
+            //			mTextView.setTextSize(textSize);
         }
-//		mRelativeLayout.setPadding(padding, padding, padding, padding);
+        //		mRelativeLayout.setPadding(padding, padding, padding, padding);
 
         setSelected(selected);
 
-//		LayoutParams params = (LayoutParams) mImageView.getLayoutParams();
-//		params.height=mIconHeight;
-//		mImageView.setLayoutParams(params);
+        //		LayoutParams params = (LayoutParams) mImageView.getLayoutParams();
+        //		params.height=mIconHeight;
+        //		mImageView.setLayoutParams(params);
 
 
         typedArray.recycle();
@@ -113,7 +115,7 @@ public class IconText extends RelativeLayout {
     }
 
     public void setPadding(int padding) {
-//		mImageView.setPadding(0, 0, 0, padding);
+        //		mImageView.setPadding(0, 0, 0, padding);
     }
 
     public void setIcon(int res) {
@@ -127,6 +129,11 @@ public class IconText extends RelativeLayout {
     public void toggle(boolean doAnim) {
         boolean flag = !selected;
         setSelected(flag);
+    }
+
+    public void setFlag(boolean selected) {
+        if (selected) mFlag.setVisibility(VISIBLE);
+        else mFlag.setVisibility(GONE);
     }
 
     public void setSelected(boolean selected) {

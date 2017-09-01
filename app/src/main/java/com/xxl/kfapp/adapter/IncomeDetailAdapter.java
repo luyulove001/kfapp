@@ -27,12 +27,12 @@ public class IncomeDetailAdapter extends BaseQuickAdapter<IncomeVo.Income> {
         TextView tvRmb = baseViewHolder.getView(R.id.tv_rmb);
         if ("1".equals(vo.getIncometype())) {
             baseViewHolder.setText(R.id.tv_rmb, "+" + vo.getIncome());
-            tvRmb.setTextColor(Color.argb(255, 177, 79, 69));
+            tvRmb.setTextColor(Color.argb(255, 59, 192, 195));
             baseViewHolder.setText(R.id.tv_type, "购票");
         } else if ("2".equals(vo.getIncometype())) {
             baseViewHolder.setText(R.id.tv_rmb, "-" + vo.getIncome());
             baseViewHolder.setText(R.id.tv_type, "退票");
-            tvRmb.setTextColor(Color.argb(255, 59, 192, 195));
+            tvRmb.setTextColor(Color.argb(255, 177, 79, 69));
         } else if ("3".equals(vo.getIncometype())) {
             baseViewHolder.setText(R.id.tv_rmb, "-" + vo.getIncome());
             baseViewHolder.setText(R.id.tv_type, "提现");

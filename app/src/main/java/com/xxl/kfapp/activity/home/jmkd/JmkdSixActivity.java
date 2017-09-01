@@ -23,6 +23,7 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
 import com.baidu.mobstat.StatService;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -30,6 +31,7 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.xxl.kfapp.R;
+import com.xxl.kfapp.activity.common.WebViewActivity;
 import com.xxl.kfapp.activity.person.ModifyAddrActivity;
 import com.xxl.kfapp.adapter.GoodsMoreAdapter;
 import com.xxl.kfapp.adapter.GoodsOneAdapter;
@@ -95,7 +97,7 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
     private List<ProgressVo> progressVos;
     private GoodsOneAdapter oneAdapter;
     private GoodsMoreAdapter moreAdapter;
-    private boolean[] isSelects = new boolean[]{false, false};
+//    private boolean[] isSelects = new boolean[]{false, false};
     private int goodsNum = 1, amount = 0;
     private ShopGoodListVo vo;
     //支付相关
@@ -197,7 +199,7 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.iv_less:
                 goodsNum -= 1;
-                if (goodsNum < 0) goodsNum = 0;
+                if (goodsNum < 1) goodsNum = 1;
                 tvGoodsNumber.setText(goodsNum + "");
                 if (vo != null) {
                     vo = setMoreListNum(vo, goodsNum);
@@ -295,32 +297,34 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
     private void initGoodsList() {
         oneAdapter = new GoodsOneAdapter(vo.getOnelst());
         oneAdapter.openLoadAnimation();
-        //        oneAdapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter
-        // .OnRecyclerViewItemChildClickListener() {
-        //
-        //            @Override
-        //            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-        //                //Intent intent = getIntent().setClass(JmkdFive2Activity.this, JmkdFive3WebActivity.class);
-        //                //intent.putExtra("shopid", vo.getShoplst().get(i).getShopid());
-        //                //startActivity(intent);
-        //                ImageView ivSelect = (ImageView) view.findViewById(R.id.iv_goods_select);
-        //                if (isSelects[i]) {
-        //                    ivSelect.setImageResource(R.mipmap.qq_grey);
-        //                    isSelects[i] = false;
-        //                    setGoodsAmount();
-        //                } else {
-        //                    ivSelect.setImageResource(R.mipmap.qq_red);
-        //                    isSelects[i] = true;
-        //                    setGoodsAmount();
-        //                }
-        //            }
-        //        });
+        oneAdapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter
+                .OnRecyclerViewItemChildClickListener() {
+
+            @Override
+            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                Intent intent = getIntent().setClass(JmkdSixActivity.this, WebViewActivity.class);
+                intent.putExtra("url", Urls.device + vo.getOnelst().get(i).getGid());
+                intent.putExtra("title", "商品详情");
+                startActivity(intent);
+            }
+        });
 
         rvGoodsOne.setAdapter(oneAdapter);
         rvGoodsOne.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler_10px));
 
         moreAdapter = new GoodsMoreAdapter(vo.getMorelst());
         moreAdapter.openLoadAnimation();
+        moreAdapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter
+                .OnRecyclerViewItemChildClickListener() {
+
+            @Override
+            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                Intent intent = getIntent().setClass(JmkdSixActivity.this, WebViewActivity.class);
+                intent.putExtra("url", Urls.device + vo.getMorelst().get(i).getGid());
+                intent.putExtra("title", "商品详情");
+                startActivity(intent);
+            }
+        });
         rvGoodsMore.setAdapter(moreAdapter);
         rvGoodsMore.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler));
 
@@ -412,6 +416,7 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
                 .params("paytype", paytype)
                 .params("ordertype", "4")
                 .params("goods", getGoodsList())
+                .params("testflag", "1")
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -502,7 +507,11 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
 
     private ShopGoodListVo setMoreListNum(ShopGoodListVo vo, int num) {
         for (int i = 0; i < vo.getMorelst().size(); i++) {
-            vo.getMorelst().get(i).setNum(num);
+            if ("1".equals(vo.getMorelst().get(i).getYdflag()) && num > 1) {
+                vo.getMorelst().get(i).setNum(num - 1);
+            } else {
+                vo.getMorelst().get(i).setNum(num);
+            }
         }
         return vo;
     }

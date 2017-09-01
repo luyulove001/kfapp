@@ -164,6 +164,8 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
                             if (code.equals("100000")) {
                                 CashApplyVo vo = mGson.fromJson(json.getString("data"), CashApplyVo.class);
                                 tvBalance.setText(vo.getBalance());
+                                if (TextUtils.isEmpty(vo.getTotal()) || "null".equals(vo.getTotal()))
+                                    vo.setTotal("0");
                                 tvTotal.setText("¥" + vo.getTotal());
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
@@ -214,7 +216,6 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
                 } else if (input > Integer.parseInt(appConfigVo.getMaxcashamount())) {
                     ToastShow("最大提现" + appConfigVo.getMaxcashamount() + "元");
                 } else {
-                    ToastShow("记得做提现啊/(ㄒoㄒ)/~~    insertShopCashApply");
                     insertShopCashApply(num.getText().toString());
                 }
             }
@@ -246,8 +247,9 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
                             String code = json.getString("code");
                             if (code.equals("100000")) {
                                 ToastShow(json.getString("msg"));
-                                getShopCashApplyInfo();
-                                getShopCashApplyRecord();
+                                // getShopCashApplyInfo();
+                                // getShopCashApplyRecord();
+                                finish();
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
                             }

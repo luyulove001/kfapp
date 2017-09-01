@@ -83,7 +83,7 @@ public class AddBarberActivity extends BaseActivity {
             ToastShow("员工手机号不能为空");
             isEmpty = true;
         }
-        if (!isEmpty && FindOrRegisterActivity.checkPhoneNumber(etPhone.getText().toString())) {
+        if (!isEmpty && !FindOrRegisterActivity.checkPhoneNumber(etPhone.getText().toString())) {
             ToastShow("手机号码格式不正确");
             isEmpty = true;
         }

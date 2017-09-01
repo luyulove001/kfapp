@@ -272,10 +272,10 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
                                 AppConfigVo vo = (AppConfigVo) mACache.getAsObject("appConfig");
                                 tvCompanyname.setText(vo.getTranscompanyname());
                                 tvCompanyaccount.setText(vo.getTransbankinfo());
-                                Calendar c = Calendar.getInstance();
-                                c.add(Calendar.DAY_OF_MONTH, Integer.valueOf(vo.getTranscheckdays()));
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
-                                tvEndtime.setText(sdf.format(c.getTime()));
+//                                Calendar c = Calendar.getInstance();
+//                                c.add(Calendar.DAY_OF_MONTH, Integer.valueOf(vo.getTranscheckdays()));
+//                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+                                tvEndtime.setText(feeListVo.getEnddata());
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

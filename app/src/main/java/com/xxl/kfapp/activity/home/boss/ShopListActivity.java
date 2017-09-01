@@ -59,6 +59,7 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
 
     private ShopApplyStatusVo shopStatusVo;
     private String applyStatus, shopid, prepaychecksts;
+    private String mProvince = "浙江", mCity = "杭州", mCounty = "滨江";
 
     @Override
     protected void initArgs(Intent intent) {
@@ -74,7 +75,7 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
         mTitleBar.setRightIV(R.mipmap.qc_fast_add_write, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ("26".equals(shopStatusVo.getApplysts())) {
+                if ("26".equals(shopStatusVo.getApplysts()) || "20".equals(shopStatusVo.getApplysts())) {
                     startActivity(new Intent(ShopListActivity.this, JmkdOneActivity.class));
                 } else {
                     sweetDialogCustom(0, "提示", "您还有未完成的门店申请流程", "去完成", "取消",
@@ -134,16 +135,20 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
 
             @Override
             public void onAddressPicked(Province province, City city, County county) {
+                mProvince = province.getAreaName();
+                mCity = city.getAreaName();
                 if (county == null) {
                     ToastShow(province.getAreaName() + city.getAreaName());
                     doGetBossShopList(province.getAreaId(), city.getAreaId(), "");
+                    mCounty = "";
                 } else {
                     ToastShow(province.getAreaName() + city.getAreaName() + county.getAreaName());
                     doGetBossShopList(province.getAreaId(), city.getAreaId(), county.getAreaId());
+                    mCounty = county.getAreaName();
                 }
             }
         });
-        task.execute("浙江", "杭州", "滨江");
+        task.execute(mProvince, mCity, mCounty);
     }
 
     private void doGetBossShopList(String province, String city, String area) {

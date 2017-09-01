@@ -86,6 +86,8 @@ public class JmkdSixDeviceActivity extends BaseActivity implements View.OnClickL
     LinearLayout lytReasonShsb;
     @Bind(R.id.ll_checking)
     LinearLayout llChecking;
+    @Bind(R.id.ll_check)
+    LinearLayout llCheck;
 
     private ProgressAdapter progressAdapter;
     private String imgWatch, gusertel, gusername, guseraddr;
@@ -184,7 +186,7 @@ public class JmkdSixDeviceActivity extends BaseActivity implements View.OnClickL
         layoutManager.setAutoMeasureEnabled(true);
         pRecyclerView.setLayoutManager(layoutManager);
         setData();
-        pRecyclerView.smoothScrollToPosition(4);
+        pRecyclerView.smoothScrollToPosition(6);
     }
 
     private void setData() {
@@ -232,6 +234,7 @@ public class JmkdSixDeviceActivity extends BaseActivity implements View.OnClickL
                                 sweetDialog(json.getString("msg"), 1, false);
                             } else {
                                 KLog.i(response.body());
+                                llCheck.setVisibility(View.VISIBLE);
                                 applyStatusVo = mGson.fromJson(json.getString("data"), ShopApplyStatusVo.class);
                                 applyid = applyStatusVo.getApplyid();
                                 if (TextUtils.isEmpty(gusertel)) {

@@ -47,6 +47,16 @@ public class QuestionListVo implements Serializable {
         private String findBy;
         private String qid;
         private String question;
+        private String answer;
+
+        public String getAnswer() {
+            return answer;
+        }
+
+        public void setAnswer(String answer) {
+            this.answer = answer;
+        }
+
         private List<Answer> alist;
 
         public String getFindBy() {

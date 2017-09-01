@@ -69,7 +69,7 @@ public class PersonFragment1 extends BaseFragment implements View.OnClickListene
     @Bind(R.id.about)
     TextView tvAbout;
     @Bind(R.id.lyt_apply)
-    LinearLayout lytApply;
+    RelativeLayout lytApply;
     @Bind(R.id.lyt_order)
     RelativeLayout lytOrder;
     @Bind(R.id.lyt_tui)
@@ -80,10 +80,13 @@ public class PersonFragment1 extends BaseFragment implements View.OnClickListene
     RelativeLayout lytAbout;
     @Bind(R.id.btn_logout)
     Button btnLogout;
+    @Bind(R.id.notification)
+    TextView tvNotification;
 
     private ApplyListVo applyListVo;
     private ShopApplyStatusVo shopStatusVo;
     private String prepaychecksts;
+    private MemberInfoVo infoVo;
 
     @Override
     protected void initArgs(Bundle bundle) {
@@ -112,7 +115,7 @@ public class PersonFragment1 extends BaseFragment implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
-        MemberInfoVo infoVo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
+        infoVo = (MemberInfoVo) mACache.getAsObject("memberInfoVo");
         if (TextUtils.isEmpty(infoVo.getHeadpic())) {
             ivHeadpic.setImageResource(R.mipmap.default_head);
         } else {
@@ -124,6 +127,7 @@ public class PersonFragment1 extends BaseFragment implements View.OnClickListene
         if ("2".equals(infoVo.getRole())) lytTui.setVisibility(View.VISIBLE);
         getMemberShopApply();
         doGetShopApplyStatus();
+        getUserNoticeCount();
         StatService.onResume(this);
     }
 
@@ -141,6 +145,7 @@ public class PersonFragment1 extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.lyt_address:
                 Intent i = new Intent(getActivity(), ModifyAddrActivity.class);
+                i.putExtra("addrid", infoVo.getAddrid());
                 startActivity(i);
                 break;
             case R.id.lyt_apply:
@@ -225,6 +230,41 @@ public class PersonFragment1 extends BaseFragment implements View.OnClickListene
                 startActivity(new Intent(getActivity(), JmkdSevenActivity.class));
                 break;
         }
+    }
+
+    private void getUserNoticeCount() {
+        String token = PreferenceUtils.getPrefString(BaseApplication.getContext(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.getUserNoticeCount)
+                .tag(this)
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                KLog.i(response.body());
+                                if (!TextUtils.isEmpty(json.getString("data"))) {
+                                    int count = Integer.parseInt(json.getJSONObject("data").getString("msgcnt"));
+                                    if (count > 0 && count < 100) {
+                                        tvNotification.setVisibility(View.VISIBLE);
+                                        tvNotification.setText(count + "");
+                                    } else if (count > 100){
+                                        tvNotification.setVisibility(View.VISIBLE);
+                                        tvNotification.setText("99+");
+                                    } else {
+                                        tvNotification.setVisibility(View.GONE);
+                                    }
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
     private void doGetShopApplyStatus() {
