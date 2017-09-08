@@ -32,7 +32,8 @@
             android:layout_marginBottom="@dimen/x40"
             android:layout_marginStart="@dimen/x40"
             android:layout_marginTop="@dimen/x40"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:src="@mipmap/default_head"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -69,10 +70,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:maxLines="1"
             android:padding="10dp"
             android:textColor="@color/black2"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/title"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -130,7 +130,7 @@
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="我的订单"
+            android:text="交易记录"
             android:textSize="18sp"/>
 
         <TextView

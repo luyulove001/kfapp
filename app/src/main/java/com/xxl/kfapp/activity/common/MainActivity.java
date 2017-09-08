@@ -199,7 +199,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         hideFragments(transaction);
         switch (position) {
             case 1:
-                if ("0".equals(role) || "1".equals(role)) {
+                if ("0".equals(role) || "1".equals(role) || TextUtils.isEmpty(role)) {
                     if ("0".equals(jobsts) || "2".equals(jobsts)) {
                         homeFragment = new HomeFragment();
                         transaction.add(R.id.mContent, homeFragment);

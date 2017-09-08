@@ -27,11 +27,12 @@ android {
     buildTypes {
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
-
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             buildConfigField "boolean", "LOG_DEBUG", "false"
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -77,6 +78,7 @@ dependencies {
     compile files('libs/alipaySingle-20170510.jar')
     compile project(':mylibrary')
     compile files('libs/Baidu_Mtj_3.7.6.1.jar')
+    compile project(':mediaseekbar')
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.9.7'
     compile 'com.alibaba:fastjson:1.1.55.android'
@@ -86,5 +88,6 @@ dependencies {
     compile 'cn.jiguang.sdk:jpush:3.0.8'
     compile 'cn.jiguang.sdk:jcore:1.1.6'
     compile 'com.android.support:multidex:1.0.1'
-    compile project(':mediaseekbar')
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.github.anzaizai:EasySwipeMenuLayout:1.1.2'
 }

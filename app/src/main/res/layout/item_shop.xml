@@ -11,7 +11,7 @@
         android:layout_height="@dimen/y250"
         android:padding="@dimen/x20"
         android:scaleType="centerCrop"
-        android:src="@color/appmsg_custom"/>
+        android:src="@mipmap/icon_no_pic"/>
 
     <View
         android:layout_width="@dimen/x1"
@@ -23,10 +23,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/x10"
             android:orientation="horizontal">
 
             <TextView
@@ -37,14 +37,19 @@
                 android:paddingStart="@dimen/x20"
                 android:text="下沙物美店 NO.996"/>
 
-            <ImageView
-                android:layout_width="@dimen/x60"
-                android:layout_height="@dimen/y60"/>
-
-            <ImageView
-                android:layout_width="@dimen/x60"
-                android:layout_height="@dimen/y60"/>
-        </LinearLayout>
+            <TextView
+                android:id="@+id/tv_online"
+                android:layout_width="@dimen/x80"
+                android:layout_height="@dimen/y40"
+                android:layout_marginEnd="9dp"
+                android:background="@drawable/bg_stroke_cornermax_red"
+                android:gravity="center"
+                android:text="离线"
+                android:textSize="@dimen/middle"
+                android:layout_alignBaseline="@+id/tv_shopname"
+                android:layout_alignBottom="@+id/tv_shopname"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_address"

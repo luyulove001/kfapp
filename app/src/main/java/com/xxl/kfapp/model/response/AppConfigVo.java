@@ -23,10 +23,19 @@ public class AppConfigVo implements Serializable {
     private String brandgoods;//品牌优势
     private String transbankinfo;//收款账号
     private String mincashamount;//最小提现额度
+    private String aboutus;
     private String ID;
     private String regprotocol;//注册协议
     private String cashrate;//提现费率
     private String maxcashamount;//最大提现额度
+
+    public String getAboutus() {
+        return aboutus;
+    }
+
+    public void setAboutus(String aboutus) {
+        this.aboutus = aboutus;
+    }
 
     public String getShopprotocol() {
         return shopprotocol;

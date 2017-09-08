@@ -115,21 +115,27 @@ public class ShopUnbindActivity extends BaseActivity {
             sweetDialog(tips, 0, false, new SweetAlertDialog.OnSweetClickListener() {
                 @Override
                 public void onClick(SweetAlertDialog sweetAlertDialog) {
-                    if ("1".equals(closetype)) {
-                        if (TextUtils.isEmpty(etCloseReason.getText().toString())) {
-                            ToastShow("关闭原因不能为空");
-                        } else {
-                            insertShopCloseApplyClose();
-                        }
-                    } else if ("2".equals(closetype)) {
-                        if (!FindOrRegisterActivity.checkPhoneNumber(etPhone.getText().toString())) {
-                            ToastShow("手机号码格式不正确");
-                        } else {
-                            insertShopCloseApplyTrans();
-                        }
-                    }
+                    close();
                 }
             });
+        } else {
+            close();
+        }
+    }
+
+    private void close() {
+        if ("1".equals(closetype)) {
+            if (TextUtils.isEmpty(etCloseReason.getText().toString())) {
+                ToastShow("关闭原因不能为空");
+            } else {
+                insertShopCloseApplyClose();
+            }
+        } else if ("2".equals(closetype)) {
+            if (!FindOrRegisterActivity.checkPhoneNumber(etPhone.getText().toString())) {
+                ToastShow("手机号码格式不正确");
+            } else {
+                insertShopCloseApplyTrans();
+            }
         }
     }
 
@@ -138,7 +144,7 @@ public class ShopUnbindActivity extends BaseActivity {
                 .tag(this)
                 .params("token", token)
                 .params("shopid", shopid)
-                .params("closetype", closetype)
+                .params("colsetype", closetype)
                 .params("otherreason", etCloseReason.getText().toString())
                 .execute(new StringCallback() {
                     @Override
@@ -164,6 +170,7 @@ public class ShopUnbindActivity extends BaseActivity {
                 .tag(this)
                 .params("token", token)
                 .params("shopid", shopid)
+                .params("colsetype", closetype)
                 .params("staffno", etStaffno.getText().toString())
                 .params("username", etName.getText().toString())
                 .params("phone", etPhone.getText().toString())

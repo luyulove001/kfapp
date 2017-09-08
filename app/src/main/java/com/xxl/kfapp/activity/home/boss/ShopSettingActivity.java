@@ -104,7 +104,8 @@ public class ShopSettingActivity extends BaseActivity implements View.OnClickLis
         tvShopName.setText(shopName);
         tvPrice.setText(price + "元");
         tvTime.setText(startTime + "-" + endTime);
-        if (!TextUtils.isEmpty(shoppic)) Glide.with(getApplicationContext()).load(shoppic).into(ivPic);
+        if (!TextUtils.isEmpty(shoppic)  && !"null".equals(shoppic))
+            Glide.with(getApplicationContext()).load(shoppic).into(ivPic);
 
         llShopName.setOnClickListener(this);
         llPrice.setOnClickListener(this);
@@ -312,6 +313,32 @@ public class ShopSettingActivity extends BaseActivity implements View.OnClickLis
                                 KLog.e(response.body());
                                 headpic = json.getJSONObject("data").getString("path");
                                 Glide.with(getApplicationContext()).load(headpic).into(ivPic);
+                                updateShopInfo();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void updateShopInfo() {
+        String token = PreferenceUtils.getPrefString(BaseApplication.getContext(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.updateShopInfo)
+                .tag(this)
+                .params("token", token)
+                .params("shopid", shopid)
+                .params("shoppic", headpic)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (code.equals("100000")) {
+                                KLog.i(response.body());
+                            } else {
+                                sweetDialog(json.getString("msg"), 1, false);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

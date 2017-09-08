@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
+import com.xxl.kfapp.activity.common.AboutUsActivity;
 import com.xxl.kfapp.activity.common.LoginActivity;
 import com.xxl.kfapp.activity.home.boss.RefundActivity;
 import com.xxl.kfapp.activity.home.jmkd.JmkdFive3WebActivity;
@@ -161,6 +162,7 @@ public class PersonFragment1 extends BaseFragment implements View.OnClickListene
                 startActivity(new Intent(getActivity(), NotificationCenterActivity.class));
                 break;
             case R.id.lyt_about:
+                startActivity(new Intent(getActivity(), AboutUsActivity.class));
                 break;
             case R.id.btn_logout:
                 sweetDialogCustom(0, "是否确定退出登录", "", "确定退出", "取消", new SweetAlertDialog.OnSweetClickListener() {
@@ -213,11 +215,12 @@ public class PersonFragment1 extends BaseFragment implements View.OnClickListene
                 startActivity(new Intent(getActivity(), JmkdFourActivity.class));
                 break;
             case "24":
-                if (!TextUtils.isEmpty(prepaychecksts)) {
-                    Intent i = new Intent(getActivity(), JmkdFivePrepayActivity.class);
-                    i.putExtra("shopStatusVo", shopStatusVo);
-                    startActivity(i);
-                } else if (TextUtils.isEmpty(applyListVo.getApplylst().get(0).getShopid())) {
+//                if (!TextUtils.isEmpty(prepaychecksts)) {
+//                    Intent i = new Intent(getActivity(), JmkdFivePrepayActivity.class);
+//                    i.putExtra("shopStatusVo", shopStatusVo);
+//                    startActivity(i);
+//                } else
+                if (TextUtils.isEmpty(applyListVo.getApplylst().get(0).getShopid())) {
                     startActivity(new Intent(getActivity(), JmkdFiveActivity.class));
                 } else {
                     startActivity(new Intent(getActivity(), JmkdFive3WebActivity.class));

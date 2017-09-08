@@ -64,6 +64,8 @@ public class ShopAmountActivity extends BaseActivity implements View.OnClickList
     Button btnType;
     @Bind(R.id.rv_shop_amount)
     RecyclerView rvShopAmount;
+    @Bind(R.id.tv_xj)
+    TextView tvXj;
 
     private TimePickerDialog dialog;
     private SlideFromBottomPopup mSlidePopup;
@@ -178,6 +180,8 @@ public class ShopAmountActivity extends BaseActivity implements View.OnClickList
                         break;
                     case R.id.tx_2:
                         doGetMemberTotalAmountInfo("", "");
+                        tvStarttime.setText("");
+                        tvEndtime.setText("");
                         mSlidePopup.dismiss();
                         break;
                     case R.id.tx_3:
@@ -237,6 +241,7 @@ public class ShopAmountActivity extends BaseActivity implements View.OnClickList
                                 if (vo != null) {
                                     tvAli.setText((int) (Float.valueOf(vo.getZfbbl()) * 100) + "%");
                                     tvWx.setText((int) (Float.valueOf(vo.getWxbl()) * 100) + "%");
+                                    tvXj.setText((int) (Float.valueOf(vo.getXjbl()) * 100) + "%");
                                     if (TextUtils.isEmpty(vo.getTotal())) {
                                         tvAmount.setText("¥ 0");
                                     } else {

@@ -278,6 +278,7 @@ public class JmkdFiveActivity extends BaseActivity implements View.OnClickListen
                 .params("selcitycode", vo.getAddcitycode())
                 .params("selareacode", vo.getAddareacode())
                 .params("address", vo.getAddress())
+                .params("shopname", etShopname.getText().toString())
                 .params("applyid", applyid)
                 .execute(new StringCallback() {
                     @Override

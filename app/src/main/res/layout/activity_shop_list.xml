@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <RelativeLayout
+    <!--<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/y200"
         android:background="@color/white"
@@ -44,9 +44,11 @@
             android:layout_below="@+id/btn_search_content"
             android:layout_marginStart="@dimen/x30"
             android:layout_marginTop="@dimen/x20"
-            android:text="你共有2家店铺"
+            android:text="你共有家店铺"
             android:textColor="@color/text_black2"/>
-    </RelativeLayout>
+    </RelativeLayout>-->
+
+    <include layout="@layout/head_search"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_own_shop"

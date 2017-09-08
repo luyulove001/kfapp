@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.xxl.kfapp.utils.AddressPickTask;
+import com.xxl.kfapp.utils.PreferenceUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

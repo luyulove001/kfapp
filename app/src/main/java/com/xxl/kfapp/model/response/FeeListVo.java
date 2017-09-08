@@ -5,16 +5,25 @@ import java.util.List;
 
 public class FeeListVo implements Serializable {
     private List<Fee> feelst;
-    private String enddata;
+    private String enddate;
+    private int bidmoney;
     private String companyaccount;
     private String companyname;
 
-    public String getEnddata() {
-        return enddata;
+    public int getBidmoney() {
+        return bidmoney;
     }
 
-    public void setEnddata(String enddata) {
-        this.enddata = enddata;
+    public void setBidmoney(int bidmoney) {
+        this.bidmoney = bidmoney;
+    }
+
+    public String getEnddate() {
+        return enddate;
+    }
+
+    public void setEnddate(String enddate) {
+        this.enddate = enddate;
     }
 
     public String getCompanyaccount() {

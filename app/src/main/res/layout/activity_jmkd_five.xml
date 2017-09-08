@@ -140,7 +140,8 @@
                             android:background="@null"
                             android:gravity="right"
                             android:hint="例如:物美下沙店"
-                            android:maxEms="10"
+                            android:maxEms="16"
+                            android:maxLength="16"
                             android:maxLines="1"
                             android:padding="10dp"
                             android:textColor="@color/black2"
@@ -164,6 +165,7 @@
                         android:background="@color/white">
 
                         <TextView
+                            android:id="@+id/tv_shopaddr"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -178,10 +180,9 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/iv_right1"
+                            android:layout_toEndOf="@+id/tv_shopaddr"
                             android:gravity="center_vertical"
                             android:hint="请选择"
-                            android:maxEms="10"
-                            android:maxLines="1"
                             android:padding="10dp"
                             android:textColor="@color/black2"
                             android:textSize="@dimen/title"

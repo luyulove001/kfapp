@@ -136,7 +136,7 @@ public class ShopDetailActivity extends BaseActivity {
                             String code = json.getString("code");
                             if (code.equals("100000")) {
                                 shoppic = json.getJSONObject("data").getString("shoppic");
-                                if (TextUtils.isEmpty(shoppic)){
+                                if (TextUtils.isEmpty(shoppic) || "null".equals(shoppic)){
                                     ivShop.setImageResource(R.mipmap.qc_fast_pic);
                                 } else {
                                     Glide.with(ShopDetailActivity.this).load(shoppic).into(ivShop);
@@ -164,7 +164,7 @@ public class ShopDetailActivity extends BaseActivity {
                                 if (onlinests.equals("1")) {
                                     tvStatus.setText("在线");
                                 } else {
-                                    tvStatus.setText("不在线");
+                                    tvStatus.setText("离线");
                                 }
                                 String staffcnt = json.getJSONObject("data").getString("staffcnt");
                                 tvStaffcnt.setText("理发师 " + staffcnt + " 人");

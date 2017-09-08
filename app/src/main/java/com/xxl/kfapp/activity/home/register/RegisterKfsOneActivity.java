@@ -19,6 +19,7 @@ import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.text.method.NumberKeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +40,7 @@ import com.xxl.kfapp.model.response.BarberInfoVo;
 import com.xxl.kfapp.model.response.DictVo;
 import com.xxl.kfapp.model.response.ProgressVo;
 import com.xxl.kfapp.utils.AddressPickTaskAll;
+import com.xxl.kfapp.utils.IDCard;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.TitleBar;
@@ -50,6 +52,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -145,6 +148,18 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
         tvWorklife.setOnClickListener(this);
         mTitleBar.setTitle("注册快发师申请");
         mTitleBar.setBackOnclickListener(this);
+        etIdcard.setKeyListener(new NumberKeyListener() {
+            @Override
+            public int getInputType() {
+                return android.text.InputType.TYPE_CLASS_PHONE;
+            }
+
+            @Override
+            protected char[] getAcceptedChars() {
+                char[] numberChars = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'X'};
+                return numberChars;
+            }
+        });
     }
 
     @Override
@@ -222,10 +237,14 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
             prompt = false;
             checkUpResult = false;
         }
-        if (!checkIDCard(idcard) && prompt) {
-            ToastShow("身份证号码格式错误");
-            prompt = false;
-            checkUpResult = false;
+        try {
+            if (!IDCard.IDCardValidate(idcard) && prompt) {
+                ToastShow("身份证号码格式错误");
+                prompt = false;
+                checkUpResult = false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         if (TextUtils.isEmpty(cardpos) && prompt) {
             ToastShow("身份证照片不能为空");
@@ -733,7 +752,6 @@ public class RegisterKfsOneActivity extends BaseActivity implements View.OnClick
                             if (!code.equals("100000")) {
                                 sweetDialog(json.getString("msg"), 1, false);
                             } else {
-                                ToastShow(response.body());
                                 KLog.e(response.body());
                                 if (idPhoto == 1) {
                                     cardpos = json.getJSONObject("data").getString("path");

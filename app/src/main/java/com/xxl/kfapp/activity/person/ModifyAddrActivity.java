@@ -214,11 +214,11 @@ public class ModifyAddrActivity extends BaseActivity {
         @Override
         public void onItemClick(Closeable closeable, int adapterPosition, int menuPosition, int direction) {
             closeable.smoothCloseMenu();
-            if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
-                ToastShow("list第" + adapterPosition + "; 右侧菜单第" + menuPosition);
-            } else if (direction == SwipeMenuRecyclerView.LEFT_DIRECTION) {
-                ToastShow("list第" + adapterPosition + "; 左侧菜单第" + menuPosition);
-            }
+//            if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
+//                ToastShow("list第" + adapterPosition + "; 右侧菜单第" + menuPosition);
+//            } else if (direction == SwipeMenuRecyclerView.LEFT_DIRECTION) {
+//                ToastShow("list第" + adapterPosition + "; 左侧菜单第" + menuPosition);
+//            }
 
             if (menuPosition == 1) {// 删除按钮被点击。
                 doDeleteUserAddr(adapterPosition);
@@ -257,14 +257,13 @@ public class ModifyAddrActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            AddrVo vo = (AddrVo) data.getSerializableExtra("addrVo");
             switch (requestCode) {
                 case UpdateAddress:
                     doGetAddressList();
                     break;
-                case AddAddress:
-                    doGetAddressList();
-                    break;
+//                case AddAddress:
+//                    doGetAddressList();
+//                    break;
                 default:
                     break;
             }

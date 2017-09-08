@@ -62,7 +62,7 @@ public class CircleImageView extends ImageView
 			path.addCircle(
 				w / 2.0f
 				, h / 2.0f
-				, (float) Math.min(w / 2.0f, (h / 2.0))
+				, (float) Math.min(w / 2.0f, (h / 2.0f))
 				, Path.Direction.CCW);
 			path.close();
 		}

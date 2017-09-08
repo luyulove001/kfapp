@@ -7,7 +7,16 @@ public class AmountVo implements Serializable {
     private String zfbbl;
     private String total;
     private String wxbl;
+    private String xjbl;
     private List<Count> countlst;
+
+    public String getXjbl() {
+        return xjbl;
+    }
+
+    public void setXjbl(String xjbl) {
+        this.xjbl = xjbl;
+    }
 
     public String getZfbbl() {
         return zfbbl;
@@ -44,9 +53,18 @@ public class AmountVo implements Serializable {
     public class Count {
         private String total;
         private String wxtotal;
+        private String xjtotal;
         private String shopid;
         private String zfbtotal;
         private String shopname;
+
+        public void setXjtotal(String xjtotal) {
+            this.xjtotal = xjtotal;
+        }
+
+        public String getXjtotal() {
+            return xjtotal;
+        }
 
         public String getTotal() {
             return total;

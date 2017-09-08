@@ -21,9 +21,9 @@ public class OrderAdapter extends BaseQuickAdapter<OrderListVo.Order> {
         baseViewHolder.setText(R.id.tv_time, order.getOrderdate());
         baseViewHolder.setText(R.id.tv_order_name, order.getSubject());
         ImageView ivPayType = baseViewHolder.getView(R.id.iv_pay_type);
-        if ("1".equals(order.getPaytype()))
+        if ("2".equals(order.getPaytype()))
             ivPayType.setImageResource(R.mipmap.qc_fast_weix);
-        else if ("2".equals(order.getPaytype()))
+        else if ("1".equals(order.getPaytype()))
             ivPayType.setImageResource(R.mipmap.qc_fast_zhi);
 
         if ("0".equals(order.getRefundsts()))

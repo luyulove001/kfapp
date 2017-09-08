@@ -9,10 +9,9 @@
 
     <TextView
         android:id="@+id/tv_shop_name"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/x220"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/x10"
-        android:layout_weight="1"
         android:gravity="center"
         android:padding="@dimen/x10"
         android:text="店铺"/>
@@ -44,14 +43,29 @@
             android:padding="@dimen/x10"
             android:text="67%"
             android:textColor="@color/google_green"/>
+
+
+        <ImageView
+            android:layout_width="@dimen/x40"
+            android:layout_height="@dimen/x40"
+            android:layout_marginTop="@dimen/x20"
+            android:src="@mipmap/qc_fast_balance"/>
+
+        <TextView
+            android:id="@+id/tv_xj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/x10"
+            android:padding="@dimen/x10"
+            android:textColor="@color/progress_red"
+            android:text="67%"/>
     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_amount"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/x150"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/x10"
-        android:layout_weight="1"
         android:gravity="center"
         android:padding="@dimen/x10"
         android:text="¥5"

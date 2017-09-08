@@ -17,6 +17,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.request.GetRequest;
 import com.xxl.kfapp.R;
+import com.xxl.kfapp.activity.common.FindOrRegisterActivity;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.response.AddrVo;
 import com.xxl.kfapp.utils.AddressPickTask;
@@ -92,13 +93,16 @@ public class AddAddrActivity extends BaseActivity {
                     Intent i = new Intent();
                     i.putExtra("addrVo", vo);
                     setResult(RESULT_OK, i);
-                    finish();
+                    if (hasAddr)
+                        finish();
                 }
                 if (!hasAddr) {
                     if (TextUtils.isEmpty(vo.getUsername())) {
                         ToastShow("请先填写联系人姓名");
                     } else if (TextUtils.isEmpty(vo.getPhone())) {
                         ToastShow("请先填写联系人手机号");
+                    } else if (!FindOrRegisterActivity.checkPhoneNumber(vo.getPhone())) {
+                        ToastShow("联系人手机号格式不正确");
                     } else {
                         doUpdateAddr(vo);
                     }
@@ -199,6 +203,7 @@ public class AddAddrActivity extends BaseActivity {
                     String code = json.getString("code");
                     if (code.equals("100000")) {
                         KLog.i(response.body());
+                        setResult(RESULT_OK);
                         ToastShow("地址保存成功");
                         finish();
                     } else {

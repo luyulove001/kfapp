@@ -4,10 +4,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
+import com.xxl.kfapp.activity.common.MainActivity;
 import com.xxl.kfapp.activity.home.boss.RefundActivity;
 import com.xxl.kfapp.activity.home.jmkd.JmkdFive3WebActivity;
 import com.xxl.kfapp.activity.home.jmkd.JmkdSevenActivity;
@@ -21,6 +24,7 @@ import java.util.HashMap;
 
 import cn.jpush.android.api.JPushInterface;
 import talex.zsw.baselibrary.util.klog.KLog;
+import talex.zsw.baselibrary.view.BasePopupWindow.utils.ToastUtils;
 
 public class JPushReceiver extends BroadcastReceiver {
 
@@ -67,6 +71,11 @@ public class JPushReceiver extends BroadcastReceiver {
         } else if (JPushInterface.ACTION_CONNECTION_CHANGE.equals(intent.getAction())) {
             boolean connected = intent.getBooleanExtra(JPushInterface.EXTRA_CONNECTION_CHANGE, false);
             KLog.w("[MyReceiver]" + intent.getAction() + " connected state change to " + connected);
+            if (connected) {
+                ToastUtils.ToastMessage(context, "网络连接正常");
+            } else {
+                ToastUtils.ToastMessage(context, "网络已断开");
+            }
         } else {
             KLog.d("[MyReceiver] Unhandled intent - " + intent.getAction());
         }
@@ -79,6 +88,7 @@ public class JPushReceiver extends BroadcastReceiver {
         String type = json.getString("type");
         Intent i = new Intent();
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+        if (TextUtils.isEmpty(type)) type = "";
         switch (type) {
             case Constant.PUSH_TYPE_TICKET_BACK:
                 i.setClass(context, RefundActivity.class);
@@ -114,6 +124,10 @@ public class JPushReceiver extends BroadcastReceiver {
                 break;
             case Constant.PUSH_TYPE_BARBER_APPLY:
                 i.setClass(context, RegisterKfsTwoActivity.class);
+                context.startActivity(i);
+                break;
+            default:
+                i.setClass(context, MainActivity.class);
                 context.startActivity(i);
                 break;
         }

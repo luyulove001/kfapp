@@ -116,7 +116,11 @@ public class AddBarberActivity extends BaseActivity {
     public void initOptionPicker(final List<BossShopListVo.BossShopInfo> shopInfos) {
         String[] strs = new String[shopInfos.size()];
         for (int i = 0; i < shopInfos.size(); i++) {
-            strs[i] = shopInfos.get(i).getShopname();
+            if (TextUtils.isEmpty(shopInfos.get(i).getShopname())) {
+                strs[i] = "";
+            } else {
+                strs[i] = shopInfos.get(i).getShopname();
+            }
         }
         picker = new OptionPicker(this, strs);
         picker.setCanceledOnTouchOutside(false);

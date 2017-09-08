@@ -248,10 +248,12 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
                     case R.id.tx_1:
                         doCreateUserOrder("1");
                         mSlidePopup.dismiss();
+                        showDialog();
                         break;
                     case R.id.tx_2:
                         doCreateUserOrder("2");
                         mSlidePopup.dismiss();
+                        showDialog();
                         break;
                     case R.id.tx_3:
                         mSlidePopup.dismiss();
@@ -263,7 +265,6 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
                         i.putExtra("nickname", tvRecipient.getText().toString());
                         i.putExtra("address", tvAddress.getText().toString());
                         startActivity(i);
-                        finish();
                         break;
                 }
             }
@@ -474,6 +475,7 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
                 msg.what = PayHandler.SDK_PAY_FLAG;
                 msg.obj = result;
                 payHandler.sendMessage(msg);
+                closeDialog();
             }
         };
         Thread payThread = new Thread(payRunnable);
@@ -500,6 +502,7 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
             } else {
                 ToastShow("请求失败,请检查您的网络");
             }
+            closeDialog();
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -18,6 +18,7 @@ public class BossShopListVo implements Serializable {
     public class BossShopInfo {
         private String shopid;
         private String starttime;
+        private int onlinests;
         private String nickname;
         private String address;
         private String shopname;
@@ -25,6 +26,14 @@ public class BossShopListVo implements Serializable {
         private String applysts;
         private String shopno;
         private String shoppic;
+
+        public int getOnlinests() {
+            return onlinests;
+        }
+
+        public void setOnlinests(int onlinests) {
+            this.onlinests = onlinests;
+        }
 
         public String getShopid() {
             return shopid;

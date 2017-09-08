@@ -38,6 +38,6 @@
         android:layout_below="@+id/et_search_content"
         android:layout_marginStart="@dimen/x30"
         android:layout_marginTop="@dimen/x20"
-        android:text="您共有3位理发师"
+        android:text="您共有位理发师"
         android:textColor="@color/text_black2"/>
 </RelativeLayout>

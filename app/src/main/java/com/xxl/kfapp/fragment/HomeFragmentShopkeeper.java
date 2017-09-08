@@ -3,6 +3,7 @@ package com.xxl.kfapp.fragment;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,12 +23,26 @@ import com.xxl.kfapp.activity.home.boss.ShopAmountActivity;
 import com.xxl.kfapp.activity.home.boss.ShopListActivity;
 import com.xxl.kfapp.activity.home.boss.TicketListActivity;
 import com.xxl.kfapp.activity.home.boss.WithdrawListActivity;
+import com.xxl.kfapp.activity.home.jmkd.JmkdFive3WebActivity;
+import com.xxl.kfapp.activity.home.jmkd.JmkdFiveActivity;
+import com.xxl.kfapp.activity.home.jmkd.JmkdFourActivity;
+import com.xxl.kfapp.activity.home.jmkd.JmkdOneActivity;
+import com.xxl.kfapp.activity.home.jmkd.JmkdSevenActivity;
+import com.xxl.kfapp.activity.home.jmkd.JmkdSixActivity;
+import com.xxl.kfapp.activity.home.jmkd.JmkdThreeActivity;
+import com.xxl.kfapp.activity.home.jmkd.JmkdTwoActivity;
+import com.xxl.kfapp.activity.home.register.RegisterKfsFiveActivity;
+import com.xxl.kfapp.activity.home.register.RegisterKfsFourActivity;
+import com.xxl.kfapp.activity.home.register.RegisterKfsOneActivity;
+import com.xxl.kfapp.activity.home.register.RegisterKfsThreeActivity;
+import com.xxl.kfapp.activity.home.register.RegisterKfsTwoActivity;
 import com.xxl.kfapp.activity.person.PersonInfoActivity;
 import com.xxl.kfapp.base.BaseApplication;
 import com.xxl.kfapp.base.BaseFragment;
 import com.xxl.kfapp.model.response.ApplyListVo;
 import com.xxl.kfapp.model.response.BossCountInfoVo;
 import com.xxl.kfapp.model.response.MemberInfoVo;
+import com.xxl.kfapp.model.response.ShopApplyStatusVo;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
 
@@ -90,12 +105,12 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
     @Bind(R.id.iv_kfs)
     ImageView ivKfs;
 
-    private boolean isFirst = true;
+    private boolean isFirst = true, isShow = true;
     private Drawable male, female;
+    private ApplyListVo applyListVo;
 
     @Override
     protected void initArgs(Bundle bundle) {
-        isFirst = PreferenceUtils.getPrefBoolean(BaseApplication.getContext(), "isFirst", false);
     }
 
     @Override
@@ -122,7 +137,6 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
     @Override
     protected void initData() {
         initDrawables();
-        doGetBossCountInfo();
         setMemberInfo();
     }
 
@@ -187,9 +201,10 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
                 break;
             case R.id.iv_close:
                 lytApply.setVisibility(View.GONE);
-                PreferenceUtils.setPrefBoolean(getContext(), "isFirst", false);
+                PreferenceUtils.setPrefBoolean(BaseApplication.getContext(), "isFirst", false);
                 break;
             case R.id.lyt_apply:
+                start2Apply(applyListVo);
                 break;
             case R.id.mImage:
                 startActivity(new Intent(getActivity(), PersonInfoActivity.class));
@@ -200,11 +215,7 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
     @Override
     public void onResume() {
         super.onResume();
-        if (isFirst) {
-            getMemberShopApply();
-        } else {
-            lytApply.setVisibility(View.GONE);
-        }
+        doGetBossCountInfo();
         StatService.onResume(this);
     }
 
@@ -244,7 +255,7 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
                             String code = json.getString("code");
                             if (code.equals("100000")) {
                                 Gson gson = new Gson();
-                                ApplyListVo applyListVo = gson.fromJson(json.getString("data"), ApplyListVo.class);
+                                applyListVo = gson.fromJson(json.getString("data"), ApplyListVo.class);
                                 if (applyListVo != null && applyListVo.getApplylst().size() != 0 && PreferenceUtils
                                         .getPrefBoolean(BaseApplication.getContext(), "isFirst", false)) {
                                     PreferenceUtils.setPrefString(BaseApplication.getContext(),
@@ -261,6 +272,90 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
                 });
     }
 
+    private void start2Apply(ApplyListVo applyListVo) {
+        switch (applyListVo.getApplylst().get(0).getApplysts()) {
+            case "10":
+                startActivity(new Intent(getActivity(), RegisterKfsOneActivity.class));
+                break;
+            case "11":
+                startActivity(new Intent(getActivity(), RegisterKfsTwoActivity.class));
+                break;
+            case "12":
+                startActivity(new Intent(getActivity(), RegisterKfsThreeActivity.class));
+                break;
+            case "13":
+                startActivity(new Intent(getActivity(), RegisterKfsFourActivity.class));
+                break;
+            case "14":
+                startActivity(new Intent(getActivity(), RegisterKfsFiveActivity.class));
+                break;
+            case "20":
+                Intent i20 = new Intent(getActivity(), JmkdOneActivity.class);
+                i20.putExtra("applyid", applyListVo.getApplylst().get(0).getApplyid());
+                startActivity(i20);
+                break;
+            case "21":
+                startActivity(new Intent(getActivity(), JmkdTwoActivity.class));
+                break;
+            case "22":
+                startActivity(new Intent(getActivity(), JmkdThreeActivity.class));
+                break;
+            case "23":
+                startActivity(new Intent(getActivity(), JmkdFourActivity.class));
+                break;
+            case "24":
+                doGetShopApplyStatus();
+                break;
+            case "25":
+                startActivity(new Intent(getActivity(), JmkdSixActivity.class));
+                break;
+            case "26":
+                startActivity(new Intent(getActivity(), JmkdSevenActivity.class));
+                break;
+        }
+    }
+
+    private void doGetShopApplyStatus() {
+        String token = PreferenceUtils.getPrefString(BaseApplication.getContext(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.getShopApplyStatus)
+                .tag(this)
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (!code.equals("100000")) {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            } else {
+                                KLog.i(response.body());
+                                Gson gson = new Gson();
+                                ShopApplyStatusVo shopStatusVo = gson.fromJson(json.getString("data"),
+                                        ShopApplyStatusVo.class);
+                                PreferenceUtils.setPrefString(BaseApplication.getContext(), "applyid", shopStatusVo
+                                        .getApplyid());
+                                //                                if (!TextUtils.isEmpty(shopStatusVo
+                                // .getPrepaychecksts())) {
+                                //                                    Intent i = new Intent(getActivity(),
+                                // JmkdFivePrepayActivity.class);
+                                //                                    i.putExtra("shopStatusVo", shopStatusVo);
+                                //                                    startActivity(i);
+                                //                                } else
+                                if (TextUtils.isEmpty(applyListVo.getApplylst().get(0).getShopid())) {
+                                    startActivity(new Intent(getActivity(), JmkdFiveActivity.class));
+                                } else {
+                                    startActivity(new Intent(getActivity(), JmkdFive3WebActivity.class));
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    @SuppressWarnings("deprecation")
     private void doGetBossCountInfo() {
         String token = PreferenceUtils.getPrefString(BaseApplication.getContext(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.getBossCountInfo)
@@ -284,13 +379,26 @@ public class HomeFragmentShopkeeper extends BaseFragment implements View.OnClick
                                 tvBarberCnt.setText("理发师：" + vo.getTotalbbcnt());
                                 tvDayAmount.setText(vo.getTotaldayamount() + "");
                                 tvDaycnt.setText("今日理发：" + vo.getTotaldaycnt());
-                                tvOffline.setText("今日离线：" + vo.getOffline());
-                                tvOnline.setText("今日正常：" + vo.getOnline());
-                                tvShopcnt.setText("我的店铺：" + vo.getShopcnt());
+                                tvOffline.setText(Html.fromHtml("今日离线：<font color='#bf4740'>"
+                                        + vo.getOffline() + "</font>"));
+                                tvOnline.setText(Html.fromHtml("今日正常：<font color='#34A853'>"
+                                        + vo.getOnline() + "</font>"));
+                                tvShopcnt.setText(Html.fromHtml("我的店铺：<font color='#34A853'>"
+                                        + vo.getShopcnt() + "</font>"));//#EA923A
                                 tvTotalcnt.setText("累计理发：" + vo.getTotalcnt());
-                                tvWorkcdCnt.setText("迟到：" + vo.getTotalworkcdcnt());
+                                tvWorkcdCnt.setText(Html.fromHtml("迟到：<font color='#EA923A'>"
+                                        + vo.getTotalworkcdcnt() + "</font>"));
                                 tvWorkCnt.setText("今日上班：" + vo.getTotalworkcnt());
-                                tvWorkztCnt.setText("早退：" + vo.getTotalworkztcnt());
+                                tvWorkztCnt.setText(Html.fromHtml("早退：<font color='#EA923A'>"
+                                        + vo.getTotalworkztcnt() + "</font>"));
+                                isShow = "1".equals(vo.getApplyflg());
+                                isFirst = PreferenceUtils.getPrefBoolean(BaseApplication.getContext(), "isFirst",
+                                        false);
+                                if (isFirst && isShow) {
+                                    getMemberShopApply();
+                                } else {
+                                    lytApply.setVisibility(View.GONE);
+                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

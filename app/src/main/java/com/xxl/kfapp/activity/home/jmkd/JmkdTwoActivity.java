@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -199,6 +200,7 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
                                 statusVo = mGson.fromJson(json.getString("data"), ShopApplyStatusVo.class);
                                 PreferenceUtils.setPrefString(getApplication(), "applyid", statusVo.getApplyid());
                                 PreferenceUtils.setPrefString(getApplication(), "brandmoney", statusVo.getBrandmoney());
+                                if (statusVo.getChecksts() == null) statusVo.setChecksts("0");
                                 switch (statusVo.getChecksts()) {
                                     case "0":
                                         next.setClickable(false);
@@ -207,7 +209,7 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
                                         lytNext.setVisibility(View.GONE);
                                         tvCheckingDate.setVisibility(View.VISIBLE);
                                         AppConfigVo vo = (AppConfigVo) mACache.getAsObject("appConfig");
-                                        tvCheckingDate.setText("预计" + vo.getBarbercheckdays() + "个工作日，请耐心等待");
+                                        tvCheckingDate.setText("一般" + vo.getBarbercheckdays() + "个工作日，请耐心等待");
                                         break;
                                     case "1":
                                         tvChecking.setText("恭喜您，您的初审已通过");
@@ -217,9 +219,15 @@ public class JmkdTwoActivity extends BaseActivity implements View.OnClickListene
                                         tvChecking.setText("真遗憾，您的审核未通过");
                                         tvChecking.setCompoundDrawablesRelative(fair, null, null, null);
                                         lytReasonShsb.setVisibility(View.VISIBLE);
-                                        tvFixedReason.setText(statusVo.getFixedreason());
-                                        tvCustomReason.setText(statusVo.getCustomreason());
-                                        next.setText("重新选择区域");
+                                        if (!TextUtils.isEmpty(statusVo.getFixedreason())) {
+                                            tvFixedReason.setVisibility(View.VISIBLE);
+                                            tvFixedReason.setText(statusVo.getFixedreason());
+                                        }
+                                        if (!TextUtils.isEmpty(statusVo.getCustomreason())) {
+                                            tvCustomReason.setVisibility(View.VISIBLE);
+                                            tvCustomReason.setText(statusVo.getCustomreason());
+                                        }
+                                        next.setText("重新填写");
                                         tvTips.setVisibility(View.VISIBLE);
                                         break;
                                 }

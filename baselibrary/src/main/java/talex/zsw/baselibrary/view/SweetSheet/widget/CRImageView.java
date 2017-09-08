@@ -1,5 +1,6 @@
 package talex.zsw.baselibrary.view.SweetSheet.widget;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -16,6 +17,7 @@ import android.view.animation.Interpolator;
  * @date 2015/8/8.
  * @github: https://github.com/zzz40500
  */
+@SuppressLint("AppCompatCustomView")
 public class CRImageView extends android.widget.ImageView
 	implements CircleRevealHelper.CircleRevealEnable
 {
@@ -76,6 +78,7 @@ public class CRImageView extends android.widget.ImageView
 	}
 
 
+	@SuppressLint("WrongCall")
 	@Override public void superOnDraw(Canvas canvas)
 	{
 		super.onDraw( canvas );

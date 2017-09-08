@@ -29,7 +29,7 @@
 
     <!-- 背景颜色 -->
     <color name="bg_gray">#EBEBEB</color>
-    <color name="main_red">#B14F45</color>
+    <color name="main_red">#bf4740</color>
     <color name="light_red">#FDF6F5</color>
     <color name="progress_red">#EA923A</color>
     <color name="progress_green">#54A530</color>

@@ -144,8 +144,9 @@
 
                     <TextView
                         android:id="@+id/tv_upload"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:maxLines="1"
                         android:paddingEnd="10dp"
@@ -203,8 +204,8 @@
                             android:drawablePadding="@dimen/x15"
                             android:drawableStart="@mipmap/sh_dian"
                             android:padding="@dimen/x10"
-                            android:visibility="gone"
-                            android:text="@string/action_forgot_pwd"/>
+                            android:text="@string/action_forgot_pwd"
+                            android:visibility="gone"/>
 
                         <TextView
                             android:id="@+id/tv_customreason"
@@ -213,8 +214,8 @@
                             android:drawablePadding="@dimen/x15"
                             android:drawableStart="@mipmap/sh_dian"
                             android:padding="@dimen/x10"
-                            android:visibility="gone"
-                            android:text="@string/action_forgot_pwd"/>
+                            android:text="@string/action_forgot_pwd"
+                            android:visibility="gone"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

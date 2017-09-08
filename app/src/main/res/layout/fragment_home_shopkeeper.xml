@@ -17,7 +17,8 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="@dimen/x30"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:src="@mipmap/default_head"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -147,7 +148,8 @@
         android:background="@color/warn"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="@dimen/x10">
+        android:padding="@dimen/x10"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -224,8 +226,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:layout_marginTop="@dimen/x20"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <LinearLayout

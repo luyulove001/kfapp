@@ -18,6 +18,7 @@ public class ShopAmountAdapter extends BaseQuickAdapter<AmountVo.Count> {
         baseViewHolder.setText(R.id.tv_shop_name, count.getShopname());
         baseViewHolder.setText(R.id.tv_ali, (int)(Float.valueOf(count.getZfbtotal()) * 100) + "%");
         baseViewHolder.setText(R.id.tv_wx, (int)(Float.valueOf(count.getWxtotal()) * 100) + "%");
+        baseViewHolder.setText(R.id.tv_xj, (int)(Float.valueOf(count.getXjtotal()) * 100) + "%");
         baseViewHolder.setText(R.id.tv_amount, "¥" + count.getTotal());
     }
 }

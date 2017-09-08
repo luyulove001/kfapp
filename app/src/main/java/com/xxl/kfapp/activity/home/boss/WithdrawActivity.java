@@ -204,14 +204,15 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
         final EditText num = (EditText) dialog.findViewById(R.id.et_balance);
         num.setHint("本次最多提现" + appConfigVo.getMaxcashamount() + "元");
         TextView cashrate = (TextView) dialog.findViewById(R.id.tv_cashrate);
-        cashrate.setText("微信等第三方平台手续费：" + appConfigVo.getCashrate() + "%");
+        double rate = Double.valueOf(appConfigVo.getCashrate()) * 100;
+        cashrate.setText("微信等第三方平台手续费：" + rate + "%");
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int input = Integer.parseInt(num.getText().toString());
                 if (input > Float.parseFloat(tvBalance.getText().toString())) {
                     ToastShow("您输入的金额大于当前最大余额");
-                } else if (input <= Integer.parseInt(appConfigVo.getMincashamount())) {
+                } else if (input < Integer.parseInt(appConfigVo.getMincashamount())) {
                     ToastShow("最少提现" + appConfigVo.getMincashamount() + "元");
                 } else if (input > Integer.parseInt(appConfigVo.getMaxcashamount())) {
                     ToastShow("最大提现" + appConfigVo.getMaxcashamount() + "元");

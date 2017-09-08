@@ -38,7 +38,7 @@ public class BaseApplication extends Application {
         KLog.init(true);
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
-
+        PreferenceUtils.setPrefBoolean(BaseApplication.getContext(), "isFirst", true);
     }
 
     @Override

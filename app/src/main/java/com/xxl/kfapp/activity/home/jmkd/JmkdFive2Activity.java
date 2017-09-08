@@ -112,6 +112,7 @@ public class JmkdFive2Activity extends BaseActivity implements View.OnClickListe
                 onAddressPicker();
                 break;
             case R.id.btn_all:
+                showDialog();
                 doGetAucteShopList("", "", "");
                 break;
         }
@@ -246,6 +247,7 @@ public class JmkdFive2Activity extends BaseActivity implements View.OnClickListe
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        disDialog();
                         try {
                             com.alibaba.fastjson.JSONObject json = JSON.parseObject(response.body());
                             String code = json.getString("code");

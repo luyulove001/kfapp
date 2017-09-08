@@ -102,7 +102,12 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         mTitleBar.setBackOnclickListener(this);
         llSignInfo.setOnClickListener(this);
         btnSign.setOnClickListener(this);
+        ivPrevious.setOnClickListener(this);
+        ivNext.setOnClickListener(this);
         date = CalendarUtil.getYMD(new Date());
+        llSignResult.setVisibility(View.GONE);
+        tvInState.setVisibility(View.GONE);
+        tvOutState.setVisibility(View.GONE);
     }
 
     @Override
@@ -124,6 +129,10 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
                     intent.putExtra("startfrom", "SignIn");
                     startActivity(intent);
                 }
+                break;
+            case R.id.iv_previous:
+                break;
+            case R.id.iv_next:
                 break;
         }
     }

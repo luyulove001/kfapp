@@ -1,12 +1,14 @@
 package com.xxl.kfapp.activity.common;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.baidu.mobstat.StatService;
 import com.xxl.kfapp.R;
@@ -47,6 +49,20 @@ public class WebViewActivity extends BaseActivity {
 
     private void initWebView() {
         webView.getSettings().setJavaScriptEnabled(true); // 设置支持javascript脚本
+        webView.setWebViewClient(new WebViewClient()
+        {
+            @Override
+            public void onPageFinished(WebView view, String url)
+            {
+                super.onPageFinished(view, url);
+                disDialog();
+            }
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon)
+            {
+                super.onPageStarted(view, url, favicon);
+            }
+        });
         webView.getSettings().setAllowFileAccess(true); // 允许访问文件
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);

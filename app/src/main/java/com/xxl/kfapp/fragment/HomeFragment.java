@@ -231,7 +231,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        setMemberInfo();
+        doGetMemberInfo();
         StatService.onResume(this);
     }
 
@@ -253,11 +253,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                                 mACache.put("memberInfoVo", vo);//保存个人信息
                                 Glide.with(BaseApplication.getContext()).load(vo.getHeadpic()).into(mImage);
                                 nickname.setText(vo.getNickname());
-                                if ("0".equals(vo.getRole())) {
+                                if ("1".equals(vo.getSex())) {
+                                    nickname.setCompoundDrawables(null, null, male, null);
+                                } else if ("2".equals(vo.getSex())) {
+                                    nickname.setCompoundDrawables(null, null, female, null);
+                                }
+                                if ("0".equals(vo.getRole())  || TextUtils.isEmpty(vo.getRole())) {
                                     doGetBarberApplyStatus();
                                 } else if ("1".equals(vo.getRole())) {
                                     doGetShopApplyStatus();
-                                    lytKfs.setVisibility(View.VISIBLE);
                                     ivKfsGood.setVisibility(View.GONE);
                                     btnBegin.setVisibility(View.GONE);
                                     ivKfs.setVisibility(View.VISIBLE);
@@ -279,7 +283,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         } else if ("2".equals(vo.getSex())) {
             nickname.setCompoundDrawables(null, null, female, null);
         }
-        if ("0".equals(vo.getRole())) {
+        if ("0".equals(vo.getRole()) || TextUtils.isEmpty(vo.getRole())) {
             doGetBarberApplyStatus();
         } else if ("1".equals(vo.getRole())) {
             doGetShopApplyStatus();
@@ -307,27 +311,28 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                                 applyStatus = barberStatusVo.getApplysts();
                                 int i = 0;
                                 tvTips.setVisibility(View.GONE);
+                                btnBegin.setVisibility(View.VISIBLE);
                                 switch (barberStatusVo.getApplysts()) {
                                     case "10":
-//                                        i = (int) (1 / 5.0 * 100);
+//                                        i = (int) (1 / 6.0 * 100);
                                         doGetBarberGoodPic();
                                         btnBegin.setText("我要成为快发师");
                                         btnBegin.setBackgroundResource(R.mipmap.qc_right_shine);
                                         break;
                                     case "11":
-                                        i = (int) (2 / 5.0 * 100);
+                                        i = (int) (2 / 6.0 * 100);
                                         showBarberTips();
                                         break;
                                     case "12":
-                                        i = (int) (3 / 5.0 * 100);
+                                        i = (int) (3 / 6.0 * 100);
                                         showBarberTips();
                                         break;
                                     case "13":
-                                        i = (int) (4 / 5.0 * 100);
+                                        i = (int) (4 / 6.0 * 100);
                                         showBarberTips();
                                         break;
                                     case "14":
-                                        i = (int) (5 / 5.0 * 100);
+                                        i = (int) (5 / 6.0 * 100);
                                         showBarberTips();
                                         break;
                                 }
@@ -368,33 +373,34 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                                 shopid = shopStatusVo.getShopid();
                                 prepaychecksts = shopStatusVo.getPrepaychecksts();
                                 devicechecksts = shopStatusVo.getDevicechecksts();
+                                lytKfs.setVisibility(View.VISIBLE);
                                 int i = 0;
                                 switch (shopStatusVo.getApplysts()) {
                                     case "20":
-//                                        i = (int) (1 / 7.0 * 100);
+//                                        i = (int) (1 / 8.0 * 100);
                                         break;
                                     case "21":
-                                        i = (int) (2 / 7.0 * 100);
+                                        i = (int) (2 / 8.0 * 100);
                                         showShopTips();
                                         break;
                                     case "22":
-                                        i = (int) (3 / 7.0 * 100);
+                                        i = (int) (3 / 8.0 * 100);
                                         showShopTips();
                                         break;
                                     case "23":
-                                        i = (int) (4 / 7.0 * 100);
+                                        i = (int) (4 / 8.0 * 100);
                                         showShopTips();
                                         break;
                                     case "24":
-                                        i = (int) (5 / 7.0 * 100);
+                                        i = (int) (5 / 8.0 * 100);
                                         showShopTips();
                                         break;
                                     case "25":
-                                        i = (int) (6 / 7.0 * 100);
+                                        i = (int) (6 / 8.0 * 100);
                                         showShopTips();
                                         break;
                                     case "26":
-                                        i = (int) (7 / 7.0 * 100);
+                                        i = (int) (7 / 8.0 * 100);
                                         showShopTips();
                                         break;
                                 }

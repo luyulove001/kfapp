@@ -19,7 +19,6 @@ import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.response.ShopSetVo;
-import com.xxl.kfapp.model.response.SignListVo;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.TimePickerDialog;
 import com.xxl.kfapp.utils.Urls;
@@ -110,7 +109,7 @@ public class ShopPriceActivity extends BaseActivity {
                 tvBeginTime.setText(shopSetVo.getStartdate());
                 tvEndTime.setText(shopSetVo.getEnddate());
             } else {
-                tvActivePrice.setText(shopSetVo.getActcheckprice() + "元");
+                tvActivePrice.setText(shopSetVo.getActprice() + "元");
                 tvBeginTime.setText(shopSetVo.getStartdate());
                 tvEndTime.setText(shopSetVo.getEnddate());
             }
@@ -125,7 +124,8 @@ public class ShopPriceActivity extends BaseActivity {
                 String year = String.valueOf(mBeginTimePickerDialog.getYear());
                 String month = String.valueOf(mBeginTimePickerDialog.getMonth());
                 String day = String.valueOf(mBeginTimePickerDialog.getDay());
-                beginDate = year + "-" + month + "-" + day;
+                beginDate = year + "-" + (Integer.valueOf(month) > 9 ? month : "0" + month) + "-"
+                        + (Integer.valueOf(day) > 9 ? day : "0" + day);
                 tvBeginTime.setText(beginDate);
                 mEndTimePickerDialog.showDatePickerDialog();
             }
@@ -143,7 +143,8 @@ public class ShopPriceActivity extends BaseActivity {
                 String year = String.valueOf(mEndTimePickerDialog.getYear());
                 String month = String.valueOf(mEndTimePickerDialog.getMonth());
                 String day = String.valueOf(mEndTimePickerDialog.getDay());
-                endDate = year + "-" + month + "-" + day;
+                endDate = year + "-" + (Integer.valueOf(month) > 9 ? month : "0" + month) + "-"
+                        + (Integer.valueOf(day) > 9 ? day : "0" + day);
                 tvEndTime.setText(endDate);
                 showUpdatePriceDialog();
             }
@@ -188,6 +189,7 @@ public class ShopPriceActivity extends BaseActivity {
                             JSONObject json = new JSONObject(response.body());
                             String code = json.getString("code");
                             if (code.equals("100000")) {
+                                ToastShow("申请成功");
                                 finish();
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
@@ -217,6 +219,7 @@ public class ShopPriceActivity extends BaseActivity {
                             JSONObject json = new JSONObject(response.body());
                             String code = json.getString("code");
                             if (code.equals("100000")) {
+                                ToastShow("申请成功");
                                 finish();
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);

@@ -227,23 +227,37 @@ public class RegisterKfsTwoActivity extends BaseActivity implements View.OnClick
                                         lytNext.setVisibility(View.GONE);
                                         tvCheckingDate.setVisibility(View.VISIBLE);
                                         AppConfigVo vo = (AppConfigVo) mACache.getAsObject("appConfig");
-                                        tvCheckingDate.setText("预计" + vo.getBarbercheckdays() + "个工作日，请耐心等待");
+                                        tvCheckingDate.setText("一般" + vo.getBarbercheckdays() + "个工作日，请耐心等待");
                                         break;
                                     case "1":
                                         tvChecking.setText("恭喜您，您的初审已通过");
+                                        tvCheckingDate.setVisibility(View.GONE);
                                         tvChecking.setCompoundDrawables(pass, null, null, null);
+                                        next.setText("下一步");
+                                        next.setBackgroundResource(R.drawable.bg_corner_red);
+                                        next.setTextColor(getResources().getColor(R.color.main_red));
+                                        next.setClickable(true);
+                                        lytNext.setVisibility(View.VISIBLE);
                                         break;
                                     case "2":
                                         tvChecking.setText("真遗憾，您的初审未通过");
                                         tvChecking.setCompoundDrawables(fair, null, null, null);
                                         lytReasonShsb.setVisibility(View.VISIBLE);
-                                        tvFixedReason.setText(statusVo.getFixedreason());
+                                        tvCheckingDate.setVisibility(View.GONE);
+                                        if (statusVo.getFixedreason().contains(",")) {
+                                            tvFixedReason.setText(statusVo.getFixedreason().replaceAll(",", "\n"));
+                                            tvFixedReason.setCompoundDrawables(null, null, null, null);
+                                        } else
+                                            tvFixedReason.setText(statusVo.getFixedreason());
                                         if (!TextUtils.isEmpty(statusVo.getCustomreason())) {
                                             tvCustomReason.setText(statusVo.getCustomreason());
                                         } else {
                                             tvCustomReason.setVisibility(View.GONE);
                                         }
                                         next.setText("重新填写");
+                                        next.setClickable(true);
+                                        next.setBackgroundResource(R.drawable.bg_corner_red);
+                                        next.setTextColor(getResources().getColor(R.color.main_red));
                                         tvTips.setVisibility(View.VISIBLE);
                                         lytNext.setVisibility(View.VISIBLE);
                                         break;

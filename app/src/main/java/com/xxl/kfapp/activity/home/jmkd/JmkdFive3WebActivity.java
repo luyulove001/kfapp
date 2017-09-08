@@ -1,5 +1,6 @@
 package com.xxl.kfapp.activity.home.jmkd;
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -91,6 +93,14 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
     LinearLayout llChecking;
     @Bind(R.id.btn_refresh)
     Button btnRefresh;
+    @Bind(R.id.ll_web)
+    LinearLayout llWeb;
+    @Bind(R.id.ll_nopay)
+    LinearLayout llNoPay;
+    @Bind(R.id.tv_confiscate)
+    TextView tvConfiscate;
+    @Bind(R.id.tv_waring)
+    TextView tvWaring;
     private SlideFromBottomPopup mSlidePopup;
 
     private ProgressAdapter progressAdapter;
@@ -102,6 +112,8 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
     //支付相关
     private PayHandler payHandler;
     private IWXAPI api;
+
+    private String offlineCancel = "";
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -131,6 +143,9 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
         next.setOnClickListener(this);
         mTitleBar.setTitle("开店申请");
         mTitleBar.setBackOnclickListener(this);
+        btnRefresh.setOnClickListener(this);
+        String str = "不好意思，因为您<font color='red'>超期未付款</font>您的保证金已被没收";
+        tvWaring.setText(Html.fromHtml(str));
         initDrawables();
     }
 
@@ -197,6 +212,10 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
         switch (v.getId()) {
             case R.id.next:
                 if (infoVo != null) {
+                    if ("1".equals(infoVo.getEndpaysts())) {
+                        startActivity(new Intent(this, JmkdFiveActivity.class));
+                        finish();
+                    } else
                     if ("3".equals(infoVo.getSalests())) {
                         if ("1".equals(infoVo.getBidsts())) {
                             //doUpdateApplyStatus(applyid);//到竞拍支付页面
@@ -234,6 +253,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
             case R.id.btn_refresh:
+                showDialog();
                 doGetSelectAddrStsInfo(applyid, shopid);
                 break;
         }
@@ -344,7 +364,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                         mSlidePopup.dismiss();
                         Intent i = new Intent(JmkdFive3WebActivity.this, JmkdFivePrepayActivity.class);
                         i.putExtra("shopStatusVo", applyStatusVo);
-                        startActivity(i);
+                        startActivityForResult(i, 1);
                         break;
                 }
             }
@@ -389,12 +409,20 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        disDialog();
                         try {
                             JSONObject json = JSON.parseObject(response.body());
                             String code = json.getString("code");
                             if (code.equals("100000")) {
                                 KLog.i(response.body());
                                 infoVo = mGson.fromJson(json.getString("data"), SelectAddrstsInfoVo.class);
+                                if ("1".equals(infoVo.getEndpaysts())) {
+                                    llWeb.setVisibility(View.GONE);
+                                    llNoPay.setVisibility(View.VISIBLE);
+                                    tvConfiscate.setText("没收金额：" + infoVo.getBond() + "元");
+                                    next.setText("重新选址");
+                                    return;
+                                }
                                 nowprice = Integer.valueOf(infoVo.getNowprice());
                                 initButtonView(infoVo);
                                 if ("1".equals(infoVo.getPrepaysts())) {
@@ -413,21 +441,30 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                                                     + "个工作日，请耐心等待");
                                             llBtn.setVisibility(View.GONE);
                                             lytReasonShsb.setVisibility(View.GONE);
+                                            tvChecking.setVisibility(View.VISIBLE);
                                             tvChecking.setCompoundDrawablesRelative(ing, null, null, null);
                                             llChecking.setVisibility(View.VISIBLE);
                                         } else if ("2".equals(infoVo.getPrepaychecksts())) {
-                                            llBtn.setVisibility(View.VISIBLE);
-                                            tvChecking.setText("真遗憾，您的审核未通过");
-                                            tvChecking.setCompoundDrawablesRelative(fair, null, null, null);
-                                            lytReasonShsb.setVisibility(View.VISIBLE);
-                                            if (!TextUtils.isEmpty(applyStatusVo.getPrepayreason())) {
-                                                tvFixedReason.setText(applyStatusVo.getPrepayreason());
-                                                tvFixedReason.setVisibility(View.VISIBLE);
+                                            if ("1".equals(offlineCancel)) {
+                                                llChecking.setVisibility(View.GONE);
+                                                webView.loadUrl(Urls.baseBidUrl + Urls.bidH5 + shopid);
+                                                doUpdateShopViewCount(shopid);
+                                            } else {
+                                                llBtn.setVisibility(View.VISIBLE);
+                                                llChecking.setVisibility(View.VISIBLE);
+                                                tvChecking.setVisibility(View.VISIBLE);
+                                                tvChecking.setText("真遗憾，您的审核未通过");
+                                                tvChecking.setCompoundDrawablesRelative(fair, null, null, null);
+                                                lytReasonShsb.setVisibility(View.VISIBLE);
+                                                if (!TextUtils.isEmpty(applyStatusVo.getPrepayreason())) {
+                                                    tvFixedReason.setText(applyStatusVo.getPrepayreason());
+                                                    tvFixedReason.setVisibility(View.VISIBLE);
+                                                }
+                                                //if (!TextUtils.isEmpty(applyStatusVo.getCustomreason()))
+                                                //tvCustomReason.setText(applyStatusVo.getCustomreason());
+                                                next.setText("重新上传");
+                                                tvTips.setVisibility(View.VISIBLE);
                                             }
-                                            //if (!TextUtils.isEmpty(applyStatusVo.getCustomreason()))
-                                            //tvCustomReason.setText(applyStatusVo.getCustomreason());
-                                            next.setText("重新上传");
-                                            tvTips.setVisibility(View.VISIBLE);
                                         }
                                     }
                                 }
@@ -439,6 +476,14 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                         }
                     }
                 });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            offlineCancel = "1";
+        }
     }
 
     private void initButtonView(SelectAddrstsInfoVo infoVo) {
@@ -476,6 +521,9 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void selectAddrSuccess() {
+        llChecking.setVisibility(View.VISIBLE);
+        llBtn.setVisibility(View.VISIBLE);
+        tvChecking.setVisibility(View.VISIBLE);
         tvChecking.setText("选址成功，您离开店只有一步之遥了");
         tvChecking.setCompoundDrawablesRelative(pass, null, null, null);
     }
@@ -604,13 +652,47 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                                 for (FeeListVo.Fee fee : feeListVo.getFeelst()) {
                                     amount += Integer.valueOf(fee.getAmount());
                                 }
-                                showBidSuccessPopup();
+//                                showBidSuccessPopup();
+                                createDialog();
                             }
                         } catch (org.json.JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 });
+    }
+
+    private void createDialog() {
+        final Dialog dialog = new Dialog(this, R.style.Dialog);
+        dialog.setContentView(R.layout.dialog_bid_tips);
+        TextView confirm = (TextView) dialog.findViewById(R.id.dialog_button_ok);
+        TextView tvBidmoney = (TextView) dialog.findViewById(R.id.tv_bidmoney);
+        TextView tvBond = (TextView) dialog.findViewById(R.id.tv_bond);
+        TextView tvEndtime = (TextView) dialog.findViewById(R.id.tv_endtime);
+        String end = "为了不影响您的竞拍结果，请您在<font color='red'>" + feeListVo.getEnddate()
+                + "</font>前支付" + amount + "元，以下是竞拍项目明细";
+        tvEndtime.setText(Html.fromHtml(end));
+        StringBuilder bidmoney = new StringBuilder();
+        for (FeeListVo.Fee fee : feeListVo.getFeelst()) {
+            bidmoney.append(fee.getCostname() + ":     " + fee.getAmount() + fee.getUnit() + "\n");
+        }
+        tvBidmoney.setText(bidmoney);
+        tvBond.setText("注：竞拍保证金可抵扣" + infoVo.getBond() + "元");
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                showBidSuccessPopup();
+            }
+        });
+        TextView cancel = (TextView) dialog.findViewById(R.id.dialog_button_cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     private void alipay(String info) {
@@ -688,34 +770,6 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                                     ToastShow("出价成功");
                                     nowprice = Integer.valueOf(saleprice);
                                 }
-                            } else {
-                                sweetDialog(json.getString("msg"), 1, false);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-    }
-
-    /**
-     * 线下转账，预付费
-     */
-    private void updateShopApplyInfo() {
-        String token = PreferenceUtils.getPrefString(getApplication(), "token", "1234567890");
-        OkGo.<String>get(Urls.baseUrl + Urls.updateShopApplyInfo)
-                .params("token", token)
-                .params("applyid", applyid)
-                .params("prepayway", "3")
-                .params("prepay", amount)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        try {
-                            JSONObject json = JSON.parseObject(response.body());
-                            String code = json.getString("code");
-                            if (code.equals("100000")) {
-                                KLog.i(response.body());
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
                             }

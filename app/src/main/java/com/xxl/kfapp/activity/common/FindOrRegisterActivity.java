@@ -97,6 +97,7 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
             @Override
             public void onFinish() {
                 btnSend.setText("重新获取");
+                btnSend.setEnabled(true);
             }
         };
         mid = PreferenceUtils.getPrefString(BaseApplication.getContext(), "uuid", "");
@@ -227,7 +228,7 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
         Pattern p;
         Matcher m;
         boolean b;
-        p = Pattern.compile("^[1][3,4,5,8][0-9]{9}$"); // 验证手机号
+        p = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$"); // 验证手机号
         m = p.matcher(mobiles);
         b = m.matches();
         return b;
@@ -309,20 +310,23 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
     }
 
     private void doGetIdentifyCode() {
+        btnSend.setClickable(false);
         phone = etPhone.getText().toString().trim();
         boolean b = true, c = true;
         if (phone.equals("")) {
             Toast.makeText(this, "手机号不能为空", Toast.LENGTH_SHORT).show();
             c = false;
             b = false;
+            btnSend.setClickable(true);
         }
         if (!checkPhoneNumber(phone) && b) {
             Toast.makeText(this, "手机号格式不正确", Toast.LENGTH_SHORT).show();
             c = false;
+            btnSend.setClickable(true);
         }
 
         if (c) {
-            btnSend.setEnabled(false);
+//            btnSend.setEnabled(false);
             mDialog.show();
             String use;
             if (isForgot) {
@@ -340,7 +344,6 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
                     .execute(new StringCallback() {
                         @Override
                         public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                            btnSend.setEnabled(true);
                             mDialog.hide();
                             try {
                                 JSONObject json = new JSONObject(response.body());

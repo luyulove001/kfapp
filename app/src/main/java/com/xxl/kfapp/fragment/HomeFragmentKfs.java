@@ -3,6 +3,7 @@ package com.xxl.kfapp.fragment;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -188,8 +189,10 @@ public class HomeFragmentKfs extends BaseFragment implements View.OnClickListene
                                     vo.setEndtime("");
                                 tvWorktime.setText("工作时间：" + vo.getBegintime() + "-" + vo.getEndtime());
                                 tvWorkaddr.setText("工作地址：" + vo.getShopname());
-                                tvCutToday.setText(vo.getDaytotal());
-                                tvCutCount.setText(vo.getTotal());
+                                tvCutToday.setText(Html.fromHtml("<font color='#028dd2'>"
+                                        + vo.getDaytotal() + "</font>"));
+                                tvCutCount.setText(Html.fromHtml("<font color='#028dd2'>"
+                                        + vo.getTotal() + "</font>"));
                                 tvSignTime.setText(vo.getSignfromtime());
                                 tvSignOutTime.setText(vo.getSignendtime());
                                 if (!TextUtils.isEmpty(vo.getFromsts()) && "2".equals(vo.getFromsts())) {

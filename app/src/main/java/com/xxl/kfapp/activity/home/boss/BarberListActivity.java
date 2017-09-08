@@ -3,7 +3,7 @@ package com.xxl.kfapp.activity.home.boss;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +21,7 @@ import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
 import com.xxl.kfapp.widget.ListViewDecoration;
 import com.xxl.kfapp.widget.TitleBar;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +39,7 @@ public class BarberListActivity extends BaseActivity implements View.OnClickList
     @Bind(R.id.btn_all)
     Button btnAll;
     @Bind(R.id.rv_barber)
-    RecyclerView rvBarber;
+    SwipeMenuRecyclerView rvBarber;
 
     private BarberAdapter adapter;
 
@@ -60,6 +61,12 @@ public class BarberListActivity extends BaseActivity implements View.OnClickList
             }
         });
         btnAll.setOnClickListener(this);
+        rvBarber.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler_10px));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.setSmoothScrollbarEnabled(true);
+        layoutManager.setAutoMeasureEnabled(true);
+        rvBarber.setLayoutManager(layoutManager);
     }
 
     @Override
@@ -69,21 +76,26 @@ public class BarberListActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.btn_all:
+                doGetBossShopStaffList(etSearch.getText().toString());
+                break;
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        doGetBossShopStaffList();
+        doGetBossShopStaffList("");
         StatService.onResume(this);
     }
 
-    private void doGetBossShopStaffList() {
+    private void doGetBossShopStaffList(String realname) {
         String token = PreferenceUtils.getPrefString(getApplication(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.getBossShopStaffList)
                 .tag(this)
                 .params("token", token)
+                .params("realname", realname)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -112,22 +124,42 @@ public class BarberListActivity extends BaseActivity implements View.OnClickList
         StatService.onPause(this);
     }
 
-    private void initBarberList(StaffVo vo) {
-        adapter = new BarberAdapter(vo.getStafflst());
+    private void initBarberList(final StaffVo vo) {
+        adapter = new BarberAdapter(vo.getStafflst(), this);
         adapter.openLoadAnimation();
         adapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter
                 .OnRecyclerViewItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-
+                Intent intent = new Intent();
+                switch (view.getId()) {
+                    case R.id.tv_checking_in:
+                        intent.setClass(BarberListActivity.this, CheckInActivity.class);
+                        intent.putExtra("barberid", vo.getStafflst().get(i).getStaffno());
+                        BarberListActivity.this.startActivity(intent);
+                        break;
+                    case R.id.tv_performance:
+                        intent.setClass(BarberListActivity.this, TicketListActivity.class);
+                        intent.putExtra("isToday", false);
+                        intent.putExtra("isBoss", false);
+                        intent.putExtra("barberid", vo.getStafflst().get(i).getStaffno());
+                        BarberListActivity.this.startActivity(intent);
+                        break;
+                    case R.id.lyt_barber_info:
+                        intent.setClass(BarberListActivity.this, BarberInfoActivity.class);
+                        intent.putExtra("barberid", vo.getStafflst().get(i).getStaffno());
+                        intent.putExtra("shopid", vo.getStafflst().get(i).getShopid());
+                        BarberListActivity.this.startActivity(intent);
+                        break;
+                    case R.id.tv_fire:
+                        intent.setClass(BarberListActivity.this, FireActivity.class);
+                        intent.putExtra("barberid", vo.getStafflst().get(i).getStaffno());
+                        intent.putExtra("shopid", vo.getStafflst().get(i).getShopid());
+                        BarberListActivity.this.startActivity(intent);
+                        break;
+                }
             }
         });
         rvBarber.setAdapter(adapter);
-        rvBarber.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler_10px));
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        layoutManager.setSmoothScrollbarEnabled(true);
-        layoutManager.setAutoMeasureEnabled(true);
-        rvBarber.setLayoutManager(layoutManager);
     }
 }

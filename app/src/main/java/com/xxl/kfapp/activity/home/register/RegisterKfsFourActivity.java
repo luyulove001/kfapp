@@ -162,6 +162,7 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
                 lytSubmit.setVisibility(View.VISIBLE);
                 lytTestAgain.setVisibility(View.GONE);
                 lytTestCount.setVisibility(View.GONE);
+                currentQuestion = 0;
                 initViewData();
                 break;
             case R.id.btn_true_answer:
@@ -169,6 +170,7 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
                 lytSubmit.setVisibility(View.GONE);
                 lytTestAgain.setVisibility(View.VISIBLE);
                 lytTestCount.setVisibility(View.GONE);
+                currentQuestion = 0;
                 setTureData();
                 break;
         }
@@ -269,6 +271,7 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
             }
         });
         ksnrAdapter.setNewData(kstmASVoList.get(0).getInfo());
+        ksTitle.setText(1 + "." + kstmASVoList.get(0).getQuestion());
         setKstmAdapter(kstmAdapter);
     }
 
@@ -378,6 +381,7 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
         for (KSTMVo kstmVo : kstmVoList) {
             if (!kstmVo.isWc()) {
                 sweetDialog("您还有题目未完成，请检查后再提交", 1, false);
+                next.setClickable(true);
                 return false;
             }
         }
@@ -447,6 +451,7 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
     }
 
     private void doCheckBarberTest() {
+        next.setClickable(false);
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
         if (isFinish()) {
             OkGo.<String>get(Urls.baseUrl + Urls.checkBarberTest)
@@ -457,6 +462,7 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
                     .execute(new StringCallback() {
                         @Override
                         public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                            next.setClickable(true);
                             try {
                                 JSONObject json = new JSONObject(response.body());
                                 String code = json.getString("code");
@@ -487,6 +493,7 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
                                             }
                                         }
                                         int count = Integer.valueOf(json.getString("testcnt"));
+                                        tvTotal.setText("共10题，您有" + count + "次考试机会");
                                         if (count > 0) {
                                             ToastShow("很抱歉，您尚未通过考试");
                                             tvTestCount.setText("您还有" + count + "次考试机会, 希望顺利通过");
@@ -512,11 +519,13 @@ public class RegisterKfsFourActivity extends BaseActivity implements View.OnClic
         lytSubmit.setVisibility(View.GONE);
         lytTestAgain.setVisibility(View.VISIBLE);
         lytTestCount.setVisibility(View.VISIBLE);
-        tvTestCount.setText("很抱歉，您不是我们所需要类型的人才");
+        tvTestCount.setText("您不符合快发师协会的要求，我们不予接纳");
         Drawable testFail = getResources().getDrawable(R.mipmap.sh_sb);
         testFail.setBounds(0, 0, testFail.getMinimumWidth(), testFail.getMinimumHeight());
         tvTestCount.setCompoundDrawables(testFail, null, null, null);
         lytTestAgain.setVisibility(View.GONE);
+        tvPoint.setVisibility(View.GONE);
+        btnTrue.setVisibility(View.GONE);
     }
 
 }

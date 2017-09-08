@@ -42,7 +42,7 @@ public class OrderListActivity extends BaseActivity {
         setContentView(R.layout.activity_order_list);
         ButterKnife.bind(this);
         mTitleBar.setBackOnclickListener(this);
-        mTitleBar.setTitle("我的订单");
+        mTitleBar.setTitle("交易记录");
 
     }
 

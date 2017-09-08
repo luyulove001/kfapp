@@ -26,6 +26,8 @@ public class IncomeAdapter extends BaseQuickAdapter<IncomeListVo.IncomeVo> {
             baseViewHolder.setText(R.id.tv_type, "支付宝");
         else if ("2".equals(vo.getPaytype()))
             baseViewHolder.setText(R.id.tv_type, "微信");
+        else if ("3".equals(vo.getPaytype()))
+            baseViewHolder.setText(R.id.tv_type, "现金");
 
     }
 }

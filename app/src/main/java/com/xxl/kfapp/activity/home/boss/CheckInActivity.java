@@ -52,11 +52,11 @@ public class CheckInActivity extends BaseActivity implements View.OnClickListene
 
     private TimePickerDialog dialog;
     private CheckInAdapter adapter;
-    private String beginDate, endDate;
+    private String beginDate, endDate, barberid;
 
     @Override
     protected void initArgs(Intent intent) {
-
+        barberid = intent.getStringExtra("barberid");
     }
 
     @Override
@@ -86,7 +86,9 @@ public class CheckInActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void initData() {
-        getTodayData();
+        if (TextUtils.isEmpty(barberid))
+            getTodayData();
+        else getShopStaffSignList("", "", barberid);
     }
 
     private void getTodayData() {
@@ -94,7 +96,7 @@ public class CheckInActivity extends BaseActivity implements View.OnClickListene
         tvStarttime.setText(today);
         tvEndtime.setText(today);
         endDate = beginDate = today;
-        getShopStaffSignList(today, today);
+        getShopStaffSignList(today, today, "");
     }
 
     @Override
@@ -144,7 +146,7 @@ public class CheckInActivity extends BaseActivity implements View.OnClickListene
                 } else if (TextUtils.isEmpty(endDate)) {
                     ToastShow("请先选择结束时间");
                 } else {
-                    getShopStaffSignList(beginDate, endDate);
+                    getShopStaffSignList(beginDate, endDate, "");
                 }
                 break;
         }
@@ -156,13 +158,14 @@ public class CheckInActivity extends BaseActivity implements View.OnClickListene
         getTodayData();
     }
 
-    private void getShopStaffSignList(String beginDate, String endDate) {
+    private void getShopStaffSignList(String beginDate, String endDate, String barberid) {
         String token = PreferenceUtils.getPrefString(getApplication(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.getShopStaffSignList)
                 .tag(this)
                 .params("token", token)
                 .params("begindate", beginDate)
                 .params("enddate", endDate)
+                .params("barberid", barberid)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {

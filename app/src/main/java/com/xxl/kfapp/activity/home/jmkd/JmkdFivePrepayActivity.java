@@ -17,6 +17,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.baidu.mobstat.StatService;
+import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
@@ -25,6 +26,7 @@ import com.xxl.kfapp.activity.home.register.RegisterKfsOneActivity;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.adapter.TextAdapter;
 import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.base.BaseApplication;
 import com.xxl.kfapp.model.response.AppConfigVo;
 import com.xxl.kfapp.model.response.FeeListVo;
 import com.xxl.kfapp.model.response.ProgressVo;
@@ -42,11 +44,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -73,6 +72,8 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
     TextView tvEndtime;
     @Bind(R.id.lyt_watch)
     LinearLayout lytWatch;
+    @Bind(R.id.tv_upload)
+    TextView tvUpload;
     @Bind(R.id.iv_prepay)
     ImageView ivPrepay;
 
@@ -97,7 +98,9 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
         next.setOnClickListener(this);
         mTitleBar.setTitle("开店申请");
         mTitleBar.setBackOnclickListener(this);
-        lytWatch.setOnClickListener(this);
+        tvUpload.setOnClickListener(this);
+        ivPrepay.setOnClickListener(this);
+        ivPrepay.setClickable(false);
         btnCancel.setOnClickListener(this);
     }
 
@@ -143,17 +146,17 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
             case R.id.next:
                 doUpdateShopApplyInfo(applyid);
                 break;
-            case R.id.lyt_watch:
-                if (!TextUtils.isEmpty(imgWatch)) {
-                    Intent i = new Intent(this, ImageShower.class);
-                    i.putExtra("image", imgWatch);
-                    startActivity(i);
-                } else {
-                    showHeadPopup();
-                }
+            case R.id.iv_prepay:
+                Intent i = new Intent(this, ImageShower.class);
+                i.putExtra("image", imgWatch);
+                startActivity(i);
                 break;
             case R.id.btn_cancel:
+                setResult(RESULT_OK);
                 finish();
+                break;
+            case R.id.tv_upload:
+                showHeadPopup();
                 break;
         }
     }
@@ -259,10 +262,15 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
                                 for (FeeListVo.Fee fee : feeListVo.getFeelst()) {
                                     textVo = new TextVo();
                                     textVo.setTxt1(fee.getCostname());
-                                    textVo.setTxt2(fee.getAmount() + fee.getUnit());
+                                    textVo.setTxt2("+" + fee.getAmount() + fee.getUnit());
                                     textVos.add(textVo);
                                     amount += Integer.valueOf(fee.getAmount());
                                 }
+                                textVo = new TextVo();
+                                textVo.setTxt1("保证金");
+                                textVo.setTxt2("-" + feeListVo.getBidmoney() + "元");
+                                textVos.add(textVo);
+                                amount -= feeListVo.getBidmoney();
                                 textVo = new TextVo();
                                 textVo.setTxt1("合计需付款");
                                 textVo.setTxt2(amount + "元");
@@ -272,10 +280,12 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
                                 AppConfigVo vo = (AppConfigVo) mACache.getAsObject("appConfig");
                                 tvCompanyname.setText(vo.getTranscompanyname());
                                 tvCompanyaccount.setText(vo.getTransbankinfo());
-//                                Calendar c = Calendar.getInstance();
-//                                c.add(Calendar.DAY_OF_MONTH, Integer.valueOf(vo.getTranscheckdays()));
-//                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
-                                tvEndtime.setText(feeListVo.getEnddata());
+                                //                                Calendar c = Calendar.getInstance();
+                                //                                c.add(Calendar.DAY_OF_MONTH, Integer.valueOf(vo
+                                // .getTranscheckdays()));
+                                //                                SimpleDateFormat sdf = new SimpleDateFormat
+                                // ("yyyy-MM-dd", Locale.CHINA);
+                                tvEndtime.setText(feeListVo.getEnddate());
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -286,6 +296,7 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
 
     private void doUploadImage(String path) {
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        showDialog();
         OkGo.<String>post(Urls.baseUrl + Urls.uploadForApp)
                 .tag(this)
                 .params("token", token)
@@ -293,6 +304,7 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        disDialog();
                         try {
                             JSONObject json = new JSONObject(response.body());
                             String code = json.getString("code");
@@ -300,6 +312,9 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
                                 sweetDialog(json.getString("msg"), 1, false);
                             } else {
                                 imgWatch = json.getJSONObject("data").getString("path");
+                                Glide.with(BaseApplication.getContext()).load(imgWatch).into(ivPrepay);
+                                ivPrepay.setLayoutParams(new LinearLayout.LayoutParams(200, 200));
+                                ivPrepay.setClickable(true);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -364,7 +379,7 @@ public class JmkdFivePrepayActivity extends BaseActivity implements View.OnClick
                         //上传服务器代码
                         doUploadImage(RegisterKfsOneActivity.getRealFilePath(this, imgUri));
                         setPicToView(head);//保存在SD卡中
-                        ivPrepay.setImageBitmap(head);//用ImageView显示出来
+                        //                        ivPrepay.setImageBitmap(head);//用ImageView显示出来
                     }
                 }
                 break;

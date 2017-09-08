@@ -17,7 +17,8 @@
             android:id="@+id/mImage"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:src="@mipmap/default_head"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -143,7 +144,8 @@
         android:background="@mipmap/right_shine"
         android:text="继续操作"
         android:textColor="@color/white"
-        android:textSize="@dimen/x35"/>
+        android:textSize="@dimen/x35"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/lyt_kfs"
@@ -170,7 +172,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/x20"
             android:layout_marginStart="@dimen/x20"
-            android:layout_marginTop="@dimen/x10"
+            android:layout_marginTop="@dimen/x20"
             android:background="@drawable/bg_corner_red"
             android:paddingBottom="15dp"
             android:paddingTop="15dp"

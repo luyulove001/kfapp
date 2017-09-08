@@ -14,10 +14,8 @@ import com.baidu.mobstat.StatService;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
-import com.xxl.kfapp.adapter.CheckInAdapter;
 import com.xxl.kfapp.adapter.TicketAdapter;
 import com.xxl.kfapp.base.BaseActivity;
-import com.xxl.kfapp.model.response.CheckInVo;
 import com.xxl.kfapp.model.response.TicketListVo;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.TimePickerDialog;
@@ -56,7 +54,7 @@ public class TicketListActivity extends BaseActivity implements View.OnClickList
     SwipeRefreshLayout mRefreshLayout;
 
     private TimePickerDialog dialog;
-    private String beginDate, endDate;
+    private String beginDate, endDate, barberid;
     private TicketAdapter adapter;
     private boolean isToday, isBoss;
 
@@ -64,6 +62,7 @@ public class TicketListActivity extends BaseActivity implements View.OnClickList
     protected void initArgs(Intent intent) {
         isToday = intent.getBooleanExtra("isToday", false);
         isBoss = intent.getBooleanExtra("isBoss", false);
+        barberid = intent.getStringExtra("barberid");
     }
 
     @Override
@@ -81,13 +80,17 @@ public class TicketListActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void initData() {
-        if (isToday) {
-            getTodayData();
+        if (!TextUtils.isEmpty(barberid)) {
+            getShopCutRecord("", "", "");
         } else {
-            if (isBoss) {
-                getShopCutRecord("", "", "");
+            if (isToday) {
+                getTodayData();
             } else {
-                getBarberCutRecord("", "", "");
+                if (isBoss) {
+                    getShopCutRecord("", "", "");
+                } else {
+                    getBarberCutRecord("", "", "");
+                }
             }
         }
     }
@@ -172,7 +175,7 @@ public class TicketListActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onRefresh() {
         ToastShow("下拉刷新");
-        getTodayData();
+        initData();
     }
 
     private void initTicketList(TicketListVo vo) {
@@ -196,6 +199,7 @@ public class TicketListActivity extends BaseActivity implements View.OnClickList
                 .params("begindate", beginDate)
                 .params("enddate", endDate)
                 .params("shopid", shopid)
+                .params("barberid", barberid)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -226,7 +230,7 @@ public class TicketListActivity extends BaseActivity implements View.OnClickList
                 .params("token", token)
                 .params("begindate", beginDate)
                 .params("enddate", endDate)
-                .params("shopid", page)
+                .params("page", page)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {

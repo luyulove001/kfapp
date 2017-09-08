@@ -14,6 +14,7 @@ public class Urls {
     public static final String deleteUserAddr = "/personalapi/deleteUserAddr";
     public static final String getMemberInfo = "/personalapi/getMemberInfo";
     public static final String updateMemberInfo = "/personalapi/updateMemberInfo";
+    public static final String feedback = "/personalapi/feedback";
 
     public static final String insertBarberApply = "/barberapi/insertBarberApply";
     public static final String getBarberApplyStatus = "/barberapi/getBarberApplyStatus";
@@ -72,6 +73,8 @@ public class Urls {
     public static final String insertShopCashApply = "/barberapi/insertShopCashApply";
     public static final String insertShopCloseApply = "/barberapi/insertShopCloseApply";
     public static final String getShopSetInfo = "/barberapi/getShopSetInfo";
+    public static final String getStaffDetailInfo = "/barberapi/getStaffDetailInfo";
+    public static final String updateShopStaffJobsts = "/barberapi/updateShopStaffJobsts";
 
     public static final String getDictList = "/commapi/getDictList";
     public static final String uploadForApp = "/file/uploadForApp";

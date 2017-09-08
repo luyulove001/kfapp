@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -54,8 +56,8 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
     TextView tvShopNum;
     @Bind(R.id.btn_all)
     Button btnAll;
-    @Bind(R.id.btn_search_content)
-    Button btnAddrSelect;
+    @Bind(R.id.et_search_content)
+    EditText etSearch;
 
     private ShopApplyStatusVo shopStatusVo;
     private String applyStatus, shopid, prepaychecksts;
@@ -70,33 +72,29 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
     protected void initView(Bundle bundle) {
         setContentView(R.layout.activity_shop_list);
         ButterKnife.bind(this);
-        mTitleBar.setTitle("门店列表");
+        mTitleBar.setTitle("店铺");
         mTitleBar.setBackOnclickListener(this);
         mTitleBar.setRightIV(R.mipmap.qc_fast_add_write, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ("26".equals(shopStatusVo.getApplysts()) || "20".equals(shopStatusVo.getApplysts())) {
-                    startActivity(new Intent(ShopListActivity.this, JmkdOneActivity.class));
-                } else {
-                    sweetDialogCustom(0, "提示", "您还有未完成的门店申请流程", "去完成", "取消",
-                            new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    sweetAlertDialog.dismiss();
-                                    startApply(applyStatus, shopStatusVo, prepaychecksts, shopid);
-                                }
-                            }, null);
-                }
+                doGetShopApplyStatus();
             }
         });
-        btnAddrSelect.setOnClickListener(this);
+//        btnAddrSelect.setOnClickListener(this);
         btnAll.setOnClickListener(this);
+        etSearch.setHint("店铺名称");
+        tvShopNum.setText("您共有家店铺");
+        rvOwnShop.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler_10px));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.setSmoothScrollbarEnabled(true);
+        layoutManager.setAutoMeasureEnabled(true);
+        rvOwnShop.setLayoutManager(layoutManager);
     }
 
     @Override
     protected void initData() {
-        doGetBossShopList("", "", "");
-        doGetShopApplyStatus();
+        doGetBossShopList("");
     }
 
     @Override
@@ -114,51 +112,24 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_search_content:
-                onAddressPicker();
-                break;
+//            case R.id.btn_search_content:
+//                onAddressPicker();
+//                break;
             case R.id.btn_all:
-                doGetBossShopList("", "", "");
+                doGetBossShopList(etSearch.getText().toString());
                 break;
         }
     }
 
-    public void onAddressPicker() {
-        AddressPickTask task = new AddressPickTask(this);
-        task.setHideProvince(false);
-        task.setHideCounty(false);
-        task.setCallback(new AddressPickTask.Callback() {
-            @Override
-            public void onAddressInitFailed() {
-                ToastShow("数据初始化失败");
-            }
-
-            @Override
-            public void onAddressPicked(Province province, City city, County county) {
-                mProvince = province.getAreaName();
-                mCity = city.getAreaName();
-                if (county == null) {
-                    ToastShow(province.getAreaName() + city.getAreaName());
-                    doGetBossShopList(province.getAreaId(), city.getAreaId(), "");
-                    mCounty = "";
-                } else {
-                    ToastShow(province.getAreaName() + city.getAreaName() + county.getAreaName());
-                    doGetBossShopList(province.getAreaId(), city.getAreaId(), county.getAreaId());
-                    mCounty = county.getAreaName();
-                }
-            }
-        });
-        task.execute(mProvince, mCity, mCounty);
-    }
-
-    private void doGetBossShopList(String province, String city, String area) {
+    private void doGetBossShopList(String shopname) {
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.getBossShopList)
                 .tag(this)
                 .params("token", token)
-                .params("province", province)
-                .params("city", city)
-                .params("area", area)
+//                .params("province", province)
+//                .params("city", city)
+//                .params("area", area)
+                .params("shopname", shopname)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -169,7 +140,8 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
                                 KLog.i(response.body());
                                 BossShopListVo bossShopListVo = mGson.fromJson(json.getString("data"), BossShopListVo
                                         .class);
-                                tvShopNum.setText("您共有" + bossShopListVo.getShoplst().size() + "家店铺");
+                                tvShopNum.setText(Html.fromHtml("您共有<font color='red'>"
+                                        + bossShopListVo.getShoplst().size() + "</font>家店铺"));
                                 initShopList(bossShopListVo);
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
@@ -194,12 +166,6 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
             }
         });
         rvOwnShop.setAdapter(bossShopAdapter);
-        rvOwnShop.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler_10px));
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        layoutManager.setSmoothScrollbarEnabled(true);
-        layoutManager.setAutoMeasureEnabled(true);
-        rvOwnShop.setLayoutManager(layoutManager);
     }
 
     private void doGetShopApplyStatus() {
@@ -223,7 +189,18 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
                                 applyStatus = shopStatusVo.getApplysts();
                                 shopid = shopStatusVo.getShopid();
                                 prepaychecksts = shopStatusVo.getPrepaychecksts();
-                                String devicechecksts = shopStatusVo.getDevicechecksts();
+                                if ("26".equals(shopStatusVo.getApplysts()) || "20".equals(shopStatusVo.getApplysts())) {
+                                    startActivity(new Intent(ShopListActivity.this, JmkdOneActivity.class));
+                                } else {
+                                    sweetDialogCustom(0, "提示", "您还有未完成的门店申请流程", "去完成", "取消",
+                                            new SweetAlertDialog.OnSweetClickListener() {
+                                                @Override
+                                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                    sweetAlertDialog.dismiss();
+                                                    startApply(applyStatus, shopStatusVo, prepaychecksts, shopid);
+                                                }
+                                            }, null);
+                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -249,11 +226,12 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
                 startActivity(new Intent(ShopListActivity.this, JmkdFourActivity.class));
                 break;
             case "24":
-                if (!TextUtils.isEmpty(prepaychecksts)) {
-                    Intent i = new Intent(ShopListActivity.this, JmkdFivePrepayActivity.class);
-                    i.putExtra("shopStatusVo", shopStatusVo);
-                    startActivity(i);
-                } else if (TextUtils.isEmpty(shopid)) {
+//                if (!TextUtils.isEmpty(prepaychecksts)) {
+//                    Intent i = new Intent(ShopListActivity.this, JmkdFivePrepayActivity.class);
+//                    i.putExtra("shopStatusVo", shopStatusVo);
+//                    startActivity(i);
+//                } else
+                if (TextUtils.isEmpty(shopid)) {
                     startActivity(new Intent(ShopListActivity.this, JmkdFiveActivity.class));
                 } else {
                     Intent i = new Intent(ShopListActivity.this, JmkdFive3WebActivity.class);

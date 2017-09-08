@@ -36,15 +36,24 @@
                 android:text="¥3"
                 android:textColor="@color/main_red"
                 android:textSize="@dimen/x40"/>
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/x10"
-                android:drawablePadding="5dp"
-                android:drawableStart="@mipmap/qc_fast_money_bg"
-                android:padding="@dimen/x10"
-                android:text="合计营业额"/>
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/x30"
+                    android:layout_height="@dimen/x30"
+                    android:src="@mipmap/qc_fast_money_bg"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/x5"
+                    android:text="合计营业额"/>
+            </LinearLayout>
         </LinearLayout>
 
         <View
@@ -69,14 +78,24 @@
                 android:textColor="@color/text_blue"
                 android:textSize="@dimen/x40"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/x10"
-                android:drawablePadding="5dp"
-                android:drawableStart="@mipmap/qc_fast_zhi"
-                android:padding="@dimen/x10"
-                android:text="支付宝"/>
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/x30"
+                    android:layout_height="@dimen/x30"
+                    android:src="@mipmap/qc_fast_zhi"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/x5"
+                    android:text="支付宝"/>
+            </LinearLayout>
         </LinearLayout>
 
         <View
@@ -101,14 +120,66 @@
                 android:textColor="@color/google_green"
                 android:textSize="@dimen/x40"/>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/x30"
+                    android:layout_height="@dimen/x30"
+                    android:src="@mipmap/icon_wx"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/x5"
+                    android:text="微信"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/x1"
+            android:layout_height="match_parent"
+            android:background="@color/line2"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
             <TextView
+                android:id="@+id/tv_xj"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x10"
-                android:drawablePadding="5dp"
-                android:drawableStart="@mipmap/qc_fast_weix"
                 android:padding="@dimen/x10"
-                android:text="微信"/>
+                android:textColor="@color/progress_red"
+                android:text="33%"
+                android:textSize="@dimen/x40"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/x30"
+                    android:layout_height="@dimen/x30"
+                    android:src="@mipmap/qc_fast_balance"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/x5"
+                    android:text="现金"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

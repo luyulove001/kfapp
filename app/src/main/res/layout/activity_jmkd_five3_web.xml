@@ -29,12 +29,14 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_web"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/bg_gray"
         android:layout_marginTop="@dimen/x20"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/ll_checking"
@@ -53,7 +55,8 @@
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp"
                 android:text="正在奋力审核中..."
-                android:textSize="@dimen/title"/>
+                android:textSize="@dimen/title"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:id="@+id/lyt_reason_shsb"
@@ -101,11 +104,54 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_nopay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/x20"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="20dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_confiscate"
+                android:layout_marginStart="@dimen/x60"/>
+
+            <TextView
+                android:id="@+id/tv_waring"
+                android:layout_marginStart="@dimen/x30"
+                android:layout_marginEnd="@dimen/x100"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="不好意思，因为您超期未付款您的保证金已被没收"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_confiscate"
+            android:layout_width="@dimen/x550"
+            android:layout_height="@dimen/y200"
+            android:layout_gravity="center"
+            android:text="没收金额：1000.00元"
+            android:background="@color/light_red"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/ll_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x20"
         android:background="@color/white"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:paddingBottom="10dp"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
@@ -120,11 +166,16 @@
             android:textSize="@dimen/small"
             android:visibility="gone"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
         <Button
             android:id="@+id/next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:background="@drawable/bg_corner_red"
             android:paddingBottom="15dp"
@@ -138,14 +189,14 @@
             android:layout_width="@dimen/x120"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/x30"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/bg_btn_red"
+            android:background="@drawable/bg_btn_corner_red"
             android:paddingBottom="15dp"
             android:paddingTop="15dp"
             android:text="刷新"
             android:textColor="@color/white"
             android:textSize="@dimen/middle"
             android:visibility="gone"/>
+        </LinearLayout>
     </LinearLayout>
 
     <include layout="@layout/include_line2"/>

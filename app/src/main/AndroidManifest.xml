@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <!-- 地理位置相关 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>-->
+    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> -->
     <!-- 定位包、导航包需要的额外权限（注：基础权限也需要） -->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
 
@@ -100,8 +100,8 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.home.register.RegisterKfsOneActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.home.register.RegisterKfsTwoActivity"
             android:screenOrientation="portrait"/>
@@ -128,7 +128,8 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.home.jmkd.JmkdFiveActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.common.LoginActivity"
             android:label="@string/title_activity_login"
@@ -219,7 +220,8 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.home.boss.BarberListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".activity.home.boss.CheckInActivity"
             android:screenOrientation="portrait"/>
@@ -243,8 +245,8 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.home.boss.RefundActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".activity.home.boss.IncomeListActivity"
             android:screenOrientation="portrait"/>
@@ -291,7 +293,19 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.home.jmkd.JmkdSixDeviceActivity">
+        <activity
+            android:name=".activity.home.jmkd.JmkdSixDeviceActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.common.AboutUsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.common.FeedbackActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.home.boss.BarberInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.home.boss.FireActivity">
         </activity>
     </application>
 

@@ -82,6 +82,7 @@
                     android:drawablePadding="@dimen/x15"
                     android:drawableStart="@mipmap/sh_dian"
                     android:padding="@dimen/x10"
+                    android:visibility="gone"
                     android:text="@string/action_forgot_pwd"/>
 
                 <TextView
@@ -91,6 +92,7 @@
                     android:drawablePadding="@dimen/x15"
                     android:drawableStart="@mipmap/sh_dian"
                     android:padding="@dimen/x10"
+                    android:visibility="gone"
                     android:text="@string/action_forgot_pwd"/>
             </LinearLayout>
 
@@ -114,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="请修改资料，重新提交审核"
+            android:text="请修改意向店址，重新提交审核"
             android:textSize="@dimen/small"
             android:visibility="gone"/>
 

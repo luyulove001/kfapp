@@ -433,7 +433,8 @@
                     <EditText
                         android:id="@+id/et_certdisc"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/y120"
+                        android:maxLength="100"
                         android:layout_weight="1"
                         android:background="@null"
                         android:hint="请填写曾经获得过的荣誉证书或是技能证书等"

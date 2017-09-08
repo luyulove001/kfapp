@@ -18,6 +18,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.baidu.mobstat.StatService;
+import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
@@ -25,6 +26,7 @@ import com.xxl.kfapp.activity.common.ImageShower;
 import com.xxl.kfapp.activity.home.register.RegisterKfsOneActivity;
 import com.xxl.kfapp.adapter.ProgressAdapter;
 import com.xxl.kfapp.base.BaseActivity;
+import com.xxl.kfapp.base.BaseApplication;
 import com.xxl.kfapp.model.response.AppConfigVo;
 import com.xxl.kfapp.model.response.ProgressVo;
 import com.xxl.kfapp.model.response.ShopApplyStatusVo;
@@ -88,6 +90,8 @@ public class JmkdSixDeviceActivity extends BaseActivity implements View.OnClickL
     LinearLayout llChecking;
     @Bind(R.id.ll_check)
     LinearLayout llCheck;
+    @Bind(R.id.tv_upload)
+    TextView tvUpload;
 
     private ProgressAdapter progressAdapter;
     private String imgWatch, gusertel, gusername, guseraddr;
@@ -116,6 +120,9 @@ public class JmkdSixDeviceActivity extends BaseActivity implements View.OnClickL
         lytWatch.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
         next1.setOnClickListener(this);
+        ivPrepay.setOnClickListener(this);
+        tvUpload.setOnClickListener(this);
+        ivPrepay.setClickable(false);
         initDrawables();
     }
 
@@ -153,14 +160,8 @@ public class JmkdSixDeviceActivity extends BaseActivity implements View.OnClickL
             case R.id.next:
                 doUpdateShopApplyInfo();
                 break;
-            case R.id.lyt_watch:
-                if (!TextUtils.isEmpty(imgWatch)) {
-                    Intent i = new Intent(this, ImageShower.class);
-                    i.putExtra("image", imgWatch);
-                    startActivity(i);
-                } else {
-                    showHeadPopup();
-                }
+            case R.id.tv_upload:
+                showHeadPopup();
                 break;
             case R.id.btn_cancel:
                 finish();
@@ -168,6 +169,11 @@ public class JmkdSixDeviceActivity extends BaseActivity implements View.OnClickL
             case R.id.next1:
                 startActivity(new Intent(JmkdSixDeviceActivity.this, JmkdSixActivity.class));
                 finish();
+                break;
+            case R.id.iv_prepay:
+                Intent i = new Intent(this, ImageShower.class);
+                i.putExtra("image", imgWatch);
+                startActivity(i);
                 break;
         }
     }
@@ -329,6 +335,7 @@ public class JmkdSixDeviceActivity extends BaseActivity implements View.OnClickL
 
     private void doUploadImage(String path) {
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
+        showDialog();
         OkGo.<String>post(Urls.baseUrl + Urls.uploadForApp)
                 .tag(this)
                 .params("token", token)
@@ -336,6 +343,7 @@ public class JmkdSixDeviceActivity extends BaseActivity implements View.OnClickL
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        disDialog();
                         try {
                             JSONObject json = new JSONObject(response.body());
                             String code = json.getString("code");
@@ -343,6 +351,9 @@ public class JmkdSixDeviceActivity extends BaseActivity implements View.OnClickL
                                 sweetDialog(json.getString("msg"), 1, false);
                             } else {
                                 imgWatch = json.getJSONObject("data").getString("path");
+                                ivPrepay.setLayoutParams(new LinearLayout.LayoutParams(200, 200));
+                                ivPrepay.setClickable(true);
+                                Glide.with(BaseApplication.getContext()).load(imgWatch).into(ivPrepay);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -391,6 +402,9 @@ public class JmkdSixDeviceActivity extends BaseActivity implements View.OnClickL
 
     private void showChecking() {
         llChecking.setVisibility(View.VISIBLE);
+        AppConfigVo appConfig = (AppConfigVo) mACache.getAsObject("appConfig");
+        tvChecking.setText("设备费凭证审核中，一般" + appConfig.getTranscheckdays()
+                + "个工作日，请耐心等待");
         llTrans.setVisibility(View.GONE);
         llBtn1.setVisibility(View.GONE);
         llBtn.setVisibility(View.GONE);
@@ -417,7 +431,7 @@ public class JmkdSixDeviceActivity extends BaseActivity implements View.OnClickL
                         //上传服务器代码
                         doUploadImage(RegisterKfsOneActivity.getRealFilePath(this, imgUri));
                         setPicToView(head);//保存在SD卡中
-                        ivPrepay.setImageBitmap(head);//用ImageView显示出来
+//                        ivPrepay.setImageBitmap(head);//用ImageView显示出来
                     }
                 }
                 break;
