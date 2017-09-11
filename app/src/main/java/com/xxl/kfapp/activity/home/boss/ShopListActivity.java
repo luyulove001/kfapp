@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.ajguan.library.EasyRefreshLayout;
+import com.ajguan.library.LoadModel;
 import com.alibaba.fastjson.JSON;
 import com.baidu.mobstat.StatService;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -58,6 +60,10 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
     Button btnAll;
     @Bind(R.id.et_search_content)
     EditText etSearch;
+    @Bind(R.id.mRefreshLayout)
+    EasyRefreshLayout mRefreshLayout;
+
+    private boolean isRefresh = false;
 
     private ShopApplyStatusVo shopStatusVo;
     private String applyStatus, shopid, prepaychecksts;
@@ -90,16 +96,33 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
         layoutManager.setSmoothScrollbarEnabled(true);
         layoutManager.setAutoMeasureEnabled(true);
         rvOwnShop.setLayoutManager(layoutManager);
+        initRefreshListener();
+    }
+
+    private void initRefreshListener() {
+        mRefreshLayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
+            @Override
+            public void onLoadMore() {
+            }
+
+            @Override
+            public void onRefreshing() {
+                isRefresh = true;
+                doGetBossShopList("");
+            }
+        });
+        mRefreshLayout.setLoadMoreModel(LoadModel.NONE);
     }
 
     @Override
     protected void initData() {
-        doGetBossShopList("");
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        doGetBossShopList("");
         StatService.onResume(this);
     }
 
@@ -121,6 +144,7 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void doGetBossShopList(String shopname) {
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.getBossShopList)
@@ -140,6 +164,8 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
                                 KLog.i(response.body());
                                 BossShopListVo bossShopListVo = mGson.fromJson(json.getString("data"), BossShopListVo
                                         .class);
+                                if (isRefresh)
+                                    mRefreshLayout.refreshComplete();
                                 tvShopNum.setText(Html.fromHtml("您共有<font color='red'>"
                                         + bossShopListVo.getShoplst().size() + "</font>家店铺"));
                                 initShopList(bossShopListVo);

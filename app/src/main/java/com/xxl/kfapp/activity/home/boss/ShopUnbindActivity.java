@@ -2,8 +2,8 @@ package com.xxl.kfapp.activity.home.boss;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.annotation.IdRes;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +18,6 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
 import com.xxl.kfapp.activity.common.FindOrRegisterActivity;
-import com.xxl.kfapp.activity.common.LoginActivity;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.model.response.CashApplyVo;
 import com.xxl.kfapp.utils.PreferenceUtils;
@@ -54,7 +53,7 @@ public class ShopUnbindActivity extends BaseActivity {
     EditText etStaffno;
 
     private String token, shopid, closetype = "1";
-    private int mBalance;
+    private double mBalance;
 
     @Override
     protected void initArgs(Intent intent) {
@@ -206,7 +205,7 @@ public class ShopUnbindActivity extends BaseActivity {
                             String code = json.getString("code");
                             if (code.equals("100000")) {
                                 CashApplyVo vo = mGson.fromJson(json.getString("data"), CashApplyVo.class);
-                                mBalance = Integer.valueOf(vo.getBalance());
+                                mBalance = Double.valueOf(vo.getBalance());
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
                             }

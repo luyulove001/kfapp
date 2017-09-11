@@ -1,25 +1,20 @@
 package com.xxl.kfapp.activity.home.boss;
 
 import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
+import com.ajguan.library.EasyRefreshLayout;
 import com.alibaba.fastjson.JSON;
 import com.baidu.mobstat.StatService;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.xxl.kfapp.R;
-import com.xxl.kfapp.adapter.BalanceAdapter;
 import com.xxl.kfapp.adapter.IncomeDetailAdapter;
 import com.xxl.kfapp.base.BaseActivity;
 import com.xxl.kfapp.base.BaseApplication;
-import com.xxl.kfapp.model.response.BalanceListVo;
 import com.xxl.kfapp.model.response.IncomeVo;
 import com.xxl.kfapp.utils.PreferenceUtils;
 import com.xxl.kfapp.utils.Urls;
@@ -29,15 +24,18 @@ import com.xxl.kfapp.widget.TitleBar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class BalanceDetailActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class BalanceDetailActivity extends BaseActivity {
     @Bind(R.id.mTitleBar)
     TitleBar mTitleBar;
     @Bind(R.id.rv_balance)
     RecyclerView rvBalance;
     @Bind(R.id.mRefreshLayout)
-    SwipeRefreshLayout mRefreshLayout;
+    EasyRefreshLayout mRefreshLayout;
 
     private String shopid;
+    private int mPage = 1;
+    private boolean isRefresh = false, isLoad = false;
+    private IncomeDetailAdapter adapter;
 
     @Override
     protected void initArgs(Intent intent) {
@@ -50,7 +48,31 @@ public class BalanceDetailActivity extends BaseActivity implements SwipeRefreshL
         ButterKnife.bind(this);
         mTitleBar.setTitle("收支明细");
         mTitleBar.setBackOnclickListener(this);
-        mRefreshLayout.setOnRefreshListener(this);
+        rvBalance.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.setSmoothScrollbarEnabled(true);
+        layoutManager.setAutoMeasureEnabled(true);
+        rvBalance.setLayoutManager(layoutManager);
+        initRefreshListener();
+    }
+
+    private void initRefreshListener() {
+        mRefreshLayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
+            @Override
+            public void onLoadMore() {
+                mPage +=1;
+                isLoad = true;
+                getShopIncome(shopid);
+            }
+
+            @Override
+            public void onRefreshing() {
+                mPage = 1;
+                isRefresh = true;
+                getShopIncome(shopid);
+            }
+        });
     }
 
     @Override
@@ -70,18 +92,13 @@ public class BalanceDetailActivity extends BaseActivity implements SwipeRefreshL
         StatService.onPause(this);
     }
 
-    @Override
-    public void onRefresh() {
-        ToastShow("下拉刷新");
-        getShopIncome(shopid);
-    }
-
     private void getShopIncome(String shopid) {
         String token = PreferenceUtils.getPrefString(BaseApplication.getContext(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.getShopIncome)
                 .tag(this)
                 .params("token", token)
                 .params("shopid", shopid)
+                .params("page", mPage)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -93,7 +110,20 @@ public class BalanceDetailActivity extends BaseActivity implements SwipeRefreshL
                                 Gson gson = new Gson();
                                 IncomeVo incomeVo = gson.fromJson(json.getString("data"), IncomeVo.class);
                                 if (incomeVo != null && incomeVo.getRows().size() != 0) {
-                                    initRv(incomeVo);
+                                    if (isRefresh) {
+                                        mRefreshLayout.refreshComplete();
+                                        adapter.setNewData(incomeVo.getRows());
+                                        isRefresh = false;
+                                    } else if (isLoad) {
+                                        mRefreshLayout.closeLoadView();
+                                        int postion = adapter.getData().size();
+                                        adapter.getData().addAll(incomeVo.getRows());
+                                        adapter.notifyDataSetChanged();
+                                        rvBalance.scrollToPosition(postion);
+                                        isLoad = false;
+                                    } else {
+                                        initRv(incomeVo);
+                                    }
                                 }
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
@@ -106,14 +136,8 @@ public class BalanceDetailActivity extends BaseActivity implements SwipeRefreshL
     }
 
     private void initRv(final IncomeVo vo) {
-        IncomeDetailAdapter adapter = new IncomeDetailAdapter(vo.getRows());
+        adapter = new IncomeDetailAdapter(vo.getRows());
         adapter.openLoadAnimation();
         rvBalance.setAdapter(adapter);
-        rvBalance.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler));
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        layoutManager.setSmoothScrollbarEnabled(true);
-        layoutManager.setAutoMeasureEnabled(true);
-        rvBalance.setLayoutManager(layoutManager);
     }
 }

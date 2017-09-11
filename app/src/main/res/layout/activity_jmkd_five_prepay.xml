@@ -105,7 +105,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/x150"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingEnd="10dp"
@@ -115,14 +115,14 @@
 
                     <TextView
                         android:id="@+id/tv_companyname"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:maxLines="1"
                         android:paddingEnd="10dp"
                         android:paddingStart="10dp"
                         android:text="金额(元)"
-                        android:textSize="@dimen/x40"/>
+                        android:textSize="@dimen/big"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -133,7 +133,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/x150"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingEnd="10dp"
@@ -143,14 +143,14 @@
 
                     <TextView
                         android:id="@+id/tv_companyaccount"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:maxLines="1"
                         android:paddingEnd="10dp"
                         android:paddingStart="10dp"
                         android:text="金额(元)"
-                        android:textSize="@dimen/x40"/>
+                        android:textSize="@dimen/big"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -163,7 +163,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/x150"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingEnd="10dp"
@@ -175,6 +175,7 @@
                         android:id="@+id/iv_prepay"
                         android:layout_width="@dimen/x40"
                         android:layout_height="@dimen/x40"
+                        android:layout_marginStart="10dp"
                         android:src="@mipmap/card_camera_ic"/>
 
                     <TextView

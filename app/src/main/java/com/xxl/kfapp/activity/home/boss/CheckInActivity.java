@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.ajguan.library.EasyRefreshLayout;
 import com.baidu.mobstat.StatService;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -33,8 +34,7 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CheckInActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout
-        .OnRefreshListener{
+public class CheckInActivity extends BaseActivity implements View.OnClickListener{
     @Bind(R.id.mTitleBar)
     TitleBar mTitleBar;
     @Bind(R.id.rv_barber_check_in)
@@ -48,11 +48,13 @@ public class CheckInActivity extends BaseActivity implements View.OnClickListene
     @Bind(R.id.btn_type)
     Button btnType;
     @Bind(R.id.mRefreshLayout)
-    SwipeRefreshLayout mRefreshLayout;
+    EasyRefreshLayout mRefreshLayout;
 
     private TimePickerDialog dialog;
     private CheckInAdapter adapter;
     private String beginDate, endDate, barberid;
+    private int mPage = 1;
+    private boolean isRefresh = false, isLoad = false;
 
     @Override
     protected void initArgs(Intent intent) {
@@ -69,7 +71,31 @@ public class CheckInActivity extends BaseActivity implements View.OnClickListene
         btnSearch.setOnClickListener(this);
         tvEndtime.setOnClickListener(this);
         tvStarttime.setOnClickListener(this);
-        mRefreshLayout.setOnRefreshListener(this);
+        rvCheckIn.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.setSmoothScrollbarEnabled(true);
+        layoutManager.setAutoMeasureEnabled(true);
+        rvCheckIn.setLayoutManager(layoutManager);
+        initRefreshListener();
+    }
+
+    private void initRefreshListener() {
+        mRefreshLayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
+            @Override
+            public void onLoadMore() {
+                mPage +=1;
+                isLoad = true;
+                getTodayData();
+            }
+
+            @Override
+            public void onRefreshing() {
+                mPage = 1;
+                isRefresh = true;
+                getTodayData();
+            }
+        });
     }
 
     @Override
@@ -152,12 +178,6 @@ public class CheckInActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    @Override
-    public void onRefresh() {
-        ToastShow("下拉刷新");
-        getTodayData();
-    }
-
     private void getShopStaffSignList(String beginDate, String endDate, String barberid) {
         String token = PreferenceUtils.getPrefString(getApplication(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.getShopStaffSignList)
@@ -166,6 +186,7 @@ public class CheckInActivity extends BaseActivity implements View.OnClickListene
                 .params("begindate", beginDate)
                 .params("enddate", endDate)
                 .params("barberid", barberid)
+                .params("page", mPage)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -175,8 +196,21 @@ public class CheckInActivity extends BaseActivity implements View.OnClickListene
                             String code = json.getString("code");
                             if (code.equals("100000")) {
                                 CheckInVo vo = mGson.fromJson(json.getString("data"), CheckInVo.class);
+                                if (isRefresh) mRefreshLayout.refreshComplete();
+                                else if (isLoad) mRefreshLayout.closeLoadView();
                                 if (vo != null) {
-                                    initCheckInList(vo);
+                                    if (isRefresh) {
+                                        adapter.setNewData(vo.getRows());
+                                        isRefresh = false;
+                                    } else if (isLoad) {
+                                        int postion = adapter.getData().size();
+                                        adapter.getData().addAll(vo.getRows());
+                                        adapter.notifyDataSetChanged();
+                                        rvCheckIn.scrollToPosition(postion);
+                                        isLoad = false;
+                                    } else {
+                                        initCheckInList(vo);
+                                    }
                                 }
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
@@ -192,11 +226,5 @@ public class CheckInActivity extends BaseActivity implements View.OnClickListene
         adapter = new CheckInAdapter(vo.getRows(), this);
         adapter.openLoadAnimation();
         rvCheckIn.setAdapter(adapter);
-        rvCheckIn.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler));
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        layoutManager.setSmoothScrollbarEnabled(true);
-        layoutManager.setAutoMeasureEnabled(true);
-        rvCheckIn.setLayoutManager(layoutManager);
     }
 }

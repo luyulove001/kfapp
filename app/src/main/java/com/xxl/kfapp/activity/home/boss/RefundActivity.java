@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.ajguan.library.EasyRefreshLayout;
 import com.alibaba.fastjson.JSON;
 import com.baidu.mobstat.StatService;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -35,13 +36,17 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
     @Bind(R.id.mTitleBar)
     TitleBar mTitleBar;
     @Bind(R.id.mRefreshLayout)
-    SwipeRefreshLayout mRefreshLayout;
+    EasyRefreshLayout mRefreshLayout;
     @Bind(R.id.et_search_content)
     EditText etSearch;
     @Bind(R.id.btn_all)
     Button btnSearch;
     @Bind(R.id.tv_num)
     TextView tvNum;
+
+    private int mPage = 1;
+    private boolean isRefresh = false, isLoad = false;
+    private RefundAdapter adapter;
 
     @Override
     protected void initArgs(Intent intent) {
@@ -56,13 +61,37 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
         btnSearch.setOnClickListener(this);
         mTitleBar.setTitle("退票列表");
         mTitleBar.setBackOnclickListener(this);
-        mRefreshLayout.setOnRefreshListener(this);
         etSearch.setHint("请输入票号");
+        rvTicket.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler_10px));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.setSmoothScrollbarEnabled(true);
+        layoutManager.setAutoMeasureEnabled(false);
+        rvTicket.setLayoutManager(layoutManager);
+        initRefreshListener();
+    }
+
+    private void initRefreshListener() {
+        mRefreshLayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
+            @Override
+            public void onLoadMore() {
+                mPage +=1;
+                isLoad = true;
+                getUserTicketBackList("", mPage);
+            }
+
+            @Override
+            public void onRefreshing() {
+                mPage = 1;
+                isRefresh = true;
+                getUserTicketBackList("", mPage);
+            }
+        });
     }
 
     @Override
     protected void initData() {
-        getUserTicketBackList("", "");
+        getUserTicketBackList("", 1);
     }
 
     @Override
@@ -81,17 +110,17 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_all:
-                getUserTicketBackList(etSearch.getText().toString(), "");
+                getUserTicketBackList(etSearch.getText().toString(), 1);
                 break;
         }
     }
 
     @Override
     public void onRefresh() {
-        getUserTicketBackList("", "");
+        getUserTicketBackList("", 1);
     }
 
-    private void getUserTicketBackList(String ticketno, String page) {
+    private void getUserTicketBackList(String ticketno, int page) {
         String token = PreferenceUtils.getPrefString(getAppApplication(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.getUserTicketBackList)
                 .tag(this)
@@ -107,7 +136,21 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
                             String code = json.getString("code");
                             if (code.equals("100000")) {
                                 KLog.i(json.getString("msg"));
-                                initRefundList(mGson.fromJson(json.getString("data"), RefundListVo.class));
+                                RefundListVo vo = mGson.fromJson(json.getString("data"), RefundListVo.class);
+                                if (isRefresh) {
+                                    mRefreshLayout.refreshComplete();
+                                    adapter.setNewData(vo.getRows());
+                                    isRefresh = false;
+                                } else if (isLoad) {
+                                    mRefreshLayout.closeLoadView();
+                                    int postion = adapter.getData().size();
+                                    adapter.getData().addAll(vo.getRows());
+                                    adapter.notifyDataSetChanged();
+                                    rvTicket.scrollToPosition(postion);
+                                    isLoad = false;
+                                } else {
+                                    initRefundList(vo);
+                                }
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
                             }
@@ -119,7 +162,7 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initRefundList(final RefundListVo vo) {
-        RefundAdapter adapter = new RefundAdapter(vo.getRows());
+        adapter = new RefundAdapter(vo.getRows());
         adapter.openLoadAnimation();
         adapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter
                 .OnRecyclerViewItemChildClickListener() {
@@ -131,11 +174,5 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
             }
         });
         rvTicket.setAdapter(adapter);
-        rvTicket.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler_10px));
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        layoutManager.setSmoothScrollbarEnabled(true);
-        layoutManager.setAutoMeasureEnabled(false);
-        rvTicket.setLayoutManager(layoutManager);
     }
 }

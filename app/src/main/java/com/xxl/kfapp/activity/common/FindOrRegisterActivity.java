@@ -97,7 +97,7 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
             @Override
             public void onFinish() {
                 btnSend.setText("重新获取");
-                btnSend.setEnabled(true);
+                btnSend.setClickable(true);
             }
         };
         mid = PreferenceUtils.getPrefString(BaseApplication.getContext(), "uuid", "");
@@ -295,9 +295,9 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
                                 JSONObject json = new JSONObject(response.body());
                                 String code = json.getString("code");
                                 if (code.equals("100000")) {
-                                    // startActivity(new Intent(FindOrRegisterActivity.this, LoginActivity.class));
-                                    // finish();
-                                    doLogin();
+                                    startActivity(new Intent(FindOrRegisterActivity.this, LoginActivity.class));
+                                    finish();
+                                    // doLogin();
                                 } else {
                                     sweetDialog(json.getString("msg"), 1, false);
                                 }
@@ -326,7 +326,7 @@ public class FindOrRegisterActivity extends BaseActivity implements KeyboardWatc
         }
 
         if (c) {
-//            btnSend.setEnabled(false);
+            //            btnSend.setEnabled(false);
             mDialog.show();
             String use;
             if (isForgot) {

@@ -5,6 +5,15 @@ import java.util.List;
 
 public class TicketListVo implements Serializable {
     private List<TicketVo> rows;
+    private int total;
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
 
     public List<TicketVo> getRows() {
         return rows;

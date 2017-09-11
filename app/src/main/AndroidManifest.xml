@@ -208,7 +208,8 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.home.boss.ShopListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".activity.home.jmkd.JmkdFivePrepayActivity"
             android:screenOrientation="portrait"/>

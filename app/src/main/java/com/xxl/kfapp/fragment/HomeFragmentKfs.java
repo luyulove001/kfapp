@@ -165,6 +165,7 @@ public class HomeFragmentKfs extends BaseFragment implements View.OnClickListene
         female.setBounds(0, 0, female.getMinimumWidth(), female.getMinimumHeight());
     }
 
+    @SuppressWarnings("deprecation")
     private void getBarberCountInfo() {
         String token = PreferenceUtils.getPrefString(BaseApplication.getContext(), "token", "1234567890");
         OkGo.<String>get(Urls.baseUrl + Urls.getBarberCountInfo)

@@ -57,6 +57,7 @@ public class ShopPriceActivity extends BaseActivity {
     EditText etvPrice;//非促销时段价格
     EditText etvUpdatePrice;//促销时段价格
     private ShopSetVo shopSetVo;
+    private int mYear, mMonth, mDay;
 
     @Override
     protected void initArgs(Intent intent) {
@@ -124,6 +125,9 @@ public class ShopPriceActivity extends BaseActivity {
                 String year = String.valueOf(mBeginTimePickerDialog.getYear());
                 String month = String.valueOf(mBeginTimePickerDialog.getMonth());
                 String day = String.valueOf(mBeginTimePickerDialog.getDay());
+                mYear = mBeginTimePickerDialog.getYear();
+                mMonth = mBeginTimePickerDialog.getMonth();
+                mDay = mBeginTimePickerDialog.getDay();
                 beginDate = year + "-" + (Integer.valueOf(month) > 9 ? month : "0" + month) + "-"
                         + (Integer.valueOf(day) > 9 ? day : "0" + day);
                 tvBeginTime.setText(beginDate);
@@ -143,10 +147,15 @@ public class ShopPriceActivity extends BaseActivity {
                 String year = String.valueOf(mEndTimePickerDialog.getYear());
                 String month = String.valueOf(mEndTimePickerDialog.getMonth());
                 String day = String.valueOf(mEndTimePickerDialog.getDay());
-                endDate = year + "-" + (Integer.valueOf(month) > 9 ? month : "0" + month) + "-"
-                        + (Integer.valueOf(day) > 9 ? day : "0" + day);
-                tvEndTime.setText(endDate);
-                showUpdatePriceDialog();
+                if (mYear <= mEndTimePickerDialog.getYear() && mMonth <= mEndTimePickerDialog.getMonth()
+                        && mDay <= mEndTimePickerDialog.getDay()) {
+                    endDate = year + "-" + (Integer.valueOf(month) > 9 ? month : "0" + month) + "-"
+                            + (Integer.valueOf(day) > 9 ? day : "0" + day);
+                    tvEndTime.setText(endDate);
+                    showUpdatePriceDialog();
+                } else {
+                    ToastShow("开始时间不能大于结束时间");
+                }
             }
 
             @Override

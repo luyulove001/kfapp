@@ -157,6 +157,7 @@ public class ShopSettingActivity extends BaseActivity implements View.OnClickLis
     protected void onResume() {
         super.onResume();
         getShopSetInfo();
+        getDetail();
         StatService.onResume(this);
     }
 
@@ -216,11 +217,36 @@ public class ShopSettingActivity extends BaseActivity implements View.OnClickLis
                                 shopSetVo = mGson.fromJson(json.getString("data"), ShopSetVo.class);
                                 if ("1".equals(shopSetVo.getApplysts())) {
                                     tvApplysts.setText("解绑审核中");
+                                    llUnbindShop.setClickable(false);
                                 }
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
                             }
                         } catch (com.alibaba.fastjson.JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void getDetail() {
+        String token = PreferenceUtils.getPrefString(BaseApplication.getContext(), "token", "1234567890");
+        OkGo.<String>get(Urls.baseUrl + Urls.getBossShopDetailInfo)
+                .tag(this)
+                .params("token", token)
+                .params("shopid", shopid)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject json = new JSONObject(response.body());
+                            String code = json.getString("code");
+                            if (code.equals("100000")) {
+                                tvPrice.setText(json.getJSONObject("data").getString("nowprice") + "元");
+                            } else {
+                                sweetDialog(json.getString("msg"), 1, false);
+                            }
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }

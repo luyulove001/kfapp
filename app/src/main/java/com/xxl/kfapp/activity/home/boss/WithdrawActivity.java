@@ -2,6 +2,7 @@ package com.xxl.kfapp.activity.home.boss;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ajguan.library.EasyRefreshLayout;
 import com.alibaba.fastjson.JSON;
 import com.baidu.mobstat.StatService;
 import com.bumptech.glide.Glide;
@@ -54,10 +56,15 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
     RecyclerView rvCashApply;
     @Bind(R.id.lyt_wx_info)
     LinearLayout lytWxInfo;
+    @Bind(R.id.mRefreshLayout)
+    EasyRefreshLayout mRefreshLayout;
 
     private String shopid, openid, wxNickname;
     private AppConfigVo appConfigVo;
     private boolean isWxBind;
+    private int mPage = 1;
+    private boolean isRefresh = false, isLoad = false;
+    private CashApplyAdapter adapter;
 
     @Override
     protected void initArgs(Intent intent) {
@@ -78,6 +85,31 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
         });
         tvTixian.setOnClickListener(this);
         btnApply.setOnClickListener(this);
+        rvCashApply.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.setSmoothScrollbarEnabled(true);
+        layoutManager.setAutoMeasureEnabled(true);
+        rvCashApply.setLayoutManager(layoutManager);
+        initRefreshListener();
+    }
+
+    private void initRefreshListener() {
+        mRefreshLayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
+            @Override
+            public void onLoadMore() {
+                mPage +=1;
+                isLoad = true;
+                getShopCashApplyRecord();
+            }
+
+            @Override
+            public void onRefreshing() {
+                mPage = 1;
+                isRefresh = true;
+                getShopCashApplyRecord();
+            }
+        });
     }
 
     @Override
@@ -116,6 +148,7 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
                 .tag(this)
                 .params("token", token)
                 .params("shopid", shopid)
+                .params("page", mPage)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -124,8 +157,21 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
                             String code = json.getString("code");
                             if (code.equals("100000")) {
                                 CashRecordVo vo = mGson.fromJson(json.getString("data"), CashRecordVo.class);
+                                if (isRefresh) mRefreshLayout.refreshComplete();
+                                else if (isLoad) mRefreshLayout.closeLoadView();
                                 if (vo != null && vo.getRows().size() != 0) {
-                                    initRv(vo);
+                                    if (isRefresh) {
+                                        adapter.setNewData(vo.getRows());
+                                        isRefresh = false;
+                                    } else if (isLoad) {
+                                        int postion = adapter.getData().size();
+                                        adapter.getData().addAll(vo.getRows());
+                                        adapter.notifyDataSetChanged();
+                                        rvCashApply.scrollToPosition(postion);
+                                        isLoad = false;
+                                    } else {
+                                        initRv(vo);
+                                    }
                                 }
                             } else {
                                 sweetDialog(json.getString("msg"), 1, false);
@@ -138,15 +184,9 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initRv(final CashRecordVo vo) {
-        CashApplyAdapter adapter = new CashApplyAdapter(vo.getRows());
+        adapter = new CashApplyAdapter(vo.getRows());
         adapter.openLoadAnimation();
         rvCashApply.setAdapter(adapter);
-        rvCashApply.addItemDecoration(new ListViewDecoration(R.drawable.divider_recycler));
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        layoutManager.setSmoothScrollbarEnabled(true);
-        layoutManager.setAutoMeasureEnabled(true);
-        rvCashApply.setLayoutManager(layoutManager);
     }
 
     private void getShopCashApplyInfo() {
@@ -164,6 +204,11 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
                             if (code.equals("100000")) {
                                 CashApplyVo vo = mGson.fromJson(json.getString("data"), CashApplyVo.class);
                                 tvBalance.setText(vo.getBalance());
+                                if ("2".equals(vo.getShopmodel())) {
+                                    btnApply.setClickable("2".equals(vo.getShopmodel()));
+                                    btnApply.setBackgroundResource(R.drawable.bg_corner_gray);
+                                    btnApply.setTextColor(Color.parseColor("#666666"));
+                                }
                                 if (TextUtils.isEmpty(vo.getTotal()) || "null".equals(vo.getTotal()))
                                     vo.setTotal("0");
                                 tvTotal.setText("¥" + vo.getTotal());

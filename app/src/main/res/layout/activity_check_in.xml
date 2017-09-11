@@ -57,7 +57,7 @@
         android:layout_height="@dimen/y1"
         android:background="@color/gray_holo_dark"/>
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.ajguan.library.EasyRefreshLayout
         android:id="@+id/mRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,5 +67,5 @@
             android:id="@+id/rv_barber_check_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.ajguan.library.EasyRefreshLayout>
 </LinearLayout>

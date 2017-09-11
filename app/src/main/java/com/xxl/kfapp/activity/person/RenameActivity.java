@@ -88,7 +88,7 @@ public class RenameActivity extends BaseActivity implements View.OnClickListener
         ButterKnife.bind(this);
         ivClear.setOnClickListener(this);
         if (isShopRename) {
-            mTitleBar.setTitle("修改店名");
+            mTitleBar.setTitle("店名修改");
         } else {
             mTitleBar.setTitle("修改昵称");
             rvRename.setVisibility(View.GONE);

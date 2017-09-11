@@ -136,6 +136,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
         shopid = intent.getStringExtra("shopid");
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void initView(Bundle bundle) {
         setContentView(R.layout.activity_jmkd_five3_web);
@@ -571,7 +572,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                 .params("paytype", paytype)
                 .params("ordertype", "2")
                 .params("shopid", shopid)
-                .params("testflag", "1")
+//                .params("testflag", "1")
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -607,7 +608,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                 .params("paytype", paytype)
                 .params("ordertype", "3")
                 .params("fees", mGson.toJson(feeListVo.getFeelst()))
-                .params("testflag", "1")
+//                .params("testflag", "1")
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -662,6 +663,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                 });
     }
 
+    @SuppressWarnings("deprecation")
     private void createDialog() {
         final Dialog dialog = new Dialog(this, R.style.Dialog);
         dialog.setContentView(R.layout.dialog_bid_tips);

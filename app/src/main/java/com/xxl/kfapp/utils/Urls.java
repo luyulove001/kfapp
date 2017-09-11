@@ -1,9 +1,9 @@
 package com.xxl.kfapp.utils;
 
 public class Urls {
-    public static final String baseUrl = "http://106.15.61.209:7881/plazz/api";
+//    public static final String baseUrl = "http://106.15.61.209:7881/plazz/api";
 //    public static final String baseUrl = "http://192.168.0.111:8090/plazz/api";
-//    public static final String baseUrl = "https://qch.qchouses.com/plazz/api";
+    public static final String baseUrl = "https://qch.qchouses.com/plazz/api";
     public static final String login = "/authapi/login";
     public static final String reg = "/authapi/reg";
     public static final String getIdentifyingCode = "/authapi/getIdentifyingCode";

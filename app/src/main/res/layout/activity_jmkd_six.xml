@@ -59,10 +59,11 @@
 
                 <TextView
                     android:id="@+id/tv_address"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_recipient"
                     android:layout_marginStart="@dimen/x75"
+                    android:layout_marginEnd="@dimen/x75"
                     android:padding="@dimen/x5"
                     android:text="收货地址：老子"/>
 
@@ -76,6 +77,7 @@
                     android:text="13111011011"/>
 
                 <ImageView
+                    android:id="@+id/iv_arrow_right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"

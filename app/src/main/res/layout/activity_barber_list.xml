@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bg_gray"
+    android:orientation="vertical"
     tools:context="com.xxl.kfapp.activity.home.boss.ShopDetailActivity">
 
     <com.xxl.kfapp.widget.TitleBar
@@ -15,10 +15,16 @@
 
     <include layout="@layout/head_search"/>
 
-    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
-        android:id="@+id/rv_barber"
+    <com.ajguan.library.EasyRefreshLayout
+        android:id="@+id/easylayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/x20"/>
+        android:layout_height="match_parent">
+
+        <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+            android:id="@+id/rv_barber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/x20"/>
+    </com.ajguan.library.EasyRefreshLayout>
 </LinearLayout>
 

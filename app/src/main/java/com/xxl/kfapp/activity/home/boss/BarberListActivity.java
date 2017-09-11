@@ -3,12 +3,13 @@ package com.xxl.kfapp.activity.home.boss;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.ajguan.library.EasyRefreshLayout;
+import com.ajguan.library.LoadModel;
 import com.baidu.mobstat.StatService;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lzy.okgo.OkGo;
@@ -29,7 +30,7 @@ import org.json.JSONObject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class BarberListActivity extends BaseActivity implements View.OnClickListener{
+public class BarberListActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.mTitleBar)
     TitleBar mTitleBar;
     @Bind(R.id.tv_num)
@@ -40,8 +41,11 @@ public class BarberListActivity extends BaseActivity implements View.OnClickList
     Button btnAll;
     @Bind(R.id.rv_barber)
     SwipeMenuRecyclerView rvBarber;
+    @Bind(R.id.easylayout)
+    EasyRefreshLayout easyRefreshLayout;
 
     private BarberAdapter adapter;
+    private boolean isRefresh = false;
 
     @Override
     protected void initArgs(Intent intent) {
@@ -67,6 +71,23 @@ public class BarberListActivity extends BaseActivity implements View.OnClickList
         layoutManager.setSmoothScrollbarEnabled(true);
         layoutManager.setAutoMeasureEnabled(true);
         rvBarber.setLayoutManager(layoutManager);
+        rvBarber.setHasFixedSize(true);
+        initRefreshListener();
+    }
+
+    private void initRefreshListener() {
+        easyRefreshLayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
+            @Override
+            public void onLoadMore() {
+            }
+
+            @Override
+            public void onRefreshing() {
+                isRefresh = true;
+                doGetBossShopStaffList("");
+            }
+        });
+        easyRefreshLayout.setLoadMoreModel(LoadModel.NONE);
     }
 
     @Override
@@ -103,6 +124,8 @@ public class BarberListActivity extends BaseActivity implements View.OnClickList
                             JSONObject json = new JSONObject(response.body());
                             String code = json.getString("code");
                             if (code.equals("100000")) {
+                                if (isRefresh)
+                                    easyRefreshLayout.refreshComplete();
                                 StaffVo vo = mGson.fromJson(json.getString("data"), StaffVo.class);
                                 if (vo != null) {
                                     tvNum.setText("您共有 " + vo.getStaffcnt() + " 位理发师");

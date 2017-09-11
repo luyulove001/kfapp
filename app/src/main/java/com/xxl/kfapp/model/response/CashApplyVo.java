@@ -11,9 +11,18 @@ public class CashApplyVo implements Serializable {
     private String balance;
     private String casefee;
     private String shopid;
+    private String shopmodel;
     private String mincashamount;
     private String shopname;
     private String maxcashamount;
+
+    public String getShopmodel() {
+        return shopmodel;
+    }
+
+    public void setShopmodel(String shopmodel) {
+        this.shopmodel = shopmodel;
+    }
 
     public String getTotal() {
         return total;

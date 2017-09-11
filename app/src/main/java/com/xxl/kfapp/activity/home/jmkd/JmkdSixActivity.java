@@ -417,7 +417,7 @@ public class JmkdSixActivity extends BaseActivity implements View.OnClickListene
                 .params("paytype", paytype)
                 .params("ordertype", "4")
                 .params("goods", getGoodsList())
-                .params("testflag", "1")
+//                .params("testflag", "1")
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {

@@ -20,7 +20,7 @@
         android:layout_height="@dimen/y20"
         android:background="@color/bg_gray"/>
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.ajguan.library.EasyRefreshLayout
         android:id="@+id/mRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,5 +30,5 @@
             android:id="@+id/rv_balance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.ajguan.library.EasyRefreshLayout>
 </LinearLayout>
