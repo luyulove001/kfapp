@@ -309,7 +309,7 @@ public class JmkdFourActivity extends BaseActivity implements View.OnClickListen
                 .params("amount", brandmoney)
                 .params("paytype", paytype)
                 .params("ordertype", "1")
-//                .params("testflag", "1")
+                .params("testflag", "1")
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {

@@ -86,12 +86,12 @@ public class JmkdOneActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void initData() {
+        shopInfoVo = new ShopApplyInfoVo();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        shopInfoVo = new ShopApplyInfoVo();
         initInfoRecycleView();
         StatService.onResume(this);
     }

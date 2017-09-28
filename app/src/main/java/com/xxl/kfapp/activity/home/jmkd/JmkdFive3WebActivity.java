@@ -572,7 +572,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                 .params("paytype", paytype)
                 .params("ordertype", "2")
                 .params("shopid", shopid)
-//                .params("testflag", "1")
+                .params("testflag", "1")
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -608,7 +608,7 @@ public class JmkdFive3WebActivity extends BaseActivity implements View.OnClickLi
                 .params("paytype", paytype)
                 .params("ordertype", "3")
                 .params("fees", mGson.toJson(feeListVo.getFeelst()))
-//                .params("testflag", "1")
+                .params("testflag", "1")
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {

@@ -19,7 +19,6 @@ import talex.zsw.baselibrary.view.SweetSheet.SimpleAnimationListener;
  * @version 1.0
  * @date 2015/8/9.
  * @github: https://github.com/zzz40500
- *
  */
 public class CircleRevealHelper {
 
@@ -47,30 +46,33 @@ public class CircleRevealHelper {
     private CircleRevealEnable mCircleRevealEnable;
 
 
-
     public void circularReveal(int centerX, int centerY, float startRadius, float endRadius) {
 
-        this.circularReveal(centerX,centerY,startRadius,endRadius,700,new AccelerateDecelerateInterpolator());
+        this.circularReveal(centerX, centerY, startRadius, endRadius, 700, new AccelerateDecelerateInterpolator());
 
 
     }
 
 
-
-    public void circularReveal(int centerX, int centerY, float startRadius, float endRadius, long duration, Interpolator interpolator) {
+    public void circularReveal(int centerX, int centerY, float startRadius, float endRadius, long duration,
+                               Interpolator interpolator) {
 
         mAnchorX = centerX;
         mAnchorY = centerY;
         if (Build.VERSION.SDK_INT >= 21) {
-            Animator animator = ViewAnimationUtils.createCircularReveal(
-                    mView,
-                    mAnchorX,
-                    mAnchorY,
-                    startRadius,
-                    endRadius);
-            animator.setInterpolator(interpolator);
-            animator.setDuration(duration);
-            animator.start();
+            try {
+                Animator animator = ViewAnimationUtils.createCircularReveal(
+                        mView,
+                        mAnchorX,
+                        mAnchorY,
+                        startRadius,
+                        endRadius);
+                animator.setInterpolator(interpolator);
+                animator.setDuration(duration);
+                animator.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
 
             ValueAnimator valueAnimator = ValueAnimator.ofFloat(startRadius, endRadius);

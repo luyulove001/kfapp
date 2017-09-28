@@ -91,6 +91,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/multi-dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/pre-dexed" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/proguard-rules" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/reload-dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/restart-dex" />
@@ -100,53 +101,59 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/transforms" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/reports" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 25 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="jpush-3.0.8" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="runner-0.5" level="project" />
-    <orderEntry type="library" exported="" name="okhttp3-integration-1.4.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="espresso-idling-resource-2.2.2" level="project" />
     <orderEntry type="library" exported="" name="Common-1.5.2" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="hamcrest-library-1.3" level="project" />
+    <orderEntry type="library" exported="" name="EasyRefreshLayout-1.3.1" level="project" />
+    <orderEntry type="library" exported="" name="cardview-v7-24.2.1" level="project" />
+    <orderEntry type="library" exported="" name="andfix-0.5.0" level="project" />
+    <orderEntry type="library" exported="" name="design-24.2.1" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="multidex-instrumentation-1.0.1" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="exposed-instrumentation-api-publish-0.5" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="javax.annotation-api-1.2" level="project" />
+    <orderEntry type="library" exported="" name="Android-SpinKit-1.0.2" level="project" />
+    <orderEntry type="library" exported="" name="core" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="javawriter-2.1.1" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="support-media-compat-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="BaseRecyclerViewAdapterHelper-v1.9.7" level="project" />
+    <orderEntry type="library" exported="" name="EasySwipeMenuLayout-1.1.2" level="project" />
+    <orderEntry type="library" exported="" name="Baidu_Mtj_3.7.6.1" level="project" />
+    <orderEntry type="library" exported="" name="recyclerview-v7-25.2.0" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="support-vector-drawable-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="percent-24.2.1" level="project" />
+    <orderEntry type="library" exported="" name="support-compat-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="jpush-3.0.8" level="project" />
+    <orderEntry type="library" exported="" name="okhttp3-integration-1.4.0" level="project" />
+    <orderEntry type="library" exported="" name="constraint-layout-1.0.2" level="project" />
     <orderEntry type="library" exported="" name="jcore-1.1.6" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="hamcrest-integration-1.3" level="project" />
     <orderEntry type="library" exported="" name="fastjson-1.1.55.android" level="project" />
     <orderEntry type="library" exported="" name="WheelPicker-1.5.2" level="project" />
     <orderEntry type="library" exported="" name="support-core-ui-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-swipe-1.0.4" level="project" />
-    <orderEntry type="library" exported="" name="cardview-v7-24.2.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="jsr305-2.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-core-utils-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="support-fragment-25.3.1" level="project" />
-    <orderEntry type="library" exported="" name="andfix-0.5.0" level="project" />
-    <orderEntry type="library" exported="" name="design-24.2.1" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="multidex-instrumentation-1.0.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="espresso-core-2.2.2" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="exposed-instrumentation-api-publish-0.5" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="rules-0.5" level="project" />
+    <orderEntry type="library" exported="" name="constraint-layout-solver-1.0.2" level="project" />
     <orderEntry type="library" exported="" name="okio-1.13.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="javax.annotation-api-1.2" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="javax.inject-1" level="project" />
     <orderEntry type="library" exported="" name="okhttp-3.8.1" level="project" />
-    <orderEntry type="library" exported="" name="core" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="javawriter-2.1.1" level="project" />
     <orderEntry type="library" exported="" name="multidex-1.0.1" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-25.3.1" level="project" />
-    <orderEntry type="library" exported="" name="support-media-compat-25.3.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.3" level="project" />
-    <orderEntry type="library" exported="" name="BaseRecyclerViewAdapterHelper-v1.9.7" level="project" />
     <orderEntry type="library" exported="" name="wechat-sdk-android-with-mta-1.3.4" level="project" />
-    <orderEntry type="library" exported="" name="Baidu_Mtj_3.7.6.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="junit-4.12" level="project" />
-    <orderEntry type="library" exported="" name="recyclerview-v7-25.2.0" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-25.3.1" level="project" />
-    <orderEntry type="library" exported="" name="support-vector-drawable-25.3.1" level="project" />
-    <orderEntry type="library" exported="" name="percent-24.2.1" level="project" />
     <orderEntry type="library" exported="" name="alipaySingle-20170510" level="project" />
-    <orderEntry type="library" exported="" name="support-compat-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="okgo-3.0.2" level="project" />
     <orderEntry type="module" module-name="mylibrary" exported="" />

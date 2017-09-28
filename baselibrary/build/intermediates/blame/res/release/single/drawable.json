@@ -144,12 +144,12 @@
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\ab303220adb3bb1436b8d52bee004c712255c7b0\\output\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
     },
     {
-        "merged": "F:\\project\\KFApp\\baselibrary\\build\\intermediates\\res\\merged\\release\\drawable\\nice_spinner_drawable.xml",
-        "source": "F:\\project\\KFApp\\baselibrary\\src\\main\\res\\drawable\\nice_spinner_drawable.xml"
-    },
-    {
         "merged": "F:\\project\\KFApp\\baselibrary\\build\\intermediates\\res\\merged\\release\\drawable\\abc_btn_colored_material.xml",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\ab303220adb3bb1436b8d52bee004c712255c7b0\\output\\res\\drawable\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "F:\\project\\KFApp\\baselibrary\\build\\intermediates\\res\\merged\\release\\drawable\\nice_spinner_drawable.xml",
+        "source": "F:\\project\\KFApp\\baselibrary\\src\\main\\res\\drawable\\nice_spinner_drawable.xml"
     },
     {
         "merged": "F:\\project\\KFApp\\baselibrary\\build\\intermediates\\res\\merged\\release\\drawable\\abc_spinner_textfield_background_material.xml",

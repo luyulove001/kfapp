@@ -97,7 +97,7 @@ public class SystemBarTintManager
 			try
 			{
 				mStatusBarAvailable = a.getBoolean(0, false);
-				mNavBarAvailable = a.getBoolean(1, false);
+//				mNavBarAvailable = a.getBoolean(1, false);
 			} finally
 			{
 				a.recycle();

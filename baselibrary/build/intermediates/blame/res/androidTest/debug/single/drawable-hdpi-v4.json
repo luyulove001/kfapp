@@ -132,12 +132,12 @@
         "source": "F:\\project\\KFApp\\baselibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\wenzi0010.png"
     },
     {
-        "merged": "F:\\project\\KFApp\\baselibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\abc_list_longpressed_holo.9.png",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\ab303220adb3bb1436b8d52bee004c712255c7b0\\output\\res\\drawable-hdpi-v4\\abc_list_longpressed_holo.9.png"
-    },
-    {
         "merged": "F:\\project\\KFApp\\baselibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\btn_white_bottom_right.xml",
         "source": "F:\\project\\KFApp\\baselibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\btn_white_bottom_right.xml"
+    },
+    {
+        "merged": "F:\\project\\KFApp\\baselibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\abc_list_longpressed_holo.9.png",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\ab303220adb3bb1436b8d52bee004c712255c7b0\\output\\res\\drawable-hdpi-v4\\abc_list_longpressed_holo.9.png"
     },
     {
         "merged": "F:\\project\\KFApp\\baselibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\wenzi0025.png",

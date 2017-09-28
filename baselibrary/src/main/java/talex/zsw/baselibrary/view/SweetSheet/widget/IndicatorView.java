@@ -162,7 +162,7 @@ public class IndicatorView extends LinearLayout implements ViewPager.OnPageChang
 
     @Override
     public void superOnDraw(Canvas canvas) {
-        super.onDraw(canvas);
+        super.draw(canvas);
     }
 
     @Override
